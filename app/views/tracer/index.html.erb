@@ -1,0 +1,10 @@
+<section class="flex-container">
+    <% @tracers.each do |tracer| %>
+        <div class="card">
+            <img src="<%= image_tag tracer.photo.url %>">
+            <div class="card-divider">
+                <%= tracer.name %>
+            </div>
+        </div>
+    <% end %>
+</section>
