@@ -26,6 +26,7 @@ module Concerns
           field :quantity
           field :longitude
           field :latitude
+          field :address
           field :description
           field :reported_at
           field :photo
@@ -39,6 +40,7 @@ module Concerns
           field :quantity
           field :longitude
           field :latitude
+          field :address
           field :description
           field :reported_at
           field :photo
