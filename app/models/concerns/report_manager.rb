@@ -16,6 +16,40 @@ module Concerns
           transition pending: :rejected
         end
       end
+
+      rails_admin do
+        list do
+          field :status, :state
+          field :tracer
+          field :name
+          field :email
+          field :quantity
+          field :longitude
+          field :latitude
+          field :description
+          field :reported_at
+          field :photo
+        end
+
+        edit do
+          field :status, :state
+          field :tracer
+          field :name
+          field :email
+          field :quantity
+          field :longitude
+          field :latitude
+          field :description
+          field :reported_at
+          field :photo
+        end
+
+        state(
+          events: {reject: 'btn-danger', accept: 'btn-success'},
+          states: {rejected: 'label-important', accepted: 'label-success'},
+          disable: []
+        )
+      end
     end
   end
 end
