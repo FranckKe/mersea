@@ -19,9 +19,7 @@
 //= require jquery.touchSwipe.min
 //= require_tree .
 
-$(document).foundation();
-
-$(function () {
+$(document).on('turbolinks:load', function () {
     $(document).foundation();
 });
 
