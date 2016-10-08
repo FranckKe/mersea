@@ -5,6 +5,13 @@
 - MRI 2.3.x
 - Postgres 9.5 [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
 
+## Create an admin account
+
+Within a Rails console:
+```rb
+Admin.create(name: 'ANSEL', email: 'asso-ansel@club-internet.fr', password: 'strongpassword')
+```
+
 ## Development
 
 ```sh
