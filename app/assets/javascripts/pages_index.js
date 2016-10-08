@@ -1,7 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(function () {
+$(document).on('turbolinks:load', function() {
 
   // Map init
   var map = L.map('map').setView([48.2520, -3.9301], 9);
@@ -14,5 +14,5 @@ $(function () {
       maxZoom: 18
     }).addTo(map);
 
-    map.zoomControl.setPosition('topright');
+  map.zoomControl.setPosition('topright');
 });
