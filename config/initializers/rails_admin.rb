@@ -1,3 +1,5 @@
+I18n.default_locale = :fr
+
 RailsAdmin.config do |config|
   config.main_app_name = %w(Mersea BackOffice)
 

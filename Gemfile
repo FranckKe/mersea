@@ -7,6 +7,7 @@ gem 'pg'
 gem 'paperclip', '~> 5.0.0'
 gem 'devise', '~> 4.2'
 gem 'rails_admin', '~> 1.0'
+gem 'rails_admin-i18n', '~> 1.10'
 gem 'state_machines-activerecord', '~> 0.4.0'
 gem 'rails_admin_state', '~> 1.5'
 
