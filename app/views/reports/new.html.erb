@@ -1,10 +1,17 @@
-<%= simple_form_for @report do |f| %>
-  <%= f.input :name %>
-  <%= f.input :quantity, as: :number %>
-  <%= f.input :address %>
-  <%= f.input :latitude, as: :decimal %>
-  <%= f.input :longitude, as: :decimal %>
-  <%= f.input :photo, as: :file %>
-  <%= f.input :description, as: :text %>
-  <%= f.button :submit %>
-<% end %>
+<div class="">
+  <h3>New report</h3>
+  <div class="medium-6 medium-centered columns">
+    <div class="row">
+      <%= simple_form_for @report do |f| %>
+        <%= f.input :name %>
+        <%= f.input :quantity, as: :integer %>
+        <%= f.input :address %>
+        <%= f.input :latitude, as: :decimal %>
+        <%= f.input :longitude, as: :decimal %>
+        <%= f.input :photo, as: :file %>
+        <%= f.input :description, as: :text %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+  </div>
+</div>
