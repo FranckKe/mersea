@@ -82,6 +82,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise-foundation-views (0.1.1)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
@@ -276,6 +277,7 @@ DEPENDENCIES
   byebug
   debbie
   devise (~> 4.2)
+  devise-foundation-views
   foundation-icons-sass-rails (~> 3.0)
   foundation-rails (~> 6.2)
   jquery-rails (~> 4.2)

@@ -31,6 +31,7 @@ group :assets, :development, :test, :production do
   gem 'jquery-rails', '~> 4.2'
   gem 'foundation-rails', '~> 6.2'
   gem 'foundation-icons-sass-rails', '~> 3.0'
+  gem 'devise-foundation-views'
   gem 'sass-rails', '~> 5.0'
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '>= 1.3.0'
