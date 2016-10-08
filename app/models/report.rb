@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: reportings
+# Table name: reports
 #
 #  id                 :uuid             not null, primary key
 #  name               :string
@@ -19,7 +19,7 @@
 #  updated_at         :datetime         not null
 #
 
-class Reporting < ApplicationRecord
+class Report < ApplicationRecord
   has_attached_file :photo
 
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/

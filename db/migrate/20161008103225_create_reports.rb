@@ -1,6 +1,6 @@
-class CreateReportings < ActiveRecord::Migration[5.0]
+class CreateReports < ActiveRecord::Migration[5.0]
   def change
-    create_table :reportings, id: :uuid do |t|
+    create_table :reports, id: :uuid do |t|
       t.string :name
       t.string :email
       t.integer :quantity

@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20161008103225) do
   enable_extension "uuid-ossp"
   enable_extension "citext"
 
-  create_table "reportings", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+  create_table "reports", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.integer  "quantity"
