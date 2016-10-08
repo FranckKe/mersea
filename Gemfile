@@ -39,5 +39,4 @@ group :assets, :development, :test, :production do
   gem 'leaflet-rails', '~> 0.7.7'
   gem 'leaflet-markercluster-rails', '~> 0.7.0'
   gem 'simple_form'
-  gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 end
