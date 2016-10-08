@@ -47,8 +47,8 @@ module Concerns
         end
 
         state(
-          events: {reject: 'btn-danger', accept: 'btn-success'},
-          states: {rejected: 'label-important', accepted: 'label-success'},
+          events: { reject: 'btn-danger', accept: 'btn-success' },
+          states: { rejected: 'label-important', accepted: 'label-success' },
           disable: []
         )
       end
