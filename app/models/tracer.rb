@@ -21,6 +21,6 @@ class Tracer < ApplicationRecord
   has_attached_file :photo
   has_many :reports, dependent: :destroy
 
-  validate :name, :description, :photo, :origin, :type, presense: true
+  validates :name, :description, :photo, :origin, :type, presence: true
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 end
