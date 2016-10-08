@@ -3,14 +3,20 @@
 
     <!-- Close button -->
     <button class="menu-close-button" aria-label="Close menu" type="button" data-close>
-          <span aria-hidden="true"><i class="fi-x"></i></span>
-        </button>
+        <span aria-hidden="true"><i class="fi-x"></i></span>
+    </button>
 
     <!-- Menu -->
     <ul class="vertical menu">
-        <li><%= link_to_unless_current("Carte", { controller: "pages", action: "index" }) %></li>
-        <li><%= link_to_unless_current("Alertes", { controller: "pages", action: "index" }) %></li>
-        <li><%= link_to_unless_current("Traceurs", { controller: "pages", action: "index" }) %></li>
+        <li>
+            <%= link_to_unless_current("Carte", { controller: "pages", action: "index" }) %>
+        </li>
+        <li>
+            <%= link_to_unless_current("Alertes", { controller: "pages", action: "index" }) %>
+        </li>
+        <li>
+            <%= link_to_unless_current("Traceurs", { controller: "pages", action: "index" }) %>
+        </li>
         <li><a href="http://www.assoansel.com/" target="_blank">ANSEL</a></li>
     </ul>
 
