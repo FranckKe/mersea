@@ -5,6 +5,14 @@
     font-size: 1.3rem;
 }
 
+.menu-toggle-swipe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5%;
+    height: 100%;
+}
+
 .menu-close-button {
     position: absolute;
     color: grey;
