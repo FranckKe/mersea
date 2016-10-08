@@ -4,7 +4,7 @@
 $(function () {
 
   // Map init
-  var map = L.map('map').setView([47.8728, -3.9207], 13);
+  var map = L.map('map').setView([48.2520, -3.9301], 9);
 
   var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
@@ -13,7 +13,6 @@ $(function () {
       attribution: 'Map data &copy; ' + mapLink,
       maxZoom: 18
     }).addTo(map);
-    
-  map.zoomControl.setPosition('topright');
 
+    map.zoomControl.setPosition('topright');
 });
