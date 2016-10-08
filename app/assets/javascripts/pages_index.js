@@ -1,19 +1,21 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(function () {
+$(document).on('turbolinks:load', function() {
 
   // Map init
-  var map = L.map('map').setView([47.8728, -3.9207], 13);
+  var mapElement = $("#map");
 
-  var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+  if (mapElement.length > 0) {
+    var map = L.map('map').setView([48.2520, -3.9301], 9);
+    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
-  L.tileLayer(
-    'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data &copy; ' + mapLink,
-      maxZoom: 18
-    }).addTo(map);
-    
-  map.zoomControl.setPosition('topright');
+    L.tileLayer(
+      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; ' + mapLink,
+        maxZoom: 18
+      }).addTo(map);
 
+    map.zoomControl.setPosition('topright');
+  }
 });
