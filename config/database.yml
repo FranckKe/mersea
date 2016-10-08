@@ -1,25 +1,24 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
 default: &default
-  adapter: sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['MERSEA_DATABASE_HOST'] || 'localhost' %>
+  port: 5432
+  username: postgres
+  password: postgres
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: mersea_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: mersea_test
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: mersea_production
+  pool: <%= ENV['MERSEA_DATABASE_POOL'] || 20 %>
+  host: <%= ENV['MERSEA_DATABASE_HOST'] %>
+  port: <%= ENV['MERSEA_DATABASE_PORT'] %>
+  username: <%= ENV['MERSEA_DATABASE_USERNAME'] %>
+  password: <%= ENV['MERSEA_DATABASE_PASSWORD'] %>
