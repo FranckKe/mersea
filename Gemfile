@@ -2,8 +2,13 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 gem 'rails', '~> 5.0.0'
-gem 'pg'
 gem 'puma', '~> 3.0'
+gem 'pg'
+gem 'paperclip', '~> 5.0.0'
+gem 'devise', '~> 4.2'
+gem 'rails_admin', '~> 1.0'
+gem 'state_machines-activerecord', '~> 0.4.0'
+gem 'rails_admin_state', '~> 1.5'
 
 group :development, :test do
   gem 'byebug', platform: :mri
