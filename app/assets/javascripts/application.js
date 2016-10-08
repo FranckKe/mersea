@@ -13,4 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require foundation
+//= require leaflet
+//= require leaflet.markercluster
 //= require_tree .
+
+$(document).foundation();
+
+$(function(){ $(document).foundation(); });
