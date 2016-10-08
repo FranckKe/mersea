@@ -23,8 +23,12 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :assets, :development, :test, :production do
+  gem 'jquery-rails', '~> 4.2'
   gem 'foundation-rails', '~> 6.2'
+  gem 'foundation-icons-sass-rails', '~> 3.0'
   gem 'sass-rails', '~> 5.0'
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '>= 1.3.0'
+  gem 'leaflet-rails', '~> 0.7.7'
+  gem 'leaflet-markercluster-rails', '~> 0.7.0'
 end

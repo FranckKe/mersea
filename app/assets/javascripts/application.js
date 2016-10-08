@@ -13,4 +13,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require foundation
+//= require leaflet
+//= require leaflet.markercluster
+//= require jquery.touchSwipe.min
 //= require_tree .
+
+$(document).foundation();
+
+$(function () {
+    $(document).foundation();
+});
+
+$(document).swipe({
+    swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
+        $('#menu').foundation('close');
+    },
+    swipeRight: function (event, distance, duration, fingerCount, fingerData) {
+        $('#menu').foundation('open');
+    }
+});
