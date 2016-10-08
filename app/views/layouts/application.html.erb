@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : 'Mersea' %></title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <%= stylesheet_link_tag    "application" %>
+  <title>
+    <%= content_for?(:title) ? yield(:title) : 'Mersea' %>
+  </title>
+
+  <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-  </head>
+      <%= csrf_meta_tags %>
+</head>
 
-  <body>
+<body>
 
-    <%= yield %>
+  <div class="off-canvas-wrapper">
+    <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+        <%= render 'layouts/menu' %>
+        <div class="off-canvas-content" data-off-canvas-content>
+          <%= yield %>
+          <button type="button" class="button" style="position: absolute; top: 50%; transform: translateY(-50%);" data-toggle="menu"><i class="fi-list"></i></button>
+        </div>
+    </div>
+  </div>
 
-  </body>
+</body>
+
 </html>
