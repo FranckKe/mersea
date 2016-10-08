@@ -36,5 +36,6 @@ class Report < ApplicationRecord
   has_attached_file :photo
   belongs_to :tracer
 
+  validate :tracer_id, :name, :photo, :latitude, :longitude, :reported_at, presense: true
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 end
