@@ -1,5 +1,34 @@
 .menu-toggle-button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: .7rem;
+    left: .7rem;
+    font-size: 1.3rem;
+}
+
+.menu-close-button {
+    position: absolute;
+    color: grey;
+    top: 1rem;
+    right: 1rem;
+}
+
+#menu {
+    padding-left: 1rem;
+    background-color: inherit;
+
+    h1 {
+        font-size: 1.7rem;
+        margin: .3rem 0;
+    }
+
+    .vertical.menu {
+        li {
+            padding: .2rem 0;
+
+            a {
+                padding-left: 0;
+                padding-top: 0;
+            }
+        }
+    }
 }
