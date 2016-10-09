@@ -1,9 +1,12 @@
-<div class="card">
-    <img src="<%= image_tag @tracer.photo.url %>">
-    <div class="card-divider">
-        <%= tracer.name %>
-    </div>
-    <div class="card-section">
-        <%= tracer.description %>
+<h1 class="traceur-title"><%= @tracer.name %></h1>
+<div class="tracer-container">
+    <div class="card">
+        <%= image_tag @tracer.photo.url %>
+        <div class="action">
+            <%= link_to "Reporter", @tracer %>
+        </div>
+        <div class="content">
+            <p><%= @tracer.description %></p>
+        </div>
     </div>
 </div>

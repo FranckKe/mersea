@@ -4,5 +4,6 @@ class TracersController < ApplicationController
   end
 
   def show
+    @tracer = Tracer.find(params[:id])
   end
 end
