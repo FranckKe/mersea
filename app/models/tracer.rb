@@ -10,7 +10,7 @@
 #  photo_file_size    :integer
 #  photo_updated_at   :datetime
 #  origin             :string
-#  type               :string
+#  kind               :string
 #  longitude          :float
 #  latitude           :float
 #  created_at         :datetime         not null
@@ -21,6 +21,6 @@ class Tracer < ApplicationRecord
   has_attached_file :photo
   has_many :reports, dependent: :destroy
 
-  validates :name, :description, :photo, :origin, :type, presence: true
+  validates :name, :description, :photo, :origin, :kind, presence: true
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 end

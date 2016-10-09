@@ -5,7 +5,7 @@ class CreateTracers < ActiveRecord::Migration[5.0]
       t.text :description
       t.attachment :photo
       t.string :origin
-      t.string :type
+      t.string :kind
       t.float :longitude
       t.float :latitude
 
