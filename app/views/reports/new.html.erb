@@ -1,10 +1,10 @@
-<section>
+<section id="newReport">
   <div class="medium-6 medium-centered">
     <h3 class="text-center">New report</h3>
     <div class="row">
       <%= simple_form_for @report do |f| %>
         <%= f.input :name %>
-        <%= f.input :quantity, as: :integer %>
+        <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
         <%= f.input :address %>
         <%= f.input :latitude, as: :decimal %>
         <%= f.input :longitude, as: :decimal %>
