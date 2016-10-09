@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  nginx:
+    image: nginx:1.10-alpine
+    ports:
+      - 8080:80
+    links:
+      - mersea:app-container
+    volumes_from:
+      - mersea:ro
+
+  mersea:
+    image: franckke/mersea:latest
+    command: /bin/sh -c "export SECRET_KEY_BASE=$$(bundle exec rake secret) && bundle exec rake db:create db:migrate && bundle exec puma -p 3000"
+    ports:
+      - 3000:3000
+    links:
+      - postgres:postgres
+    environment:
+      MERSEA_DATABASE_USERNAME: postgres
+      MERSEA_DATABASE_PASSWORD: postgres
+      MERSEA_DATABASE_HOST: postgres
+      MERSEA_DATABASE_PORT: 5432
+      # DEVISE_FORCE_PORT: 8080 # nginx port binding or your website port
+      RAILS_SERVE_STATIC_FILES: 1 # use rails instead of nginx as workaround until CSRF is fixed due to double proxy pass (docker & nginx)
+
+  postgres:
+    image: postgres:9.5
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./data/db:/var/lib/postgresql/data/pgdata

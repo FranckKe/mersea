@@ -1,3 +1,6 @@
+![docker_build_type](https://img.shields.io/docker/automated/frankke/mersea.svg)
+![license](https://img.shields.io/dub/l/vibe-d.svg)
+
 # Mersea
 
 ## Requirements
@@ -26,48 +29,20 @@ $ bundle exec rails s
 
 ## Production with Docker
 
-- Start Postgres server
+- Start server via Docker Compose
 ```sh
-$ docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:latest
+$ cd /path/to/mersea
+$ docker-compose up -d
 ```
 
-- Create/migrate database
-```sh
-$ docker run --rm \
-  -e MERSEA_DATABASE_HOST=192.168.20.42 \
-  -e MERSEA_DATABASE_PORT=5432 \
-  -e MERSEA_DATABASE_USERNAME=postgres \
-  -e MERSEA_DATABASE_PASSWORD=postgres \
-  -it FranckKe/mersea:latest bundle exec rake db:create
+http://localhost:3000
 
-$ docker run --rm \
-  -e MERSEA_DATABASE_HOST=192.168.20.42 \
-  -e MERSEA_DATABASE_PORT=5432 \
-  -e MERSEA_DATABASE_USERNAME=postgres \
-  -e MERSEA_DATABASE_PASSWORD=postgres \
-  -it FranckKe/mersea:latest bundle exec rake db:migrate
+- Start a Rails console
+```sh
+# mersea_mersea_1 is the container name defined by docker-compose
+$ docker exec -it mersea_mersea_1 bundle exec rails c
 ```
 
-- Start BreizhTrip
-```sh
-$ docker run --name breizhtrip \
-  -e MERSEA_DATABASE_HOST=192.168.20.42 \
-  -e MERSEA_DATABASE_PORT=5432 \
-  -e MERSEA_DATABASE_USERNAME=postgres \
-  -e MERSEA_DATABASE_PASSWORD=postgres \
-  -e RAILS_SERVE_STATIC_FILES=true \
-  -p 3000:3000 -d FranckKe/mersea:latest
-
-# or with linked Postgres server container
-$ docker run --name breizhtrip \
-  --link postgres:psqlhost \
-  -e MERSEA_DATABASE_HOST=psqlhost \
-  -e MERSEA_DATABASE_PORT=5432 \
-  -e MERSEA_DATABASE_USERNAME=postgres \
-  -e MERSEA_DATABASE_PASSWORD=postgres \
-  -e RAILS_SERVE_STATIC_FILES=true \
-  -p 3000:3000 -d FranckKe/mersea:latest
-```
 To set any environment variable in the container, use one or more `-e` flags:
 - `MERSEA_NAMESPACE` → namespace the url
 - `RAILS_SERVE_STATIC_FILES` → the webapp serves all the assets instead of NGINX
