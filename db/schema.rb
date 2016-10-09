@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20161008140000) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "origin"
-    t.string   "type"
+    t.string   "kind"
     t.float    "longitude"
     t.float    "latitude"
     t.datetime "created_at",         null: false
