@@ -15,9 +15,6 @@ ENV RACK_ENV production
 # ENV RAILS_RELATIVE_URL_ROOT /mersea
 ENV SECRET_KEY_BASE tmp_376ea25aaa66984733a90920c263ba138e1e571aaf3a1a54cd2b819cb06e8b7fb311027b639eb8f55d8d53c27cf2df378ceb36008462057861d824bd13a0
 
-COPY dockerfiles/nginx.conf /etc/nginx/conf.d/default.conf
-VOLUME ["/etc/nginx/conf.d"]
-
 # Install build dependencies
 RUN apk upgrade
 RUN apk add --update --no-cache git bash $BUILD_DEPENDENCIES $DEPENDENCIES
@@ -35,6 +32,9 @@ RUN bundle exec rake assets:precompile
 
 # Clean build dependencies
 RUN apk del $BUILD_DEPENDENCIES
+
+COPY dockerfiles/nginx.conf /etc/nginx/conf.d/default.conf
+VOLUME ["/etc/nginx/conf.d"]
 
 VOLUME ["/usr/src/app/public"]
 EXPOSE 3000
