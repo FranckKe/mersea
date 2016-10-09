@@ -1,0 +1,13 @@
+<h1 class="traceur-title">Traceurs</h1>
+<section class="tracers-flex-container">
+    <% @tracers.each do |tracer| %>
+        <div class="card">
+            <%= link_to(tracer, { class: "image" }) do %>
+                <%= image_tag tracer.photo.url %>
+            <% end %>
+            <div class="action">
+                <%= link_to tracer.name, tracer %>
+            </div>
+        </div>
+        <% end %>
+</section>
