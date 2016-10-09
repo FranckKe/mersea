@@ -1,4 +1,4 @@
-<div class="off-canvas position-left" id="menu" data-off-canvas>
+<div class="off-canvas position-left" style="position: fixed; top:0;"id="menu" data-off-canvas>
     <h1>Mersea</h1>
 
     <!-- Close button -->
@@ -12,12 +12,20 @@
             <%= link_to_unless_current("Carte", { controller: "pages", action: "index" }) %>
         </li>
         <li>
-            <%= link_to_unless_current("Alertes", { controller: "pages", action: "index" }) %>
+            <%= link_to_unless_current("Le projet", { controller: "pages", action: "about" }) %>
         </li>
         <li>
-            <%= link_to_unless_current("Traceurs", { controller: "pages", action: "index" }) %>
+            <%= link_to_unless_current("Traceurs", { controller: "tracers", action: "index" }) %>
         </li>
-        <li><a href="http://www.assoansel.com/" target="_blank">ANSEL</a></li>
+        <li>
+            <%= link_to_unless_current("Sécurité", { controller: "pages", action: "security" }) %>
+        </li>
+        <li>
+            <%= link_to_unless_current("ANSEL", { controller: "pages", action: "ansel" }) %>
+        </li>
+        <li>
+            <%= link_to_unless_current("Mentions légales", { controller: "pages", action: "disclaimer" }) %>
+        </li>
     </ul>
 
 </div>
