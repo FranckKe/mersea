@@ -3,6 +3,7 @@ capybara-*.html
 .rspec
 /log
 /tmp
+/data
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system
@@ -42,4 +43,4 @@ bower.json
 .byebug_history
 
 .tags*
-.DS_Store
+**.DS_Store

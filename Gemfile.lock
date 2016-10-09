@@ -157,6 +157,7 @@ GEM
       pry (>= 0.9.10)
     puma (3.6.0)
     rack (2.0.1)
+    rack-cors (0.4.0)
     rack-pjax (1.0.0)
       nokogiri (~> 1.5)
       rack (>= 1.1)
@@ -293,6 +294,7 @@ DEPENDENCIES
   paperclip (~> 5.0.0)
   pg
   puma (~> 3.0)
+  rack-cors
   rails (~> 5.0.0)
   rails-i18n (~> 5.0.0)
   rails_admin (~> 1.0)

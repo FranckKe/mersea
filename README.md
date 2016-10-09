@@ -1,3 +1,6 @@
+![docker_build_type](https://img.shields.io/docker/automated/frankke/mersea.svg)
+![license](https://img.shields.io/dub/l/vibe-d.svg)
+
 # Mersea
 
 ## Requirements
@@ -38,14 +41,14 @@ $ docker run --rm \
   -e MERSEA_DATABASE_PORT=5432 \
   -e MERSEA_DATABASE_USERNAME=postgres \
   -e MERSEA_DATABASE_PASSWORD=postgres \
-  -it FranckKe/mersea:latest bundle exec rake db:create
+  -it franckke/mersea:latest bundle exec rake db:create
 
 $ docker run --rm \
   -e MERSEA_DATABASE_HOST=192.168.20.42 \
   -e MERSEA_DATABASE_PORT=5432 \
   -e MERSEA_DATABASE_USERNAME=postgres \
   -e MERSEA_DATABASE_PASSWORD=postgres \
-  -it FranckKe/mersea:latest bundle exec rake db:migrate
+  -it franckke/mersea:latest bundle exec rake db:migrate
 ```
 
 - Start BreizhTrip
@@ -56,7 +59,7 @@ $ docker run --name breizhtrip \
   -e MERSEA_DATABASE_USERNAME=postgres \
   -e MERSEA_DATABASE_PASSWORD=postgres \
   -e RAILS_SERVE_STATIC_FILES=true \
-  -p 3000:3000 -d FranckKe/mersea:latest
+  -p 3000:3000 -d franckke/mersea:latest
 
 # or with linked Postgres server container
 $ docker run --name breizhtrip \
@@ -66,7 +69,7 @@ $ docker run --name breizhtrip \
   -e MERSEA_DATABASE_USERNAME=postgres \
   -e MERSEA_DATABASE_PASSWORD=postgres \
   -e RAILS_SERVE_STATIC_FILES=true \
-  -p 3000:3000 -d FranckKe/mersea:latest
+  -p 3000:3000 -d franckke/mersea:latest
 ```
 To set any environment variable in the container, use one or more `-e` flags:
 - `MERSEA_NAMESPACE` → namespace the url
