@@ -24,10 +24,10 @@ $(document).on('turbolinks:load', function () {
 });
 
 $(document).swipe({
-    swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
-        $('#menu').foundation('close');
-    },
-    swipeRight: function (event, distance, duration, fingerCount, fingerData) {
-        $('#menu').foundation('open');
-    }
+  swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
+      $('#menu').foundation('close');
+  },
+  swipeRight: function (event, distance, duration, fingerCount, fingerData) {
+      $('#menu').foundation('open');
+  }
 });

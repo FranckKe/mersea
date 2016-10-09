@@ -1,0 +1,19 @@
+<section id="newReport">
+  <div class="medium-6 medium-centered">
+    <h3 class="text-center">Signalement</h3>
+    <div class="row">
+      <%= simple_form_for Report.new do |f| %>
+        <%= f.input :tracer_id, as: :hidden, input_html: { value: tracer.id || '' } %>
+        <%= f.input :reported_at, input_html: { value: Time.zone.today } %>
+        <%= f.input :name %>
+        <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
+        <%= f.input :address %>
+        <%= f.input :latitude, as: :decimal %>
+        <%= f.input :longitude, as: :decimal %>
+        <%= f.input :photo, as: :file %>
+        <%= f.input :description, as: :text %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+  </div>
+</section>

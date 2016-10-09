@@ -40,4 +40,5 @@ group :assets, :development, :test, :production do
   gem 'uglifier', '>= 1.3.0'
   gem 'leaflet-rails', '~> 0.7.7'
   gem 'leaflet-markercluster-rails', '~> 0.7.0'
+  gem 'simple_form'
 end
