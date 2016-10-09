@@ -9,14 +9,14 @@ fr:
         description: Description
         photo: Photo
         origin: Origine
-        type: type
+        kind: Type
         longitude: Longitude
         latitude: Latitude
         reports: Signalements
       report:
         name: Nom
         email: Email
-        address: Address
+        address: Adresse
         longitude: Longitude
         latitude: Latitude
         description: Description
