@@ -1,0 +1,10 @@
+en:
+  admin:
+    actions:
+      toggle:
+        title: Basculer
+    state_machine:
+      event_fired: '%{attr} évènement %{event} déclenché'
+      error: 'Erreur: %{err}'
+      no_id: Aucun identifiant n'a été fourni
+      no_event: Ne pas changer

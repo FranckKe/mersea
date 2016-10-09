@@ -1,26 +1,26 @@
-en:
+fr:
   activerecord:
     models:
-      tracer: Tracer
-      report: Report
+      tracer: Traceur
+      report: Signalement
     attributes:
       tracer:
-        name: Name
+        name: Nom
         description: Description
         photo: Photo
-        origin: Origin
+        origin: Origine
         kind: Type
         longitude: Longitude
         latitude: Latitude
-        reports: Reports
+        reports: Signalements
       report:
-        name: Name
+        name: Nom
         email: Email
-        address: Address
+        address: Adresse
         longitude: Longitude
         latitude: Latitude
         description: Description
         photo: Photo
-        status: Status
-        reported_at: Reported at
-        tracer: Tracer
+        status: Statut
+        reported_at: Signalé le
+        tracer: Traceur
