@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
       redirect_to root_path
     else
       flash.now[:alert] = @report.errors.messages.first
-      render action: 'new'
+      render action: :new
     end
   end
 
