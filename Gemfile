@@ -16,6 +16,8 @@ gem 'rails_admin_state', '~> 1.5'
 gem 'rails_admin_import', '~> 2.0'
 gem 'active_model_serializers'
 gem 'recaptcha', require: 'recaptcha/rails'
+gem 'wysiwyg-rails', '~> 2.3'
+# https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
 
 group :development do
   gem 'rb-readline'
