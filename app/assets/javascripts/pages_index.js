@@ -1,6 +1,8 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
+var locateLayer = L.layerGroup();
+
 $(document).on('turbolinks:load', function() {
 
   // Map init
@@ -17,5 +19,35 @@ $(document).on('turbolinks:load', function() {
       }).addTo(map);
 
     map.zoomControl.setPosition('topright');
+
+    map.locate({ watch: true, maximumAge: 1000, setView: true, maxZoom: 16 });
+    map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
   }
+
+  function onLocationFound(e) {
+      var radius = e.accuracy / 2;
+      var marker = L.marker(e.latlng);
+      var circle = L.circle(e.latlng, radius);
+
+      // map.removeLayer(locateLayer);
+      locateLayer.clearLayers();
+
+      locateLayer.addLayer(marker)
+        .addLayer(circle)
+        .addTo(map);
+
+      console.log("located");
+  }
+
+  function onLocationError(e) {
+      alert(e.message);
+  }
+
+  function clearMarkers(array) {
+    array.forEach(function(element, index, array) {
+      map.removeLayer(element);
+    });
+  }
+
 });
