@@ -32,6 +32,9 @@ $(document).on('turbolinks:load', function() {
 
       locateLayer.clearLayers();
 
+      localStorage.setItem("lat", e.latitude);
+      localStorage.setItem("lng", e.longitude);
+
       locateLayer.addLayer(marker)
         .addLayer(circle)
         .addTo(map);
