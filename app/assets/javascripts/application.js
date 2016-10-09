@@ -23,13 +23,11 @@ $(document).on('turbolinks:load', function () {
     $(document).foundation();
 });
 
-if ($(document).width() < 1024) {
-  $(document).swipe({
-    swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
-        $('#menu').foundation('close');
-    },
-    swipeRight: function (event, distance, duration, fingerCount, fingerData) {
-        $('#menu').foundation('open');
-    }
-  });
-}
+$(document).swipe({
+  swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
+      $('#menu').foundation('close');
+  },
+  swipeRight: function (event, distance, duration, fingerCount, fingerData) {
+      $('#menu').foundation('open');
+  }
+});
