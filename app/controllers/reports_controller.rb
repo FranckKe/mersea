@@ -13,10 +13,10 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
 
     if @report.save
-      flash.now[:success] = 'Merci pour votre signalement'
+      flash[:success] = 'Merci pour votre signalement'
       redirect_to root_path
     else
-      flash.now[:alert] = @report.errors.messages.first
+      flash[:alert] = @report.errors.messages.first
       redirect_to Tracer.find(params[:report][:tracer_id])
     end
   end

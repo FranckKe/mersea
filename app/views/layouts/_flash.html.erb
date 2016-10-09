@@ -1,0 +1,3 @@
+<% if flash.present? %>
+  <div class="<%= flash.first[0] %> callout" data-closable><%= "#{flash.first[1][0]} #{flash.first[1][1][0]}" %></div>
+<% end %>

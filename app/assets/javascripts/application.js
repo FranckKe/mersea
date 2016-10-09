@@ -23,7 +23,7 @@ $(document).on('turbolinks:load', function () {
     $(document).foundation();
 });
 
-$(document).swipe({
+$(".menu-toggle-swipe").swipe({
   swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
       $('#menu').foundation('close');
   },
