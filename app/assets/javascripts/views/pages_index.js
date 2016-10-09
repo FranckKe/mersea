@@ -20,7 +20,7 @@ $(document).on('turbolinks:load', function() {
 
     map.zoomControl.setPosition('topright');
 
-    map.locate({ watch: true, maximumAge: 60000, setView: false, maxZoom: 16 });
+    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, setView: false, maxZoom: 16 });
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
   }
