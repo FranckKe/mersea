@@ -30,14 +30,11 @@ $(document).on('turbolinks:load', function() {
       var marker = L.marker(e.latlng);
       var circle = L.circle(e.latlng, radius);
 
-      // map.removeLayer(locateLayer);
       locateLayer.clearLayers();
 
       locateLayer.addLayer(marker)
         .addLayer(circle)
         .addTo(map);
-
-      console.log("located");
   }
 
   function onLocationError(e) {
