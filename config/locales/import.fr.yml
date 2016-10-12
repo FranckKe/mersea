@@ -1,0 +1,49 @@
+fr:
+  admin:
+    actions:
+      import:
+        title: Import
+        menu: Import
+        breadcrumb: Import
+        link: Import
+        bulk_link: Import
+        done: Importé
+    import:
+      model_fields: Champs du modèle
+      association_fields: Champs d'association
+
+      file: Fichier
+      missing_file: Vous devez sélectionner un fichier
+      format: Format du fichier
+      invalid_format: Format d'import invalide.
+      missing_update_lookup: "Votre fichier doit contenir une colonne pour 'Update lookup field' que vous avez sélectonné."
+      invalid_json: "The JSON data should be an array of records or an object with a key '%{root_key}' set to an array of records"
+      update_if_exists: Mettre à jour si l'entrée existe
+      update_lookup: "Update lookup field"
+      mapping: correspondance
+      encoding: Encodage
+      legend:
+        fields: Champs à importer
+        upload: Téléverser le fichier
+        mapping: "Related fields mapping"
+      import_success:
+        create: "%{name} créé"
+        update: "%{name} mis à jour"
+      import_error:
+        create: "Echec de la création de %{name}: %{error}"
+        update: "Echec de la mise à jour de %{name}: %{error}"
+        general: "Erreur durant l'importation: %{error}"
+        line_item_limit: "Veuillez limiter le nombre de lignes à importer à %{limit}."
+        old_import_hook: >
+          The import hook %{model}.%{method} should take only 1 argument.
+          Data may not imported correctly.
+          See Upgrading section readme in Rails Admin Import.
+      association_not_found: "L'association n'a pas été trouvée. %{error}"
+      help:
+        model_fields: Le champ ci-dessus doit être inclu dans le fichier importé.
+        association_fields: >
+          These fields map to other tables in the database, lookup via attribute selected below.
+          For "many" associations, you may include multiple columns with the same header in the CSV file.
+        update_if_exists: "Update records found with the lookup field below instead of creating new records"
+        file_limit: "Veuillez limiter le nombre de lignes à importer à %{limit}."
+        encoding: Choisissez l'encodage du fichier. Laisser vide pour laisser l'auto-détection. Ignorez ce champ si vous importez du JSON.
