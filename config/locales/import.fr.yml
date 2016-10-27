@@ -35,15 +35,15 @@ fr:
         general: "Erreur durant l'importation: %{error}"
         line_item_limit: "Veuillez limiter le nombre de lignes à importer à %{limit}."
         old_import_hook: >
-          L'import %{model}.%{method} devrait prendre qu'un argument.
-          Les données pourrait ne pas être importé correctement.
+          L'import %{model}.%{method} ne devrait prendre qu'un argument.
+          Les données pourrait ne pas être importées correctement.
           Voir la partie Mise à niveau du readme dans Rails Admin Import.
       association_not_found: "L'association n'a pas été trouvée. %{error}"
       help:
-        model_fields: Le champ ci-dessus doit être inclu dans le fichier importé.
+        model_fields: Le champ ci-dessus doit être inclus dans le fichier importé.
         association_fields: >
-          Ces champs sont en lien avec d'autres tables dans la base de données, à travers le champs selectionné d'en dessous.
-          Pour les associations 'many', vous pouvez inclure plutsieurs colonnes avec le même header dans le fichier CSV.
+          Ces champs sont en lien avec d'autres tables dans la base de données, à travers le champs selectionné ci-dessous.
+          Pour les associations 'many', vous pouvez inclure plusieurs colonnes avec le même en-tête dans le fichier CSV.
         update_if_exists: Mettre à jour les enregistrements trouvés avec le champs de recherche d'en dessous au lieu de créer de nouveaux enregistrements
         file_limit: "Veuillez limiter le nombre de lignes à importer à %{limit}."
         encoding: Choisissez l'encodage du fichier. Laisser vide pour laisser l'auto-détection. Ignorez ce champ si vous importez du JSON.
