@@ -26,6 +26,11 @@ RailsAdmin.config do |config|
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar true
 
+  ## == RailsAdminImport ==
+  config.configure_with(:import) do |config|
+    config.logging = true
+  end
+
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
@@ -36,8 +41,11 @@ RailsAdmin.config do |config|
     edit
     delete
     show_in_app
+    # rails_admin_state
     state
-
+    # rails_admin_import
+    all
+    import
     ## With an audit adapter, you can add:
     # history_index
     # history_show

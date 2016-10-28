@@ -13,6 +13,7 @@ gem 'rails_admin', '~> 1.0'
 gem 'rails_admin-i18n', '~> 1.10'
 gem 'state_machines-activerecord', '~> 0.4.0'
 gem 'rails_admin_state', '~> 1.5'
+gem 'rails_admin_import', '~> 2.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
