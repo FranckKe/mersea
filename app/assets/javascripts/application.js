@@ -34,8 +34,10 @@ $(".menu-toggle-swipe").swipe({
 });
 
 $(function () {
-    var today = new Date();
-    $('.datepicker-tracer-form').val(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+    var reportedAtInput = $('#report_reported_at');
+
+    $('.datepicker-tracer-form').val(reportedAtInput.val());
+    
     $('.datepicker-tracer-form').datepicker({
         dateFormat: "yy-mm-dd"
     });
@@ -46,6 +48,6 @@ $(function () {
             month = date.getMonth() + 1,
             year = date.getFullYear();
 
-        $('#report_reported_at').val(year + '-' + month + '-' + day);
+        reportedAtInput.val(year + '-' + month + '-' + day);
     });
 });
