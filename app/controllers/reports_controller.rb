@@ -12,7 +12,7 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params)
 
-    if @report.save
+    if verify_recaptcha(model: @report) && @report.save
       flash[:success] = 'Merci pour votre signalement'
       redirect_to root_path
     else

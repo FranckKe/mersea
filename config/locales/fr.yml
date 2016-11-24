@@ -24,3 +24,7 @@ fr:
         status: Statut
         reported_at: Signalé le
         tracer: Traceur
+  recaptcha:
+    errors:
+      verification_failed: Echec de la vérification du CAPTCHA, veuillez réessayer s'il vous plaît.
+      recaptcha_unreachable: Oups, nous n'avons pas réussi à valider votre CAPTCHA. Veuillez réessayer s'il vous plaît.

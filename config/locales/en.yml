@@ -24,3 +24,7 @@ en:
         status: Status
         reported_at: Reported at
         tracer: Tracer
+  recaptcha:
+    errors:
+      verification_failed: CAPTCHA verification failed, please try again.
+      recaptcha_unreachable: Oops, we failed to validate your CAPTCHA response. Please try again.
