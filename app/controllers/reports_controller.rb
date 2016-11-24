@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
   def index
+    @reports = Report.where(status: 'accepted')
+    render json: @reports, status: :ok
   end
 
   def show
