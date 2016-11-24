@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
 //= require foundation
@@ -30,4 +31,18 @@ $(".menu-toggle-swipe").swipe({
   swipeRight: function (event, distance, duration, fingerCount, fingerData) {
       $('#menu').foundation('open');
   }
+});
+
+$(function() {
+  $('.datepicker-tracer-form').datepicker({
+    dateFormat: "yy-mm-dd",
+    onSelect: function(dateText, inst) { 
+        var date = $(this).datepicker('getDate'),
+            day  = date.getDate(),
+            month = date.getMonth() + 1,              
+            year =  date.getFullYear();
+
+            $('#report_reported_at').val(year + '-' + month + '-' + day);
+    }
+  });
 });
