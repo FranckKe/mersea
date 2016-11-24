@@ -27,6 +27,8 @@ $ bundle exec rails db:migrate
 $ bundle exec rails s
 ```
 
+Configure your reCaptcha keys.
+
 ## Production with Docker
 
 - Start server via Docker Compose
