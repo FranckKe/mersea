@@ -25,25 +25,27 @@ $(document).on('turbolinks:load', function () {
 });
 
 $(".menu-toggle-swipe").swipe({
-  swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
-      $('#menu').foundation('close');
-  },
-  swipeRight: function (event, distance, duration, fingerCount, fingerData) {
-      $('#menu').foundation('open');
-  }
+    swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
+        $('#menu').foundation('close');
+    },
+    swipeRight: function (event, distance, duration, fingerCount, fingerData) {
+        $('#menu').foundation('open');
+    }
 });
 
-$(function() {
-  $('.datepicker-tracer-form').datepicker({
-    dateFormat: "yy-mm-dd"
-  });
+$(function () {
+    var today = new Date();
+    $('.datepicker-tracer-form').val(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+    $('.datepicker-tracer-form').datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-  $('.datepicker-tracer-form').change(function () { 
+    $('.datepicker-tracer-form').change(function () {
         var date = $(this).datepicker('getDate'),
-            day  = date.getDate(),
+            day = date.getDate(),
             month = date.getMonth() + 1,
-            year =  date.getFullYear();
+            year = date.getFullYear();
 
-            $('#report_reported_at').val(year + '-' + month + '-' + day);
+        $('#report_reported_at').val(year + '-' + month + '-' + day);
     });
 });
