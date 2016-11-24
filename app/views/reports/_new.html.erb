@@ -4,7 +4,8 @@
     <div class="row">
       <%= simple_form_for Report.new do |f| %>
         <%= f.input :tracer_id, as: :hidden, input_html: { value: tracer.id || '' } %>
-        <%= f.input :reported_at, input_html: { value: Time.zone.today } %>
+        <%= f.input :reported_at, input_html: { value: Time.zone.today }, as: :hidden %>
+        <input class="datepicker-tracer-form" type="date">
         <%= f.input :name %>
         <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
         <%= f.input :address %>
