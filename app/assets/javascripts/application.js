@@ -35,14 +35,15 @@ $(".menu-toggle-swipe").swipe({
 
 $(function() {
   $('.datepicker-tracer-form').datepicker({
-    dateFormat: "yy-mm-dd",
-    onSelect: function(dateText, inst) { 
+    dateFormat: "yy-mm-dd"
+  });
+
+  $('.datepicker-tracer-form').change(function () { 
         var date = $(this).datepicker('getDate'),
             day  = date.getDate(),
-            month = date.getMonth() + 1,              
+            month = date.getMonth() + 1,
             year =  date.getFullYear();
 
             $('#report_reported_at').val(year + '-' + month + '-' + day);
-    }
-  });
+    });
 });
