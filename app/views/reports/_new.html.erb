@@ -9,8 +9,8 @@
         <%= f.input :name %>
         <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
         <%= f.input :address %>
-        <%= f.input :latitude, as: :hidden %>
-        <%= f.input :longitude, as: :hidden %>
+        <%= f.input :latitude %>
+        <%= f.input :longitude %>
         <%= f.input :photo, as: :file %>
         <%= f.input :description, as: :text %>
         <%= recaptcha_tags %>
