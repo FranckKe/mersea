@@ -71,10 +71,9 @@ $(document).on('turbolinks:load', function() {
       data.forEach(function(element, index, array) {
         var marker = L.marker([element.latitude, element.longitude]);
 
-        marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.reported_at);
+        marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
         markers.push(marker);
         markerCluster.addLayer(marker);
-
       });
       map.addLayer(markerCluster);
   }
