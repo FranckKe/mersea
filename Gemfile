@@ -17,11 +17,8 @@ gem 'rails_admin_import', '~> 2.0'
 gem 'active_model_serializers'
 gem 'recaptcha', require: 'recaptcha/rails'
 
-group :development, :test do
-  gem 'byebug', platform: :mri
-end
-
 group :development do
+  gem 'rb-readline'
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
