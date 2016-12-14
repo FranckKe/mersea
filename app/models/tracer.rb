@@ -23,7 +23,7 @@
 
 class Tracer < ApplicationRecord
   has_attached_file :photo
-  has_attached_file :icon_url, default_url: '/public/images/default_marker.png'
+  has_attached_file :icon_url, default_url: '/images/default_marker.png'
   has_many :reports, dependent: :destroy
 
   validates :name, :description, :photo, :origin, :kind, presence: true
