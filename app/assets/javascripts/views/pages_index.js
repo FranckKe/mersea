@@ -7,6 +7,14 @@ $(document).on('turbolinks:load', function() {
 
   // Map init
   var mapElement = $("#map");
+  var markers = [];
+  var markerCluster = L.markerClusterGroup({
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: true,
+    zoomToBoundsOnClick: true,
+    removeOutsideVisibleBounds: true,
+    maxClusterRadius: 8
+  });
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([48.2520, -3.9301], 9);
@@ -19,6 +27,8 @@ $(document).on('turbolinks:load', function() {
       }).addTo(map);
 
     map.zoomControl.setPosition('topright');
+
+    loadMarkers();
 
     map.locate({ watch: true, maximumAge: 60000, timeout: 30000, setView: false, maxZoom: 16 });
     map.on('locationfound', onLocationFound);
@@ -44,8 +54,32 @@ $(document).on('turbolinks:load', function() {
       alert(e.message);
   }
 
-  function clearMarkers(array) {
-    array.forEach(function(element, index, array) {
+  function loadMarkers(e) {
+      var url = window.location.href + "/reports";
+
+      $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+              clearMarkers();
+              displayMarkers(data);
+            }
+      });
+  }
+
+  function displayMarkers(data) {
+      data.forEach(function(element, index, array) {
+        var marker = L.marker([element.latitude, element.longitude]);
+
+        marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
+        markers.push(marker);
+        markerCluster.addLayer(marker);
+      });
+      map.addLayer(markerCluster);
+  }
+
+  function clearMarkers() {
+    markers.forEach(function(element, index, array) {
       map.removeLayer(element);
     });
   }

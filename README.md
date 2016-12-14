@@ -12,7 +12,7 @@
 
 Within a Rails console:
 ```rb
-Admin.create(name: 'ANSEL', email: 'asso-ansel@club-internet.fr', password: 'strongpassword')
+Admin.create(name: 'ANSEL', email: 'asso.ansel@club-internet.fr', password: 'strongpassword')
 ```
 
 ## Development
