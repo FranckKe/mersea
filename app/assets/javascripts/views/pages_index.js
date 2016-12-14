@@ -84,7 +84,7 @@ $(document).on('turbolinks:load', function() {
           });
 
           $.getJSON(urlReports, function(data) {
-              clearMarkers();
+              clearMarkers(markers);
               displayMarkers(data);
           });
       });
@@ -95,7 +95,7 @@ $(document).on('turbolinks:load', function() {
         if(markerIcons[element.tracer_id]) {
             marker = L.marker([element.latitude, element.longitude], { icon: markerIcons[element.tracer_id], iconSize: [ 64, 64], iconAnchor: [32, 32] });
         } else {
-            marker = L.marker([element.latitude, element.longitude]);
+            marker = L.marker([element.latitude, element.longitude], {icon: plusIcon});
         }
 
         marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
