@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/MartinHinz/leaflet-rails.git
+  revision: eb643f0fd36995ae9206776eab6a2b436a99f533
+  branch: leaflet1.0.1
+  specs:
+    leaflet-rails (1.0.0.pre.rc1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -124,7 +131,6 @@ GEM
       activesupport (>= 3.0.0)
     leaflet-markercluster-rails (0.7.0)
       railties (>= 3.1)
-    leaflet-rails (0.7.7)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -317,7 +323,7 @@ DEPENDENCIES
   foundation-rails (~> 6.2)
   jquery-rails (~> 4.2)
   leaflet-markercluster-rails (~> 0.7.0)
-  leaflet-rails (~> 0.7.7)
+  leaflet-rails!
   listen (~> 3.0.5)
   paperclip (~> 5.0.0)
   pg

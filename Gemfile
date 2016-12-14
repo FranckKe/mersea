@@ -39,7 +39,7 @@ group :assets, :development, :test, :production do
   gem 'sass-rails', '~> 5.0'
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '>= 1.3.0'
-  gem 'leaflet-rails', '~> 0.7.7'
+  gem 'leaflet-rails', github: 'MartinHinz/leaflet-rails', branch: 'leaflet1.0.1'
   gem 'leaflet-markercluster-rails', '~> 0.7.0'
   gem 'simple_form'
 end
