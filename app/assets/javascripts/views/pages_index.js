@@ -28,7 +28,6 @@ $(document).on('turbolinks:load', function() {
     removeOutsideVisibleBounds: true,
     maxClusterRadius: 8
   });
-  var markerIcons = {};
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([48.2520, -3.9301], 9);
@@ -71,32 +70,21 @@ $(document).on('turbolinks:load', function() {
   }
 
   function loadMarkers(e) {
-      var urlReports = window.location.href + "reports";
-      var urlTracers = window.location.href + "tracers";
+      var url = window.location.href + "/reports";
 
-      $.getJSON(urlTracers, function (data) {
-          data.forEach(function(element) {
-              if(element.icon_url.indexOf("default_marker.png") == -1) {
-                  markerIcons[element.id] = L.icon({
-                      iconUrl: window.location.href + element.icon_url.substring(1)
-                  });
-              }
-          });
-
-          $.getJSON(urlReports, function(data) {
-              clearMarkers();
+      $.ajax({
+            type: "GET",
+            url: url,
+            success: function(data) {
+              clearMarkers(markers);
               displayMarkers(data);
-          });
+            }
       });
   }
 
   function displayMarkers(data) {
-      data.forEach(function(element, index, array) {       
-        if(markerIcons[element.tracer_id]) {
-            marker = L.marker([element.latitude, element.longitude], { icon: markerIcons[element.tracer_id], iconSize: [ 64, 64], iconAnchor: [32, 32] });
-        } else {
-            marker = L.marker([element.latitude, element.longitude]);
-        }
+      data.forEach(function(element, index, array) {
+        var marker = L.marker([element.latitude, element.longitude], {icon: defaultIcon});
 
         marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
         markers.push(marker);
