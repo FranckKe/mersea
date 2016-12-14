@@ -8,6 +8,11 @@ module Concerns
         state :accepted
         state :rejected
 
+        after_transition any => :accepted do |report, _|
+          report.photo = nil
+          report.save!
+        end
+
         event :accept do
           transition accepted: same, pending: :accepted
         end

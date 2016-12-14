@@ -36,6 +36,7 @@ class Report < ApplicationRecord
   has_attached_file :photo
   belongs_to :tracer
 
-  validates :tracer_id, :name, :photo, :latitude, :longitude, :reported_at, presence: true
+  validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
+  validates :photo, presence: true, if: -> { self.status != 'accepted' }
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 end
