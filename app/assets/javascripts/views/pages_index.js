@@ -9,6 +9,12 @@ var plusIcon = L.icon({
   iconAnchor:   [16, 32],
   popupAnchor:  [0, -32]
 });
+var defaultIcon = L.icon({
+  iconUrl: 'marker.png',
+  iconSize:     [25, 41],
+  iconAnchor:   [12, 41],
+  popupAnchor:  [0, -26]
+});
 
 $(document).on('turbolinks:load', function() {
 
@@ -70,7 +76,7 @@ $(document).on('turbolinks:load', function() {
             type: "GET",
             url: url,
             success: function(data) {
-              clearMarkers();
+              clearMarkers(markers);
               displayMarkers(data);
             }
       });
@@ -78,7 +84,7 @@ $(document).on('turbolinks:load', function() {
 
   function displayMarkers(data) {
       data.forEach(function(element, index, array) {
-        var marker = L.marker([element.latitude, element.longitude]);
+        var marker = L.marker([element.latitude, element.longitude], {icon: defaultIcon});
 
         marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
         markers.push(marker);
@@ -87,8 +93,8 @@ $(document).on('turbolinks:load', function() {
       map.addLayer(markerCluster);
   }
 
-  function clearMarkers() {
-    markers.forEach(function(element, index, array) {
+  function clearMarkers(array) {
+    array.forEach(function(element, index, array) {
       map.removeLayer(element);
     });
   }

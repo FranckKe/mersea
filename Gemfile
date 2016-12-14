@@ -40,6 +40,6 @@ group :assets, :development, :test, :production do
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '>= 1.3.0'
   gem 'leaflet-rails', github: 'MartinHinz/leaflet-rails', branch: 'leaflet1.0.1'
-  gem 'leaflet-markercluster-rails', '~> 0.7.0'
+  gem 'rails-assets-leaflet.markercluster', source: 'https://rails-assets.org'
   gem 'simple_form'
 end
