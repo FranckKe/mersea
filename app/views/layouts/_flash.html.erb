@@ -1,3 +1,7 @@
 <% if flash.present? %>
-  <div class="<%= flash.first[0] %> callout" data-closable><%= "#{flash.first[1][0]} #{flash.first[1][1][0]}" %></div>
+  <% if flash.first[0] == 'success' %>
+  <div class="<%= flash.first[0] %> callout" data-closable><%= "#{flash.first[1]}" %></div>
+  <% else %>
+  <div class="<%= flash.first[0] %> callout" data-closable><%= "#{flash.first[1].flatten.join(' ')}" %></div>
+  <% end %>
 <% end %>
