@@ -30,28 +30,30 @@ $(document).on('turbolinks:load', function() {
 
     loadMarkers();
 
-    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, setView: false, maxZoom: 16 });
+    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, enableHighAccuracy: true, setView: false, maxZoom: 16 });
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
   }
 
   function onLocationFound(e) {
-      var radius = e.accuracy / 2;
-      var marker = L.marker(e.latlng);
-      var circle = L.circle(e.latlng, radius);
+    var radius = e.accuracy / 2;
+    var marker = L.marker(e.latlng);
+    var circle = L.circle(e.latlng, radius);
 
-      locateLayer.clearLayers();
+    locateLayer.clearLayers();
 
-      localStorage.setItem("lat", e.latitude);
-      localStorage.setItem("lng", e.longitude);
+    localStorage.setItem("lat", e.latitude);
+    localStorage.setItem("lng", e.longitude);
 
-      locateLayer.addLayer(marker)
-        .addLayer(circle)
-        .addTo(map);
+    locateLayer.addLayer(marker)
+      .addLayer(circle)
+      .addTo(map);
+
+    console.log("Position Updated");
   }
 
   function onLocationError(e) {
-      alert(e.message);
+    console.log(e.message);
   }
 
   function loadMarkers(e) {
@@ -83,5 +85,4 @@ $(document).on('turbolinks:load', function() {
       map.removeLayer(element);
     });
   }
-
 });
