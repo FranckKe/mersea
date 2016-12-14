@@ -2,6 +2,19 @@
 // All this logic will automatically be available in application.js.
 
 var locateLayer = L.layerGroup();
+var clickLayer = L.layerGroup();
+var plusIcon = L.icon({
+  iconUrl: 'marker_plus.png',
+  iconSize:     [32, 32],
+  iconAnchor:   [16, 32],
+  popupAnchor:  [0, -32]
+});
+var defaultIcon = L.icon({
+  iconUrl: 'marker.png',
+  iconSize:     [25, 41],
+  iconAnchor:   [12, 41],
+  popupAnchor:  [0, -26]
+});
 
 $(document).on('turbolinks:load', function() {
 
@@ -30,28 +43,30 @@ $(document).on('turbolinks:load', function() {
 
     loadMarkers();
 
-    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, setView: false, maxZoom: 16 });
+    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, enableHighAccuracy: true, setView: false, maxZoom: 16 });
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
+
+    map.on('click', onMapClick);
   }
 
   function onLocationFound(e) {
-      var radius = e.accuracy / 2;
-      var marker = L.marker(e.latlng);
-      var circle = L.circle(e.latlng, radius);
+    var radius = e.accuracy / 2;
+    var circle = L.circle(e.latlng, radius);
 
-      locateLayer.clearLayers();
+    locateLayer.clearLayers();
 
-      localStorage.setItem("lat", e.latitude);
-      localStorage.setItem("lng", e.longitude);
+    localStorage.setItem("lat", e.latitude);
+    localStorage.setItem("lng", e.longitude);
 
-      locateLayer.addLayer(marker)
-        .addLayer(circle)
-        .addTo(map);
+    locateLayer.addLayer(circle)
+      .addTo(map);
+
+    console.log("Position Updated");
   }
 
   function onLocationError(e) {
-      alert(e.message);
+    console.log(e.message);
   }
 
   function loadMarkers(e) {
@@ -61,7 +76,7 @@ $(document).on('turbolinks:load', function() {
             type: "GET",
             url: url,
             success: function(data) {
-              clearMarkers();
+              clearMarkers(markers);
               displayMarkers(data);
             }
       });
@@ -69,7 +84,7 @@ $(document).on('turbolinks:load', function() {
 
   function displayMarkers(data) {
       data.forEach(function(element, index, array) {
-        var marker = L.marker([element.latitude, element.longitude]);
+        var marker = L.marker([element.latitude, element.longitude], {icon: defaultIcon});
 
         marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
         markers.push(marker);
@@ -78,10 +93,21 @@ $(document).on('turbolinks:load', function() {
       map.addLayer(markerCluster);
   }
 
-  function clearMarkers() {
-    markers.forEach(function(element, index, array) {
+  function clearMarkers(array) {
+    array.forEach(function(element, index, array) {
       map.removeLayer(element);
     });
+  }
+
+  function onMapClick(e) {
+    clickLayer.clearLayers();
+    var markerClick = new L.marker(e.latlng, {icon: plusIcon});
+    clickLayer.addLayer(markerClick).addTo(map);
+
+    markerClick.bindPopup('<a href="/tracers"><i class="fi-plus"></i> Ajouter un témoignage</a>');
+    localStorage.setItem("clickedLat", e.latlng.lat);
+    localStorage.setItem("clickedLng", e.latlng.lng);
+    markerClick.openPopup();
   }
 
 });

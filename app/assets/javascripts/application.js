@@ -18,6 +18,7 @@
 //= require leaflet
 //= require leaflet.markercluster
 //= require jquery.touchSwipe.min
+//= require exif.min
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {

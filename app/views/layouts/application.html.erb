@@ -24,11 +24,6 @@
               <%= yield %>
               <div class="menu-toggle-swipe"></div>
               <button type="button" class="secondary button menu-toggle-button" data-toggle="menu"><i class="fi-list"></i></button>
-              <% if current_page?(root_path) %>
-                <%= link_to tracers_path, class: 'button secondary new-report-button' do %>
-                  <i class="fi-plus"></i>
-                <% end %>
-              <% end %>
           </div>
       </div>
     </div>

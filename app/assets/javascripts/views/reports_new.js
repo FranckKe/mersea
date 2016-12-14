@@ -1,24 +1,17 @@
-var file = $("form input img");
-
-var filesize = ((file.size / 1024) / 1024).toFixed(4); // MB
-
-
-if (typeof files != "undefined" && filesize < 3) {
-  // OK
+function validateFileSize() {
+  var file = $('#new_report form input img');
+  return typeof files != 'undefined' && filesize === 1;
 }
 
-$("#newReport form").submit(function() {
-  var latlng = localStorage.get("latlng");
-  $("#report_latitude").val(latlng)
+$('.report-form form').submit(function() {
+  // validateFileSize();
 });
 
+function populateLatLng() {
+  $('#report_latitude').val(localStorage.getItem('clickedLat') || localStorage.getItem('lat'));
+  $('#report_longitude').val(localStorage.getItem('clickedLng') || localStorage.getItem('lng'));
+}
 
 $(document).on('turbolinks:load', function() {
-  if ($("#new_report").length > 0) {
-    var lat = localStorage.getItem("lat");
-    var lng = localStorage.getItem("lng");
-
-    $("#report_latitude").val(lat);
-    $("#report_longitude").val(lng);
-  }
+  populateLatLng();
 });
