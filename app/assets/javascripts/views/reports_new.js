@@ -7,6 +7,11 @@ $('.report-form form').submit(function() {
   // validateFileSize();
 });
 
-$(document).on('turbolinks:load', function() {
+function populateLatLng() {
+  $('#report_latitude').val(localStorage.getItem('clickedLat') || localStorage.getItem('lat'));
+  $('#report_longitude').val(localStorage.getItem('clickedLng') || localStorage.getItem('lng'));
+}
 
+$(document).on('turbolinks:load', function() {
+  populateLatLng();
 });

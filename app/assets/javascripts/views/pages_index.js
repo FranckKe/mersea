@@ -2,6 +2,13 @@
 // All this logic will automatically be available in application.js.
 
 var locateLayer = L.layerGroup();
+var clickLayer = L.layerGroup();
+var plusIcon = L.icon({
+  iconUrl: 'marker_plus.png',
+  iconSize:     [32, 32],
+  iconAnchor:   [16, 32],
+  popupAnchor:  [0, -32]
+});
 
 $(document).on('turbolinks:load', function() {
 
@@ -33,11 +40,12 @@ $(document).on('turbolinks:load', function() {
     map.locate({ watch: true, maximumAge: 60000, timeout: 30000, enableHighAccuracy: true, setView: false, maxZoom: 16 });
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
+
+    map.on('click', onMapClick);
   }
 
   function onLocationFound(e) {
     var radius = e.accuracy / 2;
-    var marker = L.marker(e.latlng);
     var circle = L.circle(e.latlng, radius);
 
     locateLayer.clearLayers();
@@ -45,8 +53,7 @@ $(document).on('turbolinks:load', function() {
     localStorage.setItem("lat", e.latitude);
     localStorage.setItem("lng", e.longitude);
 
-    locateLayer.addLayer(marker)
-      .addLayer(circle)
+    locateLayer.addLayer(circle)
       .addTo(map);
 
     console.log("Position Updated");
@@ -85,4 +92,16 @@ $(document).on('turbolinks:load', function() {
       map.removeLayer(element);
     });
   }
+
+  function onMapClick(e) {
+    clickLayer.clearLayers();
+    var markerClick = new L.marker(e.latlng, {icon: plusIcon});
+    clickLayer.addLayer(markerClick).addTo(map);
+
+    markerClick.bindPopup('<a href="/tracers"><i class="fi-plus"></i> Ajouter un témoignage</a>');
+    localStorage.setItem("clickedLat", e.latlng.lat);
+    localStorage.setItem("clickedLng", e.latlng.lng);
+    markerClick.openPopup();
+  }
+
 });
