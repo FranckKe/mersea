@@ -3,7 +3,7 @@
   <% if flash.keys.first == 'success' %>
   <%= "#{flash['success'][1]}" %>
   <% else %>
-  <%= "#{flash['alert'][1].flatten.join(' ')}" %>
+  <%= "#{flash['alert'].flatten.join(' ')}" %>
   <% end %>
 </div>
 <% end %>
