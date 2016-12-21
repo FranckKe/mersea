@@ -70,7 +70,7 @@ $(document).on('turbolinks:load', function() {
   }
 
   function loadMarkers(e) {
-      var url = window.location.href + "/reports";
+      var url = urlJoin(window.location.href, "reports");
 
       $.ajax({
             type: "GET",
