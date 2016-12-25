@@ -16,7 +16,9 @@
  *= require_self
  *= require foundation_and_overrides
  *= require jquery-ui
-
+ *= require froala_editor.min.css
+ *= require froala_style.min.css
+ *= require font-awesome
  */
 
 @import 'foundation-icons';

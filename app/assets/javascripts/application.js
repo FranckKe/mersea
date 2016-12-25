@@ -19,6 +19,7 @@
 //= require leaflet.markercluster
 //= require jquery.touchSwipe.min
 //= require exif.min
+//= require froala_editor.min.js
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
@@ -38,7 +39,7 @@ $(function () {
     var reportedAtInput = $('#report_reported_at');
 
     $('.datepicker-tracer-form').val(reportedAtInput.val());
-    
+
     $('.datepicker-tracer-form').datepicker({
         dateFormat: "yy-mm-dd"
     });
