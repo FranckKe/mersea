@@ -76,7 +76,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.11.1)
-    concurrent-ruby (1.0.2)
+    concurrent-ruby (1.0.3)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     debbie (2.0.0)
