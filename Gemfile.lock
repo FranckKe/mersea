@@ -76,7 +76,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.11.1)
-    concurrent-ruby (1.0.2)
+    concurrent-ruby (1.0.3)
     coolline (0.5.0)
       unicode_utils (~> 1.4)
     debbie (2.0.0)
@@ -309,6 +309,9 @@ GEM
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    wysiwyg-rails (2.4.0)
+      font-awesome-rails (~> 4.4, >= 4.4.0.0)
+      railties (>= 3.2, < 6.0)
     yard (0.9.5)
 
 PLATFORMS
@@ -349,6 +352,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console
+  wysiwyg-rails (~> 2.4)
 
 RUBY VERSION
    ruby 2.3.1p112
