@@ -15,9 +15,9 @@
 #  latitude              :float
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  icon_url_file_name    :string                                                                                    
-#  icon_url_content_type :string                                                                                    
-#  icon_url_file_size    :integer                                                                                   
+#  icon_url_file_name    :string
+#  icon_url_content_type :string
+#  icon_url_file_size    :integer
 #  icon_url_updated_at   :datetime
 #
 
