@@ -1,3 +1,3 @@
-class TracerSerializer < ActiveModel::Serializer                                                                    
-  attributes :id, :name, :icon_url                                                                                  
+class TracerSerializer < ActiveModel::Serializer
+  attributes :id, :name, :icon_url
 end
