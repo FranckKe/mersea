@@ -16,8 +16,7 @@ var defaultIcon = L.icon({
   popupAnchor:  [0, -26]
 });
 
-$(document).on('turbolinks:load', function() {
-
+$(document).on('turbolinks:load', function () {
   // Map init
   var mapElement = $("#map");
   var markers = [];
@@ -44,10 +43,16 @@ $(document).on('turbolinks:load', function() {
 
     loadMarkers();
 
-    map.locate({ watch: true, maximumAge: 60000, timeout: 30000, enableHighAccuracy: true, setView: false, maxZoom: 16 });
+    map.locate({
+      watch: true,
+      maximumAge: 60000,
+      timeout: 30000,
+      enableHighAccuracy: true,
+      setView: false,
+      maxZoom: 16
+    });
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
-
     map.on('click', onMapClick);
   }
 
@@ -71,44 +76,50 @@ $(document).on('turbolinks:load', function() {
   }
 
   function loadMarkers(e) {
-      var urlReports = urlJoin(window.location.href, "reports");
-      var urlTracers = urlJoin(window.location.href, "tracers");                                                                                    
-      $.getJSON(urlTracers, function (data) {                                                                       
-          data.forEach(function(element) {                                                                          
-              if(element.icon_url.indexOf("default_marker.png") == -1) {                                            
-                  markerIcons[element.id] = L.icon({                                                                
-                      iconUrl: urlJoin(window.location.href, element.icon_url.substring(1))                                
-                  });                                                                                               
-              }                                                                                                     
-          });                                                                                                       
-                                                                                                                    
-          $.getJSON(urlReports, function(data) {
-              clearMarkers(markers);
-              displayMarkers(data);
+    var urlReports = urlJoin(window.location.href, "reports");
+    var urlTracers = urlJoin(window.location.href, "tracers");
+    $.getJSON(urlTracers, function (data) {
+      for (var i = 0; i < data.length; i++) {
+        var element = data[i];
+
+        if (element.icon_url.indexOf("default_marker.png") == -1) {
+          markerIcons[element.id] = L.icon({
+            iconUrl: urlJoin(window.location.href, element.icon_url)
           });
+        }
+      }
+
+      $.getJSON(urlReports, function (data) {
+        clearMarkers(markers);
+        displayMarkers(data);
       });
+    });
   }
 
   function displayMarkers(data) {
-      data.forEach(function(element, index, array) {
-        var marker = L.marker([element.latitude, element.longitude], {icon: defaultIcon});
-
-        marker.bindPopup("<b>"+element.tracer+"</b><br>"+element.name+"</b><br>"+element.reported_at);
-        markers.push(marker);
-        markerCluster.addLayer(marker);
+    data.forEach(function (element, index, array) {
+      var marker = L.marker([element.latitude, element.longitude], {
+        icon: markerIcons[element.tracer_id] || defaultIcon
       });
-      map.addLayer(markerCluster);
+
+      marker.bindPopup("<b>" + element.tracer + "</b><br>" + element.name + "</b><br>" + element.reported_at);
+      markers.push(marker);
+      markerCluster.addLayer(marker);
+    });
+    map.addLayer(markerCluster);
   }
 
   function clearMarkers(array) {
-    array.forEach(function(element, index, array) {
+    array.forEach(function (element, index, array) {
       map.removeLayer(element);
     });
   }
 
   function onMapClick(e) {
     clickLayer.clearLayers();
-    var markerClick = new L.marker(e.latlng, {icon: plusIcon});
+    var markerClick = new L.marker(e.latlng, {
+      icon: plusIcon
+    });
     clickLayer.addLayer(markerClick).addTo(map);
 
     markerClick.bindPopup('<a href="/tracers"><i class="fi-plus"></i> Ajouter un témoignage</a>');
