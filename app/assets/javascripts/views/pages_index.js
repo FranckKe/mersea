@@ -28,6 +28,7 @@ $(document).on('turbolinks:load', function() {
     removeOutsideVisibleBounds: true,
     maxClusterRadius: 8
   });
+  var markerIcons = {};
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([48.2520, -3.9301], 9);
@@ -70,15 +71,21 @@ $(document).on('turbolinks:load', function() {
   }
 
   function loadMarkers(e) {
-      var url = urlJoin(window.location.href, "reports");
-
-      $.ajax({
-            type: "GET",
-            url: url,
-            success: function(data) {
+      var urlReports = urlJoin(window.location.href, "reports");
+      var urlTracers = urlJoin(window.location.href, "tracers");                                                                                    
+      $.getJSON(urlTracers, function (data) {                                                                       
+          data.forEach(function(element) {                                                                          
+              if(element.icon_url.indexOf("default_marker.png") == -1) {                                            
+                  markerIcons[element.id] = L.icon({                                                                
+                      iconUrl: urlJoin(window.location.href, element.icon_url.substring(1))                                
+                  });                                                                                               
+              }                                                                                                     
+          });                                                                                                       
+                                                                                                                    
+          $.getJSON(urlReports, function(data) {
               clearMarkers(markers);
               displayMarkers(data);
-            }
+          });
       });
   }
 
