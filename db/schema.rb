@@ -77,8 +77,12 @@ ActiveRecord::Schema.define(version: 20161226140000) do
     t.string   "kind"
     t.float    "longitude"
     t.float    "latitude"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "icon_url_file_name"
+    t.string   "icon_url_content_type"
+    t.integer  "icon_url_file_size"
+    t.datetime "icon_url_updated_at"
   end
 
 end
