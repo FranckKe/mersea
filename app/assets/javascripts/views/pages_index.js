@@ -82,7 +82,7 @@ $(document).on('turbolinks:load', function () {
       for (var i = 0; i < data.length; i++) {
         var element = data[i];
 
-        if (element.icon_url.indexOf("default_marker.png") == -1) {
+        if (element.icon_ursl.indexOf("default_marker.png") == -1) {
           markerIcons[element.id] = L.icon({
             iconUrl: urlJoin(window.location.href, element.icon_url)
           });
