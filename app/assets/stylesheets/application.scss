@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require leaflet
+ *= require leaflet.markercluster
  *= require devise_foundation_views_scss
  *= require_self
  *= require foundation_and_overrides
@@ -20,5 +21,4 @@
  *= require froala_style.min.css
  *= require font-awesome
  */
-
 @import 'foundation-icons';
