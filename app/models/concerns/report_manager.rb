@@ -24,6 +24,7 @@ module Concerns
 
       rails_admin do
         list do
+          sort_by :reported_at
           field :status, :state
           field :tracer
           field :name
@@ -33,7 +34,9 @@ module Concerns
           field :latitude
           field :address
           field :description
-          field :reported_at
+          field :reported_at do
+            sort_reverse true
+          end
           field :photo
         end
 
