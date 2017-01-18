@@ -34,7 +34,7 @@ $(document).on('turbolinks:load', function () {
     var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
     L.tileLayer(
-      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; ' + mapLink,
         maxZoom: 18
       }).addTo(map);
