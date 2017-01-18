@@ -1,5 +1,9 @@
 <% if flash.present? %>
-  <div class="<%= flash.first[0] %> callout" data-closable>
-    <%= "#{flash.first[1][0]} #{flash.first[1][1][0]}" %>
-  </div>
+<div class="<%= flash.keys.first %> callout" data-closable>
+  <p><%= flash.first[1].instance_of?(Array) ? "#{flash.first[1].flatten.join(' ')}" : "#{flash.first[1]}" %>
+  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </p>
+</div>
 <% end %>
