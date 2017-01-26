@@ -3,11 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .map {
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
 }
 
 .leaflet-marker-icon {
   max-width: 64px;
   max-height: 64px;
+}
+
+.article {
+  width: 100%;
+  max-width: 750px;
+  margin: auto;
+  padding-top: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+
+  h1 {
+    text-align: center;
+  }
 }
