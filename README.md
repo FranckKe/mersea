@@ -61,6 +61,10 @@ To set any environment variable in the container, use one or more `-e` flags:
 
 MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) for more details.
 
+## About
+- An application created for [ANSEL](https://www.assoansel.com/) at the [Ocean Hackathon](http://www.seatechevent.eu/Temps-forts-Ocean-Hackathon-_7-au-9-octobre-2016_-696-17-0-0.html)
+- TV News Story on Tébéo, [video@8:30](http://www.tebeo.bzh/replay/23-jt/9478685)
+
 ## Contributing
 
 1. Fork it
