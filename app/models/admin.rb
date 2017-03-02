@@ -23,6 +23,7 @@
 #
 
 class Admin < ApplicationRecord
+  include Concerns::AdminManager
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :timeoutable, :trackable, :recoverable, :rememberable, :database_authenticatable
