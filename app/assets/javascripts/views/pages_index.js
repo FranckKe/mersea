@@ -30,7 +30,7 @@ $(document).on('turbolinks:load', function () {
   var markerIcons = {};
 
   if (mapElement.length > 0) {
-    var map = L.map('map').setView([48.2520, -3.9301], 9);
+    var map = L.map('map').setView([46.2276, -2.2137], 6);
     var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
     L.tileLayer(
