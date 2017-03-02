@@ -31,7 +31,7 @@ $(document).on('turbolinks:load', function () {
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([46.2276, -2.2137], 6);
-    var mapLink = '<a href="http://oenstreetmap.org">OpenStreetMap</a>';
+    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
     L.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
