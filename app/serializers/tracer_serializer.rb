@@ -1,3 +1,3 @@
 class TracerSerializer < ActiveModel::Serializer
-  attributes :id, :name, :icon_url
+  attributes :id, :name, :color
 end
