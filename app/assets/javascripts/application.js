@@ -17,6 +17,7 @@
 //= require foundation
 //= require leaflet
 //= require leaflet.markercluster
+//= require leaflet.markercluster.layersupport
 //= require jquery.touchSwipe.min
 //= require froala_editor.min.js
 //= require_tree .
