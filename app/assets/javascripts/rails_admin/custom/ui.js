@@ -8,6 +8,9 @@ $(document).on('rails_admin.dom_ready', function () {
 
   if (markerColorFieldEdit !== null) {
     markerColorFieldEdit.css('width', '200px');
+    if (typeof markerColorFieldEdit.attr('value') === 'undefined' ) {
+      markerColorFieldEdit.val('#126fc6');
+    }
     markerColorParentEdit.append(svgIcon(markerColorFieldEdit.val()));
     var markerColorSvg = markerColorParentEdit.find('path')[0];
     markerColorFieldEdit.on('input', function () {
