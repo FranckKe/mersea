@@ -18,7 +18,7 @@
 //= require leaflet
 //= require leaflet.markercluster
 //= require jquery.touchSwipe.min
-//= require froala_editor.min
+//= require froala_editor.min.js
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
