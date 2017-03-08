@@ -24,14 +24,15 @@ $(document).on('turbolinks:load', function () {
   // Map init
   var mapElement = $("#map");
   var markers = [];
-  var markerCluster = L.markerClusterGroup({
+  var control = L.control.layers(null, null, { collapsed: false });
+  var markerCluster = L.markerClusterGroup.layerSupport({
     spiderfyOnMaxZoom: true,
     showCoverageOnHover: true,
     zoomToBoundsOnClick: true,
     removeOutsideVisibleBounds: true,
     maxClusterRadius: 8
   });
-  var markerColor = {};
+  var tracerData = {};
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([46.2276, -2.2137], 6);
@@ -55,7 +56,9 @@ $(document).on('turbolinks:load', function () {
     Esri_WorldImagery.addTo(map);
     osm.addTo(map);
 
-    L.control.layers({ "Earth": Esri_WorldImagery, "Map": osm }, { "OpenSeaMap": OpenSeaMap }).addTo(map);
+    control.addBaseLayer(Esri_WorldImagery, "Earth");
+    control.addBaseLayer(osm, "Map");
+    control.addOverlay(OpenSeaMap, "OpenSeaMap");
 
     map.zoomControl.setPosition('topright');
 
@@ -98,7 +101,10 @@ $(document).on('turbolinks:load', function () {
     var urlTracers = urlJoin(window.location.href, "tracers");
     $.getJSON(urlTracers, function (data) {
       for(var tracer in data) {
-        markerColor[data[tracer].id] = data[tracer].color || defaultMarkerColor;
+        tracerData[data[tracer].id] = {};
+        tracerData[data[tracer].id].color = data[tracer].color || defaultMarkerColor;
+        tracerData[data[tracer].id].name = data[tracer].name;
+        tracerData[data[tracer].id].layerGroup = L.layerGroup();
       }
 
       $.getJSON(urlReports, function (data) {
@@ -111,14 +117,21 @@ $(document).on('turbolinks:load', function () {
   function displayMarkers(data) {
     data.forEach(function (element, index, array) {
       var marker = L.marker([element.latitude, element.longitude], {
-        icon: defaultIcon(markerColor[element.tracer_id])
+        icon: defaultIcon(tracerData[element.tracer_id].color)
       });
 
       marker.bindPopup("<b>" + element.tracer + "</b><br>" + element.name + "</b><br>" + element.reported_at);
       markers.push(marker);
-      markerCluster.addLayer(marker);
+      marker.addTo(tracerData[element.tracer_id].layerGroup);
     });
-    map.addLayer(markerCluster);
+
+    for(var tracerId in tracerData) {
+      tracerData[tracerId].layerGroup.addTo(markerCluster);
+      control.addOverlay(tracerData[tracerId].layerGroup, tracerData[tracerId].name);
+    };
+
+    markerCluster.addTo(map);
+    control.addTo(map);
   }
 
   function clearMarkers(array) {
