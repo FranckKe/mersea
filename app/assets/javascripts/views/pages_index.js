@@ -47,7 +47,7 @@ $(document).on('turbolinks:load', function () {
 	    attribution: 'Map data: &copy; <a href="http://www.openseamap.org">OpenSeaMap</a> contributors'
     });
 
-    OpenSeaMap.addTo(map);
+
     Esri_WorldImagery.addTo(map);
     osm.addTo(map);
 
