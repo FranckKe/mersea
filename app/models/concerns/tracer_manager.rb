@@ -18,7 +18,7 @@ module Concerns
           field :color, :color
         end
 
-        edit do
+        show do
           field :name
           field :description
           field :photo
@@ -27,6 +27,21 @@ module Concerns
           field :longitude
           field :latitude
           field :color, :color
+          field :created_at
+          field :updated_at
+        end
+
+        edit do
+          field :name
+          field :description
+          field :photo
+          field :origin
+          field :kind
+          field :longitude
+          field :latitude
+          field :color do
+            html_attributes type: 'color'
+          end
         end
       end
     end
