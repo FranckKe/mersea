@@ -58,7 +58,7 @@ $(document).on('turbolinks:load', function () {
 
     control.addBaseLayer(Esri_WorldImagery, "Earth");
     control.addBaseLayer(osm, "Map");
-    control.addOverlay(OpenSeaMap, "OpenSeaMap");
+    control.addOverlay(OpenSeaMap, 'OpenSeaMap<div class="leaflet-control-layers-separator"></div>');
 
     map.zoomControl.setPosition('topright');
 
