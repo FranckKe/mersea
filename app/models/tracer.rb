@@ -2,30 +2,26 @@
 #
 # Table name: tracers
 #
-#  id                    :uuid             not null, primary key
-#  name                  :string
-#  description           :text
-#  photo_file_name       :string
-#  photo_content_type    :string
-#  photo_file_size       :integer
-#  photo_updated_at      :datetime
-#  origin                :string
-#  kind                  :string
-#  longitude             :float
-#  latitude              :float
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  icon_url_file_name    :string
-#  icon_url_content_type :string
-#  icon_url_file_size    :integer
-#  icon_url_updated_at   :datetime
+#  id                 :uuid             not null, primary key
+#  name               :string
+#  description        :text
+#  photo_file_name    :string
+#  photo_content_type :string
+#  photo_file_size    :integer
+#  photo_updated_at   :datetime
+#  origin             :string
+#  kind               :string
+#  longitude          :float
+#  latitude           :float
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  color              :string
 #
 
 class Tracer < ApplicationRecord
-  include Concerns::RailsAdmin
+  include Concerns::TracerManager
 
   has_attached_file :photo
-  has_attached_file :icon_url, default_url: '/images/default_marker.png'
   has_many :reports, dependent: :destroy
 
   validates :name, :description, :photo, :origin, :kind, presence: true

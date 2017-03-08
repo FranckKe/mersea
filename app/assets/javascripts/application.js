@@ -18,8 +18,7 @@
 //= require leaflet
 //= require leaflet.markercluster
 //= require jquery.touchSwipe.min
-//= require exif.min
-//= require froala_editor.min.js
+//= require froala_editor.min
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {

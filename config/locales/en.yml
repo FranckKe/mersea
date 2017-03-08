@@ -8,7 +8,7 @@ en:
         name: Name
         description: Description
         photo: Photo
-        icon_url: Icon
+        color: Color
         origin: Origin
         kind: Type
         longitude: Longitude

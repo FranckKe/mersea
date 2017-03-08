@@ -1,6 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
+var defaultMarkerColor = '#126fc6';
 var locateLayer = L.layerGroup();
 var clickLayer = L.layerGroup();
 var plusIcon = L.icon({
@@ -9,12 +10,15 @@ var plusIcon = L.icon({
   iconAnchor:   [16, 32],
   popupAnchor:  [0, -32]
 });
-var defaultIcon = L.icon({
-  iconUrl: 'marker.png',
-  iconSize:     [25, 41],
-  iconAnchor:   [12, 41],
-  popupAnchor:  [0, -26]
-});
+var defaultIcon = function(color) {
+  return L.divIcon({
+    className: '',
+    iconSize:     [25, 41],
+    iconAnchor:   [12, 41],
+    popupAnchor:  [0, -26],
+    html: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect xmlns="http://www.w3.org/2000/svg" x="6.02" y="6.02" height="14.5" width="12.625" fill="#fff"/><path d="M12.7 0.7c-6.573 0-12.044 5.691-12.044 11.866 0 2.778 1.564 6.308 2.694 8.746l9.306 17.872 9.262-17.872c1.13-2.438 2.738-5.791 2.738-8.746 0-6.175-5.383-11.866-11.956-11.866zm0 7.155c2.584.017 4.679 2.122 4.679 4.71s-2.095 4.663-4.679 4.679c-2.584-.017-4.679-2.09-4.679-4.679 0-2.588 2.095-4.693 4.679-4.71z" fill="' + color + '" stroke="gray" stroke-width="1.1" stroke-linecap="round"/></svg>'
+  });
+}
 
 $(document).on('turbolinks:load', function () {
   // Map init
@@ -27,7 +31,7 @@ $(document).on('turbolinks:load', function () {
     removeOutsideVisibleBounds: true,
     maxClusterRadius: 8
   });
-  var markerIcons = {};
+  var markerColor = {};
 
   if (mapElement.length > 0) {
     var map = L.map('map').setView([46.2276, -2.2137], 6);
@@ -79,14 +83,8 @@ $(document).on('turbolinks:load', function () {
     var urlReports = urlJoin(window.location.href, "reports");
     var urlTracers = urlJoin(window.location.href, "tracers");
     $.getJSON(urlTracers, function (data) {
-      for (var i = 0; i < data.length; i++) {
-        var element = data[i];
-
-        if (element.icon_url.indexOf("default_marker.png") == -1) {
-          markerIcons[element.id] = L.icon({
-            iconUrl: urlJoin(window.location.href, element.icon_url)
-          });
-        }
+      for(var tracer in data) {
+        markerColor[data[tracer].id] = data[tracer].color || defaultMarkerColor;
       }
 
       $.getJSON(urlReports, function (data) {
@@ -99,7 +97,7 @@ $(document).on('turbolinks:load', function () {
   function displayMarkers(data) {
     data.forEach(function (element, index, array) {
       var marker = L.marker([element.latitude, element.longitude], {
-        icon: markerIcons[element.tracer_id] || defaultIcon
+        icon: defaultIcon(markerColor[element.tracer_id])
       });
 
       marker.bindPopup("<b>" + element.tracer + "</b><br>" + element.name + "</b><br>" + element.reported_at);
@@ -110,8 +108,8 @@ $(document).on('turbolinks:load', function () {
   }
 
   function clearMarkers(array) {
-    array.forEach(function (element, index, array) {
-      map.removeLayer(element);
+    array.forEach(function (marker, index, array) {
+      map.removeLayer(marker);
     });
   }
 
