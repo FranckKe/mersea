@@ -14,6 +14,8 @@ fr:
         longitude: Longitude
         latitude: Latitude
         reports: Signalements
+        created_at: Créé le
+        updated_at: Mise à jour
       report:
         name: Nom
         email: Email
