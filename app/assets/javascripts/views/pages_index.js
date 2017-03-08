@@ -24,7 +24,7 @@ $(document).on('turbolinks:load', function () {
   // Map init
   var mapElement = $("#map");
   var markers = [];
-  var control = L.control.layers(null, null, { collapsed: false });
+  var control = L.control.layers(null, null, { collapsed: true, position: 'bottomright' });
   var markerCluster = L.markerClusterGroup.layerSupport({
     spiderfyOnMaxZoom: true,
     showCoverageOnHover: true,
@@ -127,7 +127,7 @@ $(document).on('turbolinks:load', function () {
 
     for(var tracerId in tracerData) {
       tracerData[tracerId].layerGroup.addTo(markerCluster);
-      control.addOverlay(tracerData[tracerId].layerGroup, tracerData[tracerId].name);
+      control.addOverlay(tracerData[tracerId].layerGroup, '<span style="color:' + tracerData[tracerId].color + '">' + tracerData[tracerId].name + '</span>');
     };
 
     markerCluster.addTo(map);
