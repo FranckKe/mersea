@@ -127,7 +127,7 @@ $(document).on('turbolinks:load', function () {
 
     for(var tracerId in tracerData) {
       tracerData[tracerId].layerGroup.addTo(markerCluster);
-      control.addOverlay(tracerData[tracerId].layerGroup, '<span style="color:' + tracerData[tracerId].color + '">' + tracerData[tracerId].name + '</span>');
+      control.addOverlay(tracerData[tracerId].layerGroup, '<span style="color:' + tracerData[tracerId].color + '">' + tracerData[tracerId].name + ' (' + tracerData[tracerId].layerGroup.getLayers().length + ')</span>');
     };
 
     markerCluster.addTo(map);
