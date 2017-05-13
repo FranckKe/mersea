@@ -2,7 +2,7 @@
   <div class="medium-6 medium-centered">
     <h3 class="text-center">Signalement</h3>
     <div class="row">
-      <%= simple_form_for Report.new do |f| %>
+      <%= simple_form_for Report.new(name: current_user&.name) do |f| %>
         <%= f.input :tracer_id, as: :hidden, input_html: { value: tracer.id || '' } %>
         <%= f.input :reported_at, input_html: { value: Time.zone.today }, as: :hidden %>
         <input class="datepicker-tracer-form" type="date">

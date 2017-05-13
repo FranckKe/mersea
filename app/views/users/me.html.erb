@@ -1,0 +1,10 @@
+<section id="user">
+  <div class="medium-6 medium-centered">
+    <h3 class="text-center">Votre profil utilisateur</h3>
+    <%= simple_form_for current_user, url: me_users_path do |f| %>
+      <%= f.input :name %>
+      <%= f.input :email, type: 'email' %>
+      <%= f.button :submit %>
+    <% end %>
+  </div>
+</section>
