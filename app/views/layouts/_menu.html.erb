@@ -1,24 +1,28 @@
-<div class="off-canvas position-left" id="menu" data-off-canvas>
-    <h1>Mersea</h1>
-
-    <!-- Close button -->
-    <button class="menu-close-button" aria-label="Close menu" type="button" data-close>
-        <span aria-hidden="true"><i class="fi-x"></i></span>
-    </button>
-
-    <!-- Menu -->
-    <ul class="vertical menu">
-        <li>
-            <%= link_to_unless_current('Carte', controller: 'pages', action: 'index') %>
-        </li>
-        <li>
-            <%= link_to_unless_current('Traceurs', controller: 'tracers', action: 'index') %>
-        </li>
-
-        <% @pages.each do |page| %>
-          <li>
-              <%= link_to_unless_current(page.name, controller: 'pages', action: 'show', id: page.id) %>
-          </li>
+<button id="mm-menu-toggle" class="mm-menu-toggle">Toggle Menu</button>
+<nav id="mm-menu" class="mm-menu">
+  <div class="mm-menu__header">
+    <%= link_to root_path, class: 'mm-header__link' do %>
+      <h2 class="mm-menu__title">Mersea</h2>
+    <% end %>
+  </div>
+  <ul class="mm-menu__items">
+    <li class="mm-menu__link">
+      <%= link_to root_path, class: 'mm-menu__link' do %>
+        <span class="mm-menu__link-text <%= 'active' if request.path == root_path %>">Carte</span>
+      <% end %>
+    </li>
+    <li class="mm-menu__link">
+      <%= link_to tracers_path, class: 'mm-menu__link' do %>
+        <span class="mm-menu__link-text <%= 'active' if request.path == tracers_path %>">Traceurs</span>
+      <% end %>
+    </li>
+    <% @pages.each do |page| %>
+      <li class="mm-menu__link">
+        <%= link_to page_path(page), class: 'mm-menu__link' do %>
+          <span class="mm-menu__link-text <%= 'active' if request.path == page_path(page) %>"><%= page.name %></span>
         <% end %>
-    </ul>
-</div>
+      </li>
+    <% end %>
+
+  </ul>
+</nav>

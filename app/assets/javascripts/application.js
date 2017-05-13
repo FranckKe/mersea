@@ -18,19 +18,11 @@
 //= require leaflet
 //= require leaflet.markercluster
 //= require leaflet.markercluster.layersupport
-//= require jquery.touchSwipe.min
-//= require froala_editor.min.js
+//= require froala_editor.min
+//= require materialMenu.min
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
   $(document).foundation();
-});
-
-$(".menu-toggle-swipe").swipe({
-  swipeLeft: function (event, distance, duration, fingerCount, fingerData) {
-    $('#menu').foundation('close');
-  },
-  swipeRight: function (event, distance, duration, fingerCount, fingerData) {
-    $('#menu').foundation('open');
-  }
+  var menu = new Menu;
 });

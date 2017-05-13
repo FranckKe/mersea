@@ -16,17 +16,11 @@
 
 <body>
   <% unless devise_controller? %>
-    <div class="off-canvas-wrapper">
-      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
-          <%= render 'layouts/menu' %>
-          <div class="off-canvas-content" data-off-canvas-content>
-            <%= render 'layouts/flash' %>
-              <%= yield %>
-              <div class="menu-toggle-swipe"></div>
-              <button type="button" class="secondary button menu-toggle-button" data-toggle="menu"><i class="fi-list"></i></button>
-          </div>
-      </div>
+    <div id="wrapper" class="wrapper">
+      <%= render 'layouts/flash' %>
+        <%= yield %>
     </div>
+    <%= render 'layouts/menu' %>
   <% else %>
     <%= yield %>
   <% end %>
