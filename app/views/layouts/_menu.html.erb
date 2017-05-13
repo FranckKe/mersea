@@ -11,6 +11,11 @@
         <span class="mm-menu__link-text <%= 'active' if request.path == root_path %>">Carte</span>
       <% end %>
     </li>
+    <li class="mm-menu__link">
+      <%= link_to tracers_path, class: 'mm-menu__link' do %>
+        <span class="mm-menu__link-text <%= 'active' if request.path == tracers_path %>">Traceurs</span>
+      <% end %>
+    </li>
     <% @pages.each do |page| %>
       <li class="mm-menu__link">
         <%= link_to page_path(page), class: 'mm-menu__link' do %>
