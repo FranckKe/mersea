@@ -8,11 +8,11 @@ class ReportsController < ApplicationController
   end
 
   def new
-    @report = Report.new
+    @report = Report.new(name: current_user&.name)
   end
 
   def create
-    @report = Report.new(report_params)
+    @report = Report.new(report_params.merge(user: current_user))
 
     if verify_recaptcha(model: @report) && @report.save
       flash[:success] = 'Merci pour votre signalement'
