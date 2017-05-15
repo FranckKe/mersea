@@ -21,10 +21,9 @@ input[type="date"]::-webkit-input-placeholder {
   height: 100%;
 
   .card {
-    flex-basis: 150px;
+    flex-basis: 250px;
     flex-shrink: 1;
-    flex-grow: 1;
-    margin: 0.5rem;
+    margin: 1rem;
     overflow: hidden;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
@@ -51,7 +50,6 @@ input[type="date"]::-webkit-input-placeholder {
 
     a {
       display: block;
-      margin-right: 1.3rem;
       transition: color 0.3s ease;
       text-transform: uppercase;
       text-decoration: none;
