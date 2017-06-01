@@ -15,8 +15,6 @@ class UsersController < ApplicationController
     URI.parse(request.referer).path if request.referer
   end
 
-  private
-
   def update_params
     params.require(:user).permit(:name, :email)
   end
