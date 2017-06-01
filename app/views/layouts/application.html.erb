@@ -16,11 +16,11 @@
 
 <body>
   <% unless devise_controller? %>
+    <%= render 'layouts/topbar' %>
     <div id="wrapper" class="wrapper">
       <%= render 'layouts/flash' %>
         <%= yield %>
     </div>
-    <%= render 'layouts/menu' %>
   <% else %>
     <%= yield %>
   <% end %>
