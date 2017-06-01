@@ -1,0 +1,38 @@
+.topbar {
+  background-color: #64b5f6;
+  padding: 5px 15px;
+  height: 55px;
+
+  h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .button {
+    margin: 0; // Foundation override
+  }
+
+  .button.primary {
+    background-color: #ffaa00;
+  }
+
+  .button.secondary {
+    color: black;
+    background-color: #ffffff;
+  }
+}
+
+.is-dropdown-submenu {
+  list-style: none;
+
+  li {
+    padding: 10px;
+  }
+}
+
+.user-menu {
+  li > a {
+    margin: 10px;
+  }
+}

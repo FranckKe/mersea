@@ -15,15 +15,11 @@
 </head>
 
 <body>
-  <% unless devise_controller? %>
-    <%= render 'layouts/topbar' %>
-    <div id="wrapper" class="wrapper">
-      <%= render 'layouts/flash' %>
-        <%= yield %>
-    </div>
-  <% else %>
+  <%= render 'layouts/topbar' %>
+  <div id="wrapper" class="wrapper">
+    <%= render 'layouts/flash' %>
     <%= yield %>
-  <% end %>
+  </div>
 </body>
 
 </html>

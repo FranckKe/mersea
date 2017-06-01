@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def after_sign_in_path_for(resource_or_scope)
+  def after_sign_in_path_for
     URI.parse(request.referer).path if request.referer
   end
 

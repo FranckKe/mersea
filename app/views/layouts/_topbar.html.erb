@@ -1,0 +1,24 @@
+<div class="topbar flex h-center v-center">
+  <div class="menu-wrapper">
+    <%= render 'layouts/menu' %>
+  </div>
+    <h1>Mersea</h1>
+  <div class="">
+    <% if current_user.present? %>
+      <ul class="dropdown menu user-menu" data-dropdown-menu data-click-open>
+        <li>
+          <% link_to 'Mon compte', me_users_path, class: 'button secondary' %>
+          <div href="#" class="button secondary">Mon compte</div>
+          <ul>
+            <li><i class="fi-widget"></i><%= link_to 'Paramètres', new_user_password_path %></li>
+            <li><i class="fi-marker"></i><a href="#">Mes témoignages</a></li>
+            <li><i class="fi-power"></i><%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete %></li>
+          </ul>
+        </li>
+      </ul>
+    <% else %>
+      <%= link_to 'Se connecter', user_session_path, class: 'button secondary' %>
+      <%= link_to 'S\'inscrire', new_user_registration_path, class: 'button primary' %>
+    <% end %>
+  </div>
+</div>
