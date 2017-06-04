@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_action :fetch_pages, only: [:new, :index, :show, :me]
+  before_action :fetch_pages
 
   def status
     render json: {}, status: :ok

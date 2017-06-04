@@ -1,0 +1,65 @@
+$(document).on('turbolinks:load', function () {
+  var informationStatusMessage = $('.simple_form.edit-user .status-message p');
+  var editUserSubmit = $('.simple_form.edit-user .submit');
+  var editUserLoader = $('.simple_form.edit-user .loader-wrapper');
+
+  $('.simple_form.edit-user')
+  .on('ajax:beforeSend', function (e, data, status, xhr) {
+    editUserSubmit.addClass('hide');
+    editUserLoader.removeClass('hide');
+  })
+  .on('ajax:success', function (evt, data, status, xhr) {
+    updateStatusMessage(informationStatusMessage, 'success', data.message);
+  })
+  .on('ajax:error', function (e, data, status, xhr) {
+    updateStatusMessage(informationStatusMessage, 'error', data.message);
+  })
+  .on('ajax:complete', function (evt, xhr, status, error) {
+    editUserLoader.addClass('hide');
+    editUserSubmit.removeClass('hide');
+  });
+
+  var passwordStatusMessage = $('.simple_form.password-update .status-message p');
+  var passwordSubmit = $('.simple_form.password-update .submit');
+  var passwordLoader = $('.simple_form.password-update .loader-wrapper');
+  var newPassword = $('.new-password');
+  var newPasswordConfirmation = $('.new-password.confirmation');
+
+  $('input.new-password').on('propertychange change click keyup input paste', function (event) {
+    if (newPassword.val() === '' || newPasswordConfirmation.val() === '') {
+      $('.simple_form.password-update .submit').prop('disabled', true);
+    } else {
+      if (newPassword.val() === newPasswordConfirmation.val()) {
+        updateStatusMessage(passwordStatusMessage);
+        $('.simple_form.password-update .submit').prop('disabled', false);
+      } else {
+        updateStatusMessage(passwordStatusMessage, 'error', 'Les nouveaux mots de passes ne correspondent pas');
+        $('.simple_form.password-update .submit').prop('disabled', true);
+      }
+    }
+  });
+
+  $('.simple_form.password-update')
+  .on('ajax:beforeSend', function (e, data, status, xhr) {
+    passwordSubmit.addClass('hide');
+    passwordLoader.removeClass('hide');
+  })
+  .on('ajax:success', function (evt, data, status, xhr) {
+    updateStatusMessage(passwordStatusMessage, 'success', data.message);
+  })
+  .on('ajax:error', function (e, data, status, xhr) {
+    updateStatusMessage(passwordStatusMessage, 'error', data.message);
+  })
+  .on('ajax:complete', function (evt, xhr, status, error) {
+    passwordLoader.addClass('hide');
+    passwordSubmit.removeClass('hide');
+  });
+
+  function updateStatusMessage (node, status, message) {
+    status = status || '';
+    message = message || '';
+    node.removeClass();
+    node.addClass(status);
+    node.text(message);
+  }
+});

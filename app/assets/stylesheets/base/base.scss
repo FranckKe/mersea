@@ -1,5 +1,12 @@
 .wrapper {
   height: calc(100% - 55px); // Menu height
+  margin-top: 55px; // Menu height
+
+  .callout {
+    width: 100%;
+    position: fixed;
+    z-index: 900;
+  }
 }
 
 section {

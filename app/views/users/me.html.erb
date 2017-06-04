@@ -1,10 +1,25 @@
 <section id="user">
   <div class="medium-6 medium-centered">
     <h3 class="text-center">Votre profil utilisateur</h3>
-    <%= simple_form_for current_user, url: me_users_path do |f| %>
-      <%= f.input :name %>
-      <%= f.input :email, type: 'email' %>
-      <%= f.button :submit %>
+    <%= simple_form_for current_user, url: me_users_path, html: { class: 'edit-user' }, remote: true do |f| %>
+      <div class="form-inputs">
+        <%= f.input :name, label: 'Nom' %>
+        <%= f.input :email, type: 'email', label: 'Email' %>
+      </div>
+      <div class="status-message">
+        <p class="message"></p>
+      </div>
+      <div class="form-actions large-12 large-centered">
+        <%= f.button :submit, 'Modifier les informations', class: 'submit expand large-6 large-centered' %>
+        <div class="button expand large-6 large-centered loader-wrapper hide">
+          <div class="loader">
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
+</section>
+
+<section class="medium-6 medium-centered">
+  <%= render "devise/passwords/edit" %>
 </section>

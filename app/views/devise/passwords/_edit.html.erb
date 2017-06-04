@@ -1,0 +1,25 @@
+ <h2>Nouveau mot de passe</h2>
+
+<%= simple_form_for(current_user, url: update_password_users_path, html: { method: :put, class: 'password-update margin-bottom' }, remote: true) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :reset_password_token, as: :hidden %>
+  <%= f.full_error :reset_password_token %>
+
+  <div class="form-inputs">
+    <%= f.input :current_password, label: "Mot de passe actuel", input_html: { class: 'current-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password, label: "Nouveau mot de passe", input_html: { class: 'new-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, label: "Confimation du nouveau mot de passe", input_html: { class: 'new-password confirmation' }, required: true %>
+  </div>
+  <div class="status-message">
+    <p class="message"></p>
+  </div>
+
+  <div class="form-actions large-12 large-centered">
+    <%= f.button :submit, "Mettre à jour le mot de passe", class: 'submit button expand large-6 large-centered', disabled: true %>
+    <div class="button expand large-6 large-centered loader-wrapper hide">
+      <div class="loader">
+      </div>
+    </div>
+  </div>
+<% end %>

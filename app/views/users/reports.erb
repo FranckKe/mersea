@@ -1,0 +1,27 @@
+<h1 class="">Témoignages</h1>
+<section class="flex user-reports">
+  <table class="user-reports__table">
+    <thead>
+      <th>Quantité</th>
+      <th>Adresse</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Date</th>
+    </thead>
+    <tbody>
+    <% current_user.reports.each do |report| %>
+      <tr>
+        <td><%= report.quantity %></td>
+        <td><%= report.address %></td>
+        <td><%= report.longitude %></td>
+        <td><%= report.latitude %></td>
+        <td><%= report.description %></td>
+        <td><%= report.status %></td>
+        <td><%= report.reported_at.strftime("%d-%m-%Y") %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>

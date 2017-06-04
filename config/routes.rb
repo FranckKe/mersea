@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
   devise_for :admin
-
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  # devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   match '/status', to: 'application#status', via: %i(get head)
   root to: 'pages#index'
   resources :tracers, only: [:index, :show]
@@ -12,9 +15,8 @@ Rails.application.routes.draw do
     collection do
       get 'me'
       patch 'me'
-      patch 'update_password', defaults: { format: 'json' }
+      get 'reports'
+      put 'update_password', defaults: { format: 'json' }, to: 'users#update_password'
     end
   end
-
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 end

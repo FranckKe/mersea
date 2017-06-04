@@ -1,0 +1,25 @@
+<%= foundation_devise_error_messages! %>
+<div class="row">
+  <div class="medium-6 medium-centered columns">
+    <div class="login-box">
+      <div class="row">
+        <div class="large-12 columns">
+          <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post}) do |f| %>
+            <div class="row">
+              <h5 class="text-center">
+                <%= t('.resend_unlock_instructions', :default => "Resend unlock instructions") %>
+              </h5>
+            </div>
+            <div class="row">
+              <%= f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: "Email"%>
+            </div>
+            <div class="row">
+              <%= f.submit t('.resend_unlock_instructions', :default => "Resend unlock instructions"), class: "button expand large-12 large-centered columns" %>
+            </div>
+          <% end %>
+        </div>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

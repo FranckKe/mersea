@@ -5,6 +5,8 @@ class CustomFailure < Devise::FailureApp
       url = URI.parse(new_admin_session_url)
       url.port = port
       url.to_s
+    elsif warden_options[:scope] == :user
+      user_session_path
     else
       new_admin_session_url
     end
