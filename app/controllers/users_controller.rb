@@ -4,8 +4,10 @@ class UsersController < ApplicationController
   def me
     return unless request.method_symbol == :post
     if current_user.update_attributes(update_params)
+      set_flash_message :notice, I18n.t('devise.registrations.updated') if is_flashing_format?
       render json: { message: I18n.t('devise.registrations.updated') }, status: 200
     else
+      set_flash_message :notice, current_user.errors.full_messages if is_flashing_format?
       render json: { message: current_user.errors.full_messages }, status: 200
     end
   end
@@ -18,8 +20,10 @@ class UsersController < ApplicationController
     @user = User.find(current_user.id)
     if @user.update_with_password(update_password_params)
       bypass_sign_in(@user)
+      set_flash_message :notice, I18n.t('devise.passwords.updated_not_active') if is_flashing_format?
       render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: 200
     else
+      set_flash_message :notice, 'Mot de passe actuel incorrect' if is_flashing_format?
       render json: { message: 'Mot de passe actuel incorrect' }, status: 401
     end
   end

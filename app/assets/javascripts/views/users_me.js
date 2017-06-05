@@ -27,14 +27,15 @@ $(document).on('turbolinks:load', function () {
 
   $('input.new-password').on('propertychange change click keyup input paste', function (event) {
     if (newPassword.val() === '' || newPasswordConfirmation.val() === '') {
-      $('.simple_form.password-update .submit').prop('disabled', true);
+      passwordSubmit.prop('disabled', true);
+      updateStatusMessage(passwordStatusMessage);
     } else {
       if (newPassword.val() === newPasswordConfirmation.val()) {
         updateStatusMessage(passwordStatusMessage);
-        $('.simple_form.password-update .submit').prop('disabled', false);
+        passwordSubmit.prop('disabled', false);
       } else {
         updateStatusMessage(passwordStatusMessage, 'error', 'Les nouveaux mots de passes ne correspondent pas');
-        $('.simple_form.password-update .submit').prop('disabled', true);
+        passwordSubmit.prop('disabled', true);
       }
     }
   });
@@ -54,12 +55,4 @@ $(document).on('turbolinks:load', function () {
     passwordLoader.addClass('hide');
     passwordSubmit.removeClass('hide');
   });
-
-  function updateStatusMessage (node, status, message) {
-    status = status || '';
-    message = message || '';
-    node.removeClass();
-    node.addClass(status);
-    node.text(message);
-  }
 });

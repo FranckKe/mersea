@@ -13,6 +13,7 @@
         <%= f.input :longitude, as: :hidden %>
         <%= f.input :photo, as: :file %>
         <%= f.input :description, as: :text %>
+        <%= recaptcha_tags unless current_user.present? %>
         <%= f.button :submit %>
       <% end %>
     </div>

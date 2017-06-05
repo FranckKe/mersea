@@ -11,6 +11,7 @@
     <%= f.input :password, label: "Nouveau mot de passe", input_html: { class: 'new-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
     <%= f.input :password_confirmation, label: "Confimation du nouveau mot de passe", input_html: { class: 'new-password confirmation' }, required: true %>
   </div>
+
   <div class="status-message">
     <p class="message"></p>
   </div>

@@ -27,3 +27,11 @@ $(document).on('turbolinks:load', function () {
   $(document).foundation();
   var menu = new Menu;
 });
+
+function updateStatusMessage (node, status, message) {
+  status = status || '';
+  message = message || '';
+  node.removeClass();
+  node.addClass(status);
+  node.text(message);
+}

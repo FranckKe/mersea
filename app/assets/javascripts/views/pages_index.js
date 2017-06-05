@@ -10,6 +10,7 @@ var plusIcon = L.icon({
   iconAnchor:   [16, 32],
   popupAnchor:  [0, -32]
 });
+
 var defaultIcon = function(color) {
   return L.divIcon({
     className: '',
