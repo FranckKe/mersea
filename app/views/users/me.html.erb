@@ -1,6 +1,6 @@
 <section id="user">
   <div class="medium-6 medium-centered">
-    <h3 class="text-center">Votre profil utilisateur</h3>
+    <h3 class="text-center">Mes informations</h3>
     <%= simple_form_for current_user, url: me_users_path, html: { class: 'edit-user' }, remote: true do |f| %>
       <div class="form-inputs">
         <%= f.input :name, label: 'Nom' %>
@@ -22,4 +22,11 @@
 
 <section class="medium-6 medium-centered">
   <%= render "devise/passwords/edit" %>
+</section>
+
+<section class="medium-6 medium-centered">
+  <h3 class="text-center">Supprimer mon compte</h3>
+  <div class="form-actions large-6 large-centered">
+      <%= link_to 'Supprimer mon compte', registration_path(current_user), data: { confirm: 'Êtes-vous sûr ?' }, method: :delete, class: 'button submit expand large-12 large-centered alert' %>
+  </div>
 </section>

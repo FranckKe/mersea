@@ -5,6 +5,7 @@ $(document).on('turbolinks:load', function () {
 
   $('.new_user')
   .on('ajax:beforeSend', function (e, data, status, xhr) {
+    updateStatusMessage(signinStatusMessage)
     signinSubmit.addClass('hide');
     signinLoader.removeClass('hide');
   })

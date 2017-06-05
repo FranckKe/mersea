@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
   def create
     resource = User.find_for_database_authentication(email: params[:user][:email])
 
-    if resource.valid_password?(params[:user][:password])
+    if resource && resource.valid_password?(params[:user][:password])
       sign_in :user, resource
       flash.discard
       render json: { message: I18n.t("devise.failure.#{env['warden'].message}") }, status: 200 && return

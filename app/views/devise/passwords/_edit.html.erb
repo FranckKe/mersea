@@ -1,4 +1,4 @@
- <h2>Nouveau mot de passe</h2>
+<h3 class="text-center">Nouveau mot de passe</h3>
 
 <%= simple_form_for(current_user, url: update_password_users_path, html: { method: :put, class: 'password-update margin-bottom' }, remote: true) do |f| %>
   <%= f.error_notification %>

@@ -35,6 +35,7 @@ $(document).on('turbolinks:load', function () {
     }
   })
   .on('ajax:beforeSend', function (e, data, status, xhr) {
+    updateStatusMessage(registrationStatusMessage);
     registrationSubmit.addClass('hide');
     registrationLoader.removeClass('hide');
   })
