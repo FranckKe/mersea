@@ -20,4 +20,5 @@ Rails.application.routes.draw do
       put 'update_password', defaults: { format: 'json' }, to: 'users#update_password'
     end
   end
+  match '/leaderboard', to: 'pages#leaderboard', via: :get
 end

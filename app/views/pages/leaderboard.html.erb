@@ -1,0 +1,19 @@
+<h2 class="text-center">Palmarès</h2>
+<section class="flex user-reports small-12 medium-10 medium-centered">
+  <table class="palmares__table">
+    <thead>
+      <th>Nom</th>
+      <th>Nombre de témoignages</th>
+      <th>Dernière activité</th>
+    </thead>
+    <tbody>
+    <% @leaderboard.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.reports.count %></td>
+        <td><%= user.reports.last.reported_at.strftime("%d-%m-%Y") %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</section>
