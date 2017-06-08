@@ -11,7 +11,7 @@
           <div href="#" class="button secondary">Mon compte</div>
           <ul>
             <li><i class="fi-widget"></i><%= link_to 'Paramètres', me_users_path %></li>
-            <li><i class="fi-marker"></i><%= link_to 'Mes témoignages', reports_users_path %></li>
+            <li><i class="fi-marker"></i><%= link_to 'Mes témoignages', reports_user_path(current_user) %></li>
             <li><i class="fi-power"></i><%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete %></li>
           </ul>
         </li>

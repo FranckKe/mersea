@@ -1,0 +1,14 @@
+.leaflet-locpicker-map {
+  width: 52% !important; //js override
+}
+@media screen and (max-width: 640px) {
+  .leaflet-locpicker-map {
+    width: 95% !important; //js override
+    left: 2.5% !important;
+  }
+}
+
+.leaflet-bottom,
+.leaflet-top {
+  z-index: 900 !important;
+}

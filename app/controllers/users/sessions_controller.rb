@@ -10,14 +10,13 @@ class Users::SessionsController < Devise::SessionsController
   def create
     resource = User.find_for_database_authentication(email: params[:user][:email])
 
-    if resource && resource.valid_password?(params[:user][:password])
+    if resource&.valid_password?(params[:user][:password])
       sign_in :user, resource
       flash.discard
-      render json: { message: I18n.t("devise.failure.#{env['warden'].message}") }, status: 200 && return
+      render json: { message: I18n.t("devise.failure.#{env['warden'].message}") }, status: :created && return
     end
     invalid_login_attempt
   end
-
 
   # DELETE /resource/sign_out
   # def destroy
@@ -29,7 +28,7 @@ class Users::SessionsController < Devise::SessionsController
   def invalid_login_attempt
     error_message = I18n.t("devise.failure.#{env['warden'].message}.not_found_in_database")
     flash[:alert] = error_message
-    render json: { message: error_message }, status: 401
+    render json: { message: error_message }, status: :bad_request
   end
 
   # If you have extra params to permit, append them to the sanitizer.

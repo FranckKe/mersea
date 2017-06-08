@@ -1,0 +1,66 @@
+var reportId = $(this).attr('data-id');
+var editModal = $('#reportEdit');
+var editFormWrapper = $('.report-edit__form-wrapper');
+editFormWrapper.html('<%= j render partial: 'reports/edit', locals: {report: @report} %>');
+
+editModal.foundation('open');
+
+var reportedAtInput = $('.report_reported_at');
+
+$('.datepicker-tracer-form').val(reportedAtInput.val());
+$('.datepicker-tracer-form').datepicker({
+  dateFormat: "yy-mm-dd",
+  dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+  dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+  dayNamesShort: [ "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam" ],
+  monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+  firstDay: 1
+});
+$('.datepicker-tracer-form').datepicker('setDate', new Date($('.report_reported_at input').val()));
+
+
+$('.datepicker-tracer-form').change(function () {
+  var date = $(this).datepicker('getDate'),
+    day = date.getDate(),
+    month = date.getMonth() + 1,
+    year = date.getFullYear();
+
+  reportedAtInput.val(year + '-' + month + '-' + day);
+});
+
+var geoloc = $('#geoloc').leafletLocationPicker()
+geoloc.on('changeLocation', function (e) {
+  $('.report_latitude input').val(e.latlng.lat);
+  $('.report_longitude input').val(e.latlng.lng);
+});
+
+editModal.on('closed.zf.reveal', function () {
+  geoloc.trigger('closeMap');
+  $('.leaflet-locpicker-map').remove();
+
+});
+
+$('.leaflet-locpicker-map').css('z-index', 1200)
+
+var informationStatusMessage = $('.simple_form.edit-report .status-message p');
+var editReportSubmit = $('.simple_form.edit-report .submit');
+var editReportLoader = $('.simple_form.edit-report .loader-wrapper');
+
+$('.simple_form.edit-report')
+.on('ajax:beforeSend', function (e, data, status, xhr) {
+  editReportSubmit.addClass('hide');
+  editReportLoader.removeClass('hide');
+})
+.on('ajax:success', function (evt, data, status, xhr) {
+  updateStatusMessage(informationStatusMessage, 'success', data.message);
+  $('.user-reports__table').DataTable().ajax.reload();
+  setTimeout(function(){ editModal.foundation('close'); }, 2000);
+
+})
+.on('ajax:error', function (e, data, status, xhr) {
+  updateStatusMessage(informationStatusMessage, 'error', data.message);
+})
+.on('ajax:complete', function (evt, xhr, status, error) {
+  editReportLoader.addClass('hide');
+  editReportSubmit.removeClass('hide');
+});

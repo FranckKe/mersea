@@ -18,26 +18,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, :signed_up if is_flashing_format?
         msg = find_message(:signed_up, {})
         sign_up(resource_name, resource)
-        render json: { message: msg, url: after_sign_up_path_for(resource) }, status: 200
+        render json: { message: msg, url: after_sign_up_path_for(resource) }, status: :created
       else
         set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
         msg = find_message(:"signed_up_but_#{resource.inactive_message}", {})
         expire_data_after_sign_in!
-        render json: { message: msg }, status: 200
+        render json: { message: msg }, status: :created
       end
     else
       clean_up_passwords resource
-      msg = resource.errors.full_messages.join('<br>').html_safe # TODO
-      render json: { message: msg }, status: 401
+      msg = resource.errors.full_messages.join('<br>').html_safe
+      render json: { message: msg }, status: :bad_request
     end
   end
 
   private
 
   def check_captcha
-    unless verify_recaptcha
-      render json: { message: 'Veuillez confirmer que vous n\'êtes pas un robot' }, status: 401
-    end
+    return if verify_recaptcha
+    render json: { message: 'Veuillez confirmer que vous n\'êtes pas un robot' }, status: :bad_request
   end
 
   # GET /resource/edit

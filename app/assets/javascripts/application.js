@@ -21,6 +21,7 @@
 //= require froala_editor.min
 //= require materialMenu.min
 //= require jquery.dataTables.min
+//= require leaflet-locationpicker
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
@@ -31,7 +32,16 @@ $(document).on('turbolinks:load', function () {
 function updateStatusMessage (node, status, message) {
   status = status || '';
   message = message || '';
+  var multipleMessage = '';
+  if (typeof message === 'object') {
+    for (var field in message) {
+      multipleMessage += field + ': ' + message[field] + '<br>';
+    }
+    message = multipleMessage;
+    node.html(multipleMessage);
+  } else {
+    node.text(message);
+  }
   node.removeClass();
   node.addClass(status);
-  node.text(message);
 }
