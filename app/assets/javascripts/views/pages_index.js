@@ -5,9 +5,9 @@ var defaultMarkerColor = '#126fc6';
 var locateLayer = L.layerGroup();
 var clickLayer = L.layerGroup();
 var plusIcon = L.icon({
-  iconUrl: 'marker_plus.png',
-  iconSize:     [32, 32],
-  iconAnchor:   [16, 32],
+  iconUrl: 'marker_plus.svg',
+  iconSize:     [26, 40],
+  iconAnchor:   [13, 40],
   popupAnchor:  [0, -32]
 });
 
