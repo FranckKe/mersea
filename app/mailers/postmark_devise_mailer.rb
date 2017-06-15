@@ -15,7 +15,4 @@ class PostmarkDeviseMailer < Devise::Mailer
       }
     )
   end
-
-  # def email_changed(record, opts={})
-  # end
 end
