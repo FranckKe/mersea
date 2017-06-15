@@ -5,7 +5,7 @@ $(document).on('turbolinks:load', function () {
   var registrationPassword = $('.registration .password');
   var registrationPasswordConfirmation = $('.registration .password.confirmation');
 
-  $('input.password').on('propertychange change click keyup input paste', function (event) {
+  $('.registration input.password').on('propertychange change click keyup input paste', function (event) {
     if (registrationPassword.val() === '' || registrationPasswordConfirmation.val() === '') {
       registrationSubmit.prop('disabled', true);
       updateStatusMessage(registrationStatusMessage);

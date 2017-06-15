@@ -25,7 +25,7 @@ $(document).on('turbolinks:load', function () {
   var newPassword = $('.new-password');
   var newPasswordConfirmation = $('.new-password.confirmation');
 
-  $('input.new-password').on('propertychange change click keyup input paste', function (event) {
+  $('.edit-user input.new-password').on('propertychange change click keyup input paste', function (event) {
     if (newPassword.val() === '' || newPasswordConfirmation.val() === '') {
       passwordSubmit.prop('disabled', true);
       updateStatusMessage(passwordStatusMessage);
