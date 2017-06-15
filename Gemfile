@@ -15,6 +15,7 @@ gem 'state_machines-activerecord', '~> 0.4.0'
 gem 'rails_admin_state', '~> 1.5'
 gem 'rails_admin_import', '~> 2.0'
 gem 'active_model_serializers'
+gem 'postmark', '~> 1.10'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'wysiwyg-rails', '~> 2.4'
 # https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
