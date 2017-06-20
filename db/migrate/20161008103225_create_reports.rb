@@ -12,7 +12,6 @@ class CreateReports < ActiveRecord::Migration[5.0]
       t.text :description
       t.attachment :photo
       t.date :reported_at, index: true
-      t.date :reported_at, index: true
       t.string :status, index: true
 
       t.timestamps
