@@ -18,7 +18,6 @@
 //= require leaflet
 //= require leaflet.markercluster
 //= require leaflet.markercluster.layersupport
-//= require froala_editor.min
 //= require materialMenu.min
 //= require_tree .
 
