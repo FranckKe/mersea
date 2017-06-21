@@ -11,8 +11,8 @@
         <%= f.input :address %>
         <%= f.input :photo, as: :file, required: true %>
         <%= f.input :description, as: :text %>
-        <%= f.input :latitude, as: :hidden %>
-        <%= f.input :longitude, as: :hidden %>
+        <%= f.input :latitude, as: :hidden, input_html: { value: (params[:lat] if params[:lat].present?) } %>
+        <%= f.input :longitude, as: :hidden, input_html: { value: (params[:lng] if params[:lng].present?) } %>
         <label>Position
           <input id="geoloc" type="text" value="<%= "#{params[:lat]},#{params[:lng]}" if params[:lat].present? && params[:lng].present? %>" required/>
         </label>
