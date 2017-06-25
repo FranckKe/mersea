@@ -2,7 +2,7 @@
   <div class="menu-wrapper">
     <%= render 'layouts/menu' %>
   </div>
-    <h1>Mersea</h1>
+    <h1><%= link_to 'Mersea', root_path %></h1>
   <div class="">
     <% if current_user.present? %>
       <ul class="dropdown menu user-menu" data-dropdown-menu data-click-open>

@@ -15,6 +15,14 @@
     width: 110px;
     left: calc(50% - 55px);
     position: absolute;
+
+    a {
+      color: white;
+    }
+
+    a:hover {
+      color: black;
+    }
   }
 
   .button {
@@ -50,4 +58,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+@media screen and (max-width: 640px) {
+  .topbar h1 {
+    font-size: 1.5rem;
+  }
 }

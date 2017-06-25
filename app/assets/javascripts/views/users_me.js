@@ -1,9 +1,9 @@
 $(document).on('turbolinks:load', function () {
-  var informationStatusMessage = $('.simple_form.edit-user .status-message p');
-  var editUserSubmit = $('.simple_form.edit-user .submit');
-  var editUserLoader = $('.simple_form.edit-user .loader-wrapper');
+  var informationStatusMessage = $('.edit-user .status-message p');
+  var editUserSubmit = $('.edit-user .submit');
+  var editUserLoader = $('.edit-user .loader-wrapper');
 
-  $('.simple_form.edit-user')
+  $('.edit-user')
   .on('ajax:beforeSend', function (e, data, status, xhr) {
     editUserSubmit.addClass('hide');
     editUserLoader.removeClass('hide');
@@ -12,7 +12,7 @@ $(document).on('turbolinks:load', function () {
     updateStatusMessage(informationStatusMessage, 'success', data.message);
   })
   .on('ajax:error', function (e, data, status, xhr) {
-    updateStatusMessage(informationStatusMessage, 'error', data.message);
+    updateStatusMessage(informationStatusMessage, 'error', data.responseJSON.message);
   })
   .on('ajax:complete', function (evt, xhr, status, error) {
     editUserLoader.addClass('hide');
@@ -25,7 +25,7 @@ $(document).on('turbolinks:load', function () {
   var newPassword = $('.new-password');
   var newPasswordConfirmation = $('.new-password.confirmation');
 
-  $('.edit-user input.new-password').on('propertychange change click keyup input paste', function (event) {
+  $('.password-update input.new-password').on('propertychange change click keyup input paste', function (event) {
     if (newPassword.val() === '' || newPasswordConfirmation.val() === '') {
       passwordSubmit.prop('disabled', true);
       updateStatusMessage(passwordStatusMessage);
@@ -49,7 +49,7 @@ $(document).on('turbolinks:load', function () {
     updateStatusMessage(passwordStatusMessage, 'success', data.message);
   })
   .on('ajax:error', function (e, data, status, xhr) {
-    updateStatusMessage(passwordStatusMessage, 'error', data.message);
+    updateStatusMessage(passwordStatusMessage, 'error', data.responseJSON.message);
   })
   .on('ajax:complete', function (evt, xhr, status, error) {
     passwordLoader.addClass('hide');

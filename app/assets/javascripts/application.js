@@ -27,7 +27,14 @@
 $(document).on('turbolinks:load', function () {
   $(document).foundation();
   var menu = new Menu;
+  setTimeout(function () {
+    $('.callout').trigger('close');
+  }, 3500);
 });
+
+$.ajaxSetup({
+  dataType: 'json'
+})
 
 function updateStatusMessage (node, status, message) {
   status = status || '';

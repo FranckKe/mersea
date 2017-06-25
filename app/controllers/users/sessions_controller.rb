@@ -27,8 +27,10 @@ class Users::SessionsController < Devise::SessionsController
 
   def invalid_login_attempt
     error_message = I18n.t("devise.failure.#{env['warden'].message}.not_found_in_database")
-    flash[:alert] = error_message
-    render json: { message: error_message }, status: :bad_request
+    respond_to do |format|
+      format.html { set_flash_message :alert, error_message }
+      format.json { render json: { message: error_message }, status: :bad_request }
+    end
   end
 
   # If you have extra params to permit, append them to the sanitizer.

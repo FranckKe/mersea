@@ -5,6 +5,7 @@ $(document).on('turbolinks:load', function () {
       'dataType': 'json',
       'url': '/users/' + $('.user-reports__table').attr('data-id') + '/reports'
     },
+    'bDestroy': true,
     'columns': [
       { 'data': 'id' },
       { 'data': 'tracer.name' },
@@ -26,7 +27,11 @@ $(document).on('turbolinks:load', function () {
   $('.user-reports__table tbody').on('click', 'tr', function () {
     var reportId = $(this).find('td:first').text();
     if (reportId !== 'No data available in table') {
-      $.get('/reports/' + reportId + '/edit');
+      $.ajax({
+        type: 'GET',
+        url: '/reports/' + reportId + '/edit',
+        dataType : 'script'
+      });
     }
   });
 });

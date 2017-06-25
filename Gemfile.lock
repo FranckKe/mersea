@@ -105,7 +105,7 @@ GEM
     foundation-icons-sass-rails (3.0.0)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
-    foundation-rails (6.2.4.0)
+    foundation-rails (6.3.1.0)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
       sprockets-es6 (>= 0.9.0)
@@ -328,7 +328,7 @@ DEPENDENCIES
   devise-foundation-views
   devise-i18n (~> 1.1)
   foundation-icons-sass-rails (~> 3.0)
-  foundation-rails (~> 6.2)
+  foundation-rails (~> 6.3)
   jquery-rails (~> 4.2)
   leaflet-rails!
   listen (~> 3.0.5)

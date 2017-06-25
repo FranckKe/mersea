@@ -29,13 +29,18 @@ class Users::PasswordsController < Devise::PasswordsController
         sign_in(resource_name, resource)
         render json: { message: message }
       else
-        set_flash_message :notice, I18n.t('devise.passwords.updated_not_active') if is_flashing_format?
-        render json: { message: I18n.t('devise.passwords.updated_not_active') }
+        respond_to do |format|
+          format.html { set_flash_message :alert, I18n.t('devise.passwords.updated_not_active') }
+          format.json { render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: :bad_request }
+        end
       end
     else
       set_minimum_password_length
       msg = resource.errors.full_messages.join('<br>').html_safe
-      render json: { message: msg }, status: :bad_request
+      respond_to do |format|
+        format.html { set_flash_message :alert, msg }
+        format.json { render json: { message: msg }, status: :bad_request }
+      end
     end
   end
 
@@ -53,8 +58,10 @@ class Users::PasswordsController < Devise::PasswordsController
   # Check if a reset_password_token is provided in the request
   def assert_reset_token_passed
     if params[:reset_password_token].blank?
-      set_flash_message :alert, :no_token if is_flashing_format?
-      render json: { message: I18n.t('devise.passwords.no_token') }, status: :bad_request
+      respond_to do |format|
+        format.html { set_flash_message :alert, :no_token }
+        format.json { render json: { message: I18n.t('devise.passwords.no_token') }, status: :bad_request }
+      end
     end
   end
 end

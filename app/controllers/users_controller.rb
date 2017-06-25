@@ -3,12 +3,23 @@ class UsersController < ApplicationController
 
   def me
     return unless request.method_symbol == :post
-    if current_user.update_attributes(update_params)
-      set_flash_message :notice, I18n.t('devise.registrations.updated') if is_flashing_format?
-      render json: { message: I18n.t('devise.registrations.updated') }, status: :ok
+    if current_user.valid_password?(update_params[:password])
+      if current_user.update_attributes(update_params.except(:password))
+        respond_to do |format|
+          format.html { set_flash_message :notice, I18n.t('devise.registrations.updated') }
+          format.json { render json: { message: I18n.t('devise.registrations.updated') }, status: :ok }
+        end
+      else
+        respond_to do |format|
+          format.html { set_flash_message :alert, current_user.errors.full_messages }
+          format.json { render json: { message: current_user.errors.full_messages.join(', ') }, status: :bad_request }
+        end
+      end
     else
-      set_flash_message :notice, current_user.errors.full_messages if is_flashing_format?
-      render json: { message: current_user.errors.full_messages }, status: :bad_request
+      respond_to do |format|
+        format.html { set_flash_message :alert, I18n.t('devise.failure.invalid') }
+        format.json { render json: { message:  I18n.t('devise.failure.invalid') }, status: :unauthorized }
+      end
     end
   end
 
@@ -32,20 +43,47 @@ class UsersController < ApplicationController
 
   def update_password
     @user = User.find(current_user.id)
-    if @user.update_with_password(update_password_params)
-      bypass_sign_in(@user)
-      set_flash_message :notice, I18n.t('devise.passwords.updated_not_active') if is_flashing_format?
-      render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: :created
+    if @user.valid_password?(update_password_params[:current_password])
+      if update_password_params[:password] == update_password_params[:password_confirmation]
+        if @user.update_attributes(update_password_params.slice(:password))
+          bypass_sign_in(@user)
+          respond_to do |format|
+            format.html { set_flash_message :notice, I18n.t('devise.passwords.updated_not_active') }
+            format.json { render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: :created }
+          end
+        else
+          default_message = 'Votre mot de passe doit être compris entre 6 et 128 charactères'
+          respond_to do |format|
+            format.html { set_flash_message :alert, default_message }
+            format.json { render json: { message: default_message }, status: :bad_request }
+          end
+        end
+      else
+        respond_to do |format|
+          format.html { set_flash_message :alert, 'Les nouveaux mot de passes ne correspondent pas' }
+          format.json { render json: { message: 'Les nouveaux mot de passes ne correspondent pas' }, status: :bad_request }
+        end
+      end
     else
-      set_flash_message :notice, 'Mot de passe actuel incorrect' if is_flashing_format?
-      render json: { message: 'Mot de passe actuel incorrect' }, status: :bad_request
+      respond_to do |format|
+        format.html { seset_flash_message :alert, I18n.t('devise.failure.invalid') }
+        format.json { render json: { message: I18n.t('devise.failure.invalid') }, status: :unauthorized }
+      end
+    end
+  end
+
+  protected
+
+  def set_flash_message(key, kind, options = {})
+    if is_flashing_format?
+      set_flash_message(key, kind, options)
     end
   end
 
   private
 
   def update_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password)
   end
 
   def update_password_params

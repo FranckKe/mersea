@@ -3,9 +3,6 @@
 <%= simple_form_for(current_user, url: update_password_users_path, html: { method: :put, class: 'password-update margin-bottom' }, remote: true) do |f| %>
   <%= f.error_notification %>
 
-  <%= f.input :reset_password_token, as: :hidden %>
-  <%= f.full_error :reset_password_token %>
-
   <div class="form-inputs">
     <%= f.input :current_password, label: "Mot de passe actuel", input_html: { class: 'current-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
     <%= f.input :password, label: "Nouveau mot de passe", input_html: { class: 'new-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>

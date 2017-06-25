@@ -15,20 +15,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message :notice, :signed_up if is_flashing_format?
-        msg = find_message(:signed_up, {})
         sign_up(resource_name, resource)
-        render json: { message: msg, url: after_sign_up_path_for(resource) }, status: :created
+        sign_in(resource)
+        respond_to do |format|
+          format.html { set_flash_message :notice, :signed_up }
+          format.json { render json: { message: find_message(:signed_up, {}) }, status: :created }
+        end
       else
-        set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
-        msg = find_message(:"signed_up_but_#{resource.inactive_message}", {})
         expire_data_after_sign_in!
-        render json: { message: msg }, status: :created
+        respond_to do |format|
+          format.html { set_flash_message :alert, :"signed_up_but_#{resource.inactive_message}" }
+          format.json { render json: { message: find_message(:"signed_up_but_#{resource.inactive_message}", {}) }, status: :created }
+        end
       end
     else
-      clean_up_passwords resource
       msg = resource.errors.full_messages.join('<br>').html_safe
-      render json: { message: msg }, status: :bad_request
+      clean_up_passwords resource
+      respond_to do |format|
+        format.html { set_flash_message :alert, msg }
+        format.json { render json: { message: msg }, status: :bad_request }
+      end
     end
   end
 
@@ -36,7 +42,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def check_captcha
     return if verify_recaptcha
-    render json: { message: 'Veuillez confirmer que vous n\'êtes pas un robot' }, status: :bad_request
+    respond_to do |format|
+      format.html { set_flash_message :alert, 'Veuillez confirmer que vous n\'êtes pas un robot' }
+      format.json { render json: { message: 'Veuillez confirmer que vous n\'êtes pas un robot' }, status: :bad_request }
+    end
   end
 
   # GET /resource/edit

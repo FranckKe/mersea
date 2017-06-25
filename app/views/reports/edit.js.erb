@@ -2,11 +2,9 @@ var reportId = $(this).attr('data-id');
 var editModal = $('#reportEdit');
 var editFormWrapper = $('.report-edit__form-wrapper');
 editFormWrapper.html('<%= j render partial: 'reports/edit', locals: {report: @report} %>');
-
 editModal.foundation('open');
 
 var reportedAtInput = $('.report_reported_at');
-
 $('.datepicker-tracer-form').val(reportedAtInput.val());
 $('.datepicker-tracer-form').datepicker({
   dateFormat: "yy-mm-dd",
@@ -17,8 +15,6 @@ $('.datepicker-tracer-form').datepicker({
   firstDay: 1
 });
 $('.datepicker-tracer-form').datepicker('setDate', new Date($('.report_reported_at input').val()));
-
-
 $('.datepicker-tracer-form').change(function () {
   var date = $(this).datepicker('getDate'),
     day = date.getDate(),
@@ -37,7 +33,6 @@ geoloc.on('changeLocation', function (e) {
 editModal.on('closed.zf.reveal', function () {
   geoloc.trigger('closeMap');
   $('.leaflet-locpicker-map').remove();
-
 });
 
 $('.leaflet-locpicker-map').css('z-index', 1200)
@@ -55,10 +50,9 @@ $('.simple_form.edit-report')
   updateStatusMessage(informationStatusMessage, 'success', data.message);
   $('.user-reports__table').DataTable().ajax.reload();
   setTimeout(function(){ editModal.foundation('close'); }, 2000);
-
 })
 .on('ajax:error', function (e, data, status, xhr) {
-  updateStatusMessage(informationStatusMessage, 'error', data.message);
+  updateStatusMessage(informationStatusMessage, 'error', data.responseJSON.message);
 })
 .on('ajax:complete', function (evt, xhr, status, error) {
   editReportLoader.addClass('hide');

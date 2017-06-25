@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
 
     respond_to do |format|
-      format.js
+      format.js { render layout: false, content_type: 'text/javascript' }
     end
   end
 
