@@ -1,0 +1,27 @@
+.flex {
+  display: flex;
+}
+
+.flex.h-center {
+  justify-content: space-between;
+}
+
+.flex.v-center {
+  align-items: center;
+}
+
+.flex.d-column {
+  flex-direction: column;
+}
+
+.status-message > .error {
+  color: red;
+}
+
+.status-message > .success {
+  color: green;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
+}

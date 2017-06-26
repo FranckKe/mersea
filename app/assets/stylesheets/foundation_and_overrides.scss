@@ -1,5 +1,4 @@
 @charset 'utf-8';
-
 @import 'settings';
 @import 'foundation';
 
@@ -8,7 +7,6 @@
 // @import 'motion-ui/motion-ui';
 
 // We include everything by default.  To slim your CSS, remove components you don't use.
-
 @include foundation-global-styles;
 @include foundation-grid;
 @include foundation-typography;
@@ -22,10 +20,10 @@
 // @include foundation-breadcrumbs;
 @include foundation-button-group;
 @include foundation-callout;
-// @include foundation-close-button;
+@include foundation-close-button;
 @include foundation-drilldown-menu;
-// @include foundation-dropdown;
-// @include foundation-dropdown-menu;
+@include foundation-dropdown;
+@include foundation-dropdown-menu;
 @include foundation-flex-video;
 // @include foundation-label;
 @include foundation-media-object;
@@ -37,7 +35,7 @@
 @include foundation-progress-bar;
 // @include foundation-slider;
 @include foundation-sticky;
-// @include foundation-reveal;
+@include foundation-reveal;
 // @include foundation-switch;
 @include foundation-table;
 // @include foundation-tabs;

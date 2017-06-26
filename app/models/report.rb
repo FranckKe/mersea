@@ -19,6 +19,7 @@
 #  status             :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  user_id            :uuid
 #
 # Indexes
 #
@@ -28,6 +29,7 @@
 #  index_reports_on_reported_at  (reported_at)
 #  index_reports_on_status       (status)
 #  index_reports_on_tracer_id    (tracer_id)
+#  index_reports_on_user_id      (user_id)
 #
 
 class Report < ApplicationRecord
@@ -35,6 +37,7 @@ class Report < ApplicationRecord
 
   has_attached_file :photo
   belongs_to :tracer
+  belongs_to :user
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
   validates :photo, presence: true, if: -> { self.status != 'accepted' }

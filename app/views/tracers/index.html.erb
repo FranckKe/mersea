@@ -1,12 +1,22 @@
 <h1 class="traceur-title">Traceurs</h1>
 <section class="tracers-flex-container">
     <% @tracers.each do |tracer| %>
-        <div class="card">
-            <%= link_to(tracer, { class: "image" }) do %>
+        <div class="card flex d-column">
+            <% if params[:lat].present? && params[:lng].present? %>
+              <%= link_to tracer_path(tracer, lat: params[:lat], lng: params[:lng]), { class: "image" } do %>
                 <%= image_tag tracer.photo.url %>
+              <% end %>
+            <% else %>
+              <%= link_to(tracer, { class: "image" }) do %>
+                <%= image_tag tracer.photo.url %>
+              <% end %>
             <% end %>
             <div class="action">
-                <%= link_to tracer.name, tracer %>
+              <% if params[:lat].present? && params[:lng].present? %>
+                <%= link_to tracer.name, tracer_path(tracer, lat: params[:lat], lng: params[:lng]) %>
+              <% else %>
+              <%= link_to tracer.name, tracer %>
+              <% end %>
             </div>
         </div>
         <% end %>

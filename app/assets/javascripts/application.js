@@ -10,7 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery3
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
@@ -19,9 +19,35 @@
 //= require leaflet.markercluster
 //= require leaflet.markercluster.layersupport
 //= require materialMenu.min
+//= require jquery.dataTables.min
+//= require leaflet-locationpicker
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
   $(document).foundation();
   var menu = new Menu;
+  setTimeout(function () {
+    $('.callout').trigger('close');
+  }, 3500);
 });
+
+$.ajaxSetup({
+  dataType: 'json'
+})
+
+function updateStatusMessage (node, status, message) {
+  status = status || '';
+  message = message || '';
+  var multipleMessage = '';
+  if (typeof message === 'object') {
+    for (var field in message) {
+      multipleMessage += field + ': ' + message[field] + '<br>';
+    }
+    message = multipleMessage;
+    node.html(multipleMessage);
+  } else {
+    node.text(message);
+  }
+  node.removeClass();
+  node.addClass(status);
+}

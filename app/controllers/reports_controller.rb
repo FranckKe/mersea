@@ -5,14 +5,16 @@ class ReportsController < ApplicationController
   end
 
   def show
+    @report = Report.find(params[:id])
+    render json: @report, status: :ok
   end
 
   def new
-    @report = Report.new
+    @report = Report.new(name: current_user&.name)
   end
 
   def create
-    @report = Report.new(report_params)
+    @report = Report.new(report_params.merge(user: current_user))
 
     if verify_recaptcha(model: @report) && @report.save
       flash[:success] = 'Merci pour votre signalement'
@@ -23,10 +25,41 @@ class ReportsController < ApplicationController
     end
   end
 
+  def update
+    @report = Report.find(params[:id])
+
+    if @report.update_attributes(report_params_update)
+      render json: { report: @report, message: 'Témoignage mis à jour' }, status: :ok
+    else
+      render json: { message: @report.errors.full_messages }, status: :bad_request
+    end
+  end
+
+  def edit
+    @report = Report.find(params[:id])
+
+    respond_to do |format|
+      format.js { render layout: false, content_type: 'text/javascript' }
+    end
+  end
+
+  def destroy
+    @report = Report.find(params[:id])
+    @report.destroy
+    render json: { message: 'Témoignage supprimé' }, status: :ok
+  end
+
   private
 
   def report_params
-    params.require(:report).permit(:tracer_id, :name, :email, :quantity, :address, :longitude,
-                                   :latitude, :description, :photo, :reported_at)
+    params.require(:report)
+          .permit(:tracer_id, :name, :quantity, :address, :longitude, :latitude,
+                  :description, :photo, :reported_at)
+  end
+
+  def report_params_update
+    params.require(:report)
+          .permit(:name, :quantity, :address, :longitude, :latitude,
+                  :description, :reported_at)
   end
 end

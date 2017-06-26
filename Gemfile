@@ -15,6 +15,7 @@ gem 'state_machines-activerecord', '~> 0.4.0'
 gem 'rails_admin_state', '~> 1.5'
 gem 'rails_admin_import', '~> 2.0'
 gem 'active_model_serializers'
+gem 'postmark', '~> 1.10'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'wysiwyg-rails', '~> 2.4'
 # https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
@@ -35,7 +36,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :assets, :development, :test, :production do
   gem 'jquery-rails', '~> 4.2'
-  gem 'foundation-rails', '~> 6.2'
+  gem 'foundation-rails', '~> 6.3'
   gem 'foundation-icons-sass-rails', '~> 3.0'
   gem 'devise-foundation-views'
   gem 'sass-rails', '~> 5.0'

@@ -1,10 +1,8 @@
-function populateLatLng() {
-  $('#report_latitude').val(localStorage.getItem('clickedLat') || localStorage.getItem('lat'));
-  $('#report_longitude').val(localStorage.getItem('clickedLng') || localStorage.getItem('lng'));
-}
-
 $(document).on('turbolinks:load', function () {
-  populateLatLng();
+  $('#geoloc').leafletLocationPicker().on('changeLocation', function (e) {
+    $('.report_latitude input').val(e.latlng.lat);
+    $('.report_longitude input').val(e.latlng.lng);
+  });
 
   var reportedAtInput = $('#report_reported_at');
 

@@ -2,19 +2,22 @@
   <div class="medium-6 medium-centered">
     <h3 class="text-center">Signalement</h3>
     <div class="row">
-      <%= simple_form_for Report.new do |f| %>
+      <%= simple_form_for Report.new(name: current_user&.name), html: { class: 'new-report' } do |f| %>
         <%= f.input :tracer_id, as: :hidden, input_html: { value: tracer.id || '' } %>
         <%= f.input :reported_at, input_html: { value: Time.zone.today }, as: :hidden %>
-        <input class="datepicker-tracer-form" type="date">
-        <%= f.input :name %>
+        <input class="datepicker-tracer-form" type="date" required>
+        <%= f.input :name, required: true %>
         <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
         <%= f.input :address %>
-        <%= f.input :latitude, as: :hidden %>
-        <%= f.input :longitude, as: :hidden %>
-        <%= f.input :photo, as: :file %>
+        <%= f.input :photo, as: :file, required: true %>
         <%= f.input :description, as: :text %>
-        <%= recaptcha_tags %>
-        <%= f.button :submit %>
+        <%= f.input :latitude, as: :hidden, input_html: { value: (params[:lat] if params[:lat].present?) } %>
+        <%= f.input :longitude, as: :hidden, input_html: { value: (params[:lng] if params[:lng].present?) } %>
+        <label>Position
+          <input id="geoloc" type="text" value="<%= "#{params[:lat]},#{params[:lng]}" if params[:lat].present? && params[:lng].present? %>" required/>
+        </label>
+        <%= recaptcha_tags unless current_user.present? %>
+        <%= f.button :submit, class: 'submit expand large-6 large-centered' %>
       <% end %>
     </div>
   </div>

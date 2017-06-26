@@ -1,0 +1,66 @@
+.topbar {
+  background-color: #64b5f6;
+  padding: 5px 15px;
+  height: 55px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 990;
+
+  h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
+    width: 110px;
+    left: calc(50% - 55px);
+    position: absolute;
+
+    a {
+      color: white;
+    }
+
+    a:hover {
+      color: black;
+    }
+  }
+
+  .button {
+    margin: 0; // Foundation override
+  }
+
+  .button.primary {
+    background-color: #ffaa00;
+  }
+
+  .button.secondary {
+    color: black;
+    background-color: #ffffff;
+  }
+}
+
+.is-dropdown-submenu {
+  list-style: none;
+
+  li {
+    padding: 0 10px;
+  }
+}
+
+.user-menu {
+  li > a {
+    padding: 10px;
+    flex-grow: 1;
+  }
+}
+
+.is-submenu-item.is-dropdown-submenu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media screen and (max-width: 640px) {
+  .topbar h1 {
+    font-size: 1.5rem;
+  }
+}

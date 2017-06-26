@@ -1,3 +1,14 @@
+.wrapper {
+  height: calc(100vh - 55px); // Menu height
+  margin-top: 55px; // Menu height
+
+  .callout {
+    width: 100%;
+    position: fixed;
+    z-index: 901;
+  }
+}
+
 section {
   padding-top: 25px;
 }
