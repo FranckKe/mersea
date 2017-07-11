@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
   def create
     @report = Report.new(report_params.merge(user: current_user))
 
-    if verify_recaptcha(model: @report) && @report.save
+    if trusted_report && @report.save
       flash[:success] = 'Merci pour votre signalement'
       redirect_to root_path
     else
@@ -61,5 +61,9 @@ class ReportsController < ApplicationController
     params.require(:report)
           .permit(:name, :quantity, :address, :longitude, :latitude,
                   :description, :reported_at)
+  end
+
+  def trusted_report
+    current_user.present? || verify_recaptcha(model: @report)
   end
 end
