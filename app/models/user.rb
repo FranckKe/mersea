@@ -39,4 +39,16 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates_format_of :email, with: Devise.email_regexp
   validates :password, presence: true, on: :create
+
+  rails_admin do
+    list do
+      field :name
+      field :email
+      field :created_at
+      field :sign_in_count
+      field :last_sign_in_at
+      field :updated_at
+      field :reset_password_sent_at
+    end
+  end
 end
