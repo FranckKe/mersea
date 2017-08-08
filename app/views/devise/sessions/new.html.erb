@@ -4,10 +4,11 @@
     <div class="login-box">
       <div class="row">
         <div class="large-12 columns">
-          <%= form_for(resource, as: resource_name, url: session_path(resource_name), remote: true) do |f| %>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), remote: resource.is_a?(User)) do |f| %>
             <div class="row">
               <h5 class="text-center">
                 <%= t('.sign_in', :default => "Sign in") %>
+                <%= 'admin' if resource.is_a?(Admin) %>
               </h5>
             </div>
             <div class="row">
