@@ -42,4 +42,22 @@ class Report < ApplicationRecord
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
   validates :photo, presence: true, if: -> { self.status != 'accepted' }
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
+
+  rails_admin do
+    list do
+      exclude_fields :longitude, :latitude, :email
+    end
+    show do
+      include_all_fields
+      exclude_fields :latitude, :status
+      field :address
+      field :description
+      field :status, :state
+      field :longitude do
+        pretty_value do
+          bindings[:view].tag(:div, { id: 'map', class: 'map', 'data-lng': bindings[:object].longitude, 'data-lat': bindings[:object].latitude })
+        end
+      end
+    end
+  end
 end
