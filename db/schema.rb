@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(version: 20170513194900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "citext"
   enable_extension "uuid-ossp"
+  enable_extension "citext"
 
   create_table "admins", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "name"
