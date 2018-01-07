@@ -143,9 +143,17 @@ $(document).on('turbolinks:load', function () {
     var markerClick = new L.marker(e.latlng, {
       icon: plusIcon
     });
-    clickLayer.addLayer(markerClick).addTo(map);
+    clickLayer
+      .addLayer(markerClick)
+      .addTo(map);
 
-    markerClick.bindPopup('<a href="/tracers?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '"><i class="fi-plus"></i> Ajouter un témoignage</a>');
+    var popup = L.popup()
+      .setContent('<a href="/tracers?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng + '"><i class="fi-plus"></i> Ajouter un témoignage</a>')
+
+    markerClick.bindPopup(popup);
     markerClick.openPopup();
+    markerClick.on('popupclose', function(e) {
+      map.removeLayer(markerClick)
+    })
   }
 });
