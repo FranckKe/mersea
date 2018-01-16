@@ -5,15 +5,16 @@
 
 ## Requirements
 
-- MRI 2.3.x
+- MRI 2.5.x
 - Postgres 9.5 [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
 
 ## Create an admin account
 
 Within a Rails console:
 ```rb
-Admin.create(name: 'ANSEL', email: 'asso.ansel@club-internet.fr', password: 'strongpassword')
+Admin.create(name: 'myname', email: 'myemail@email.local', password: 'mypassword')
 ```
+
 
 ## Development
 
@@ -32,7 +33,7 @@ $ bundle exec rails s
 
 Configure your reCaptcha keys.
 
-## Production with Docker
+## Production with Docker (WIP)
 
 - Start server via Docker Compose
 ```sh
