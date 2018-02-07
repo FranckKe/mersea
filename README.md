@@ -33,13 +33,16 @@ $ bundle exec rails s
 
 Configure your reCaptcha keys.
 
-## Production with Docker (WIP)
+## Production with Docker
+
+**Configure your reCaptcha keys as environment variables**
 
 - Start server via Docker Compose
 ```sh
 $ cd /path/to/mersea
 $ docker-compose up -d
 ```
+> Feel free to modifies the provided docker-compose.yml to your needs.
 
 http://localhost:3000
 
@@ -57,6 +60,8 @@ To set any environment variable in the container, use one or more `-e` flags:
 - `MERSEA_DATABASE_PORT` → database port (by default 5432)
 - `MERSEA_DATABASE_USERNAME` → database credential
 - `MERSEA_DATABASE_PASSWORD` → database credential
+- `RECAPTCHA_SITE_KEY` → Google reCaptcha key
+- `RECAPTCHA_SECRET_KEY` → Google reCaptcha secret
 
 ## License
 

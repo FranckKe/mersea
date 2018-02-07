@@ -27,7 +27,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'debbie'
-  gem 'rubocop', '0.43'
+  gem 'rubocop', '0.52.1' # MRI 2.5.0 compatibility
   gem 'annotate'
 end
 
