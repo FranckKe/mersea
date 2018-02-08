@@ -1,11 +1,6 @@
 class CustomFailure < Devise::FailureApp
   def redirect_url
-    if (port = ENV['DEVISE_FORCE_PORT'])
-      # Overrides default ports when the server is behind several proxies
-      url = URI.parse(new_admin_session_url)
-      url.port = port
-      url.to_s
-    elsif warden_options[:scope] == :user
+    if warden_options[:scope] == :user
       user_session_path
     else
       new_admin_session_url
