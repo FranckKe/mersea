@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= I18n.locale %>">
 
 <head>
   <meta charset="utf-8" />
@@ -20,6 +20,13 @@
     <%= render 'layouts/flash' %>
     <%= yield %>
   </div>
+  <script type="text/javascript">
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+    I18n.locales.fr = ["en"];
+    I18n.locales.en = ["fr"];
+    I18n.missingBehaviour = "guess";
+  </script>
 </body>
 
 </html>

@@ -8,20 +8,26 @@
   width: 100%;
   z-index: 990;
 
-  h1 {
-    color: white;
-    font-size: 2rem;
-    margin: 0;
-    width: 110px;
-    left: calc(50% - 55px);
+  .title-wrapper {
+    display: flex;
+    width: 100%;
     position: absolute;
+    z-index: 1;
 
-    a {
+    h1 {
       color: white;
-    }
+      font-size: 2vw;
+      margin: 0;
+      width: 100%;
+      text-align: center;
 
-    a:hover {
-      color: black;
+      a {
+        color: white;
+      }
+
+      a:hover {
+        color: black;
+      }
     }
   }
 
@@ -30,12 +36,12 @@
   }
 
   .button.primary {
-    background-color: #ffaa00;
+    background-color: #fa0;
   }
 
   .button.secondary {
     color: black;
-    background-color: #ffffff;
+    background-color: #fff;
   }
 }
 
@@ -59,8 +65,71 @@
   align-items: center;
   justify-content: space-between;
 }
-@media screen and (max-width: 640px) {
-  .topbar h1 {
-    display: none;
+
+.topbar .utils {
+  height: 100%;
+  display: flex;
+  width: auto;
+  align-items: start;
+  z-index: 10;
+  margin-top: 3px;
+
+  & > a {
+    margin-right: 5px;
+    display: flex;
+    height: auto;
+  }
+}
+
+.languagepicker {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 39px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin: 0 0 2px 0;
+
+  &:hover,
+  &:focus,
+  &:active {
+    height: calc(3 * 42px);
+  }
+
+  li {
+    display: block;
+    padding: 0 20px;
+    line-height: 40px;
+    border-top: 1px solid #eee;
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  li img {
+    margin-right: 5px;
+    width: 25px;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+
+    &:first-child li {
+      border: none;
+      background: #fff;
+    }
+  }
+
+  div li {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    display: none !important;
   }
 }

@@ -1,15 +1,15 @@
-<h2 class="text-center">Témoignages</h2>
+<h2 class="text-center"><%= t('activerecord.report, count: Report.count') %></h2>
 <section class="flex user-reports small-12 medium-10 medium-centered">
   <table class="user-reports__table" data-id=<%= current_user.id %>>
     <thead>
-      <th>id</th>
-      <th>Traceur</th>
-      <th>Quantité</th>
-      <th>Longitude</th>
-      <th>Latitude</th>
-      <th>Description</th>
-      <th>Date</th>
-      <th>Status</th>
+      <th><%= t('activerecord.attributes.report.id') %></th>
+      <th><%= t('activerecord.attributes.report.tracer') %></th>
+      <th><%= t('activerecord.attributes.report.quantity') %></th>
+      <th><%= t('activerecord.attributes.report.longitude') %></th>
+      <th><%= t('activerecord.attributes.report.latitude') %></th>
+      <th><%= t('activerecord.attributes.report.description') %></th>
+      <th><%= t('activerecord.attributes.report.date') %></th>
+      <th><%= t('activerecord.attributes.report.status') %></th>
     </thead>
     <tbody>
 
@@ -18,7 +18,7 @@
 </section>
 
 <div class="reveal" id="reportEdit" class="report-edit" data-reveal>
-  <h1>Modifier le témoignage</h1>
+  <h1><%= t('.edit_report') %></h1>
   <div class="report-edit__form-wrapper">
 
   </div>

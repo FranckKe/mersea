@@ -1,12 +1,12 @@
-<h3 class="text-center">Nouveau mot de passe</h3>
+<h3 class="text-center"><%= t('.new_password') %></h3>
 
 <%= simple_form_for(current_user, url: update_password_users_path, html: { method: :put, class: 'password-update margin-bottom' }, remote: true) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :current_password, label: "Mot de passe actuel", input_html: { class: 'current-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password, label: "Nouveau mot de passe", input_html: { class: 'new-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password_confirmation, label: "Confimation du nouveau mot de passe", input_html: { class: 'new-password confirmation' }, required: true %>
+    <%= f.input :current_password, label: t('activerecord.attributes.user.current_password'), input_html: { class: 'current-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password, label:  t('.new_password'), input_html: { class: 'new-password' }, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, label: t('.confirm_new_password'), input_html: { class: 'new-password confirmation' }, required: true %>
   </div>
 
   <div class="status-message">

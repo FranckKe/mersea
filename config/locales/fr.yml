@@ -1,8 +1,15 @@
 fr:
   activerecord:
     models:
-      tracer: Traceur
-      report: Signalement
+      tracer:
+        zero: Traceur
+        one: Traceur
+        other: Traceurs
+      report:
+        zero:  Signalement
+        one: Signalement
+        other: Signalements
+      user: Utilisateur
     attributes:
       tracer:
         name: Nom
@@ -17,6 +24,7 @@ fr:
         created_at: Créé le
         updated_at: Mise à jour
       report:
+        id: id
         name: Nom
         email: Email
         address: Adresse
@@ -27,6 +35,44 @@ fr:
         status: Statut
         reported_at: Signalé le
         tracer: Traceur
+        quantity: Quantité
+        date: date
+        status: status
+      user:
+        name: Nom
+  layouts:
+    menu:
+      toggle_menu: Activé le menu
+      map: Carte
+      leaderboard: Contributeurs
+    topbar:
+      my_account: Mon compte
+      settings: Paramètres
+      my_reports: Mes témoignage
+  pages:
+    index:
+      add_report: Témoignage
+    leaderboard:
+      report_count: Nombre de témoignages
+      last_activity: Dernière activitée
+  reports:
+    edit:
+      delete_report: Supprimer témoignage
+      delete_my_report: Supprimer mon témoignage
+      please_confirm: Veuillez confirmer la suppression
+      location: Position
+  user:
+    me:
+      my_info: Mes informations
+      new_password_not_match: Le nouveau mot de passe ne correspond pas
+    reports:
+      edit_report: Modifier mon rapport
+  devise:
+    password:
+      password_not_match: Les mots de passes ne correspondent pas
+      password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres
+    registration:
+      human_check: Veuillez confirmer que vous n'êtes pas un robot
   recaptcha:
     errors:
       verification_failed: Echec de la vérification du CAPTCHA, veuillez réessayer s'il vous plaît.

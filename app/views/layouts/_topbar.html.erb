@@ -2,23 +2,35 @@
   <div class="menu-wrapper">
     <%= render 'layouts/menu' %>
   </div>
-    <h1><%= link_to 'Mersea', root_path %></h1>
-  <div class="">
+  <div class="title-wrapper">
+    <h1><%= link_to 'Ocean Plastic Tracker', root_path %></h1>
+  </div>
+  <div class="utils">
     <% if current_user.present? %>
       <ul class="dropdown menu user-menu" data-dropdown-menu data-click-open>
         <li>
-          <% link_to 'Mon compte', me_users_path, class: 'button secondary' %>
-          <div href="#" class="button secondary">Mon compte</div>
+          <% link_to t('my_account'), me_users_path, class: 'button secondary' %>
+          <div href="#" class="button secondary"><%= t('.my_account') %></div>
           <ul>
-            <li><i class="fi-widget"></i><%= link_to 'Paramètres', me_users_path %></li>
-            <li><i class="fi-marker"></i><%= link_to 'Mes témoignages', reports_user_path(current_user) %></li>
-            <li><i class="fi-power"></i><%= link_to 'Se déconnecter', destroy_user_session_path, method: :delete %></li>
+            <li><i class="fi-widget"></i><%= link_to t('.settings'), me_users_path %></li>
+            <li><i class="fi-marker"></i><%= link_to t('.my_reports'), reports_user_path(current_user) %></li>
+            <li><i class="fi-power"></i><%= link_to t('devise.sessions.sign_out'), destroy_user_session_path, method: :delete %></li>
           </ul>
         </li>
       </ul>
     <% else %>
-      <%= link_to 'Se connecter', user_session_path, class: 'button secondary' %>
-      <%= link_to 'S\'inscrire', new_user_registration_path, class: 'button primary' %>
+      <%= link_to t('devise.shared.links.sign_in'), user_session_path, class: 'button secondary' %>
+      <%= link_to t('devise.shared.links.sign_up'), new_user_registration_path, class: 'button primary' %>
     <% end %>
+    <ul class="languagepicker">
+      <div>
+        <li><%= @locale %></li>
+      </div>
+      <% @available_locales.each do |lang| %>
+        <%= link_to root_path(locale: lang[:language]) do %>
+          <li><%= lang[:translation] %></li>
+        <% end %>
+      <% end %>
+    </ul>
   </div>
 </div>

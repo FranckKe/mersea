@@ -1,5 +1,5 @@
 <button id="mm-menu-toggle" class="mm-wrapper-menu-toggle">
-  <div class="mm-menu-toggle">Toggle Menu</div>
+  <div class="mm-menu-toggle"><%= t('.toggle_menu') %></div>
 </button>
 <nav id="mm-menu" class="mm-menu">
   <div class="mm-menu__header">
@@ -10,17 +10,17 @@
   <ul class="mm-menu__items">
     <li class="mm-menu__link">
       <%= link_to root_path, class: 'mm-menu__link' do %>
-        <span class="mm-menu__link-text <%= 'active' if request.path == root_path %>">Carte</span>
+        <span class="mm-menu__link-text <%= 'active' if request.path == root_path %>"><%= t('.map') %></span>
       <% end %>
     </li>
     <li class="mm-menu__link">
       <%= link_to tracers_path, class: 'mm-menu__link' do %>
-        <span class="mm-menu__link-text <%= 'active' if request.path == tracers_path %>">Traceurs</span>
+        <span class="mm-menu__link-text <%= 'active' if request.path == tracers_path %>"><%= t('activerecord.models.tracer', count: Tracer.count) %></span>
       <% end %>
     </li>
     <li class="mm-menu__link">
       <%= link_to leaderboard_path, class: 'mm-menu__link' do %>
-        <span class="mm-menu__link-text <%= 'active' if request.path == leaderboard_path %>">Palmarès</span>
+        <span class="mm-menu__link-text <%= 'active' if request.path == leaderboard_path %>"><%= t('.leaderboard') %></span>
       <% end %>
     </li>
     <% @pages.each do |page| %>

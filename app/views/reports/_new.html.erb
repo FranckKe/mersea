@@ -1,6 +1,6 @@
 <section id="newReport">
   <div class="medium-6 medium-centered">
-    <h3 class="text-center">Signalement</h3>
+    <h3 class="text-center"><%= t('activerecord.models.report.one') %></h3>
     <div class="row">
       <%= simple_form_for Report.new(name: current_user&.name), html: { class: 'new-report' } do |f| %>
         <%= f.input :tracer_id, as: :hidden, input_html: { value: tracer.id || '' } %>

@@ -1,8 +1,15 @@
 en:
   activerecord:
     models:
-      tracer: Tracer
-      report: Report
+      tracer:
+        zero: Tracer
+        one: Tracer
+        other: Tracers
+      report:
+        zero: Report
+        one: Report
+        other: Reports
+      user: User
     attributes:
       tracer:
         name: Name
@@ -14,7 +21,10 @@ en:
         longitude: Longitude
         latitude: Latitude
         reports: Reports
+        created_at: Created at
+        updated_at: Updated at
       report:
+        id: id
         name: Name
         email: Email
         address: Address
@@ -25,6 +35,44 @@ en:
         status: Status
         reported_at: Reported at
         tracer: Tracer
+        quantity: Quantity
+        date: date
+        status: status
+      user:
+        name: Name
+  layouts:
+    menu:
+      toggle_menu: User menu
+      map: Map
+      leaderboard: Contributors
+    topbar:
+      my_account: My account
+      settings: Settings
+      my_reports: My reports
+  pages:
+    index:
+      add_report: Report
+    leaderboard:
+      report_count: Report count
+      last_activity: Last activity
+  reports:
+    edit:
+      delete_report: Delete report
+      delete_my_report: Delete my report
+      please_confirm: Please confirm the deletion
+      location: Location
+  user:
+    me:
+      my_info: My informations
+      new_password_not_match: New password does not match
+    reports:
+      edit_report: Edit my report
+  devise:
+    password:
+      password_not_match: Passwords does not match
+      password_wrong_length: Password must be longer than 6 characters
+    registration:
+      human_check: Please confirm you are not a robot
   recaptcha:
     errors:
       verification_failed: CAPTCHA verification failed, please try again.

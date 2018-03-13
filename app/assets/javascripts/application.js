@@ -21,11 +21,14 @@
 //= require materialMenu.min
 //= require jquery.dataTables.min
 //= require leaflet-locationpicker
+//= require i18n
+//= require i18n/translations
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
   $(document).foundation();
   var menu = new Menu;
+  I18n.locale = $('body').data('locale')
   setTimeout(function () {
     $('.callout').trigger('close');
   }, 3500);
