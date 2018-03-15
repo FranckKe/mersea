@@ -25,26 +25,26 @@
 //= require i18n/translations
 //= require_tree .
 
-$(document).on('turbolinks:load', function () {
+$(document).on("turbolinks:load", function() {
   $(document).foundation();
-  var menu = new Menu;
-  I18n.locale = $('body').data('locale')
-  setTimeout(function () {
-    $('.callout').trigger('close');
+  var menu = new Menu();
+  I18n.locale = $("body").data("locale");
+  setTimeout(function() {
+    $(".callout").trigger("close");
   }, 3500);
 });
 
 $.ajaxSetup({
-  dataType: 'json'
-})
+  dataType: "json"
+});
 
-function updateStatusMessage (node, status, message) {
-  status = status || '';
-  message = message || '';
-  var multipleMessage = '';
-  if (typeof message === 'object') {
+function updateStatusMessage(node, status, message) {
+  status = status || "";
+  message = message || "";
+  var multipleMessage = "";
+  if (typeof message === "object") {
     for (var field in message) {
-      multipleMessage += field + ': ' + message[field] + '<br>';
+      multipleMessage += field + ": " + message[field] + "<br>";
     }
     message = multipleMessage;
     node.html(multipleMessage);

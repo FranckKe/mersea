@@ -68,6 +68,8 @@ fr:
     reports:
       edit_report: Modifier mon rapport
   devise:
+    shared:
+      sign_in: Connexion
     password:
       password_not_match: Les mots de passes ne correspondent pas
       password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres

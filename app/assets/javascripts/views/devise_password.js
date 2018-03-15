@@ -25,7 +25,8 @@ $(document).on("turbolinks:load", function() {
             updateStatusMessage(
               resetPasswordStatusMessage,
               "error",
-              I18n.t("devise.password.password_wrong_length")
+              I18n.translations[I18n.currentLocale()].devise.password
+                .password_wrong_length
             );
             resetPasswordSubmit.prop("disabled", true);
           } else {
@@ -36,7 +37,8 @@ $(document).on("turbolinks:load", function() {
           updateStatusMessage(
             resetPasswordStatusMessage,
             "error",
-            I18n.t("devise.password.password_not_match")
+            I18n.translations[I18n.currentLocale()].devise.password
+              .password_not_match
           );
           resetPasswordSubmit.prop("disabled", true);
         }

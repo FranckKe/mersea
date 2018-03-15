@@ -24,7 +24,8 @@ $(document).on("turbolinks:load", function() {
             updateStatusMessage(
               registrationStatusMessage,
               "error",
-              I18n.t("devise.password.password_wrong_length")
+              I18n.translations[I18n.currentLocale()].devise.password
+                .password_wrong_length
             );
             registrationSubmit.prop("disabled", true);
           } else {
@@ -35,7 +36,8 @@ $(document).on("turbolinks:load", function() {
           updateStatusMessage(
             registrationStatusMessage,
             "error",
-            I18n.t("devise.password.password_not_match")
+            I18n.translations[I18n.currentLocale()].devise.password
+              .password_not_match
           );
           registrationSubmit.prop("disabled", true);
         }
@@ -49,7 +51,8 @@ $(document).on("turbolinks:load", function() {
         updateStatusMessage(
           registrationStatusMessage,
           "error",
-          I18n.t("devise.registration.human_check")
+          I18n.translations[I18n.currentLocale()].devise.registration
+            .human_check
         );
         return false;
       } else {

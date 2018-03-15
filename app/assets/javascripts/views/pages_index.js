@@ -185,7 +185,7 @@ $(document).on("turbolinks:load", function() {
         "&lng=" +
         e.latlng.lng +
         '"><i class="fi-plus"></i>' +
-        I18n.t("pages.index.add_report") +
+        I18n.translations[I18n.currentLocale()].pages.index.add_report +
         "</a>"
     );
 
