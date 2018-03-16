@@ -75,6 +75,11 @@ fr:
       password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres
     registration:
       human_check: Veuillez confirmer que vous n'êtes pas un robot
+      edit:
+        advanced_actions: Options avancées
+        are_you_sure: Êtes-vous sûr ?
+        cancel_my_account: Supprimer mon compte
+        update: Mettre à jour
   recaptcha:
     errors:
       verification_failed: Echec de la vérification du CAPTCHA, veuillez réessayer s'il vous plaît.

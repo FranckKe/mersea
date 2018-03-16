@@ -73,6 +73,11 @@ en:
       password_wrong_length: Password must be longer than 6 characters
     registration:
       human_check: Please confirm you are not a robot
+      edit:
+        advanced_actions: Advanced actions
+        are_you_sure: Are you sure?
+        cancel_my_account: Delete my account
+        update: Update
   recaptcha:
     errors:
       verification_failed: CAPTCHA verification failed, please try again.
