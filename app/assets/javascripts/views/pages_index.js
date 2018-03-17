@@ -83,34 +83,8 @@ $(document).on("turbolinks:load", function() {
 
     loadMarkers();
 
-    map.locate({
-      watch: true,
-      maximumAge: 60000,
-      timeout: 30000,
-      enableHighAccuracy: true,
-      setView: false,
-      maxZoom: 16
-    });
-    map.on("locationfound", onLocationFound);
-    map.on("locationerror", onLocationError);
     map.on("click", onMapClick);
   }
-
-  function onLocationFound(e) {
-    var radius = e.accuracy / 2;
-    var circle = L.circle(e.latlng, radius);
-
-    locateLayer.clearLayers();
-
-    locateLayer.addLayer(circle).addTo(map);
-
-    console.log("Position Updated");
-  }
-
-  function onLocationError(e) {
-    console.log(e.message);
-  }
-
   function loadMarkers(e) {
     var urlReports = urlJoin(window.location.origin, "reports");
     var urlTracers = urlJoin(window.location.origin, "tracers");
@@ -184,7 +158,7 @@ $(document).on("turbolinks:load", function() {
         e.latlng.lat +
         "&lng=" +
         e.latlng.lng +
-        '"><i class="fi-plus"></i>' +
+        '"><i class="fi-plus"></i> ' +
         I18n.translations[I18n.currentLocale()].pages.index.add_report +
         "</a>"
     );

@@ -13,6 +13,8 @@
 //= require jquery3
 //= require jquery-ui
 //= require jquery_ujs
+//= require datepicker-fr
+//= require datepicker-es
 //= require turbolinks
 //= require foundation
 //= require leaflet

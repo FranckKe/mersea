@@ -9,35 +9,10 @@ $(document).on("turbolinks:load", function() {
   var reportedAtInput = $("#report_reported_at");
 
   $(".datepicker-tracer-form").val(reportedAtInput.val());
-  $(".datepicker-tracer-form").datepicker({
-    dateFormat: "yy-mm-dd",
-    dayNames: [
-      "Dimanche",
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi"
-    ],
-    dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-    dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-    monthNames: [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre"
-    ],
-    firstDay: 1
-  });
+
+  var datepicker = $(".datepicker-tracer-form").datepicker(
+    $.datepicker.regional[I18n.currentLocale()]
+  );
 
   $(".datepicker-tracer-form").change(function() {
     var date = $(this).datepicker("getDate"),

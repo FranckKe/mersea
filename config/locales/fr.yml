@@ -51,7 +51,7 @@ fr:
       my_reports: Mes témoignages
   pages:
     index:
-      add_report: Témoignage
+      add_report: Ajouter un témoignage
     leaderboard:
       report_count: Nombre de témoignages
       last_activity: Dernière activitée

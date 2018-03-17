@@ -51,7 +51,7 @@ en:
       my_reports: My reports
   pages:
     index:
-      add_report: Report
+      add_report: Add a report
     leaderboard:
       report_count: Report count
       last_activity: Last activity
