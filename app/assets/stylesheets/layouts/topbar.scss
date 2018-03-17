@@ -75,12 +75,17 @@
   z-index: 10;
   margin-top: 3px;
   justify-content: space-between;
-  min-width: 220px;
+  min-width: 235px;
 
   & > a {
     margin-right: 5px;
     display: flex;
     height: auto;
+  }
+
+  a,
+  li {
+    font-size: 0.95rem;
   }
 }
 
@@ -89,10 +94,10 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  height: 39px;
+  height: 40px;
   overflow: hidden;
   transition: all 0.3s ease;
-  margin: 0 0 2px 0;
+  margin: 0;
 
   &:hover,
   &:focus,
@@ -104,7 +109,6 @@
     display: block;
     padding: 0 20px;
     line-height: 40px;
-    border-top: 1px solid #eee;
 
     &:hover {
       background-color: #eee;
