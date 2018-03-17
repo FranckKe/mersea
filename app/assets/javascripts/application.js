@@ -15,6 +15,8 @@
 //= require jquery_ujs
 //= require datepicker-fr
 //= require datepicker-es
+//= require i18n
+//= require i18n/translations
 //= require turbolinks
 //= require foundation
 //= require leaflet
@@ -23,14 +25,12 @@
 //= require materialMenu.min
 //= require jquery.dataTables.min
 //= require leaflet-locationpicker
-//= require i18n
-//= require i18n/translations
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
   $(document).foundation();
   var menu = new Menu();
-  I18n.locale = $("body").data("locale");
+  I18n.locale = document.querySelector("body").dataset.lang;
   setTimeout(function() {
     $(".callout").trigger("close");
   }, 3500);

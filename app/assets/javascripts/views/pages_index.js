@@ -154,7 +154,9 @@ $(document).on("turbolinks:load", function() {
     clickLayer.addLayer(markerClick).addTo(map);
 
     var popup = L.popup().setContent(
-      '<a href="/tracers?lat=' +
+      '<a href="/tracers?locale=' +
+        I18n.currentLocale() +
+        "&lat=" +
         e.latlng.lat +
         "&lng=" +
         e.latlng.lng +
