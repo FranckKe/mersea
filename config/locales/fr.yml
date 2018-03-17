@@ -61,7 +61,7 @@ fr:
       delete_my_report: Supprimer mon témoignage
       please_confirm: Veuillez confirmer la suppression
       location: Position
-  user:
+  users:
     me:
       my_info: Mes informations
       new_password_not_match: Le nouveau mot de passe ne correspond pas
@@ -80,6 +80,8 @@ fr:
         are_you_sure: Êtes-vous sûr ?
         delete_my_account: Supprimer mon compte
         update: Mettre à jour
+    sessions:
+      sign_out: Se déconnecter
   recaptcha:
     errors:
       verification_failed: Echec de la vérification du CAPTCHA, veuillez réessayer s'il vous plaît.

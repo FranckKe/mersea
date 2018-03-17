@@ -1,4 +1,4 @@
-<h2 class="text-center"><%= t('activerecord.report, count: Report.count') %></h2>
+<h2 class="text-center"><%= t('activerecord.models.report', count: current_user.reports.count) %></h2>
 <section class="flex user-reports small-12 medium-10 medium-centered">
   <table class="user-reports__table" data-id=<%= current_user.id %>>
     <thead>

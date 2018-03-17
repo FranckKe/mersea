@@ -61,7 +61,7 @@ en:
       delete_my_report: Delete my report
       please_confirm: Please confirm the deletion
       location: Location
-  user:
+  users:
     me:
       my_info: My informations
       new_password_not_match: New password does not match
@@ -78,6 +78,8 @@ en:
         are_you_sure: Are you sure?
         delete_my_account: Delete my account
         update: Update
+    sessions:
+      sign_out: Sign out
   recaptcha:
     errors:
       verification_failed: CAPTCHA verification failed, please try again.

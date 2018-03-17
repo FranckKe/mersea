@@ -61,7 +61,7 @@ es:
       delete_my_report: Borrar mi informe
       please_confirm: Por favor confirma la eliminación
       location: Localización
-  user:
+  users:
     me:
       my_info: Mi informacion
       new_password_not_match: Nueva contraseña no coincide
@@ -78,6 +78,8 @@ es:
         are_you_sure: ¿Estás seguro?
         delete_my_account: Borrar mi cuenta
         update: Actualizar
+    sessions:
+      sign_out: Desconectar
   recaptcha:
     errors:
       verification_failed: La verificación CAPTCHA falló, por favor intente de nuevo.

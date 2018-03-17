@@ -2,7 +2,7 @@
   <%= f.input :id, as: :hidden, input_html: { value: report.id } %>
   <%= f.input :reported_at, input_html: { value: report.reported_at }, as: :hidden %>
   <input class="datepicker-tracer-form" type="date" value="<%= report.reported_at %>" required/>
-  <%= f.input :name, value: report.name, required: true%>
+  <%= f.input :name, value: report.name, required: true unless current_user.present? %>
   <%= f.input :quantity, as: :integer, input_html: { value: report.quantity } %>
   <%= f.input :address, value: report.address %>
   <%= f.input :description, as: :text, value: report.address %>

@@ -45,7 +45,7 @@ $(document).on("turbolinks:load", function() {
           updateStatusMessage(
             passwordStatusMessage,
             "error",
-            I18n.translations[I18n.currentLocale()].user.me
+            I18n.translations[I18n.currentLocale()].users.me
               .new_password_not_match
           );
           passwordSubmit.prop("disabled", true);
