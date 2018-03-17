@@ -11,16 +11,16 @@
               </h5>
             </div>
             <div class="row">
-              <%= f.text_field :name, autofocus: true, class: "large-12 columns", placeholder: "Nom/pseudo", required: true %>
+              <%= f.text_field :name, autofocus: true, class: "large-12 columns", placeholder: t('activerecord.attributes.user.name'), required: true %>
             </div>
             <div class="row">
-              <%= f.email_field :email, class: "large-12 columns email", placeholder: "Email", required: true %>
+              <%= f.email_field :email, class: "large-12 columns email", placeholder: t('activerecord.attributes.user.email'), required: true %>
             </div>
             <div class="row">
-              <%= f.password_field :password, autocomplete: "off", class: "large-12 columns password", placeholder: "Mot de passe", required: true %>
+              <%= f.password_field :password, autocomplete: "off", class: "large-12 columns password", placeholder: t('activerecord.attributes.user.password'), required: true %>
             </div>
             <div class="row">
-              <%= f.password_field :password_confirmation, autocomplete: "off", class: "large-12 columns password confirmation", placeholder: "Confirmation de mot de passe", required: true %>
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: "large-12 columns password confirmation", placeholder: t('activerecord.attributes.user.password_confirmation'), required: true %>
             </div>
             <div class="row status-message">
               <p class="message"></p>

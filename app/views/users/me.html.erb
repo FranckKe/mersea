@@ -1,17 +1,17 @@
 <section id="user" class="columns">
   <div class="medium-6 medium-centered">
-    <h3 class="text-center">Mes informations</h3>
+    <h3 class="text-center"><%= t('.my_info') %></h3>
     <%= simple_form_for(current_user, url: me_users_path, html: { class: 'edit-user' }, format: :json, remote: true) do |f| %>
       <div class="form-inputs">
-        <%= f.input :name, label: 'Nom' %>
-        <%= f.input :email, type: 'email', label: 'Email' %>
-        <%= f.input :password, type: 'password', label: 'Mot de passe actuel' %>
+        <%= f.input :name, label: t('activerecord.attributes.user.name') %>
+        <%= f.input :email, type: 'email', label: t('activerecord.attributes.user.email') %>
+        <%= f.input :password, type: 'password', label: t('activerecord.attributes.user.current_password') %>
       </div>
       <div class="status-message">
         <p class="message"></p>
       </div>
       <div class="form-actions large-12 large-centered">
-        <%= f.button :submit, 'Modifier les informations', class: 'submit expand large-6 large-centered' %>
+        <%= f.button :submit, t('devise.registrations.edit.update'), class: 'submit expand large-6 large-centered' %>
         <div class="button expand large-6 large-centered loader-wrapper hide">
           <div class="loader">
           </div>
@@ -26,8 +26,8 @@
 </section>
 
 <section class="medium-6 medium-centered delete-user margin-bottom columns">
-  <h3 class="text-center">Supprimer mon compte</h3>
-  <div class="form-actions large-6 large-centered">
-      <%= link_to 'Supprimer mon compte', registration_path(current_user), data: { confirm: 'Êtes-vous sûr ?' }, method: :delete, class: 'button submit expand large-12 large-centered alert' %>
+  <h3 class="text-center"><%= t('devise.registrations.edit.cancel_my_account') %></h3>
+  <div class="form-actions large-12 large-centered">
+      <%= link_to t('devise.registration.edit.delete_my_account'), registration_path(current_user), data: { confirm: t('devise.registration.edit.are_you_sure') }, method: :delete, class: 'button submit expand large-12 large-centered alert' %>
   </div>
 </section>

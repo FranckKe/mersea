@@ -1,14 +1,14 @@
 <%= simple_form_for report, html: { class: 'edit-report' }, remote: true, method: :put do |f| %>
   <%= f.input :id, as: :hidden, input_html: { value: report.id } %>
   <%= f.input :reported_at, input_html: { value: report.reported_at }, as: :hidden %>
-  <input class="datepicker-tracer-form" type="date" value=<%= report.reported_at %> required>
-  <%= f.input :name, value: report.name,required: true%>
+  <input class="datepicker-tracer-form" type="date" value="<%= report.reported_at %>" required/>
+  <%= f.input :name, value: report.name, required: true unless current_user.present? %>
   <%= f.input :quantity, as: :integer, input_html: { value: report.quantity } %>
   <%= f.input :address, value: report.address %>
   <%= f.input :description, as: :text, value: report.address %>
   <%= f.input :latitude, as: :hidden, value: report.latitude %>
   <%= f.input :longitude, as: :hidden, value: report.longitude %>
-  <label>Position
+  <label><%= t('.location') %>
     <input id="geoloc" type="text" value="<%= "#{report.latitude}, #{report.longitude}" %>" required/>
   </label>
   <div class="status-message">
@@ -29,9 +29,9 @@
   </div>
 
   <section class="medium-12 medium-centered">
-    <h3 class="text-center">Supprimer mon témoignage</h3>
+    <h3 class="text-center"><%= t('.delete_report') %></h3>
     <div class="form-actions large-6 large-centered">
-        <%= link_to 'Supprimer mon témoignage', report_path(report), data: { confirm: 'Êtes-vous sûr ?' }, method: :delete, remote: true, class: 'button submit expand large-12 large-centered alert' %>
+        <%= link_to t('.delete_my_report'), report_path(report), data: { confirm: t('.please_confirm') }, method: :delete, remote: true, class: 'button submit expand large-12 large-centered alert' %>
     </div>
   </section>
 <% end %>

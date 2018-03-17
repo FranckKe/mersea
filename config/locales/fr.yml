@@ -1,8 +1,15 @@
 fr:
   activerecord:
     models:
-      tracer: Traceur
-      report: Signalement
+      tracer:
+        zero: Traceur
+        one: Traceur
+        other: Traceurs
+      report:
+        zero: Signalement
+        one: Signalement
+        other: Signalements
+      user: Utilisateur
     attributes:
       tracer:
         name: Nom
@@ -15,9 +22,10 @@ fr:
         latitude: Latitude
         reports: Signalements
         created_at: Créé le
-        updated_at: Mise à jour
+        updated_at: Mise à jour le
       report:
-        name: Nom
+        id: id
+        name: Votre nom
         email: Email
         address: Adresse
         longitude: Longitude
@@ -27,6 +35,53 @@ fr:
         status: Statut
         reported_at: Signalé le
         tracer: Traceur
+        quantity: Quantité
+        date: Date
+        status: Statut
+      user:
+        name: Nom
+  layouts:
+    menu:
+      toggle_menu: Activé le menu
+      map: Carte
+      leaderboard: Contributeurs
+    topbar:
+      my_account: Mon compte
+      settings: Paramètres
+      my_reports: Mes témoignages
+  pages:
+    index:
+      add_report: Ajouter un témoignage
+    leaderboard:
+      report_count: Nombre de témoignages
+      last_activity: Dernière activitée
+  reports:
+    edit:
+      delete_report: Supprimer témoignage
+      delete_my_report: Supprimer mon témoignage
+      please_confirm: Veuillez confirmer la suppression
+      location: Position
+  users:
+    me:
+      my_info: Mes informations
+      new_password_not_match: Le nouveau mot de passe ne correspond pas
+    reports:
+      edit_report: Modifier mon rapport
+  devise:
+    shared:
+      sign_in: Connexion
+    password:
+      password_not_match: Les mots de passes ne correspondent pas
+      password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres
+    registration:
+      human_check: Veuillez confirmer que vous n'êtes pas un robot
+      edit:
+        advanced_actions: Options avancées
+        are_you_sure: Êtes-vous sûr ?
+        delete_my_account: Supprimer mon compte
+        update: Mettre à jour
+    sessions:
+      sign_out: Se déconnecter
   recaptcha:
     errors:
       verification_failed: Echec de la vérification du CAPTCHA, veuillez réessayer s'il vous plaît.

@@ -13,6 +13,10 @@
 //= require jquery3
 //= require jquery-ui
 //= require jquery_ujs
+//= require datepicker-fr
+//= require datepicker-es
+//= require i18n
+//= require i18n/translations
 //= require turbolinks
 //= require foundation
 //= require leaflet
@@ -23,25 +27,26 @@
 //= require leaflet-locationpicker
 //= require_tree .
 
-$(document).on('turbolinks:load', function () {
+$(document).on("turbolinks:load", function() {
   $(document).foundation();
-  var menu = new Menu;
-  setTimeout(function () {
-    $('.callout').trigger('close');
+  var menu = new Menu();
+  I18n.locale = document.querySelector("body").dataset.lang;
+  setTimeout(function() {
+    $(".callout").trigger("close");
   }, 3500);
 });
 
 $.ajaxSetup({
-  dataType: 'json'
-})
+  dataType: "json"
+});
 
-function updateStatusMessage (node, status, message) {
-  status = status || '';
-  message = message || '';
-  var multipleMessage = '';
-  if (typeof message === 'object') {
+function updateStatusMessage(node, status, message) {
+  status = status || "";
+  message = message || "";
+  var multipleMessage = "";
+  if (typeof message === "object") {
     for (var field in message) {
-      multipleMessage += field + ': ' + message[field] + '<br>';
+      multipleMessage += field + ": " + message[field] + "<br>";
     }
     message = multipleMessage;
     node.html(multipleMessage);

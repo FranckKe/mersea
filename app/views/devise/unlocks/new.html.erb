@@ -11,7 +11,7 @@
               </h5>
             </div>
             <div class="row">
-              <%= f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: "Email"%>
+              <%= f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: t('activerecord.attributes.user.email') %>
             </div>
             <div class="row">
               <%= f.submit t('.resend_unlock_instructions', :default => "Resend unlock instructions"), class: "button expand large-12 large-centered columns" %>

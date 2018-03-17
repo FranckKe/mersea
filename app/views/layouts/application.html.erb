@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
-    <%= content_for?(:title) ? yield(:title) : 'Mersea' %>
+    <%= content_for?(:title) ? yield(:title) : 'Ocean Plastic Tracker' %>
   </title>
 
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+
   <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body data-lang="<%= I18n.locale %>">
   <%= render 'layouts/topbar' %>
   <div id="wrapper" class="wrapper">
     <%= render 'layouts/flash' %>

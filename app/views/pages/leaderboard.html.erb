@@ -1,10 +1,10 @@
-<h2 class="text-center">Palmarès</h2>
+<h2 class="text-center"><%= t('layouts.menu.leaderboard') %></h2>
 <section class="flex user-reports small-12 medium-10 medium-centered">
   <table class="palmares__table">
     <thead>
-      <th>Nom</th>
-      <th>Nombre de témoignages</th>
-      <th>Dernière activité</th>
+      <th><%= t('activerecord.attributes.user.name') %></th>
+      <th><%= t('.report_count') %></th>
+      <th></th>
     </thead>
     <tbody>
     <% @leaderboard.each do |user| %>

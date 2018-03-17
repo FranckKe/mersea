@@ -12,10 +12,10 @@
               </h5>
             </div>
             <div class="row">
-              <%= f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: "Email"%>
+              <%= f.email_field :email, autofocus: true, class: "large-12 columns", placeholder: t('activerecord.attributes.user.email') %>
             </div>
             <div class="row">
-              <%= f.password_field :password, autocomplete: "off", class: "large-12 columns", placeholder: "Password"%>
+              <%= f.password_field :password, autocomplete: "off", class: "large-12 columns", placeholder: t('activerecord.attributes.user.password') %>
             </div>
             <div class="row status-message">
               <p class="error"></p>

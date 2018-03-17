@@ -1,0 +1,86 @@
+es:
+  activerecord:
+    models:
+      tracer:
+        zero: Localizador
+        one: Localizador
+        other: Localizadors
+      report:
+        zero: Informe
+        one: Informe
+        other: Informes
+      user: Usuario
+    attributes:
+      tracer:
+        name: Nombre
+        description: Descripción
+        photo: Foto
+        color: Color
+        origin: Origen
+        kind: Tipo
+        longitude: Longitud
+        latitude: Latitud
+        reports: Informes
+        created_at: Creado a
+        updated_at: Actualizado a
+      report:
+        id: id
+        name: Su nombre
+        email: Email
+        address: Dirección
+        longitude: Longitud
+        latitude: Latitud
+        description: Descripción
+        photo: Foto
+        status: Status
+        reported_at: Informado a
+        tracer: Localizador
+        quantity: Cantidad
+        date: Fecha
+        status: Status
+      user:
+        name: Nombre
+  layouts:
+    menu:
+      toggle_menu: Menú del Usuario
+      map: Mapa
+      leaderboard: Contribuyentes
+    topbar:
+      my_account: Mi cuenta
+      settings: Ajustes
+      my_reports: Mi informes
+  pages:
+    index:
+      add_report: Informe
+    leaderboard:
+      report_count: Recuento de informes
+      last_activity: Última actividad
+  reports:
+    edit:
+      delete_report: Borrar informe
+      delete_my_report: Borrar mi informe
+      please_confirm: Por favor confirma la eliminación
+      location: Localización
+  users:
+    me:
+      my_info: Mi informacion
+      new_password_not_match: Nueva contraseña no coincide
+    reports:
+      edit_report: Edita mi informe
+  devise:
+    password:
+      password_not_match: Contraseñas no coincide
+      password_wrong_length: La contraseña debe tener más de 6 caracteres
+    registration:
+      human_check: Por favor confirma que no eres un robot
+      edit:
+        advanced_actions: Acciones avanzadas
+        are_you_sure: ¿Estás seguro?
+        delete_my_account: Borrar mi cuenta
+        update: Actualizar
+    sessions:
+      sign_out: Desconectar
+  recaptcha:
+    errors:
+      verification_failed: La verificación CAPTCHA falló, por favor intente de nuevo.
+      recaptcha_unreachable: Vaya, no hemos podido validar su respuesta CAPTCHA. Inténtalo de nuevo.

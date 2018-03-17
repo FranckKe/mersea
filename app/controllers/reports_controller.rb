@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
 
     if trusted_report && @report.save
       flash[:success] = 'Merci pour votre signalement'
-      redirect_to root_path
+      redirect_to root_path(locale: I18n.locale)
     else
       flash[:alert] = @report.errors.messages.first
       redirect_to Tracer.find(params[:report][:tracer_id])
