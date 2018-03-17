@@ -59,6 +59,11 @@
     padding: 10px;
     flex-grow: 1;
   }
+
+  .button {
+    height: 40px;
+    margin-right: 5px;
+  }
 }
 
 .is-submenu-item.is-dropdown-submenu-item {
@@ -75,7 +80,6 @@
   z-index: 10;
   margin-top: 3px;
   justify-content: space-between;
-  min-width: 235px;
 
   & > a {
     margin-right: 5px;
@@ -102,7 +106,7 @@
   &:hover,
   &:focus,
   &:active {
-    height: calc(3 * 42px);
+    height: calc(3 * 40px);
   }
 
   li {
