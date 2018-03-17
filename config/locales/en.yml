@@ -37,7 +37,7 @@ en:
         tracer: Tracer
         quantity: Quantity
         date: Date
-        status: status
+        status: Status
       user:
         name: Name
   layouts:
@@ -69,14 +69,14 @@ en:
       edit_report: Edit my report
   devise:
     password:
-      password_not_match: Passwords does not match
-      password_wrong_length: Password must be longer than 6 characters
+      password_not_match: The passwords do not match
+      password_wrong_length: Your password must be longer than 6 characters
     registration:
       human_check: Please confirm you are not a robot
       edit:
         advanced_actions: Advanced actions
         are_you_sure: Are you sure?
-        cancel_my_account: Delete my account
+        delete_my_account: Delete my account
         update: Update
   recaptcha:
     errors:

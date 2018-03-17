@@ -28,6 +28,6 @@
 <section class="medium-6 medium-centered delete-user margin-bottom columns">
   <h3 class="text-center"><%= t('devise.registration.edit.advanced_actions') %></h3>
   <div class="form-actions large-6 large-centered">
-      <%= link_to t('devise.registration.edit.cancel_my_account'), registration_path(current_user), data: { confirm: t('devise.registration.edit.are_you_sure') }, method: :delete, class: 'button submit expand large-12 large-centered alert' %>
+      <%= link_to t('devise.registration.edit.delete_my_account'), registration_path(current_user), data: { confirm: t('devise.registration.edit.are_you_sure') }, method: :delete, class: 'button submit expand large-12 large-centered alert' %>
   </div>
 </section>

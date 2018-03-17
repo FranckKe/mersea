@@ -76,7 +76,7 @@ es:
       edit:
         advanced_actions: Acciones avanzadas
         are_you_sure: ¿Estás seguro?
-        cancel_my_account: Borrar mi cuenta
+        delete_my_account: Borrar mi cuenta
         update: Actualizar
   recaptcha:
     errors:

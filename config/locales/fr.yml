@@ -6,7 +6,7 @@ fr:
         one: Traceur
         other: Traceurs
       report:
-        zero:  Signalement
+        zero: Signalement
         one: Signalement
         other: Signalements
       user: Utilisateur
@@ -22,7 +22,7 @@ fr:
         latitude: Latitude
         reports: Signalements
         created_at: Créé le
-        updated_at: Mise à jour
+        updated_at: Mise à jour le
       report:
         id: id
         name: Votre nom
@@ -37,7 +37,7 @@ fr:
         tracer: Traceur
         quantity: Quantité
         date: Date
-        status: status
+        status: Statut
       user:
         name: Nom
   layouts:
@@ -48,7 +48,7 @@ fr:
     topbar:
       my_account: Mon compte
       settings: Paramètres
-      my_reports: Mes témoignage
+      my_reports: Mes témoignages
   pages:
     index:
       add_report: Témoignage
@@ -78,7 +78,7 @@ fr:
       edit:
         advanced_actions: Options avancées
         are_you_sure: Êtes-vous sûr ?
-        cancel_my_account: Supprimer mon compte
+        delete_my_account: Supprimer mon compte
         update: Mettre à jour
   recaptcha:
     errors:
