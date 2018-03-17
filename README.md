@@ -1,4 +1,4 @@
-![docker_build_type](https://img.shields.io/docker/automated/frankke/mersea.svg)
+![docker_build_type](https://img.shields.io/docker/automated/franckke/mersea.svg)
 ![license](https://img.shields.io/dub/l/vibe-d.svg)
 
 # Mersea
