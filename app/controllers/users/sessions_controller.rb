@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::SessionsController < Devise::SessionsController
   before_action :configure_sign_in_params, only: [:create]
 
@@ -13,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
     if resource&.valid_password?(params[:user][:password])
       sign_in :user, resource
       flash.discard
-      render json: { message: I18n.t("devise.failure.#{env['warden'].message}") }, status: :created && return
+      render json: { message: I18n.t("devise.failure.#{request.env['warden'].message}", authentication_keys: 'email') }, status: :created && return
     end
     invalid_login_attempt
   end
@@ -26,7 +28,7 @@ class Users::SessionsController < Devise::SessionsController
   protected
 
   def invalid_login_attempt
-    error_message = I18n.t("devise.failure.#{env['warden'].message}.not_found_in_database")
+    error_message = I18n.t('devise.failure.not_found_in_database', authentication_keys: 'email')
     respond_to do |format|
       format.html { set_flash_message :alert, error_message }
       format.json { render json: { message: error_message }, status: :bad_request }

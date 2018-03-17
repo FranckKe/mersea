@@ -27,7 +27,7 @@
         <li><%= @locale %></li>
       </div>
       <% @available_locales.each do |lang| %>
-        <%= link_to root_path(locale: lang[:language]) do %>
+        <%= link_to url_for(locale: lang[:language]) do %>
           <li><%= lang[:translation] %></li>
         <% end %>
       <% end %>
