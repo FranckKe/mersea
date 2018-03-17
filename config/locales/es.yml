@@ -25,7 +25,7 @@ es:
         updated_at: Updated at
       report:
         id: id
-        name: Name
+        name: Su nombre
         email: Email
         address: Address
         longitude: Longitude
@@ -36,7 +36,7 @@ es:
         reported_at: Reported at
         tracer: Tracer
         quantity: Quantity
-        date: date
+        date: Date
         status: status
       user:
         name: Name
