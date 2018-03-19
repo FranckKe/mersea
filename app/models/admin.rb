@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: admins
@@ -26,5 +28,9 @@ class Admin < ApplicationRecord
   include Concerns::AdminManager
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :timeoutable, :trackable, :recoverable, :rememberable, :database_authenticatable
+  devise :timeoutable,
+         # :trackable,
+         :recoverable,
+         :rememberable,
+         :database_authenticatable
 end
