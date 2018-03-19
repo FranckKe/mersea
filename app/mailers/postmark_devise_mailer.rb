@@ -1,7 +1,7 @@
 class PostmarkDeviseMailer < Devise::Mailer
-  FROM_EMAIL = Rails.application.secrets.postmark['from']
-  TEMPLATE_IDS = Rails.application.secrets.postmark['template_ids']
-  CLIENT = Postmark::ApiClient.new(Rails.application.secrets.postmark['api_key'])
+  FROM_EMAIL = Rails.application.secrets.postmark[:from]
+  TEMPLATE_IDS = Rails.application.secrets.postmark[:template_ids]
+  CLIENT = Postmark::ApiClient.new(Rails.application.secrets.postmark[:api_key])
 
   def reset_password_instructions(record, token, _)
     CLIENT.deliver_with_template(
