@@ -335,7 +335,7 @@ DEPENDENCIES
   annotate
   debbie
   devise (~> 4)
-  devise-foundation-views (~> 0)
+  devise-foundation-views (~> 0.1)
   devise-i18n (~> 1)
   foundation-icons-sass-rails (~> 3)
   foundation-rails (~> 6)
@@ -362,7 +362,7 @@ DEPENDENCIES
   simple_form (~> 3)
   spring
   spring-watcher-listen
-  state_machines-activerecord (~> 0)
+  state_machines-activerecord (~> 0.5)
   turbolinks (~> 5)
   tzinfo-data
   uglifier (~> 4)
