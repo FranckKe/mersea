@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
 
   def create
     @report = Report.new(report_params.merge(user: current_user))
-
+    @report.update_attributes(name: current_user.name) if current_user
     if trusted_report && @report.save
       flash[:success] = 'Merci pour votre signalement'
       redirect_to root_path(locale: I18n.locale)
