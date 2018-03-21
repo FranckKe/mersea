@@ -39,8 +39,6 @@ class User < ApplicationRecord
       field :name
       field :email
       field :created_at
-      field :sign_in_count
-      field :last_sign_in_at
       field :updated_at
       field :reset_password_sent_at
     end
