@@ -2,7 +2,7 @@ FROM ruby:2.5.0-alpine
 MAINTAINER mdouchement
 
 ARG BUILD_DEPENDENCIES='build-base'
-ARG DEPENDENCIES='postgresql-dev libxml2-dev libxslt-dev tzdata nodejs'
+ARG DEPENDENCIES='postgresql-dev libxml2-dev libxslt-dev tzdata nodejs file'
 
 # Set the locale
 ENV LANG c.UTF-8
