@@ -11,24 +11,12 @@ class ApplicationController < ActionController::Base
 
   private
 
-  @languages = ActiveSupport::HashWithIndifferentAccess.new(
-    en: 'English',
-    es: 'Español',
-    fr: 'Français'
-  )
-
   def fetch_pages
     @pages = Page.all # For side menu
   end
 
   def set_locale
-    languages = ActiveSupport::HashWithIndifferentAccess.new(
-      en: 'English',
-      es: 'Español',
-      fr: 'Français'
-    )
-
-    I18n.locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ? params[:locale] : I18n.default_locale
+    I18n.locale = I18n.available_locales.include?(params[:locale]&.to_sym) ? params[:locale] : I18n.default_locale
 
     @locale = languages[I18n.locale]
     @available_locales = []
@@ -43,5 +31,13 @@ class ApplicationController < ActionController::Base
 
   def default_url_options(options = {})
     options.merge(locale: I18n.locale)
+  end
+
+  def languages
+    @languages ||= ActiveSupport::HashWithIndifferentAccess.new(
+      en: 'English',
+      es: 'Español',
+      fr: 'Français'
+    )
   end
 end
