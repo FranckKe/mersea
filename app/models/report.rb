@@ -36,7 +36,7 @@ class Report < ApplicationRecord
   include Concerns::ReportManager
 
   has_attached_file :photo
-  belongs_to :tracer, optional: true
+  belongs_to :tracer
   belongs_to :user, optional: true
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
