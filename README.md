@@ -62,6 +62,7 @@ To set any environment variable in the container, use one or more `-e` flags:
 - `MERSEA_DATABASE_PASSWORD` → database credential
 - `RECAPTCHA_SITE_KEY` → Google reCaptcha key
 - `RECAPTCHA_SECRET_KEY` → Google reCaptcha secret
+- `BUGSNAG_API_KEY` → Bugsnag key (leave empty to disable error reporting)
 
 ## License
 
