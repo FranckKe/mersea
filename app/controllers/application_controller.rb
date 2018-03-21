@@ -27,9 +27,9 @@ class ApplicationController < ActionController::Base
       es: 'Español',
       fr: 'Français'
     )
-    parsed_locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ? params[:locale] : nil
+    parsed_locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ? params[:locale] : I18n.default_locale
 
-    I18n.locale = parsed_locale || I18n.default_locale
+    I18n.locale = parsed_locale
     @locale = languages[I18n.locale]
     @available_locales = []
     I18n.available_locales.map do |lang|
@@ -41,15 +41,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def default_url_options
-    { locale: I18n.locale }
+  def default_url_options(options = {})
+    options.merge(locale: I18n.locale)
   end
 
-  def after_sign_out_path_for(resource_or_scope)
-    request.referrer
-  end
-
-  def after_sign_in_path_for(resource_or_scope)
-    request.referrer
-  end
 end
