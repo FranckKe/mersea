@@ -51,9 +51,9 @@ ENV EXECJS_RUNTIME Disabled
 # ENV RAILS_RELATIVE_URL_ROOT /mersea
 ENV SECRET_KEY_BASE tmp_376ea25aaa66984733a90920c263ba138e1e571aaf3a1a54cd2b819cb06e8b7fb311027b639eb8f55d8d53c27cf2df378ceb36008462057861d824bd13a0
 
-# # Install build dependencies
+# Install build dependencies
 RUN apk upgrade
-RUN apk add --update --no-cache postgresql-dev libxml2-dev libxslt-dev tzdata
+RUN apk add --update --no-cache postgresql-dev libxml2-dev libxslt-dev tzdata file
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
