@@ -25,18 +25,18 @@
 //= require jquery.dataTables.min
 //= require leaflet-locationpicker
 //= require_tree .
-<% if Rails.env.production?
-  require_asset 'bugsnag.min'
-  puts "window.bugsnagClient = bugsnag(#{Rails.application.secrets.bugsnag[:api_key]})"
-end %>
+//= require bugsnag.min
 
 $(document).on("turbolinks:load", function() {
-  $(document).foundation();
-  var menu = new Menu();
-  I18n.locale = document.querySelector("body").dataset.lang;
-  setTimeout(function() {
-    $(".callout").trigger("close");
-  }, 3500);
+ $(document).foundation();
+ var menu = new Menu();
+ I18n.locale = document.querySelector("body").dataset.lang;
+ setTimeout(function() {
+   $(".callout").trigger("close");
+ }, 3500);
+ <% if Rails.env.production? %>
+   window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
+ <% end %>
 });
 
 $.ajaxSetup({
