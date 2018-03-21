@@ -40,7 +40,7 @@ class Report < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
-  validates :photo, presence: true, if: -> { self.status != 'accepted' }
+  validates :photo, presence: true, if: -> { !self.user&.senior && self.status != 'accepted' }
   validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
 
   rails_admin do
