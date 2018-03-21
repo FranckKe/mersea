@@ -7,7 +7,7 @@
         <%= f.input :reported_at, input_html: { value: Time.zone.today }, as: :hidden %>
         <label class="string required" for="report_date"><%= t('activerecord.attributes.report.date') %></label>
         <input name="report[date]" id="report_date" class="datepicker-tracer-form" type="date" required>
-        <%= f.input :name, required: true unless current_user.present? %>
+        <%= f.input :name, value: current_user&.name, required: true,  disabled: current_user.present? %>
         <%= f.input :quantity, as: :integer, input_html: { value: '1' } %>
         <%= f.input :address %>
         <%= f.input :photo, as: :file, required: true %>
