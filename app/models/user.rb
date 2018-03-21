@@ -11,6 +11,7 @@
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  senior                 :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -38,6 +39,7 @@ class User < ApplicationRecord
     list do
       field :name
       field :email
+      field :senior
       field :created_at
       field :updated_at
       field :reset_password_sent_at
