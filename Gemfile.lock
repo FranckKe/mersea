@@ -161,6 +161,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
+    paperclip-i18n (4.3.0)
     parallel (1.12.1)
     parser (2.5.0.4)
       ast (~> 2.4.0)
@@ -344,6 +345,7 @@ DEPENDENCIES
   leaflet-rails (~> 1)
   listen
   paperclip (~> 6)
+  paperclip-i18n (~> 4)
   pg (~> 1)
   postmark (~> 1)
   puma (~> 3)
