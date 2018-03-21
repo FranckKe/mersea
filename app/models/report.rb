@@ -37,7 +37,7 @@ class Report < ApplicationRecord
 
   has_attached_file :photo
   belongs_to :tracer
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
   validates :photo, presence: true, if: -> { self.status != 'accepted' }
