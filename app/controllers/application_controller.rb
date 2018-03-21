@@ -27,9 +27,9 @@ class ApplicationController < ActionController::Base
       es: 'Español',
       fr: 'Français'
     )
-    parsed_locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ? params[:locale] : I18n.default_locale
 
-    I18n.locale = parsed_locale
+    I18n.locale = I18n.available_locales.map(&:to_s).include?(params[:locale]) ? params[:locale] : I18n.default_locale
+
     @locale = languages[I18n.locale]
     @available_locales = []
     I18n.available_locales.map do |lang|
@@ -44,5 +44,4 @@ class ApplicationController < ActionController::Base
   def default_url_options(options = {})
     options.merge(locale: I18n.locale)
   end
-
 end
