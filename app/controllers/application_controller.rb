@@ -2,8 +2,8 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception unless -> { request.format.json? }
-  before_action :fetch_pages
   before_action :set_locale
+  before_action :fetch_pages
 
   def status
     render json: {}, status: :ok
@@ -12,7 +12,9 @@ class ApplicationController < ActionController::Base
   private
 
   def fetch_pages
-    @pages = Page.all # For side menu
+    # List pages for side menu
+    @pages = Page.where(language: I18n.locale)
+    @pages = Page.where(language: I18n.default_locale) if @pages.length.zero?
   end
 
   def set_locale
