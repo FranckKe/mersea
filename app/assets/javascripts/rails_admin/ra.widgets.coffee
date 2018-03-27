@@ -250,7 +250,6 @@ $(document).on 'rails_admin.dom_ready', (e, content) ->
         else
           config_options = {toolbarInline: false}
 
-        console.log(config_options)
         if config_options['imageUploadURL']
           uploadEnabled = true;
 
