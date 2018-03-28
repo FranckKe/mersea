@@ -1,5 +1,6 @@
 class ReportSerializer < ActiveModel::Serializer
-  attributes :name, :latitude, :longitude, :tracer, :reported_at, :tracer_id
+  attributes :name, :latitude, :longitude, :tracer, :reported_at, :tracer_id,
+             :quantity
 
   def name
     object.user&.name || object.name

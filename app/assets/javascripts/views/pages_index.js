@@ -116,6 +116,11 @@ $(document).on("turbolinks:load", function() {
           "</b><br>" +
           element.name +
           "</b><br>" +
+          I18n.translations[I18n.currentLocale()].activerecord.attributes.report
+            .quantity +
+          ": " +
+          element.quantity +
+          "</b><br>" +
           element.reported_at
       );
       markers.push(marker);
