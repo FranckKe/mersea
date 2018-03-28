@@ -19,16 +19,8 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = I18n.available_locales.include?(params[:locale]&.to_sym) ? params[:locale] : I18n.default_locale
-
     @locale = languages[I18n.locale]
-    @available_locales = []
-    I18n.available_locales.map do |lang|
-      next if lang == I18n.locale
-      @available_locales << {
-        language: lang,
-        translation: languages[lang]
-      }
-    end
+    @available_locales = other_available_locales
   end
 
   def default_url_options(options = {})
@@ -41,5 +33,22 @@ class ApplicationController < ActionController::Base
       es: 'Español',
       fr: 'Français'
     )
+  end
+
+  def available_locales
+    available_locales_with_translation = []
+    I18n.available_locales.map do |lang|
+      available_locales_with_translation << {
+        language: lang,
+        translation: languages[lang]
+      }
+    end
+    available_locales_with_translation
+  end
+
+  def other_available_locales
+    available_locales.map do |lang|
+      lang if lang[:language] != I18n.locale
+    end.compact
   end
 end

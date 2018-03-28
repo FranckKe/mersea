@@ -9,15 +9,21 @@ module Concerns
           field :language
           field :content
         end
+
         edit do
           field :name
           field :language, :enum do
             enum do
-              [
-                %w[Français fr],
-                %w[English en],
-                %w[Español es]
-              ]
+              available_locales_with_translation = []
+              languages = {
+                en: 'English',
+                es: 'Espanol',
+                fr: 'Français'
+              }
+              I18n.available_locales.map do |lang|
+                available_locales_with_translation << [languages[lang], lang]
+              end
+              available_locales_with_translation
             end
           end
           field :content, :froala do
