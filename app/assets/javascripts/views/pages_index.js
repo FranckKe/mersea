@@ -97,37 +97,41 @@ $(document).on("turbolinks:load", function() {
         tracerData[data[tracer].id].layerGroup = L.layerGroup();
       }
 
-      $.getJSON(urlReports, function(data) {
+      $.getJSON(urlReports, function(reports) {
         clearMarkers(markers);
-        displayMarkers(data);
+        displayMarkers(reports);
       });
     });
   }
 
-  function displayMarkers(data) {
-    data.forEach(function(element, index, array) {
-      var marker = L.marker([element.latitude, element.longitude], {
-        icon: defaultIcon(tracerData[element.tracer_id].color)
+  function displayMarkers(reports) {
+    reports.forEach(function(report, index, array) {
+      var marker = L.marker([report.latitude, report.longitude], {
+        icon: defaultIcon(tracerData[report.tracer_id].color)
       });
 
       marker.bindPopup(
         "<b>" +
-          element.tracer +
+          report.tracer +
           "</b><br>" +
-          element.name +
+          report.name +
           "</b><br>" +
           I18n.translations[I18n.currentLocale()].activerecord.attributes.report
             .quantity +
           ": " +
-          element.quantity +
+          report.quantity +
           "</b><br>" +
-          element.reported_at
+          report.reported_at
       );
       markers.push(marker);
-      marker.addTo(tracerData[element.tracer_id].layerGroup);
+      marker.addTo(tracerData[report.tracer_id].layerGroup);
     });
 
     for (var tracerId in tracerData) {
+      var tracerQuantity = Object.values(reports)
+        .filter(report => report.tracer_id === tracerId)
+        .reduce((total, report) => total + report.quantity, 0);
+
       tracerData[tracerId].layerGroup.addTo(markerCluster);
       control.addOverlay(
         tracerData[tracerId].layerGroup,
@@ -136,7 +140,7 @@ $(document).on("turbolinks:load", function() {
           '">' +
           tracerData[tracerId].name +
           " (" +
-          tracerData[tracerId].layerGroup.getLayers().length +
+          tracerQuantity +
           ")</span>"
       );
     }
