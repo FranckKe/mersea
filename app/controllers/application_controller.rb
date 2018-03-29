@@ -19,35 +19,9 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = I18n.available_locales.include?(params[:locale]&.to_sym) ? params[:locale] : I18n.default_locale
-    @locale = languages[I18n.locale]
-    @available_locales = other_available_locales
   end
 
   def default_url_options(options = {})
     options.merge(locale: I18n.locale)
-  end
-
-  def languages
-    @languages ||= ActiveSupport::HashWithIndifferentAccess.new.tap do |langs|
-      I18n.backend.available_locales # Load translations
-      I18n.backend.send(:translations).each do |lang, hsh|
-        langs[lang] = hsh[:name]
-      end
-    end
-  end
-
-  def available_locales
-    I18n.available_locales.map do |lang|
-      {
-        language: lang,
-        translation: languages[lang]
-      }
-    end
-  end
-
-  def other_available_locales
-    available_locales.map do |lang|
-      lang if lang[:language] != I18n.locale
-    end.compact
   end
 end

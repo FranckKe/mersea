@@ -15,7 +15,7 @@ module Concerns
           field :language, :enum do
             enum do
               I18n.available_locales.map do |lang|
-                [I18n.backend.send(:translations)[lang][:name], lang] # e.g. ["English", :en]
+                [I18n.t('.name', locale: lang), lang] # e.g. ["English", :en]
               end
             end
           end
@@ -35,7 +35,7 @@ module Concerns
                   'print', 'spellChecker', 'help', 'html', '|',
                   'undo', 'redo'
                 ],
-                language: 'fr'
+                language: I18n.locale
               }
             end
           end

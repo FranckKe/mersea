@@ -24,13 +24,15 @@
     <% end %>
     <ul class="languagepicker">
       <div>
-        <li><%= @locale %></li>
+        <li><%= I18n.t('.name') %></li>
       </div>
-      <% @available_locales.each do |lang| %>
-        <%= link_to url_for(locale: lang[:language]), 'data-turbolinks': "false" do %>
-          <li><%= lang[:translation] %></li>
-        <% end %>
-      <% end %>
+      <% I18n.available_locales.each do |lang|
+         unless lang.to_s == I18n.locale.to_s %>
+          <%= link_to url_for(locale: lang), 'data-turbolinks': "false" do
+            content_tag(:li, I18n.t('.name', locale: lang))
+          end %>
+        <% end
+      end %>
     </ul>
   </div>
 </div>
