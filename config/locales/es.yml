@@ -1,4 +1,5 @@
 es:
+  name: Español
   activerecord:
     models:
       tracer:

@@ -28,22 +28,21 @@ class ApplicationController < ActionController::Base
   end
 
   def languages
-    @languages ||= ActiveSupport::HashWithIndifferentAccess.new(
-      en: 'English',
-      es: 'Español',
-      fr: 'Français'
-    )
+    @languages ||= ActiveSupport::HashWithIndifferentAccess.new.tap do |langs|
+      I18n.backend.available_locales # Load translations
+      I18n.backend.send(:translations).each do |lang, hsh|
+        langs[lang] = hsh[:name]
+      end
+    end
   end
 
   def available_locales
-    available_locales_with_translation = []
     I18n.available_locales.map do |lang|
-      available_locales_with_translation << {
+      {
         language: lang,
         translation: languages[lang]
       }
     end
-    available_locales_with_translation
   end
 
   def other_available_locales

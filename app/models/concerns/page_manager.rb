@@ -14,16 +14,9 @@ module Concerns
           field :name
           field :language, :enum do
             enum do
-              available_locales_with_translation = []
-              languages = {
-                en: 'English',
-                es: 'Espanol',
-                fr: 'Français'
-              }
               I18n.available_locales.map do |lang|
-                available_locales_with_translation << [languages[lang], lang]
+                [I18n.backend.send(:translations)[lang][:name], lang] # e.g. ["English", :en]
               end
-              available_locales_with_translation
             end
           end
           field :content, :froala do
