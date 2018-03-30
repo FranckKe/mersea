@@ -1,28 +1,26 @@
-Page.create!(name: 'Le projet', content: <<~ABOUT
+Page.create!(
+  name: 'Le projet',
+  language: 'fr',
+  content: <<~ABOUT
     <div class="page-container">
         <h1>Description du projet</h1>
         <h2>Les impacts de la pollution plastique</h2>
         <p>8 millions de tonnes de plastiques sont déversés dans les océans chaque année. Dommages sur les habitants, perturbateurs
             endocriniens, blessures, décès d’animaux marins par ingestion ou étranglement, ces pollutions massives entraînent
             des pertes économiques majeures (baisse du tourisme, impacts sur les pêches…).</p>
-
-        <p>80% des déchets retrouvés sur le littoral proviennent du continent par les rivières, les eaux pluviales. Le reste provient
+         <p>80% des déchets retrouvés sur le littoral proviennent du continent par les rivières, les eaux pluviales. Le reste provient
             du trafic maritime et des activités en mer. On estime à 10 000 le nombre de conteneurs perdus en mer par an au niveau
             mondial.
         </p>
-
-        <p>Pertes économiques (baisse tourisme), dommages sur les habitats marins, blessures ou décès d’animaux marins par ingestion
+         <p>Pertes économiques (baisse tourisme), dommages sur les habitats marins, blessures ou décès d’animaux marins par ingestion
             ou étranglement. Des problèmes pour la navigation, déplacement d'espèces marines qui s'accroche aux déchets (<a href="https://marinedebris.noaa.gov/discover-issue/impacts" target="_blank">www.marinedebris.noaa.gov</a>).</p>
-
-        <h2>Le rôle des traceurs</h2>
-
-        <p>Parmi les pollutions plastiques, certains déchets racontent une histoire et permettent de suivre leur propagation au
+         <h2>Le rôle des traceurs</h2>
+         <p>Parmi les pollutions plastiques, certains déchets racontent une histoire et permettent de suivre leur propagation au
             gré des courants et des tempêtes. Ces traceurs permettent de qualifier et de quantifier une pollution provenant soit
             de conteneurs perdus en mer soit de déversements accidentels en milieu naturel. Avec plus de 150 navires qui passent
             tous les jours dans le rail d’Ouessant, la zone Atlantique est un observatoire unique de ces traceurs.
         </p>
-
-        <h2>Technologie</h2>
+         <h2>Technologie</h2>
         <p>Le code est publié sous licence Open Source MIT sur GitHub : <a href="https://github.com/FranckKe/mersea" target="_blank">Mersea</a></p>
         <p>Les contributeurs au code : Pierre Charpentier / Marc Douchement
             / Franck Kerbiriou</p>
@@ -30,7 +28,10 @@ Page.create!(name: 'Le projet', content: <<~ABOUT
   ABOUT
 )
 
-Page.create!(name: 'ANSEL', content: <<~ANSEL
+Page.create!(
+  name: 'ANSEL',
+  language: 'fr',
+  content: <<~ANSEL
     <div class="page-container">
         <h1>ANSEL &amp; co</h1>
         <p>L’association ANSEL sensibilise aux échouages de déchets sur le littoral depuis 17 ans. Après avoir lancé le Réseau d’Observation
@@ -39,15 +40,17 @@ Page.create!(name: 'ANSEL', content: <<~ANSEL
             se concrétise lors du Ocean Hackathon de Brest en octobre 2016. A cette occasion Pierre Charpentier, Franck Kerbiriou,
             Marc Douchement et Caroline Geisert développent en 48h la première version de la cartographie.
         </p>
-
-        <h2>Contacts</h2>
+         <h2>Contacts</h2>
         <p>Ansel asso 29900 Concarneau</p>
         <p>Réseau d’observation d’échouage de déchets en atlantique, Facebook.</p>
     </div>
   ANSEL
 )
 
-Page.create!(name: 'Mentions légales', content: <<~DISCLAIMER
+Page.create!(
+  name: 'Mentions légales',
+  language: 'fr',
+  content: <<~DISCLAIMER
     <div class="page-container">
         <h2>Mentions légales</h2>
         <p>L’association ANSEL est producteur de la base de donnée issue des observations. Les données que vous communiquez seront
@@ -62,7 +65,10 @@ Page.create!(name: 'Mentions légales', content: <<~DISCLAIMER
   DISCLAIMER
 )
 
-Page.create!(name: 'Liens', content: <<~LINKS
+Page.create!(
+  name: 'Liens',
+  language: 'fr',
+  content: <<~LINKS
     <div class="page-container">
         <h1>Liens utiles</h1>
         <ul>
@@ -75,7 +81,10 @@ Page.create!(name: 'Liens', content: <<~LINKS
   LINKS
 )
 
-Page.create!(name: 'Sécurité', content: <<~SECURITY
+Page.create!(
+  name: 'Sécurité',
+  language: 'fr',
+  content: <<~SECURITY
     <div class="page-container">
         <h1>Sécurité</h1>
         <h2>Préservez la nature !</h2>
