@@ -41,6 +41,7 @@ en:
         status: Status
       user:
         name: Name
+        language: Language
   layouts:
     menu:
       toggle_menu: User menu

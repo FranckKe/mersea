@@ -152,10 +152,11 @@ $(document).on("turbolinks:load", function() {
       icon: plusIcon
     });
     clickLayer.addLayer(markerClick).addTo(map);
-
+    var locale =
+      $(".user-menu").length > 0 ? "" : "locale=" + I18n.currentLocale();
     var popup = L.popup().setContent(
-      '<a href="/tracers?locale=' +
-        I18n.currentLocale() +
+      '<a href="/tracers?' +
+        locale +
         "&lat=" +
         e.latlng.lat +
         "&lng=" +

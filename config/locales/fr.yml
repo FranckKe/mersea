@@ -41,6 +41,7 @@ fr:
         status: Statut
       user:
         name: Nom
+        language: Langage
   layouts:
     menu:
       toggle_menu: Activé le menu

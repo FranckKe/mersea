@@ -10,6 +10,9 @@ $(document).on("turbolinks:load", function() {
     })
     .on("ajax:success", function(evt, data, status, xhr) {
       updateStatusMessage(informationStatusMessage, "success", data.message);
+      if (I18n.currentLocale() !== $("#user_language").val()) {
+        window.location.replace(window.location.pathname);
+      }
     })
     .on("ajax:error", function(e, data, status, xhr) {
       updateStatusMessage(

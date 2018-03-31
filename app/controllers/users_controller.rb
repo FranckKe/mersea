@@ -2,6 +2,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
 
   def me
+    @available_locales = I18n.available_locales.map do |lang|
+      [I18n.t('.name', locale: lang), lang]
+    end
     return unless request.method_symbol == :post
     if current_user.valid_password?(update_params[:password])
       if current_user.update_attributes(update_params.except(:password))
@@ -83,7 +86,7 @@ class UsersController < ApplicationController
   private
 
   def update_params
-    params.require(:user).permit(:name, :email, :password)
+    params.require(:user).permit(:name, :email, :language, :password)
   end
 
   def update_password_params

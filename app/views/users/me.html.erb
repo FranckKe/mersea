@@ -4,8 +4,9 @@
     <%= simple_form_for(current_user, url: me_users_path, html: { class: 'edit-user' }, format: :json, remote: true) do |f| %>
       <div class="form-inputs">
         <%= f.input :name, label: t('activerecord.attributes.user.name') %>
+        <%= f.input :language, collection: @available_locales, label: t('activerecord.attributes.user.language'), include_blank: false, selected: I18n.locale %>
         <%= f.input :email, type: 'email', label: t('activerecord.attributes.user.email') %>
-        <%= f.input :password, type: 'password', label: t('activerecord.attributes.user.current_password') %>
+        <%= f.input :password, type: 'password', label: t('activerecord.attributes.user.current_password'), required: true %>
       </div>
       <div class="status-message">
         <p class="message"></p>
