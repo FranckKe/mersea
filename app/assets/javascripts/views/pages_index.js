@@ -42,9 +42,6 @@ $(document).on("turbolinks:load", function() {
   var tracerData = {};
 
   if (mapElement.length > 0) {
-    var map = L.map("map").setView([46.2276, -2.2137], 6);
-    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-
     var osm = L.tileLayer(
       "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       {
@@ -69,8 +66,10 @@ $(document).on("turbolinks:load", function() {
       }
     );
 
-    Esri_WorldImagery.addTo(map);
-    osm.addTo(map);
+    var map = L.map("map", {
+      layers: [Esri_WorldImagery]
+    }).setView([46.2276, -2.2137], 6);
+    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
     control.addBaseLayer(Esri_WorldImagery, "Earth");
     control.addBaseLayer(osm, "Map");
