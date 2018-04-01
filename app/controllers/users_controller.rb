@@ -1,10 +1,12 @@
 class UsersController < ApplicationController
+  AVAILABLE_LOCALES = I18n.available_locales.map do |lang|
+    [I18n.t('.name', locale: lang), lang]
+  end
+
   before_action :authenticate_user!
 
   def me
-    @available_locales = I18n.available_locales.map do |lang|
-      [I18n.t('.name', locale: lang), lang]
-    end
+    @available_locales = AVAILABLE_LOCALES
     return unless request.method_symbol == :post
     if current_user.valid_password?(update_params[:password])
       if current_user.update_attributes(update_params.except(:password))
