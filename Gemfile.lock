@@ -110,6 +110,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hirb (0.7.3)
+    http_accept_language (2.1.1)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     i18n-js (3.0.5)
@@ -343,6 +344,7 @@ DEPENDENCIES
   devise-i18n (~> 1)
   foundation-icons-sass-rails (~> 3)
   foundation-rails (~> 6)
+  http_accept_language (~> 2)
   i18n-js (~> 3)
   jquery-rails (~> 4)
   leaflet-rails (~> 1)

@@ -27,41 +27,17 @@ class ApplicationController < ActionController::Base
     preferred_locale_from_user
     preferred_locale_from_param
 
-    preferred_locale = preferred_language_from I18n.available_locales
+    preferred_locale = http_accept_language.preferred_language_from I18n.available_locales
     I18n.locale = preferred_locale || I18n.default_locale
   end
 
   def preferred_locale_from_user
     return unless current_user&.language
-    user_preferred_languages.unshift(current_user.language)
+    http_accept_language.user_preferred_languages.unshift(current_user.language)
   end
 
   def preferred_locale_from_param
     return unless params[:locale]
-    user_preferred_languages.unshift(params[:locale])
-  end
-
-  def user_preferred_languages
-    @user_preferred_languages ||= begin
-      request.headers.env['HTTP_ACCEPT_LANGUAGE'].to_s.gsub(/\s+/, '').split(',').map do |language|
-        locale, quality = language.split(';q=')
-        raise ArgumentError, 'Not correctly formatted' unless locale =~ /^[a-z\-0-9]+|\*$/i
-
-        locale  = locale.downcase.gsub(/-[a-z0-9]+$/i, &:upcase)
-        locale  = nil if locale == '*'
-
-        quality = quality ? quality.to_f : 1.0
-
-        [locale, quality]
-      end.sort do |(_, left), (_, right)|
-        right <=> left
-      end.map(&:first).compact
-    rescue ArgumentError # Just rescue anything if the browser messed up badly.
-      []
-    end
-  end
-
-  def preferred_language_from(array)
-    (user_preferred_languages & array.map(&:to_s)).first
+    http_accept_language.user_preferred_languages.unshift(params[:locale])
   end
 end
