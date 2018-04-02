@@ -12,6 +12,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  senior                 :boolean          default(FALSE)
+#  language               :string
 #
 # Indexes
 #
@@ -32,6 +33,8 @@ class User < ApplicationRecord
   has_many :reports
 
   validates :email, presence: true
+  validates :name, presence: true
+  validates :language, presence: true
   validates_format_of :email, with: Devise.email_regexp
   validates :password, presence: true, on: :create
 
@@ -40,6 +43,7 @@ class User < ApplicationRecord
       field :name
       field :email
       field :senior
+      field :language
       field :created_at
       field :updated_at
       field :reset_password_sent_at

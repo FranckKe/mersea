@@ -21,18 +21,18 @@
     <% else %>
       <%= link_to t('devise.shared.links.sign_in'), user_session_path, class: 'button secondary' %>
       <%= link_to t('devise.shared.links.sign_up'), new_user_registration_path, class: 'button primary' %>
+      <ul class="languagepicker">
+        <div>
+          <li><%= I18n.t('.name') %></li>
+        </div>
+        <% I18n.available_locales.each do |lang|
+           unless lang.to_s == I18n.locale.to_s %>
+            <%= link_to url_for(locale: lang), 'data-turbolinks': "false" do
+              content_tag(:li, I18n.t('.name', locale: lang))
+            end %>
+          <% end
+        end %>
+      </ul>
     <% end %>
-    <ul class="languagepicker">
-      <div>
-        <li><%= I18n.t('.name') %></li>
-      </div>
-      <% I18n.available_locales.each do |lang|
-         unless lang.to_s == I18n.locale.to_s %>
-          <%= link_to url_for(locale: lang), 'data-turbolinks': "false" do
-            content_tag(:li, I18n.t('.name', locale: lang))
-          end %>
-        <% end
-      end %>
-    </ul>
   </div>
 </div>

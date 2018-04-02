@@ -10,7 +10,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    build_resource(sign_up_params)
+    build_resource(sign_up_params.merge(language: I18n.locale))
     resource.save
     yield resource if block_given?
     if resource.persisted?
@@ -43,8 +43,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def check_captcha
     return if verify_recaptcha
     respond_to do |format|
-      format.html { set_flash_message :alert, 'Veuillez confirmer que vous n\'êtes pas un robot' }
-      format.json { render json: { message: 'Veuillez confirmer que vous n\'êtes pas un robot' }, status: :bad_request }
+      format.html { set_flash_message :alert, I18n.t('.devise.registraion.human_check') }
+      format.json { render json: { message: I18n.t('.devise.registraion.human_check') }, status: :bad_request }
     end
   end
 
