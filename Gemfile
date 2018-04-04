@@ -24,6 +24,7 @@ gem 'recaptcha', require: 'recaptcha/rails'
 gem 'state_machines-activerecord', '~> 0.5'
 gem 'wysiwyg-rails', '~> 2'
 # https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
+gem 'bugsnag', '~> 6.6'
 
 group :development do
   gem 'annotate'
@@ -51,6 +52,3 @@ group :assets, :development, :test, :production do
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '~> 4'
 end
-
-# Added at 2018-03-19 14:06:30 +0100 by fragan:
-gem "bugsnag", "~> 6.6"
