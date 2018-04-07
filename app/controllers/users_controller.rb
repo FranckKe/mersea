@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     else
       respond_to do |format|
         format.html { set_flash_message :alert, I18n.t('devise.failure.invalid') }
-        format.json { render json: { message:  I18n.t('devise.failure.invalid') }, status: :unauthorized }
+        format.json { render json: { message: I18n.t('devise.failure.invalid') }, status: :unauthorized }
       end
     end
   end
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
             format.json { render json: { message: I18n.t('devise.passwords.updated_not_active') }, status: :created }
           end
         else
-          default_message = 'Votre mot de passe doit être compris entre 6 et 128 charactères'
+          default_message = t('devise.password.length_error')
           respond_to do |format|
             format.html { set_flash_message :alert, default_message }
             format.json { render json: { message: default_message }, status: :bad_request }
@@ -65,8 +65,8 @@ class UsersController < ApplicationController
         end
       else
         respond_to do |format|
-          format.html { set_flash_message :alert, 'Les nouveaux mot de passes ne correspondent pas' }
-          format.json { render json: { message: 'Les nouveaux mot de passes ne correspondent pas' }, status: :bad_request }
+          format.html { set_flash_message :alert, t('users.me.new_password_not_match') }
+          format.json { render json: { message:  t('users.me.new_password_not_match') }, status: :bad_request }
         end
       end
     else

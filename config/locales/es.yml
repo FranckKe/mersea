@@ -37,7 +37,7 @@ es:
         reported_at: Informado a
         tracer: Localizador
         quantity: Cantidad
-        date: Fecha
+        date: Fecha del informe
         status: Status
       user:
         name: Nombre
@@ -58,6 +58,13 @@ es:
       report_count: Recuento de informes
       last_activity: Última actividad
   reports:
+    create:
+      thanks: Gracias por tu informe
+      sucessful_update: Informe actualizada
+      sucessful_deletion: Informe borrado
+    new:
+      review: Los informes necesitan aprobación. Será revisado por un administrador en breve.
+      tired_of_captcha: Cansado de catcha? Crea una cuenta!
     edit:
       delete_report: Borrar informe
       delete_my_report: Borrar mi informe
@@ -73,6 +80,8 @@ es:
     password:
       password_not_match: Contraseñas no coincide
       password_wrong_length: La contraseña debe tener más de 6 caracteres
+      update_password: Actualizar contraseña
+      length_error: La contraseña debe tener entre 6 y 128 caracteres
     registration:
       human_check: Por favor confirma que no eres un robot
       edit:

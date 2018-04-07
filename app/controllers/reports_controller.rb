@@ -17,8 +17,8 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params.merge(user: current_user))
     @report.update_attributes(name: current_user.name) if current_user
     if trusted_report && @report.save
-      flash[:success] = 'Merci pour votre signalement'
-      redirect_to root_path(locale: I18n.locale)
+      flash[:success] = I18n.t('.reports.create.thanks')
+      redirect_to root_path
     else
       flash[:alert] = @report.errors.messages.first
       redirect_to Tracer.find(params[:report][:tracer_id])
@@ -29,7 +29,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
 
     if @report.update_attributes(report_params_update)
-      render json: { report: @report, message: 'Témoignage mis à jour' }, status: :ok
+      render json: { report: @report, message: I18n.t('.reports.create.sucessful_update') }, status: :ok
     else
       render json: { message: @report.errors.full_messages }, status: :bad_request
     end
@@ -46,7 +46,7 @@ class ReportsController < ApplicationController
   def destroy
     @report = Report.find(params[:id])
     @report.destroy
-    render json: { message: 'Témoignage supprimé' }, status: :ok
+    render json: { message: I18n.t('.reports.create.sucessful_deletion') }, status: :ok
   end
 
   private

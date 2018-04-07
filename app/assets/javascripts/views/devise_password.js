@@ -63,7 +63,7 @@ $(document).on("turbolinks:load", function() {
       );
     })
     .on("ajax:complete", function(evt, xhr, status, error) {
-      resetPasswordLoader.addClass("hide");
       resetPasswordSubmit.removeClass("hide");
+      resetPasswordLoader.addClass("hide");
     });
 });

@@ -79,7 +79,7 @@ $(document).on("turbolinks:load", function() {
       }
     })
     .on("ajax:complete", function(evt, xhr, status, error) {
-      registrationLoader.addClass("hide");
       registrationSubmit.removeClass("hide");
+      registrationLoader.addClass("hide");
     });
 });

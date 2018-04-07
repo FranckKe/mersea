@@ -37,7 +37,7 @@ fr:
         reported_at: Signalé le
         tracer: Traceur
         quantity: Quantité
-        date: Date
+        date: Date du signalement
         status: Statut
       user:
         name: Nom
@@ -50,17 +50,24 @@ fr:
     topbar:
       my_account: Mon compte
       settings: Paramètres
-      my_reports: Mes témoignages
+      my_reports: Mes signalements
   pages:
     index:
-      add_report: Ajouter un témoignage
+      add_report: Ajouter un signalement
     leaderboard:
-      report_count: Nombre de témoignages
+      report_count: Nombre de signalements
       last_activity: Dernière activitée
   reports:
+    create:
+      thanks: Merci pour votre signalement
+      sucessful_update: Signalement mis à jour
+      sucessful_deletion: Signalement supprimé
+    new:
+      review: Les signalements doivent être approuvés. Un administrateur va bientôt le passer en revue.
+      tired_of_captcha: Marre des catcha ? Créé un compte !
     edit:
-      delete_report: Supprimer témoignage
-      delete_my_report: Supprimer mon témoignage
+      delete_report: Supprimer signalement
+      delete_my_report: Supprimer mon signalement
       please_confirm: Veuillez confirmer la suppression
       location: Position
   users:
@@ -70,11 +77,11 @@ fr:
     reports:
       edit_report: Modifier mon rapport
   devise:
-    shared:
-      sign_in: Connexion
     password:
       password_not_match: Les mots de passes ne correspondent pas
       password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres
+      update_password: Mettre à jour le mot de passe
+      length_error: Le mot de passe doit être compris entre 6 et 128 charactères
     registration:
       human_check: Veuillez confirmer que vous n'êtes pas un robot
       edit:

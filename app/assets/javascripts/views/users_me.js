@@ -73,7 +73,7 @@ $(document).on("turbolinks:load", function() {
       );
     })
     .on("ajax:complete", function(evt, xhr, status, error) {
-      passwordLoader.addClass("hide");
       passwordSubmit.removeClass("hide");
+      passwordLoader.addClass("hide");
     });
 });
