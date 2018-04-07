@@ -18,7 +18,7 @@ $(document).on("turbolinks:load", function() {
         "error",
         data.responseJSON.message
       );
-      signinLoader.addClass("hide");
       signinSubmit.removeClass("hide");
+      signinLoader.addClass("hide");
     });
 });

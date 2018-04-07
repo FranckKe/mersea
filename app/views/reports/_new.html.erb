@@ -17,8 +17,12 @@
         <label>Position
           <input id="geoloc" type="text" value="<%= "#{params[:lat]},#{params[:lng]}" if params[:lat].present? && params[:lng].present? %>" required/>
         </label>
-        <%= recaptcha_tags unless current_user.present? %>
-        <%= f.button :submit, class: 'submit expand large-6 large-centered' %>
+        <% unless current_user.present? %>
+          <%= link_to t('.tired_of_captcha'), new_user_registration_path %>
+          <%= recaptcha_tags  %>
+        <% end %>
+        <%= f.button :submit, class: 'button submit expand medium-12 small-12 large-12' %>
+        <p><%= t('.review') %></p>
       <% end %>
     </div>
   </div>

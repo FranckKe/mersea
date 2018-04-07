@@ -13,9 +13,9 @@
             <% end %>
             <div class="action">
               <% if params[:lat].present? && params[:lng].present? %>
-                <%= link_to tracer.name, tracer_path(tracer, lat: params[:lat], lng: params[:lng]) %>
+                <%= link_to tracer.name, tracer_path(tracer, lat: params[:lat], lng: params[:lng]), class: 'uppercase' %>
               <% else %>
-              <%= link_to tracer.name, tracer %>
+              <%= link_to tracer.name, tracer, class: 'uppercase' %>
               <% end %>
             </div>
         </div>

@@ -37,7 +37,7 @@ en:
         reported_at: Reported at
         tracer: Tracer
         quantity: Quantity
-        date: Date
+        date: Date of report
         status: Status
       user:
         name: Name
@@ -58,6 +58,13 @@ en:
       report_count: Report count
       last_activity: Last activity
   reports:
+    create:
+      thanks: Thank you for your report
+      sucessful_update: Report updated
+      sucessful_deletion: Report deleted
+    new:
+      review: Reports need approval. It will be reviewed by an administrator shortly.
+      tired_of_captcha: Tired of captcha ? Create an account!
     edit:
       delete_report: Delete report
       delete_my_report: Delete my report
@@ -73,6 +80,8 @@ en:
     password:
       password_not_match: The passwords do not match
       password_wrong_length: Your password must be longer than 6 characters
+      update_password: Update password
+      length_error: The password must be between 6 and 128 characters
     registration:
       human_check: Please confirm you are not a robot
       edit:

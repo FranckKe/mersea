@@ -1,7 +1,9 @@
 <%= simple_form_for report, html: { class: 'edit-report' }, remote: true, method: :put do |f| %>
   <%= f.input :id, as: :hidden, input_html: { value: report.id } %>
   <%= f.input :reported_at, input_html: { value: report.reported_at }, as: :hidden %>
-  <input class="datepicker-tracer-form" type="date" value="<%= report.reported_at %>" required/>
+  <label><%= t('activerecord.attributes.report.date') %>
+  <input class="datepicker-tracer-form" type="date" id="reportedAtDatepicker" value="<%= report.reported_at %>" required/>
+  </label>
   <%= f.input :name, value: report.name, required: true, disabled: current_user.present? %>
   <%= f.input :quantity, as: :integer, input_html: { value: report.quantity } %>
   <%= f.input :address, value: report.address %>
@@ -16,12 +18,12 @@
   </div>
   <div class="form-actions large-12 large-centered">
     <div class="form-actions large-6 large-centered">
-      <%= f.button :submit, class: 'submit expand large-12 large-centered' %>
+      <%= f.button :submit, class: 'button submit expand medium-12 small-12 large-12 edit-report' %>
     </div>
   </div>
   <div class="form-actions large-12 large-centered">
     <div class="form-actions large-6 large-centered">
-      <div class="button expand large-6 large-centered loader-wrapper hide">
+      <div class="button submit expand medium-12 small-12 large-12 loader-wrapper hide edit-report">
         <div class="loader">
         </div>
       </div>
@@ -31,7 +33,7 @@
   <section class="medium-12 medium-centered">
     <h3 class="text-center"><%= t('.delete_report') %></h3>
     <div class="form-actions large-6 large-centered">
-        <%= link_to t('.delete_my_report'), report_path(report), data: { confirm: t('.please_confirm') }, method: :delete, remote: true, class: 'button submit expand large-12 large-centered alert' %>
+        <%= link_to t('.delete_my_report'), report_path(report), data: { confirm: t('.please_confirm') }, method: :delete, remote: true, class: 'button submit expand medium-12 small-12 large-12 alert' %>
     </div>
   </section>
 <% end %>
