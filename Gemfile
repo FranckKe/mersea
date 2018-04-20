@@ -20,6 +20,7 @@ gem 'rails_admin', '~> 1'
 gem 'rails_admin-i18n', '~> 1'
 gem 'rails_admin_import', '~> 2'
 gem 'rails_admin_state', '~> 1'
+gem 'pundit', '~> 1.1'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'state_machines-activerecord', '~> 0.5'
 gem 'wysiwyg-rails', '~> 2'
@@ -34,7 +35,6 @@ group :development do
   gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem 'web-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

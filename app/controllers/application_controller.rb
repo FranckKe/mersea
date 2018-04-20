@@ -1,12 +1,23 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit
+
   protect_from_forgery with: :exception unless -> { request.format.json? }
   before_action :set_locale
   before_action :fetch_pages
 
   def status
     render json: {}, status: :ok
+  end
+
+  def index
+    render nothing: true
+  end
+
+  rescue_from StandardError do |e|
+    @error = Mersea::Errors.format(e)
+    render json: @error, status: @error.status
   end
 
   private
