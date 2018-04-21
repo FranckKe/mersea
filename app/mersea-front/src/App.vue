@@ -2,85 +2,56 @@
   <div id="app">
     <Slideout menu="#menu" panel="#panel" :toggleSelectors="['.toggle-button']" @on-open="open">
       <nav id="menu">
-        <div>Menu</div>
         <aside class="menu">
           <p class="menu-label">
             General
           </p>
           <ul class="menu-list">
             <li>
-              <a>Dashboard</a>
+              <router-link to="/">Home</router-link>
             </li>
             <li>
-              <a>Customers</a>
-            </li>
-          </ul>
-          <p class="menu-label">
-            Administration
-          </p>
-          <ul class="menu-list">
-            <li>
-              <a>Team Settings</a>
+              <router-link to="/">Tracers</router-link>
             </li>
             <li>
-              <a class="is-active">Manage Your Team</a>
-              <ul>
-                <li>
-                  <a>Members</a>
-                </li>
-                <li>
-                  <a>Plugins</a>
-                </li>
-                <li>
-                  <a>Add a member</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Invitations</a>
-            </li>
-            <li>
-              <a>Cloud Storage Environment Settings</a>
-            </li>
-            <li>
-              <a>Authentication</a>
+              <router-link to="/">Contributors</router-link>
             </li>
           </ul>
           <p class="menu-label">
-            Transactions
+            About us
           </p>
           <ul class="menu-list">
             <li>
-              <a>Payments</a>
+              <router-link to="/">Project</router-link>
             </li>
             <li>
-              <a>Transfers</a>
+              <router-link to="/">ANSEL</router-link>
+            </li>
+          </ul>
+          <p class="menu-label">
+            Information
+          </p>
+          <ul class="menu-list">
+            <li>
+              <router-link to="/">Links</router-link>
             </li>
             <li>
-              <a>Balance</a>
+              <router-link to="/">Security</router-link>
+            </li>
+            <li>
+              <router-link to="/">Legal mentions</router-link>
             </li>
           </ul>
         </aside>
       </nav>
       <header>
-        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-          <div class="navbar-start">
-            <div class="navbar-item">
-              <button class="button toggle-button">☰</button>
-            </div>
-            <a class="navbar-item" href="#">
-              Ocean Plastic Tracker
-            </a>
-          </div>
-        </nav>
-        <!--<div>
-          <button class="navbar-burger toggle-button">☰</button>
-        </div>-->
+        <button class="button toggle-button">☰</button>
+        <h1 class="navbar-item app-title">
+          {{ appName }}
+        </h1>
       </header>
 
       <main id="panel">
-        <img src="./assets/logo.png" alt="Vue.js PWA">
-        <router-view></router-view>
       </main>
     </Slideout>
   </div>
@@ -108,21 +79,43 @@ export default {
 </script>
 
 <style>
-#panel {
-  margin-top: 40px;
+html {
+  overflow-y: auto;
+}
+
+#menu {
+  margin-top: 50px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+header h1 {
+  margin: 0 auto;
+}
+
+.toggle-button {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  align-content: flex-start;
+  margin: auto 0;
 }
 
 .slideout-menu {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 100vw;
   height: 100vh;
+  padding: 10px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   z-index: 0;
   display: none;
-  background-color: #1d1f20;
   color: white;
 }
 
@@ -140,7 +133,7 @@ export default {
   position: relative;
   z-index: 1;
   will-change: transform;
-  min-height: 100vh;
+  min-height: calc(100vh - 50px);
 }
 
 .slideout-open,
