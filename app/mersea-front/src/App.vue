@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <header>
-      <span>Vue.js PWA</span>
+      <h1>{{ appName }}</h1>
     </header>
     <main>
-      <img src="./assets/logo.png" alt="Vue.js PWA">
       <router-view></router-view>
     </main>
   </div>
@@ -12,7 +11,12 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      appName: this.$appName
+    }
+  }
 }
 </script>
 
@@ -39,6 +43,9 @@ header {
   padding: 0 16px 0 24px;
   background-color: #35495e;
   color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header span {
