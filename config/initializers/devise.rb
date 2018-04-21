@@ -65,10 +65,10 @@ Devise.setup do |config|
   # given strategies, for example, `config.http_authenticatable = [:database]` will
   # enable it only for database authentication. The supported strategies are:
   # :database      = Support basic authentication with authentication key + password
-  # config.http_authenticatable = false
+  config.http_authenticatable = true
 
   # If 401 status code should be returned for AJAX requests. True by default.
-  config.http_authenticatable_on_xhr = false
+  config.http_authenticatable_on_xhr = true
 
   # The realm used in Http Basic Authentication. 'Application' by default.
   # config.http_authentication_realm = 'Application'
@@ -260,6 +260,11 @@ Devise.setup do |config|
   # end
   config.warden do |manager|
     manager.failure_app = CustomFailure
+  end
+
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.secrets.jwt_secret
+    jwt.expiration_time = 1.week # FIXME reduce that value and use refresh token mechanism
   end
 
   # ==> Mountable engine configurations

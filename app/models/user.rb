@@ -13,13 +13,16 @@
 #  updated_at             :datetime         not null
 #  senior                 :boolean          default(FALSE)
 #  language               :string
+#  jti                    :string           not null
 #
 # Indexes
 #
 #  index_users_on_email  (email)
+#  index_users_on_jti    (jti) UNIQUE
 #
 
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
@@ -27,8 +30,10 @@ class User < ApplicationRecord
          :recoverable,
          :rememberable,
          :database_authenticatable,
+         :jwt_authenticatable,
          :validatable,
-         password_length: 6..128
+         password_length: 6..128,
+         jwt_revocation_strategy: self
 
   has_many :reports
 

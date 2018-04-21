@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   include Pundit
-
-  protect_from_forgery with: :exception unless -> { request.format.json? }
   before_action :set_locale
 
   def status

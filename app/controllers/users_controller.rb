@@ -1,13 +1,24 @@
 class UsersController < ApplicationController
-  AVAILABLE_LOCALES = I18n.available_locales.map do |lang|
-    [I18n.t('.name', locale: lang), lang]
-  end
+  # AVAILABLE_LOCALES = I18n.available_locales.map do |lang|
+  #   [I18n.t('.name', locale: lang), lang]
+  # end
 
   before_action :authenticate_user!
+  before_action :authorize_user!, only: %i(me update update_password)
 
   def me
-    @available_locales = AVAILABLE_LOCALES
-    return unless request.method_symbol == :post
+    render json: current_user, status: :ok
+  end
+
+  def update
+    # @available_locales = AVAILABLE_LOCALES
+    # return unless request.method_symbol == :post
+
+    unless current_user.valid_password?(update_params[:password])
+      @error = Mersea::Errors.format(Pundit::NotAuthorizedError.new(record: current_user))
+      render json: @error, status: @error.status
+    end
+
     if current_user.valid_password?(update_params[:password])
       if current_user.update_attributes(update_params.except(:password))
         respond_to do |format|
@@ -32,19 +43,19 @@ class UsersController < ApplicationController
     URI.parse(request.referer).path if request.referer
   end
 
-  def reports
-    @user = User.find(params[:id])
-    @reports = @user.reports
-
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: { data: @reports },
-               include: { tracer: { only: :name } },
-               except: [:email, :photo_content_type, :photo_file_name, :photo_file_size, :photo_updated_at, :created_at, :updated_at ]
-      end
-    end
-  end
+  # def reports
+  #   @user = User.find(params[:id])
+  #   @reports = @user.reports
+  #
+  #   respond_to do |format|
+  #     format.html
+  #     format.json do
+  #       render json: { data: @reports },
+  #              include: { tracer: { only: :name } },
+  #              except: [:email, :photo_content_type, :photo_file_name, :photo_file_size, :photo_updated_at, :created_at, :updated_at ]
+  #     end
+  #   end
+  # end
 
   def update_password
     @user = User.find(current_user.id)
@@ -79,11 +90,11 @@ class UsersController < ApplicationController
 
   protected
 
-  def set_flash_message(key, kind, options = {})
-    if is_flashing_format?
-      set_flash_message(key, kind, options)
-    end
-  end
+  # def set_flash_message(key, kind, options = {})
+  #   if is_flashing_format?
+  #     set_flash_message(key, kind, options)
+  #   end
+  # end
 
   private
 
@@ -93,5 +104,9 @@ class UsersController < ApplicationController
 
   def update_password_params
     params.require(:user).permit(:password, :password_confirmation, :current_password)
+  end
+
+  def authorize_user!
+    authorize current_user
   end
 end

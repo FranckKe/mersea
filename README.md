@@ -53,6 +53,7 @@ $ docker exec -it mersea_mersea_1 bundle exec rails c
 ```
 
 To set any environment variable in the container, use one or more `-e` flags:
+- `JWT_SECRET` → the JWT secret
 - `MERSEA_NAMESPACE` → namespace the url
 - `RAILS_SERVE_STATIC_FILES` → the webapp serves all the assets instead of NGINX
 - `MERSEA_DATABASE_POOL` → database connection pool size

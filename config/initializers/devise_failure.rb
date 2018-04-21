@@ -1,17 +1,7 @@
 class CustomFailure < Devise::FailureApp
-  def redirect_url
-    if warden_options[:scope] == :user
-      user_session_path
-    else
-      new_admin_session_url
-    end
-  end
-
   def respond
-    if http_auth?
-      http_auth
-    else
-      redirect
-    end
+    self.status = :unauthorized
+    self.response_body = { errors: i18n_message }.to_json
+    self.content_type = 'application/json; charset=utf-8'
   end
 end
