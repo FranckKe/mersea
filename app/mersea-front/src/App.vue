@@ -11,10 +11,10 @@
               <router-link to="/">Home</router-link>
             </li>
             <li>
-              <router-link to="/">Tracers</router-link>
+              <router-link to="/tracers">Tracers</router-link>
             </li>
             <li>
-              <router-link to="/">Contributors</router-link>
+              <router-link to="/contributors">Contributors</router-link>
             </li>
           </ul>
           <p class="menu-label">
@@ -22,10 +22,10 @@
           </p>
           <ul class="menu-list">
             <li>
-              <router-link to="/">Project</router-link>
+              <router-link to="/project">Project</router-link>
             </li>
             <li>
-              <router-link to="/">ANSEL</router-link>
+              <router-link to="/ansel">ANSEL</router-link>
             </li>
           </ul>
           <p class="menu-label">
@@ -33,13 +33,13 @@
           </p>
           <ul class="menu-list">
             <li>
-              <router-link to="/">Links</router-link>
+              <router-link to="/links">Links</router-link>
             </li>
             <li>
-              <router-link to="/">Security</router-link>
+              <router-link to="/security">Security</router-link>
             </li>
             <li>
-              <router-link to="/">Legal mentions</router-link>
+              <router-link to="/legal-mentions">Legal mentions</router-link>
             </li>
           </ul>
         </aside>
