@@ -19,7 +19,7 @@ export default {
     console.dir(mapboxgl)
   },
   methods: {
-    createMap: function() {
+    createMap: () => {
       mapboxgl.accessToken =
         'pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w'
       this.map = new mapboxgl.Map({
@@ -67,7 +67,7 @@ export default {
 
 .mapboxgl-ctrl-top-left,
 .mapboxgl-ctrl-geocoder {
-  width: calc(100% - 35px);
+  width: calc(100% - 35px); /* Width of geolocalize button */
   max-width: calc(100% - 35px);
 }
 </style>
