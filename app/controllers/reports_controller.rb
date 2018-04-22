@@ -47,14 +47,12 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:report)
-          .permit(:tracer_id, :name, :quantity, :address, :longitude, :latitude,
+    params.permit(:tracer_id, :name, :quantity, :address, :longitude, :latitude,
                   :description, :photo, :reported_at)
   end
 
   def report_params_update
-    params.require(:report)
-          .permit(:name, :quantity, :address, :longitude, :latitude,
+    params.permit(:name, :quantity, :address, :longitude, :latitude,
                   :description, :reported_at)
   end
 end

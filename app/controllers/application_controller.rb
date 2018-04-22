@@ -19,6 +19,12 @@ class ApplicationController < ActionController::API
 
   private
 
+  # Customize pundit's user
+  # https://github.com/varvet/pundit#additional-context
+  def pundit_user
+    UserContext.new(current_user, params)
+  end
+
   def default_url_options(options = {})
     return options if current_user
     # Add locale to url/path builder ()

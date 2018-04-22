@@ -21,6 +21,6 @@ class ApplicationPolicy
   private
 
   def owner?
-    record.user_id == user&.id
+    user.same?(id: record.user_id)
   end
 end

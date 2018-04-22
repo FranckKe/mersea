@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resources :users, only: [:get, :patch] do
     collection do
       get 'me'
-      patch 'update'
-      put 'update_password', defaults: { format: 'json' }, to: 'users#update_password'
+      patch 'me', to: 'users#update'
+      patch 'update_password', defaults: { format: 'json' }, to: 'users#update_password'
     end
     member do
       get 'reports', to: 'users#reports'

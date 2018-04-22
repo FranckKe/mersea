@@ -16,6 +16,6 @@ class UserPolicy < ApplicationPolicy
   private
 
   def owner?
-    record.id == user.id
+    user.same?(id: record.id)
   end
 end
