@@ -43,14 +43,11 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :assets, :development, :test, :production do
   gem 'devise-foundation-views', '~> 0.1'
-  gem 'foundation-icons-sass-rails', '~> 3'
   gem 'foundation-rails', '~> 6'
   gem 'jquery-rails', '~> 4'
   gem 'leaflet-rails', '~> 1'
-  gem 'rails-assets-leaflet.markercluster', source: 'https://rails-assets.org'
   gem 'sass-rails', '~> 5'
   gem 'simple_form', '~> 3'
-  gem 'turbolinks', '~> 5'
   gem 'uglifier', '~> 4'
 end
 
