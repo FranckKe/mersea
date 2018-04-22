@@ -1,38 +1,5 @@
 <div class="topbar flex h-center v-center">
-  <div class="menu-wrapper">
-    <%= render 'layouts/menu' %>
-  </div>
   <div class="title-wrapper">
-    <h1><%= link_to 'Ocean Plastic Tracker', root_path %></h1>
-  </div>
-  <div class="utils">
-    <% if current_user.present? %>
-      <ul class="dropdown menu user-menu" data-dropdown-menu data-click-open>
-        <li>
-          <% link_to t('my_account'), me_users_path, class: 'button secondary' %>
-          <div href="#" class="button secondary"><%= t('.my_account') %></div>
-          <ul>
-            <li><i class="fi-widget"></i><%= link_to t('.settings'), me_users_path %></li>
-            <li><i class="fi-marker"></i><%= link_to t('.my_reports'), reports_user_path(current_user) %></li>
-            <li><i class="fi-power"></i><%= link_to t('devise.sessions.sign_out'), destroy_user_session_path, method: :delete %></li>
-          </ul>
-        </li>
-      </ul>
-    <% else %>
-      <%= link_to t('devise.shared.links.sign_in'), user_session_path, class: 'button secondary' %>
-      <%= link_to t('devise.shared.links.sign_up'), new_user_registration_path, class: 'button primary' %>
-      <ul class="languagepicker">
-        <div>
-          <li><%= I18n.t('.name') %></li>
-        </div>
-        <% I18n.available_locales.each do |lang|
-           unless lang.to_s == I18n.locale.to_s %>
-            <%= link_to url_for(locale: lang), 'data-turbolinks': "false" do
-              content_tag(:li, I18n.t('.name', locale: lang))
-            end %>
-          <% end
-        end %>
-      </ul>
-    <% end %>
+    <h1>Back Office</h1>
   </div>
 </div>
