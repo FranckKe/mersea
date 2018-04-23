@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  respond_to :json
+
   # POST /resource/sign_in
   def create
     self.resource = warden.authenticate!(scope: :user)
@@ -35,5 +37,10 @@ class Users::SessionsController < Devise::SessionsController
   # Hack Devise for Rails 5 API for `DELETE /resource/sign_out`.
   def respond_to_on_destroy
     render nothing: true, status: :no_content
+  end
+
+  # API mode
+  def is_navigational_format?
+    false
   end
 end
