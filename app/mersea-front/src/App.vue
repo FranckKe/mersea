@@ -1,78 +1,79 @@
 <template>
   <div id="app">
-    <Slideout menu="#menu" panel="#panel" :toggleSelectors="['.toggle-button']" @on-open="open">
-      <nav id="menu">
-        <aside class="menu">
-          <p class="menu-label">
-            General
-          </p>
-          <ul class="menu-list">
-            <li>
-              <router-link to="/">Home</router-link>
-            </li>
-            <li>
-              <router-link to="/tracers">Tracers</router-link>
-            </li>
-            <li>
-              <router-link to="/contributors">Contributors</router-link>
-            </li>
-          </ul>
-          <p class="menu-label">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="navbar-start">
+          <a role="button" class="navbar-burger" aria-label="menu" data-target="flexible-menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+        </a>
+      </div>
+      <div id="flexible-menu" class="navbar-menu">
+        <router-link to="/" class="navbar-item">Home</router-link>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <p class="navbar-link">
             About us
           </p>
-          <ul class="menu-list">
-            <li>
-              <router-link to="/project">Project</router-link>
-            </li>
-            <li>
-              <router-link to="/ansel">ANSEL</router-link>
-            </li>
-          </ul>
-          <p class="menu-label">
-            Information
-          </p>
-          <ul class="menu-list">
-            <li>
-              <router-link to="/links">Links</router-link>
-            </li>
-            <li>
-              <router-link to="/security">Security</router-link>
-            </li>
-            <li>
-              <router-link to="/legal-mentions">Legal mentions</router-link>
-            </li>
-          </ul>
-        </aside>
-      </nav>
-      <header>
-        <button class="button toggle-button">☰</button>
-        <h1 class="navbar-item app-title">
-          {{ appName }}
-        </h1>
-      </header>
 
-      <main id="panel">
-      </main>
-    </Slideout>
+          <div class="navbar-dropdown">
+            <router-link to="/project" class="navbar-item">Project</router-link>
+            <router-link to="/ansel" class="navbar-item">ANSEL</router-link>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <p class="navbar-link">
+            More
+          </p>
+          <div class="navbar-dropdown">
+            <router-link to="/links" class="navbar-item">Links</router-link>
+            <router-link to="/security" class="navbar-item">Security</router-link>
+            <router-link to="/legal-mentions" class="navbar-item">Legal mentions</router-link>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <router-view>
+    </router-view>
   </div>
 </template>
 
 <script>
-import Slideout from 'vue-slideout'
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Get all "navbar-burger" elements
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+
+        // Get the target from the "data-target" attribute
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+});
 
 export default {
   name: 'app',
   data() {
     return {
       appName: this.$appName
-    }
-  },
-  components: {
-    Slideout
-  },
-  methods: {
-    open: function() {
-      // console.log('slideoutOpen')
     }
   }
 }
@@ -83,66 +84,17 @@ html {
   overflow-y: auto;
 }
 
-#menu {
-  margin-top: 50px;
+.navbar {
+  background-color: #DDD;
 }
 
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5px;
+p.navbar-link {
+  cursor: default;
 }
 
-header h1 {
-  margin: 0 auto;
-}
-
-.toggle-button {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  align-content: flex-start;
-  margin: auto 0;
-}
-
-.slideout-menu {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  height: 100vh;
-  padding: 10px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  z-index: 0;
-  display: none;
-  color: white;
-}
-
-.slideout-menu-left {
-  left: 0;
-}
-
-.slideout-menu-right {
-  right: 0;
-}
-
-.slideout-panel {
-  background-color: #4b5;
-  color: white;
-  position: relative;
-  z-index: 1;
-  will-change: transform;
-  min-height: calc(100vh - 50px);
-}
-
-.slideout-open,
-.slideout-open body,
-.slideout-open .slideout-panel {
-  overflow: hidden;
-}
-
-.slideout-open .slideout-menu {
-  display: block;
+@media screen and (max-width: 1023px) {
+  .navbar-menu.is-active {
+    height: 100vh;
+  }
 }
 </style>
