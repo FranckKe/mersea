@@ -23,6 +23,7 @@
         <span class="mm-menu__link-text <%= 'active' if request.path == leaderboard_path %>"><%= t('.leaderboard') %></span>
       <% end %>
     </li>
+    <% @pages = [] %> <!-- FIXME Cleanup assets & views for v2.0 -->
     <% @pages.each do |page| %>
       <li class="mm-menu__link">
         <%= link_to page_path(page), class: 'mm-menu__link' do %>

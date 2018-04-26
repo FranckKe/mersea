@@ -1,4 +1,4 @@
-class TracersController < ApplicationController
+class TracersController < ApiController
   def index
     @tracers = Tracer.order(:name).all
     render json: @tracers, status: :ok
