@@ -3,11 +3,17 @@ class ReportsController < ApiController
 
   def index
     @reports = Report.where(status: 'accepted')
-    render json: @reports, status: :ok
+    respond_to do |format|
+      format.json { render json: @reports, status: :ok }
+      format.geojson { render json: @reports, serializer: GeojsonReportsSerializer, status: :ok }
+    end
   end
 
   def show
-    render json: @report, status: :ok
+    respond_to do |format|
+      format.json { render json: @report, status: :ok }
+      format.geojson { render json: @report, serializer: GeojsonReportSerializer, status: :ok }
+    end
   end
 
   def create
