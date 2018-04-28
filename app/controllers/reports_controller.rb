@@ -2,7 +2,9 @@ class ReportsController < ApiController
   before_action :fetch_report, only: %i(show update destroy)
 
   def index
-    @reports = Report.where(status: 'accepted')
+    @reports = Report.filter(params.permit(*parameters))
+    @reports = @reports.where(status: 'accepted') unless current_user_reports?
+
     respond_to do |format|
       format.json { render json: @reports, status: :ok }
       format.geojson { render json: @reports, serializer: GeojsonReportsSerializer, status: :ok }
@@ -60,5 +62,15 @@ class ReportsController < ApiController
   def report_params_update
     params.permit(:name, :quantity, :address, :longitude, :latitude,
                   :description, :reported_at)
+  end
+
+  def parameters
+    [
+      :name, :tracer_id, :user_id, :reported_at
+    ]
+  end
+
+  def current_user_reports?
+    params[:user_id].present? && params[:user_id] == current_user&.id
   end
 end
