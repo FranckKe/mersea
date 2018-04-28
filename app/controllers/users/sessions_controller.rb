@@ -17,6 +17,7 @@ class Users::SessionsController < Devise::SessionsController
   # Devise hack for JWT support
   def all_signed_out?
     users = Devise.mappings.keys.map do |s|
+      next if s == :admin
       warden.user(scope: s, run_callbacks: false) || jwt_user(s)
     end
 
