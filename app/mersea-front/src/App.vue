@@ -13,6 +13,7 @@
       </div>
       <div id="flexible-menu" class="navbar-menu">
         <router-link to="/" class="navbar-item">Home</router-link>
+        <router-link to="/tracers" class="navbar-item">Tracers</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <p class="navbar-link">
             About us

@@ -8,6 +8,9 @@ import router from './router'
 import Vuex from 'vuex'
 import Buefy from 'buefy'
 import axios from 'axios'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch, faThLarge, faThList } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import 'buefy/lib/buefy.css'
 
@@ -19,6 +22,9 @@ Vue.prototype.$apiUrl = process.env.API_URL
 
 Vue.use(Vuex)
 Vue.use(Buefy)
+
+library.add(faSearch, faThList, faThLarge)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
   el: '#app',

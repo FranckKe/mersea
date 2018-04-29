@@ -1,72 +1,98 @@
 <template>
-  <section class="section">
-    <h1>Tracers</h1>
-    <div class="columns is-multiline is-mobile">
-      <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop" :key="idx" v-for="(tracer, idx) in tracers">
-        <article class="card">
-          <div class="card-image">
-            <div class="img-wrapper" :style="'background-image: url(' + tracer.img + ')'">
-            </div>
-          </div>
-          <div class="card-content">
-            {{ tracer.title }}
-          </div>
-        </article>
+  <div class="section">
+    <h1 class="heading_text is-size-3">Tracers</h1>
+    <div class="field">
+      <div class="control has-icons-left">
+        <span class="icon is-small is-left"> 
+          <font-awesome-icon icon="search" />
+        </span>
+        <input class="input" type="text" placeholder="Search for a tracer" v-model="searchKeywords">
       </div>
     </div>
-  </section>
+    <div class="columns columns is-multiline is-mobile">
+      <div class="column">
+        <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
+      </div>
+      <div class="column is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
+        <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchToGrid">
+          <span class="icon is-small is-left"> 
+            <font-awesome-icon icon="th-large" />
+          </span>
+        </button>
+        <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="switchToList">
+          <span class="icon is-small is-left"> 
+            <font-awesome-icon icon="th-list" />
+          </span>
+        </button>
+      </div>
+    </div>
+    <tracers-grid v-if="displayFormat == 'grid'" :tracers="getFilteredTracers"></tracers-grid>
+    <tracers-list v-if="displayFormat == 'list'" :tracers="getFilteredTracers"></tracers-list>
+  </div>
 </template>
 
 
 <script>
+import TracersGrid from '@/components/TracersGrid'
+import TracersList from '@/components/TracersList'
+
 export default {
   name: 'tracers',
+  components: {
+    TracersGrid,
+    TracersList,
+  },
   data() {
     return {
-      tracers: [
-        {
-          title: 'Hello1',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello2',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello3',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello4',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello5',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello6',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        },
-        {
-          title: 'Hello7',
-          content: 'Lorem ipsum lol',
-          img: 'https://placeimg.com/1280/960/any'
-        }
-      ]
+      apiUrl: this.$apiUrl,
+      displayFormat: 'list',
+      tracers: [],
+      searchKeywords: ''
+    }
+  },
+  async created() {
+    await this.loadTracers()
+  },
+  methods: {
+    async switchToGrid() {
+      this.displayFormat = 'grid'
+    },
+    switchToList() {
+      this.displayFormat = 'list'
+    },
+    getFilteredTracers() {
+      if (this.searchKeywords !== '') {
+        let keywords = this.searchKeywords.toLowerCase()
+        console.log(this.tracers)
+        return this.tracers.filter((tracer, index) => tracer.name.toLowerCase().indexOf(keywords) !== -1)
+      } else {
+        return this.tracers
+      }
+    },
+    async loadTracers() {
+      const tracers = await fetch(`${this.apiUrl}/tracers`, {
+        method: 'get',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        })
+      })
+
+      this.tracers = await tracers.json()
     }
   }
 }
 </script>
 <style>
+div.section {
+  padding-top: 0;
+}
 .card-image {
   height: 200px;
+}
+
+.heading_text {
+  margin-bottom: 1.5rem;
 }
 
 .img-wrapper {
