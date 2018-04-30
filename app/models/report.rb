@@ -5,7 +5,6 @@
 #  id                 :uuid             not null, primary key
 #  tracer_id          :uuid
 #  name               :string
-#  email              :string
 #  quantity           :integer
 #  address            :string
 #  longitude          :float
