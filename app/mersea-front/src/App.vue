@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <header>
       <h1>{{ appName }}</h1>
     </header>
@@ -21,28 +21,35 @@ export default {
 </script>
 
 <style>
+:root {
+  --header-height: 40px;
+
+  --color-primary: #0093b7;
+  --color-primary-dark: #005f89;
+  --color-primary-ligth: #a0c5cf;
+  --color-light: #e6eceb;
+  --color-secondary: #63cdd7;
+  --color-primary-t1: #ffb100;
+  --color-primary-t2: #ff1e00;
+}
+
 body {
   margin: 0;
 }
 
-#app {
+.app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-main {
-  text-align: center;
-  margin-top: 40px;
+  color: var(--color-primary);
 }
 
 header {
   margin: 0;
-  height: 56px;
+  height: var(--header-height);
   padding: 0 16px 0 24px;
-  background-color: #35495e;
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: var(--color-light);
   display: flex;
   justify-content: center;
   align-items: center;
