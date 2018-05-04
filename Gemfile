@@ -53,3 +53,14 @@ group :assets, :development, :test, :production do
   gem 'turbolinks', '~> 5'
   gem 'uglifier', '~> 4'
 end
+
+group :test do
+  # Rspec
+  gem 'rspec-rails', '~> 3.7'
+  gem 'factory_bot_rails', '~> 4.8'
+  gem 'faker', '~> 1.8'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'pundit-matchers', '~> 1.4'
+  gem 'database_cleaner', '~> 1.7'
+  gem 'json-schema', '~> 2.8'
+end

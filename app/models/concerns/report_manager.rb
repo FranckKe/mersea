@@ -30,14 +30,25 @@ module Concerns
           field :name
           field :email
           field :quantity
-          field :longitude
-          field :latitude
           field :address
           field :description
           field :reported_at do
             sort_reverse true
           end
           field :photo
+        end
+
+        show do
+          include_all_fields
+          exclude_fields :latitude, :status
+          field :address
+          field :description
+          field :status, :state
+          field :longitude do
+            pretty_value do
+              bindings[:view].tag(:div, { id: 'map', class: 'map', 'data-lng': bindings[:object].longitude, 'data-lat': bindings[:object].latitude })
+            end
+          end
         end
 
         edit do
