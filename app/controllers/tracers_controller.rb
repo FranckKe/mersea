@@ -1,13 +1,11 @@
 class TracersController < ApplicationController
   def index
     @tracers = Tracer.order(:name).all
-    respond_to do |format|
-      format.html
-      format.json { render json: @tracers, status: :ok }
-    end
+    render json: @tracers, status: :ok
   end
 
   def show
     @tracer = Tracer.find(params[:id])
+    render json: @tracer, status: :ok
   end
 end

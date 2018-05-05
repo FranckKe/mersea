@@ -6,6 +6,7 @@ ruby '2.5.0'
 gem 'active_model_serializers', '0.10'
 gem 'devise', '~> 4'
 gem 'devise-i18n', '~> 1'
+gem 'devise-jwt', '~> 0.5.6'
 gem 'http_accept_language', '~> 2'
 gem 'i18n-js', '~> 3'
 gem 'paperclip', '~> 6'
@@ -20,6 +21,7 @@ gem 'rails_admin', '~> 1'
 gem 'rails_admin-i18n', '~> 1'
 gem 'rails_admin_import', '~> 2'
 gem 'rails_admin_state', '~> 1'
+gem 'pundit', '~> 1.1'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'state_machines-activerecord', '~> 0.5'
 gem 'wysiwyg-rails', '~> 2'
@@ -34,7 +36,6 @@ group :development do
   gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem 'web-console'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

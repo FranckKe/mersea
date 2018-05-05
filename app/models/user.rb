@@ -20,6 +20,7 @@
 #
 
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::MerseaWhitelist
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
@@ -27,8 +28,10 @@ class User < ApplicationRecord
          :recoverable,
          :rememberable,
          :database_authenticatable,
+         :jwt_authenticatable,
          :validatable,
-         password_length: 6..128
+         password_length: 6..128,
+         jwt_revocation_strategy: self
 
   has_many :reports
 

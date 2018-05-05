@@ -1,20 +1,28 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception unless -> { request.format.json? }
+class ApplicationController < ActionController::API
+  include Pundit
   before_action :set_locale
-  before_action :fetch_pages
 
   def status
     render json: {}, status: :ok
   end
 
+  def index
+    render nothing: true
+  end
+
+  rescue_from StandardError do |e|
+    @error = Mersea::Errors.format(e)
+    render json: @error, status: @error.status
+  end
+
   private
 
-  def fetch_pages
-    # List pages for side menu
-    @pages = Page.where(language: I18n.locale)
-    @pages = Page.where(language: I18n.default_locale) if @pages.length.zero?
+  # Customize pundit's user
+  # https://github.com/varvet/pundit#additional-context
+  def pundit_user
+    UserContext.new(current_user, params)
   end
 
   def default_url_options(options = {})

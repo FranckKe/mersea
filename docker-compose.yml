@@ -19,6 +19,7 @@ services:
     links:
       - postgres:postgres
     environment:
+      JWT_SECRET: ${JWT_SECRET}
       MERSEA_DATABASE_USERNAME: postgres
       MERSEA_DATABASE_PASSWORD: postgres
       MERSEA_DATABASE_HOST: postgres

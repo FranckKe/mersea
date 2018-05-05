@@ -1,42 +1,47 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  before_action :configure_sign_in_params, only: [:create]
-
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  respond_to :json
 
   # POST /resource/sign_in
   def create
-    resource = User.find_for_database_authentication(email: params[:user][:email])
+    self.resource = warden.authenticate!(scope: :user)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
 
-    if resource&.valid_password?(params[:user][:password])
-      sign_in :user, resource
-      flash.discard
-      render json: { message: I18n.t("devise.failure.#{request.env['warden'].message}", authentication_keys: 'email') }, status: :created && return
-    end
-    invalid_login_attempt
+    render json: resource
   end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
 
   protected
 
-  def invalid_login_attempt
-    error_message = I18n.t('devise.failure.not_found_in_database', authentication_keys: 'email')
-    respond_to do |format|
-      format.html { set_flash_message :alert, error_message }
-      format.json { render json: { message: error_message }, status: :bad_request }
+  # Devise hack for JWT support
+  def all_signed_out?
+    users = Devise.mappings.keys.map do |s|
+      next if s == :admin
+      warden.user(scope: s, run_callbacks: false) || jwt_user(s)
     end
+
+    users.all?(&:blank?)
   end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_in_params
-    devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
+  def jwt_user(scope)
+    return nil if bearer.blank?
+    Warden::JWTAuth::UserDecoder.new.call(bearer, scope, nil)
+  rescue Warden::JWTAuth::Errors::RevokedToken
+    return nil
+  end
+
+  def bearer
+    request.headers['Authorization']&.gsub('Bearer ', '')
+  end
+
+  # Hack Devise for Rails 5 API for `DELETE /resource/sign_out`.
+  def respond_to_on_destroy
+    render nothing: true, status: :no_content
+  end
+
+  # API mode
+  def is_navigational_format?
+    false
   end
 end

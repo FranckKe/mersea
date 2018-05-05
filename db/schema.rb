@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331151629) do
+ActiveRecord::Schema.define(version: 20180429154542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
   enable_extension "citext"
+
+  create_table "access_tokens", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "jti", null: false
+    t.string "aud"
+    t.datetime "exp", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_access_tokens_on_jti"
+    t.index ["user_id"], name: "index_access_tokens_on_user_id"
+  end
 
   create_table "admins", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name"
@@ -45,7 +56,6 @@ ActiveRecord::Schema.define(version: 20180331151629) do
   create_table "reports", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.uuid "tracer_id"
     t.string "name"
-    t.string "email"
     t.integer "quantity"
     t.string "address"
     t.float "longitude"

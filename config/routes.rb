@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admin
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  # devise_for :users
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
@@ -9,18 +8,15 @@ Rails.application.routes.draw do
   }
   match '/status', to: 'application#status', via: %i(get head)
   root to: 'pages#index'
-  resources :tracers, only: [:index, :show]
-  resources :reports
-  resources :pages, only: [:show, :index]
+  resources :tracers, only: %i(index show)
+  resources :reports, only: %i(index create show update destroy)
+  resources :pages, only: %i(index show)
 
-  resources :users, only: [:get, :patch] do
+  resources :users, only: %i(show update) do
     collection do
       get 'me'
-      patch 'me'
-      put 'update_password', defaults: { format: 'json' }, to: 'users#update_password'
-    end
-    member do
-      get 'reports', to: 'users#reports'
+      patch 'me', to: 'users#update'
+      patch 'update_password', to: 'users#update_password'
     end
   end
   match '/leaderboard', to: 'pages#leaderboard', via: :get
