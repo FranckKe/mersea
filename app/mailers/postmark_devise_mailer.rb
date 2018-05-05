@@ -7,7 +7,7 @@ class PostmarkDeviseMailer < Devise::Mailer
     CLIENT.deliver_with_template(
       from: FROM_EMAIL,
       to: record.email,
-      template_id: TEMPLATE_IDS['reset_password'],
+      template_id: TEMPLATE_IDS[:reset_password],
       template_model: {
         subject: I18n.t(:subject, scope: 'devise.mailer.reset_password_instructions'),
         name: record.name,
