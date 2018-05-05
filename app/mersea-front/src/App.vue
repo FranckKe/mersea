@@ -9,10 +9,7 @@
             <span aria-hidden="true"></span>
           </a>
         </div>
-
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
+        <h1>{{ appName }}</h1>
       </div>
       <div id="flexible-menu" class="navbar-menu">
         <router-link to="/" class="navbar-item">Home</router-link>
@@ -44,30 +41,29 @@
 </template>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-
+document.addEventListener('DOMContentLoaded', function() {
   // Get all "navbar-burger" elements
-  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  var $navbarBurgers = Array.prototype.slice.call(
+    document.querySelectorAll('.navbar-burger'),
+    0
+  )
 
   // Check if there are any navbar burgers
   if ($navbarBurgers.length > 0) {
-
     // Add a click event on each of them
-    $navbarBurgers.forEach(function ($el) {
-      $el.addEventListener('click', function () {
-
+    $navbarBurgers.forEach(function($el) {
+      $el.addEventListener('click', function() {
         // Get the target from the "data-target" attribute
-        var target = $el.dataset.target;
-        var $target = document.getElementById(target);
+        var target = $el.dataset.target
+        var $target = document.getElementById(target)
 
         // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-        $el.classList.toggle('is-active');
-        $target.classList.toggle('is-active');
-
-      });
-    });
+        $el.classList.toggle('is-active')
+        $target.classList.toggle('is-active')
+      })
+    })
   }
-});
+})
 
 export default {
   name: 'app',
@@ -90,6 +86,16 @@ export default {
   --color-secondary: #63cdd7;
   --color-primary-t1: #ffb100;
   --color-primary-t2: #ff1e00;
+
+  @custom-media --only-small (width < 500px);
+  @custom-media --only-medium (width >= 500px) and (width <= 839px);
+  @custom-media --below-medium (width < 839px);
+  @custom-media --only-large (width >= 839px) and (width <= 1024px);
+  @custom-media --below-large (width <= 1024px);
+}
+
+html {
+  overflow-y: auto;
 }
 
 body {
@@ -103,34 +109,25 @@ body {
   color: var(--color-primary);
 }
 
-header {
+h1 {
   margin: 0;
-  height: var(--header-height);
-  padding: 0 16px 0 24px;
-  background-color: var(--color-primary);
-  color: var(--color-light);
+  height: 100%;
+  min-height: 3.25rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#panel {
-  margin-top: 40px;
-}
-
-html {
-  overflow-y: auto;
-}
-
 .navbar {
-  background-color: #DDD;
+  background-color: var(--color-light);
 }
 
 p.navbar-link {
   cursor: default;
 }
 
-@media screen and (max-width: 1023px) {
+@media (--below-large) {
   .navbar-menu.is-active {
     height: 100vh;
   }
