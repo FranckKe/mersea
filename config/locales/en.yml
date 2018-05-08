@@ -82,6 +82,7 @@ en:
       password_wrong_length: Your password must be longer than 6 characters
       update_password: Update password
       length_error: The password must be between 6 and 128 characters
+      send_instruction: Send me instruction
     registration:
       human_check: Please confirm you are not a robot
       edit:
