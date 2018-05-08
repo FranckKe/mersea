@@ -33,6 +33,7 @@
 
 class Report < ApplicationRecord
   include Concerns::ReportManager
+  include Concerns::Filterable
 
   has_attached_file :photo
   belongs_to :tracer
