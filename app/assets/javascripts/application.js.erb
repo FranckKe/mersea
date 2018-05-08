@@ -12,17 +12,16 @@
 //= require jquery3
 //= require i18n
 //= require i18n/translations
-//= require foundation
 //= require_tree .
 //= require bugsnag.min
-
-$(document).on("load", function() {
- $(document).foundation();
+window.onload = function () {
  I18n.locale = document.querySelector("body").dataset.lang;
- setTimeout(function() {
-   $(".callout").trigger("close");
- }, 3500);
+ if (document.querySelector(".callout") != null) {
+   setTimeout(function() {
+     document.querySelector(".callout").trigger("close");
+   }, 3500);
+ }
  <% if Rails.env.production? %>
    window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
  <% end %>
-});
+};

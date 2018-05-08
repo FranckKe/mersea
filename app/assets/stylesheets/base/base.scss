@@ -15,3 +15,29 @@
   right: 15px;
   font-size: 2rem;
 }
+
+.devise-form {
+  h2 {
+    width: fit-content;
+    margin: auto;
+    padding: 15px 0;
+    font-size: 2rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: auto;
+    width: fit-content;
+
+    .field {
+      width: 100%;
+    }
+  }
+
+  a {
+    margin-top: 15px;
+  }
+}
