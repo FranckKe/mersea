@@ -31,6 +31,8 @@
     align-items: flex-start;
     margin: auto;
     width: fit-content;
+    width: 75%;
+    max-width: fit-content;
 
     .field {
       width: 100%;
@@ -39,5 +41,11 @@
 
   a {
     margin-top: 15px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .devise-form h2 {
+    font-size: 1.5rem;
   }
 }
