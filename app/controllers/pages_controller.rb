@@ -1,4 +1,4 @@
-class PagesController < ApplicationController
+class PagesController < ApiController
   def index
     @pages = Page.order(:name).all
     render json: @pages, status: :ok

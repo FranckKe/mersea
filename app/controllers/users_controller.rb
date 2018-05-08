@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < ApiController
   before_action :authenticate_user!
   before_action :authorize_user!, only: %i(me update update_password)
 

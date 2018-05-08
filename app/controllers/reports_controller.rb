@@ -1,4 +1,4 @@
-class ReportsController < ApplicationController
+class ReportsController < ApiController
   before_action :fetch_report, only: %i(show update destroy)
 
   def index
