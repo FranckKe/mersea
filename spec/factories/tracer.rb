@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tracer do
-    name { Faker::Name.name }
+    name { Faker::Name.title }
     description { Faker::Lorem.sentence }
     origin { Faker::Lorem.sentence }
     kind { Faker::Lorem.word }

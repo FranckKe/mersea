@@ -23,9 +23,65 @@ describe 'ReportsController', type: :request do
         expect(JSON.parse(response.body).count).to eq 2
       end
 
+      it 'returns only accepted reports' do
+        request.call
+        JSON.parse(response.body).each do |r|
+          expect(r['status']).to eq 'accepted'
+        end
+      end
+
       it 'compliances to json-schema' do
         request.call
         expect(response).to match_response_schema('reports')
+      end
+
+      context 'when user asking for its reports' do
+        subject!(:current_user) { FactoryBot.create(:user) } # Need for RequestsHelper module.
+        let(:queries) { { user_id: current_user.id } }
+        let(:request) do
+          -> { get reports_path, params: queries, headers: headers_with_auth }
+        end
+
+        before do
+          FactoryBot.create(:report, user: current_user)
+          FactoryBot.create(:report, user: current_user, status: :pending)
+          FactoryBot.create(:report, user: current_user, status: :pending)
+          FactoryBot.create(:report, user: current_user, status: :rejected)
+        end
+
+        it 'returns four reports' do
+          request.call
+          expect(JSON.parse(response.body).count).to eq 4
+        end
+
+        it 'returns only current user reports' do
+          request.call
+          JSON.parse(response.body).each do |r|
+            expect(Report.find(r['id']).user_id).to eq(current_user.id)
+          end
+        end
+      end
+
+      context 'when user asking for all reports from another user' do
+        let(:another_user) { FactoryBot.create(:user) } # Need for RequestsHelper module.
+        let(:queries) { { user_id: another_user.id } }
+        let(:request) do
+          -> { get reports_path, params: queries, headers: headers_with_auth }
+        end
+
+        before do
+          FactoryBot.create(:report, user: another_user)
+          FactoryBot.create(:report, user: another_user, status: :pending)
+          FactoryBot.create(:report, user: another_user, status: :pending)
+          FactoryBot.create(:report, user: another_user, status: :rejected)
+        end
+
+        it 'returns only accepted reports from anybody' do
+          request.call
+          JSON.parse(response.body).each do |r|
+            expect(r['status']).to eq 'accepted'
+          end
+        end
       end
     end
 
