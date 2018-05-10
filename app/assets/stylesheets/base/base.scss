@@ -17,22 +17,22 @@
 }
 
 .devise-form {
+  display: flex;
+  flex-direction: column;
+
   h2 {
-    width: fit-content;
     margin: auto;
     padding: 15px 0;
     font-size: 2rem;
   }
 
   form {
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     margin: auto;
-    width: fit-content;
-    width: 75%;
-    max-width: fit-content;
 
     .field {
       width: 100%;
@@ -45,7 +45,13 @@
 }
 
 @media (max-width: 1024px) {
-  .devise-form h2 {
-    font-size: 1.5rem;
+  .devise-form {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    form {
+      width: 75%;
+    }
   }
 }
