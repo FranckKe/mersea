@@ -14,14 +14,22 @@
 //= require i18n/translations
 //= require_tree .
 //= require bugsnag.min
-window.onload = function () {
- I18n.locale = document.querySelector("body").dataset.lang;
- if (document.querySelector(".callout") != null) {
-   setTimeout(function() {
-     document.querySelector(".callout").trigger("close");
-   }, 3500);
- }
- <% if Rails.env.production? %>
-   window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
- <% end %>
-};
+document.addEventListener('DOMContentLoaded', () => {
+
+  let notifications = document.querySelectorAll('.notification')
+
+  if (notifications != null) {
+    notifications.forEach( (notification) => {
+      let closeButton = notification.querySelector('.delete')
+      closeButton.addEventListener('click', () => {
+        notification.classList.toggle('is-hidden');
+      });
+    });
+  }
+
+  I18n.locale = document.querySelector("body").dataset.lang;
+  <% if Rails.env.production? %>
+    window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
+  <% end %>
+
+});
