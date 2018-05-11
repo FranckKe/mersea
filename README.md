@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/FranckKe/mersea.svg?style=svg)](https://circleci.com/gh/FranckKe/mersea)
 ![docker_build_type](https://img.shields.io/docker/automated/franckke/mersea.svg)
 ![license](https://img.shields.io/dub/l/vibe-d.svg)
 
