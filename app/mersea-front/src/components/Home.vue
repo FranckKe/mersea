@@ -1,10 +1,11 @@
 <template>
   <div class="">
-  <div id="map"></div>
+    <div id="map"></div>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -13,15 +14,16 @@ import moment from 'moment'
 
 export default {
   data() {
-    return {}
+    return {
+      apiUrl: this.$apiUrl
+    }
   },
   mounted() {
     this.createMap()
   },
   methods: {
-    createMap: () => {
-      // TODO better handle api url
-      const apiUrl = 'http://localhost:3000'
+    createMap: function() {
+      const apiUrl = this.apiUrl
       mapboxgl.accessToken =
         'pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w'
       this.map = new mapboxgl.Map({
@@ -51,7 +53,6 @@ export default {
         })
       )
       this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
-
       this.map.on('load', async () => {
         try {
           let reports = await fetch(`${apiUrl}/reports`, {
@@ -67,10 +68,6 @@ export default {
         }
 
         for (let marker of geojson.features) {
-          // let html = `${marker.properties.title} (${
-          //   marker.properties.quantity
-          // })`
-
           new mapboxgl.Marker({ color: marker.properties.color })
             .setLngLat(marker.geometry.coordinates)
             .setPopup(
