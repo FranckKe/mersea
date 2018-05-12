@@ -9,10 +9,10 @@ class GeojsonReportSerializer < ActiveModel::Serializer
     {
       id: object.id,
       reported_at: object.reported_at,
-      name: object.user&.name || object.name,
+      user_name: object.user&.name || object.name,
       tracer_id: object.tracer_id,
-      title: object.tracer.name,
-      icon: object.tracer.color,
+      tracer_name: object.tracer.name,
+      color: object.tracer.color,
       quantity: object.quantity
     }
   end
