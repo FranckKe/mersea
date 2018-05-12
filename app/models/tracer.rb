@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: tracers
@@ -21,7 +23,13 @@
 class Tracer < ApplicationRecord
   include Concerns::TracerManager
 
-  has_attached_file :photo
+  has_attached_file :photo,
+                    styles: {
+                      thumb: :"64x64#"
+                    },
+                    convert_options: {
+                      thumb: :"-quality 75 -strip"
+                    }
   has_many :reports, dependent: :destroy
 
   validates :name, :description, :photo, :origin, :kind, presence: true
