@@ -6,7 +6,7 @@ class PostmarkDeviseMailer < Devise::Mailer
   def reset_password_instructions(record, token, _)
     if record.is_a?(User)
       url = edit_user_password_url(record, reset_password_token: token)
-    elsif record.is_a? Admin
+    elsif record.is_a?(Admin)
       url = edit_admin_password_url(record, reset_password_token: token)
     end
 
