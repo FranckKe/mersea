@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["type", "properties", "geometry"],
+  "properties": {
+    "type": { "enum": ["Feature"] },
+    "properties": {
+      "type": "object",
+      "required": ["name", "reported_at", "title", "icon", "quantity"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+        "reported_at": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "name": { "type": "string" },
+        "tracer_id": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+        "name": { "type": "string" },
+        "title": { "type": "string" },
+        "icon": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" },
+        "quantity": { "type": "integer" }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": ["type", "coordinates"],
+      "properties": {
+        "type": { "enum": ["Point"] },
+        "coordinates": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

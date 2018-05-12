@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :reports, only: %i(index create show update destroy)
   resources :pages, only: %i(index show)
 
-  resources :users, only: %i(show update) do
+  resources :users, only: %i(get patch) do
     collection do
       get 'me'
       patch 'me', to: 'users#update'

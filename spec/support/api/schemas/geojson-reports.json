@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["type", "features"],
+  "properties": {
+    "type": { "enum": ["FeatureCollection"] },
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "geojson-report.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

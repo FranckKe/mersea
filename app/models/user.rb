@@ -20,6 +20,7 @@
 #
 
 class User < ApplicationRecord
+  include Concerns::UserManager
   include Devise::JWT::RevocationStrategies::MerseaWhitelist
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -40,16 +41,4 @@ class User < ApplicationRecord
   validates :language, presence: true
   validates_format_of :email, with: Devise.email_regexp
   validates :password, presence: true, on: :create
-
-  rails_admin do
-    list do
-      field :name
-      field :email
-      field :senior
-      field :language
-      field :created_at
-      field :updated_at
-      field :reset_password_sent_at
-    end
-  end
 end
