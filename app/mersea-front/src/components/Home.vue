@@ -1,11 +1,10 @@
 <template>
   <div class="">
-    <div id="map"></div>
+    <div id="map" class="map"></div>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-undef */
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -71,7 +70,7 @@ export default {
           new mapboxgl.Marker({ color: marker.properties.color })
             .setLngLat(marker.geometry.coordinates)
             .setPopup(
-              new mapboxgl.Popup({ offset: 25, className: 'box' }).setHTML(`
+              new mapboxgl.Popup({ offset: 25 }).setHTML(`
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
@@ -102,7 +101,7 @@ export default {
 </script>
 
 <style>
-#map {
+.map {
   width: 100%;
   height: calc(100vh - var(--header-height));
 }
@@ -118,6 +117,7 @@ export default {
   max-width: calc(100% - 35px);
 }
 
+/* Style mapbox popup close button as Bulma close button */
 .mapboxgl-popup-close-button {
   -webkit-appearance: none;
   background-color: rgba(10, 10, 10, 0.2);
@@ -128,14 +128,14 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   font-size: 0;
-  height: 20px;
-  max-height: 20px;
-  max-width: 20px;
-  min-height: 20px;
-  min-width: 20px;
+  height: 24px;
+  max-height: 24px;
+  max-width: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  width: 24px;
   outline: 0;
   vertical-align: top;
-  width: 20px;
   position: absolute;
   top: 5px;
   right: 5px;
@@ -163,5 +163,17 @@ export default {
 .mapboxgl-popup-close-button::after {
   height: 50%;
   width: 2px;
+}
+
+/* Style mapbox popup as Bulma .box */
+.mapboxgl-popup-content {
+  background-color: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
 }
 </style>
