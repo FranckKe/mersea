@@ -9,13 +9,50 @@
   }
 }
 
-section {
-  padding-top: 25px;
-}
-
 .callout .close-button {
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 2rem;
+}
+
+.devise-form {
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin: auto;
+    padding: 15px 0;
+    font-size: 2rem;
+  }
+
+  form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: auto;
+
+    .field {
+      width: 100%;
+    }
+  }
+
+  .shared {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .devise-form {
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    form {
+      width: 75%;
+    }
+  }
 }

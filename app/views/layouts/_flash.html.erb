@@ -1,7 +1,7 @@
 <% if flash.present? %>
-<div class="<%= flash.keys.first %> callout" data-closable>
+<div class="<%= bulma_flash_message(flash.keys.first) %> notification has-text-centered" data-closable>
   <p><%= flash.first[1].instance_of?(Array) ? "#{flash.first[1].flatten.join(' ')}" : "#{flash.first[1]}" %>
-  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+  <button class="delete" aria-label="Dismiss alert" type="button" data-close>
     <span aria-hidden="true">&times;</span>
   </button>
   </p>

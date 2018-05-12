@@ -1,36 +1,25 @@
-<%= foundation_devise_error_messages! %>
-<div class="row">
-  <div class="medium-6 medium-centered columns">
-    <div class="login-box">
-      <div class="row">
-        <div class="large-12 columns">
-          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'reset-password' }, remote: true) do |f| %>
-            <%= f.hidden_field :reset_password_token %>
-            <div class="row">
-              <h5 class="text-center">
-              <%= t('.change_your_password', :default => 'Change your password') %>
-              </h5>
-            </div>
-            <div class="row">
-              <%= f.password_field :password, autocomplete: 'off', class: 'large-12 columns password', placeholder: t('.new_password'), required: true %>
-            </div>
-            <div class="row">
-              <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'large-12 columns password confirmation', placeholder: t('.confirm_new_password') %>
-            </div>
-            <div class="row status-message">
-              <p class="message"></p>
-            </div>
-            <div class="row">
-              <%= f.submit t('.change_my_password', default: 'Change my password'), class: 'button expand large-12 large-centered columns submit' %>
-              <div class="button expand large-12 large-centered loader-wrapper hide">
-                <div class="loader">
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <%= render "devise/shared/links" %>
+<div class="devise-form devise-update-password">
+  <h2><%= t('.change_your_password', default: 'Change your password') %></h2>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'reset-password' }) do |f| %>
+    <%= f.hidden_field :reset_password_token %>
+    <div class="field">
+      <%= f.label t('activerecord.attributes.user.password'), class: "label" %>
+      <div class="control">
+        <%= f.password_field :password, class: "input" %>
       </div>
     </div>
-  </div>
+    <div class="field">
+      <%= f.label t('activerecord.attributes.user.password'), class: "label" %>
+      <div class="control">
+        <%= f.password_field :password, class: "input" %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit t('.change_my_password', default: 'Change my password'), class: 'button' %>
+    </div>
+    <div class="shared">
+      <%= render "devise/shared/links" %>
+    </div>
+  <% end %>
 </div>

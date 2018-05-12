@@ -10,52 +10,26 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //= require jquery3
-//= require jquery-ui
-//= require jquery_ujs
-//= require datepicker-fr
-//= require datepicker-es
 //= require i18n
 //= require i18n/translations
-//= require turbolinks
-//= require foundation
-//= require leaflet
-//= require leaflet.markercluster
-//= require leaflet.markercluster.layersupport
-//= require materialMenu.min
-//= require jquery.dataTables.min
-//= require leaflet-locationpicker
 //= require_tree .
 //= require bugsnag.min
+document.addEventListener('DOMContentLoaded', () => {
 
-$(document).on("turbolinks:load", function() {
- $(document).foundation();
- var menu = new Menu();
- I18n.locale = document.querySelector("body").dataset.lang;
- setTimeout(function() {
-   $(".callout").trigger("close");
- }, 3500);
- <% if Rails.env.production? %>
-   window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
- <% end %>
-});
+  let notifications = document.querySelectorAll('.notification')
 
-$.ajaxSetup({
-  dataType: "json"
-});
-
-function updateStatusMessage(node, status, message) {
-  status = status || "";
-  message = message || "";
-  var multipleMessage = "";
-  if (typeof message === "object") {
-    for (var field in message) {
-      multipleMessage += field + ": " + message[field] + "<br>";
-    }
-    message = multipleMessage;
-    node.html(multipleMessage);
-  } else {
-    node.text(message);
+  if (notifications != null) {
+    notifications.forEach( (notification) => {
+      let closeButton = notification.querySelector('.delete')
+      closeButton.addEventListener('click', () => {
+        notification.classList.toggle('is-hidden');
+      });
+    });
   }
-  node.removeClass();
-  node.addClass(status);
-}
+
+  I18n.locale = document.querySelector("body").dataset.lang;
+  <% if Rails.env.production? %>
+    window.bugsnagClient = bugsnag({ apiKey: '<%= Rails.application.secrets.bugsnag[:api_key] %>', collectUserIp: false, maxEvents: 50 })
+  <% end %>
+
+});

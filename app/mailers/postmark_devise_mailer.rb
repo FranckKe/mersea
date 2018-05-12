@@ -4,6 +4,12 @@ class PostmarkDeviseMailer < Devise::Mailer
   CLIENT = Postmark::ApiClient.new(Rails.application.secrets.postmark[:api_key])
 
   def reset_password_instructions(record, token, _)
+    if record.is_a?(User)
+      url = edit_user_password_url(record, reset_password_token: token)
+    elsif record.is_a?(Admin)
+      url = edit_admin_password_url(record, reset_password_token: token)
+    end
+
     CLIENT.deliver_with_template(
       from: FROM_EMAIL,
       to: record.email,
@@ -11,7 +17,7 @@ class PostmarkDeviseMailer < Devise::Mailer
       template_model: {
         subject: I18n.t(:subject, scope: 'devise.mailer.reset_password_instructions'),
         name: record.name,
-        reset_password_url: edit_user_password_url(record, reset_password_token: token)
+        reset_password_url: url
       }
     )
   end

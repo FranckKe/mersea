@@ -82,6 +82,7 @@ fr:
       password_wrong_length: Le mot de passe doit être composé d'au moins 6 lettres
       update_password: Mettre à jour le mot de passe
       length_error: Le mot de passe doit être compris entre 6 et 128 charactères
+      send_instruction: Envoyez-moi les instructions
     registration:
       human_check: Veuillez confirmer que vous n'êtes pas un robot
       edit:
