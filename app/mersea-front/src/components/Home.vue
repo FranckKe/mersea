@@ -9,6 +9,7 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import moment from 'moment'
 
 export default {
   data() {
@@ -77,17 +78,21 @@ export default {
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+        <img src="${apiUrl}${marker.properties.tracer.photo}" alt="Image">
       </figure>
     </div>
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>${marker.properties.tracer_name}</strong><br><small>${
-                marker.properties.user_name
-              }</small><br><small>${marker.properties.reported_at}</small>
+          <strong>${marker.properties.tracer.name}</strong><br><small>${
+                marker.properties.user.name
+              }</small><br><small>${moment(
+                marker.properties.reported_at
+              ).format('LL')}</small>
         </p>
       </div>
+    </div>
+    <div class="media-right">
     </div>
   </article>`)
             )
