@@ -1,5 +1,5 @@
-# build stage
-FROM ruby:2.5.1-alpine as build-env
+# ruby build stage
+FROM ruby:2.5.1-alpine as ruby-build-env
 MAINTAINER mdouchement
 
 ARG BUILD_DEPENDENCIES='build-base'
@@ -31,7 +31,20 @@ RUN bundle config build.nokogiri
 RUN bundle config --global frozen 1
 RUN bundle install --deployment --without development test
 
+# Admin assets
 RUN bundle exec rake assets:precompile
+
+# javascript build stage
+FROM node:9.11.1-alpine as js-build-env
+MAINTAINER mdouchement
+
+COPY --from=ruby-build-env /usr/src/app /usr/src/app
+
+WORKDIR /usr/src/app/app/mersea-front
+RUN npm install -g yarn
+RUN yarn install
+RUN yarn run build
+RUN mv dist/* ../../public
 
 # final stage
 FROM ruby:2.5.1-alpine
@@ -58,7 +71,7 @@ RUN apk add --update --no-cache postgresql-dev libxml2-dev libxslt-dev tzdata fi
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY --from=build-env /usr/src/app /usr/src/app
+COPY --from=js-build-env /usr/src/app /usr/src/app
 
 # Resync bundler
 RUN bundle install --deployment --without development test
