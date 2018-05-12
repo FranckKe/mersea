@@ -4,9 +4,10 @@ class PostmarkDeviseMailer < Devise::Mailer
   CLIENT = Postmark::ApiClient.new(Rails.application.secrets.postmark[:api_key])
 
   def reset_password_instructions(record, token, _)
-    if record.is_a?(User)
+    case record
+    when User
       url = edit_user_password_url(record, reset_password_token: token)
-    elsif record.is_a?(Admin)
+    when Admin
       url = edit_admin_password_url(record, reset_password_token: token)
     end
 
