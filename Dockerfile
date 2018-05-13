@@ -4,7 +4,6 @@ MAINTAINER mdouchement
 
 ARG BUILD_DEPENDENCIES='build-base'
 ARG DEPENDENCIES='postgresql-dev libxml2-dev libxslt-dev tzdata nodejs'
-
 # Set the locale
 ENV LANG c.UTF-8
 
@@ -35,14 +34,16 @@ RUN bundle install --deployment --without development test
 RUN bundle exec rake assets:precompile
 
 # javascript build stage
-FROM node:9.11.1-alpine as js-build-env
-MAINTAINER mdouchement
+FROM node:10.5-alpine as js-build-env
+MAINTAINER mdouchement franckke
 
 COPY --from=ruby-build-env /usr/src/app /usr/src/app
 
+ENV NODE_ENV production
+
 WORKDIR /usr/src/app/app/mersea-front
-RUN npm install -g yarn
-RUN yarn install
+
+RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 RUN yarn run build
 RUN mv dist/* ../../public
 
