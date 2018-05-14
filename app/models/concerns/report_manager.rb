@@ -54,7 +54,6 @@ module Concerns
           field :status, :state
           field :tracer
           field :name
-          field :email
           field :quantity
           field :longitude
           field :latitude
