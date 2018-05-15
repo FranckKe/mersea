@@ -15,7 +15,7 @@ class GeojsonReportSerializer < ActiveModel::Serializer
       tracer: {
         id: object.tracer_id,
         name: object.tracer.name,
-        photo: object.tracer.photo.url(:thumb)
+        photo: object.tracer.photo.url
       },
       color: object.tracer.color,
       quantity: object.quantity
