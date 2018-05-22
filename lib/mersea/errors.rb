@@ -16,11 +16,7 @@ module Mersea
       when Pundit::NotAuthorizedError
         NotAuthorized.new(error)
       when ActiveRecord::RecordNotFound
-        if error.model == User.name
-          UserNotFound.new(error)
-        else
-          RecordNotFound.new(error)
-        end
+        RecordNotFound.new(error)
       else
         InternalServer.new(error) # TODO
       end
