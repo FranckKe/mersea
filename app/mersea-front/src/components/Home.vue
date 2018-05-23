@@ -59,6 +59,10 @@ export default {
                         ${marker.properties.user.name}
                       </small>
                       <br>
+                      <small>
+                        Quantity: ${marker.properties.quantity}
+                      </small>
+                      <br>
                       <small>${moment(marker.properties.reportedAt).format(
                         'LL'
                       )}</small>
