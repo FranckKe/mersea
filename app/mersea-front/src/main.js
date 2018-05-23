@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = axios
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
+Vue.prototype.$apiUrl = process.env.API_URL
 
 new Vue({
   el: '#app',

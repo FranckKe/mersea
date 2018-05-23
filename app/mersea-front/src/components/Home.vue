@@ -1,6 +1,6 @@
 <template>
   <div class="">
-  <div id="map"></div>
+    <div id="map" class="map"></div>
   </div>
 </template>
 
@@ -9,19 +9,85 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import moment from 'moment'
 
 export default {
   data() {
-    return {}
+    return {
+      apiUrl: this.$apiUrl,
+      map: {}
+    }
   },
   mounted() {
     this.createMap()
-    console.dir(mapboxgl)
   },
   methods: {
-    createMap: () => {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w'
+    mapLoad: async function() {
+      try {
+        var geojson
+        let reports = await fetch(`${this.apiUrl}/reports`, {
+          method: 'get',
+          headers: new Headers({
+            Accept: 'application/geo+json',
+            'Content-Type': 'application/geo+json'
+          })
+        })
+        geojson = await reports.json()
+      } catch (e) {
+        throw e
+      }
+
+      for (let marker of geojson.features) {
+        new mapboxgl.Marker({ color: `${marker.properties.color}` })
+          .setLngLat(marker.geometry.coordinates)
+          .setPopup(
+            new mapboxgl.Popup({ offset: 25 }).setHTML(
+              `<article class="media">
+                <div class="media-left">
+                  <figure class="image is-64x64">
+                    <img src="${this.apiUrl}${
+                marker.properties.tracer.photo
+              }" alt="Image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                      <strong>${marker.properties.tracer.name}</strong>
+                      <br>
+                      <small>
+                        ${marker.properties.user.name}
+                      </small>
+                      <br>
+                      <small>
+                        Quantity: ${marker.properties.quantity}
+                      </small>
+                      <br>
+                      <small>${moment(marker.properties.reportedAt).format(
+                        'LL'
+                      )}</small>
+                    </p>
+                  </div>
+                </div>
+                <div class="media-right">
+                </div>
+              </article>`
+            )
+          )
+          .addTo(this.map)
+      }
+
+      this.map.addLayer({
+        id: 'reports',
+        type: 'symbol',
+        source: {
+          type: 'geojson',
+          data: geojson
+        }
+      })
+    },
+    createMap() {
+      mapboxgl.accessToken = process.env.MAPBOX_TOKEN
       this.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
@@ -29,33 +95,32 @@ export default {
         zoom: 5,
         center: [0, 46.2276]
       })
+      let geolocator = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      })
+      let geocoder = new MapboxGeocoder(
+        { accessToken: mapboxgl.accessToken },
+        'top'
+      )
+      let scaler = new mapboxgl.ScaleControl()
+      let navigater = new mapboxgl.NavigationControl()
 
-      this.map.addControl(new mapboxgl.ScaleControl())
-      this.map.addControl(
-        new MapboxGeocoder(
-          {
-            accessToken: mapboxgl.accessToken
-          },
-          'top'
-        ),
-        'top-left'
-      )
-      this.map.addControl(
-        new mapboxgl.GeolocateControl({
-          positionOptions: {
-            enableHighAccuracy: true
-          },
-          trackUserLocation: true
-        })
-      )
-      this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
+      this.map.addControl(scaler)
+      this.map.addControl(geocoder, 'top-left')
+      this.map.addControl(geolocator)
+      this.map.addControl(navigater, 'bottom-right')
+      this.map.on('load', this.mapLoad)
+      this.map.on('mousemove', 'reports', this.mapMouseMoved)
     }
   }
 }
 </script>
 
 <style>
-#map {
+.map {
   width: 100%;
   height: calc(100vh - var(--header-height));
 }
@@ -69,5 +134,64 @@ export default {
 .mapboxgl-ctrl-geocoder {
   width: calc(100% - 35px); /* Width of geolocalize button */
   max-width: calc(100% - 35px);
+}
+
+.mapboxgl-popup-close-button {
+  -webkit-appearance: none;
+  background-color: rgba(10, 10, 10, 0.2);
+  border: none;
+  border-radius: 290486px;
+  cursor: pointer;
+  display: inline-block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  font-size: 0;
+  height: 24px;
+  max-height: 24px;
+  max-width: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  width: 24px;
+  outline: 0;
+  vertical-align: top;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.mapboxgl-popup-close-button::before,
+.mapboxgl-popup-close-button::after {
+  background-color: #fff;
+  content: '';
+  display: block;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+}
+
+.mapboxgl-popup-close-button::before {
+  height: 2px;
+  width: 50%;
+}
+
+.mapboxgl-popup-close-button::after {
+  height: 50%;
+  width: 2px;
+}
+
+/* Style mapbox popup as Bulma .box */
+.mapboxgl-popup-content {
+  background-color: white;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.1);
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
 }
 </style>
