@@ -55,6 +55,8 @@ GEM
     ast (2.4.0)
     awesome_print (1.8.0)
     bcrypt (3.1.11)
+    bootsnap (1.3.0)
+      msgpack (~> 1.0)
     bugsnag (6.7.1)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
@@ -171,6 +173,7 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    msgpack (1.2.4)
     nested_form (0.3.2)
     nio4r (2.3.1)
     nokogiri (1.8.2)
@@ -372,6 +375,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (= 0.10)
   annotate
+  bootsnap (~> 1.3)
   bugsnag (~> 6.6)
   bulma-rails (~> 0.7.1)
   database_cleaner (~> 1.7)
