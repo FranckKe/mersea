@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.0'
+ruby '2.5.1'
 
 gem 'active_model_serializers', '0.10'
 gem 'devise', '~> 4'
@@ -16,7 +16,7 @@ gem 'postmark', '~> 1'
 gem 'puma', '~> 3'
 gem 'pundit', '~> 1.1'
 gem 'rack-cors', '~> 1'
-gem 'rails', '~> 5'
+gem 'rails', '~> 5.2'
 gem 'rails-i18n', '~> 5'
 gem 'rails_admin', '~> 1'
 gem 'rails_admin-i18n', '~> 1'

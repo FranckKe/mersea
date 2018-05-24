@@ -5,6 +5,10 @@ RailsAdmin.config do |config|
 
   ### Popular gems integration
 
+  ## == ActiveStorage ==
+  # https://github.com/sferik/rails_admin/issues/3014
+  config.excluded_models = ['ActiveStorage::Blob', 'ActiveStorage::Attachment']
+
   ## == Devise ==
   config.authenticate_with do
     warden.authenticate! scope: :admin
