@@ -23,9 +23,9 @@
 class Tracer < ApplicationRecord
   include Concerns::TracerManager
 
-  has_attached_file :photo
+  has_one_attached :photo
   has_many :reports, dependent: :destroy
 
   validates :name, :description, :photo, :origin, :kind, presence: true
-  validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
+  validates :photo, image: true
 end

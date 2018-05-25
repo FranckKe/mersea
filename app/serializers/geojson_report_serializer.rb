@@ -1,4 +1,5 @@
 class GeojsonReportSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
   attributes :type, :properties, :geometry
 
   def type
@@ -15,7 +16,7 @@ class GeojsonReportSerializer < ActiveModel::Serializer
       tracer: {
         id: object.tracer_id,
         name: object.tracer.name,
-        photo: object.tracer.photo.url
+        photo: rails_blob_path(object.tracer.photo, disposition: 'attachment', only_path: true)
       },
       color: object.tracer.color,
       quantity: object.quantity

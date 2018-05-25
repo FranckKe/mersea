@@ -46,3 +46,10 @@ bower.json
 
 .tags*
 **.DS_Store
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+/config/credentials.yml.enc
+
+# Ignore uploaded files in development
+/storage/*

@@ -35,11 +35,11 @@ class Report < ApplicationRecord
   include Concerns::ReportManager
   include Concerns::Filterable
 
-  has_attached_file :photo
+  has_one_attached :photo
   belongs_to :tracer
   belongs_to :user, optional: true
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
   validates :photo, presence: true, if: -> { !self.user&.senior && self.status != 'accepted' }
-  validates_attachment_content_type :photo, content_type: /\Aimage\/.*\z/
+  validates :photo, image: true
 end
