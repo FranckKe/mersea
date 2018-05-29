@@ -2,23 +2,19 @@
 #
 # Table name: reports
 #
-#  id                 :uuid             not null, primary key
-#  tracer_id          :uuid
-#  name               :string
-#  quantity           :integer
-#  address            :string
-#  longitude          :float
-#  latitude           :float
-#  description        :text
-#  photo_file_name    :string
-#  photo_content_type :string
-#  photo_file_size    :integer
-#  photo_updated_at   :datetime
-#  reported_at        :date
-#  status             :string
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  user_id            :uuid
+#  id          :uuid             not null, primary key
+#  tracer_id   :uuid
+#  name        :string
+#  quantity    :integer
+#  address     :string
+#  longitude   :float
+#  latitude    :float
+#  description :text
+#  reported_at :date
+#  status      :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :uuid
 #
 # Indexes
 #

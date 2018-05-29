@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_24_140947) do
+ActiveRecord::Schema.define(version: 2018_05_29_092906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -82,10 +82,6 @@ ActiveRecord::Schema.define(version: 2018_05_24_140947) do
     t.float "longitude"
     t.float "latitude"
     t.text "description"
-    t.string "photo_file_name"
-    t.string "photo_content_type"
-    t.integer "photo_file_size"
-    t.datetime "photo_updated_at"
     t.date "reported_at"
     t.string "status"
     t.datetime "created_at", null: false
@@ -103,10 +99,6 @@ ActiveRecord::Schema.define(version: 2018_05_24_140947) do
   create_table "tracers", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "photo_file_name"
-    t.string "photo_content_type"
-    t.integer "photo_file_size"
-    t.datetime "photo_updated_at"
     t.string "origin"
     t.string "kind"
     t.float "longitude"
