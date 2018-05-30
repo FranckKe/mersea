@@ -38,7 +38,7 @@ module Concerns
           field :reported_at do
             sort_reverse true
           end
-          field :photo
+          field :photo, :active_storage
         end
 
         show do

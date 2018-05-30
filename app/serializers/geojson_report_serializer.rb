@@ -16,7 +16,10 @@ class GeojsonReportSerializer < ActiveModel::Serializer
       tracer: {
         id: object.tracer_id,
         name: object.tracer.name,
-        photo: rails_blob_path(object.tracer.photo, disposition: 'attachment', only_path: true)
+        photo: rails_blob_path(
+          object.tracer.photo, # object.tracer.photo.variant(resize: '100x100>').processed
+          disposition: 'attachment',
+          only_path: true)
       },
       color: object.tracer.color,
       quantity: object.quantity

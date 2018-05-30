@@ -22,7 +22,7 @@ class ReportsController < ApiController
     @report = Report.new(report_params.merge(user: current_user))
     authorize @report
 
-    @report.photo = Paperclip.io_adapters.for(params[:photo]) if params[:photo].present?
+    @report.photo.attach(Uploads.call(params[:photo])) if params[:photo].present?
     if @report.save
       render json: @report, status: :created
     else
@@ -56,7 +56,7 @@ class ReportsController < ApiController
 
   def report_params
     params.permit(:tracer_id, :name, :quantity, :address, :longitude, :latitude,
-                  :description, :photo, :reported_at)
+                  :description, :reported_at)
   end
 
   def report_params_update
