@@ -5,6 +5,12 @@ FactoryBot.define do
     origin { Faker::Lorem.sentence }
     kind { Faker::Lorem.word }
     color { Faker::Color.hex_color }
-    photo { File.new("#{Rails.root}/spec/support/fixtures/image.png") }
+
+    after(:build) do |instance|
+      instance.photo.attach(
+        io: File.open("#{Rails.root}/spec/support/fixtures/image.png"),
+        filename: 'image.png',
+        content_type: 'image/png')
+    end
   end
 end

@@ -8,10 +8,6 @@ describe Report do
   it { expect(subject).to have_db_column(:longitude) }
   it { expect(subject).to have_db_column(:latitude) }
   it { expect(subject).to have_db_column(:description) }
-  it { expect(subject).to have_db_column(:photo_file_name) }
-  it { expect(subject).to have_db_column(:photo_content_type) }
-  it { expect(subject).to have_db_column(:photo_file_size) }
-  it { expect(subject).to have_db_column(:photo_updated_at) }
   it { expect(subject).to have_db_column(:reported_at) }
   it { expect(subject).to have_db_column(:status) }
   it { expect(subject).to have_db_column(:created_at) }
@@ -25,5 +21,5 @@ describe Report do
   it { expect(subject).to validate_presence_of(:latitude) }
   it { expect(subject).to validate_presence_of(:longitude) }
   it { expect(subject).to validate_presence_of(:reported_at) }
-  it { expect(subject).to validate_presence_of(:photo) }
+  # it { expect(subject).to validate_presence_of(:photo) } TODO shoulda-matchers are not compatible with ActiveStorage yet
 end
