@@ -28,6 +28,7 @@
             More
           </p>
           <div class="navbar-dropdown">
+            <router-link to="/leaderboard" class="navbar-item">Leaderboard</router-link>
             <router-link to="/links" class="navbar-item">Links</router-link>
             <router-link to="/security" class="navbar-item">Security</router-link>
             <router-link to="/legal-mentions" class="navbar-item">Legal mentions</router-link>
