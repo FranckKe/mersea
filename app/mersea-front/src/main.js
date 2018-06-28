@@ -17,12 +17,12 @@ Vue.prototype.$http = axios
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.API_URL
 
+Vue.use(Vuex)
+Vue.use(Buefy)
+
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
   components: { App }
 })
-
-Vue.use(Vuex)
-Vue.use(Buefy)
