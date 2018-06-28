@@ -3,12 +3,16 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
+      # The following is needed to support deletion
+      attribute :remove_photo, :boolean
+      after_save -> { photo.purge }, if: :remove_photo
+
       rails_admin do
         list do
           sort_by :created_at
           field :name
           field :description
-          field :photo
+          field :photo, :active_storage
           field :origin
           field :kind
           field :longitude
@@ -21,7 +25,7 @@ module Concerns
         show do
           field :name
           field :description
-          field :photo
+          field :photo, :active_storage
           field :origin
           field :kind
           field :longitude
@@ -34,7 +38,7 @@ module Concerns
         edit do
           field :name
           field :description
-          field :photo
+          field :photo, :active_storage
           field :origin
           field :kind
           field :longitude

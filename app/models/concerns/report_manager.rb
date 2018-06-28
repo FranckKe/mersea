@@ -3,13 +3,17 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
+      # The following is needed to support deletion
+      attribute :remove_photo, :boolean
+      after_save -> { photo.purge }, if: :remove_photo
+
       state_machine :status, initial: :pending do
         state :pending
         state :accepted
         state :rejected
 
         after_transition any => :accepted do |report, _|
-          report.photo = nil
+          report.photo.purge
           report.save!
         end
 
@@ -34,7 +38,7 @@ module Concerns
           field :reported_at do
             sort_reverse true
           end
-          field :photo
+          field :photo, :active_storage
         end
 
         show do
@@ -60,7 +64,7 @@ module Concerns
           field :address
           field :description
           field :reported_at
-          field :photo
+          field :photo, :active_storage
         end
 
         state(

@@ -10,6 +10,12 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     status :accepted
     reported_at { Time.now }
-    photo { File.new("#{Rails.root}/spec/support/fixtures/image.png") }
+
+    after(:build) do |instance|
+      instance.photo.attach(
+        io: File.open("#{Rails.root}/spec/support/fixtures/image.png"),
+        filename: 'image.png',
+        content_type: 'image/png')
+    end
   end
 end

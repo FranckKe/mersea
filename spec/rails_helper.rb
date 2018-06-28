@@ -25,6 +25,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :deletion, { except: %w(neighborhoods) }
     DatabaseCleaner.clean
   end
+
+  config.after(:all) do
+    FileUtils.rm_rf(Rails.root.join("tmp/storage")) # Update config/storage.yml if you change this
+  end
 end
 
 Shoulda::Matchers.configure do |config|

@@ -17,6 +17,7 @@ module Mersea
     # config.middleware.use ActionDispatch::Cookies
     # config.middleware.use ActionDispatch::Session::CookieStore
 
+    config.active_storage.service = :local
     config.eager_load_paths << Rails.root.join('lib')
   end
 end
