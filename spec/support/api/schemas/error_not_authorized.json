@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["status", "status_text", "errors"],
+  "properties": {
+    "status": { "enum": [403] },
+    "status_text": { "type": "string" },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "type", "metadata"],
+        "properties": {
+          "code": { "enum": ["MERSEA-403-000", "MERSEA-403-001"] },
+          "type": { "enum": ["access"] },
+          "metadata": {
+            "oneOf": [
+              { "$ref": "#/metadata_403_000_definition" },
+              { "$ref": "#/metadata_403_001_definition" }
+            ]
+          }
+        }
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false,
+
+  "metadata_403_000_definition": {
+    "type": "object",
+    "required": ["reason"],
+    "properties": {
+      "reason": { "type": "string" }
+    }
+  },
+
+  "metadata_403_001_definition": {
+    "type": "object",
+    "required": ["reason", "resource", "resource_id"],
+    "properties": {
+      "reason": { "type": "string" },
+      "resource": { "type": "string" },
+      "resource_id": { "type": ["string", null] }
+    }
+  }
+}
