@@ -2,8 +2,6 @@
 FROM ruby:2.5.1-alpine as ruby-build-env
 MAINTAINER mdouchement
 
-ARG BUILD_DEPENDENCIES='build-base'
-ARG DEPENDENCIES='postgresql-dev libxml2-dev libxslt-dev tzdata nodejs imagemagick'
 # Set the locale
 ENV LANG c.UTF-8
 
@@ -19,7 +17,7 @@ ENV SECRET_KEY_BASE tmp_376ea25aaa66984733a90920c263ba138e1e571aaf3a1a54cd2b819c
 
 # Install build dependencies
 RUN apk upgrade
-RUN apk add --update --no-cache git bash $BUILD_DEPENDENCIES $DEPENDENCIES
+RUN apk add --update --no-cache git bash build-base postgresql-dev libxml2-dev libxslt-dev tzdata nodejs
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -67,7 +65,7 @@ ENV SECRET_KEY_BASE tmp_376ea25aaa66984733a90920c263ba138e1e571aaf3a1a54cd2b819c
 
 # Install build dependencies
 RUN apk upgrade
-RUN apk add --update --no-cache postgresql-dev libxml2-dev libxslt-dev tzdata file
+RUN apk add --update --no-cache postgresql-dev libxml2-dev libxslt-dev tzdata file imagemagick
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app

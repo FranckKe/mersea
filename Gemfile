@@ -26,6 +26,7 @@ gem 'state_machines-activerecord', '~> 0.5'
 gem 'wysiwyg-rails', '~> 2'
 # https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
 gem 'bugsnag', '~> 6.6'
+gem 'nokogiri', '~> 1.8'
 
 group :development do
   gem 'annotate'
