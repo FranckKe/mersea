@@ -1,3 +1,3 @@
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :name, :language, :content
+  attributes :id, :name, :language, :content, :category
 end

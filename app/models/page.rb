@@ -8,9 +8,10 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  language   :string
+#  category   :string           default("other")
 #
 
 class Page < ApplicationRecord
   include Concerns::PageManager
-  validates :name, :language, :content, presence: true
+  validates :name, :language, :category, :content, presence: true
 end

@@ -8,10 +8,12 @@ module Concerns
           field :name
           field :language
           field :content
+          field :category
         end
 
         edit do
           field :name
+          field :category
           field :language, :enum do
             enum do
               I18n.available_locales.map do |lang|
