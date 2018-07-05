@@ -24,7 +24,7 @@ export default {
   methods: {
     mapLoad: async function() {
       try {
-        let reports = await this.$http.get(`${this.apiUrl}/reports`, {
+        let reports = await this.$http.get(`/reports`, {
           headers: {
             Accept: 'application/geo+json',
             'Content-Type': 'application/geo+json'
