@@ -9,7 +9,11 @@ import Vuex from 'vuex'
 import Buefy from 'buefy'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch, faThLarge, faThList } from '@fortawesome/free-solid-svg-icons'
+import {
+  faSearch,
+  faThLarge,
+  faThList
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import moment from 'moment'
 
@@ -17,7 +21,13 @@ import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios
+const api = axios.create({
+  baseURL: process.env.API_URL,
+  timeout: 1000,
+  headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
+})
+
+Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.API_URL
 

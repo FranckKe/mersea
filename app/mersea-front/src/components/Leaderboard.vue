@@ -45,7 +45,6 @@
 export default {
   data() {
     return {
-      apiUrl: this.$apiUrl,
       leaderboard: [],
       filter: '',
       defaultSortDirection: 'asc',
@@ -59,14 +58,7 @@ export default {
   methods: {
     load: async function() {
       try {
-        let leaderboard = await fetch(`${this.apiUrl}/leaderboard`, {
-          method: 'get',
-          headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          })
-        })
-        this.leaderboard = await leaderboard.json()
+        await this.$http.get(`/leaderboard`).data
       } catch (e) {
         throw e
       }
@@ -76,9 +68,11 @@ export default {
     filtered: function() {
       this.filter = this.filter.toLowerCase()
       return this.leaderboard.filter(v => {
-        return v.name.toLowerCase().includes(this.filter) ||
+        return (
+          v.name.toLowerCase().includes(this.filter) ||
           v.reports_count.toString().includes(this.filter) ||
           v.last_activity.includes(this.filter)
+        )
       })
     }
   }

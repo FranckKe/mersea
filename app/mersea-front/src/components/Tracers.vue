@@ -3,7 +3,7 @@
     <h1 class="heading_text is-size-3">Tracers</h1>
     <div class="field">
       <div class="control has-icons-left">
-        <span class="icon is-small is-left"> 
+        <span class="icon is-small is-left">
           <font-awesome-icon icon="search" />
         </span>
         <input class="input" type="text" placeholder="Search for a tracer" v-model="searchKeywords">
@@ -15,12 +15,12 @@
       </div>
       <div class="column is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
         <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchToGrid">
-          <span class="icon is-small is-left"> 
+          <span class="icon is-small is-left">
             <font-awesome-icon icon="th-large" />
           </span>
         </button>
         <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="switchToList">
-          <span class="icon is-small is-left"> 
+          <span class="icon is-small is-left">
             <font-awesome-icon icon="th-list" />
           </span>
         </button>
@@ -40,11 +40,10 @@ export default {
   name: 'tracers',
   components: {
     TracersGrid,
-    TracersList,
+    TracersList
   },
   data() {
     return {
-      apiUrl: this.$apiUrl,
       displayFormat: 'list',
       tracers: [],
       searchKeywords: ''
@@ -63,22 +62,16 @@ export default {
     getFilteredTracers() {
       if (this.searchKeywords !== '') {
         let keywords = this.searchKeywords.toLowerCase()
-
-        return this.tracers.filter((tracer, index) => tracer.name.toLowerCase().indexOf(keywords) !== -1)
+        return this.tracers.filter(
+          (tracer, index) => tracer.name.toLowerCase().indexOf(keywords) !== -1
+        )
       } else {
         return this.tracers
       }
     },
     async loadTracers() {
-      const tracers = await fetch(`${this.apiUrl}/tracers`, {
-        method: 'get',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
-      })
-
-      this.tracers = await tracers.json()
+      let tracers = await this.$http.get(`/tracers`)
+      this.tracers = tracers.data
     }
   }
 }
