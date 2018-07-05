@@ -4,7 +4,7 @@
       <article class="card">
         <div class="card-image">
           <router-link :to="`/tracers/${tracer.id}`">
-          <div class="img-wrapper" :style="`background-image: url('${apiUrl}${tracer.photo_url}')`">
+          <div class="img-wrapper" :style="`background-image: url('${apiUrl}${tracer.photo}')`">
           </div>
           </router-link>
         </div>

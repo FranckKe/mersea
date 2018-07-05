@@ -1,12 +1,5 @@
 <template>
-  <!--<table class="table is-fullwidth is-striped is-narrow is-hoverable is-fullwidth">
-    <tbody>
-      <tr :key="idx" v-for="(tracer, idx) in tracersData()">
-        <td>{{ tracer.name }}</td>
-      </tr>
-    </tbody>
-  </table>-->
-  <div class="container">
+  <div>
     <b-field grouped group-multiline>
       <b-select v-model="perPage">
         <option value="5">5 per page</option>
