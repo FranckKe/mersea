@@ -9,7 +9,7 @@
         <input class="input" type="text" placeholder="Search for a tracer" v-model="searchKeywords">
       </div>
     </div>
-    <div class="columns columns is-multiline is-mobile">
+    <div class="columns is-multiline is-mobile">
       <div class="column">
         <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
       </div>
@@ -54,7 +54,7 @@ export default {
     await this.loadTracers()
   },
   methods: {
-    async switchToGrid() {
+    switchToGrid() {
       this.displayFormat = 'grid'
     },
     switchToList() {
@@ -63,7 +63,7 @@ export default {
     getFilteredTracers() {
       if (this.searchKeywords !== '') {
         let keywords = this.searchKeywords.toLowerCase()
-        console.log(this.tracers)
+
         return this.tracers.filter((tracer, index) => tracer.name.toLowerCase().indexOf(keywords) !== -1)
       } else {
         return this.tracers

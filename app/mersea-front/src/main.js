@@ -11,6 +11,7 @@ import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch, faThLarge, faThList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import moment from 'moment'
 
 import 'buefy/lib/buefy.css'
 
@@ -25,6 +26,10 @@ Vue.use(Buefy)
 
 library.add(faSearch, faThList, faThLarge)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.filter('formatDate', function (value) {
+  return moment(String(value)).format('MM/DD/YYYY hh:mm')
+})
 
 new Vue({
   el: '#app',
