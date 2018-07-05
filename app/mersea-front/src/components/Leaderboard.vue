@@ -58,7 +58,8 @@ export default {
   methods: {
     load: async function() {
       try {
-        await this.$http.get(`/leaderboard`).data
+        let leaderboard = await this.$http.get(`/leaderboard`)
+        this.leaderboard = leaderboard.data
       } catch (e) {
         throw e
       }
