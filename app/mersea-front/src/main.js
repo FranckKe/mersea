@@ -8,17 +8,42 @@ import router from './router'
 import Vuex from 'vuex'
 import Buefy from 'buefy'
 import axios from 'axios'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faSearch,
+  faThLarge,
+  faThList
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
+import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
+import moment from 'moment'
 
 import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios
+const api = axios.create({
+  baseURL: process.env.API_URL,
+  timeout: 1000,
+  headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
+})
+
+Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.API_URL
 
 Vue.use(Vuex)
-Vue.use(Buefy)
+Vue.use(Buefy, {
+  defaultIconPack: 'fas'
+})
+
+library.add(faSearch, faThList, faThLarge)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.filter('formatDate', function (value) {
+  return moment(String(value)).format('MM/DD/YYYY')
+})
 
 new Vue({
   el: '#app',
