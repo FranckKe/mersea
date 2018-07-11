@@ -8,4 +8,8 @@ describe TracerSerializer do
   it { expect(subject.serializable_hash).to have_key(:name) }
   it { expect(subject.serializable_hash).to have_key(:color) }
   it { expect(subject.serializable_hash).to have_key(:photo) }
+  it { expect(subject.serializable_hash).to have_key(:description) }
+  it { expect(subject.serializable_hash).to have_key(:origin) }
+  it { expect(subject.serializable_hash).to have_key(:kind) }
+  it { expect(subject.serializable_hash).to have_key(:created_at) }
 end
