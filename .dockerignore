@@ -1,4 +1,4 @@
-app/mersea-front/node_modules/*
+frontend/node_modules/*
 log/*
 public/system/*
 tmp/*
