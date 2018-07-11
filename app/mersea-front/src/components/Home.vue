@@ -113,7 +113,6 @@ export default {
       this.map.addControl(geolocator)
       this.map.addControl(navigater, 'bottom-right')
       this.map.on('load', this.mapLoad)
-      this.map.on('mousemove', 'reports', this.mapMouseMoved)
     }
   }
 }
