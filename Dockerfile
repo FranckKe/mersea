@@ -43,7 +43,7 @@ WORKDIR /usr/src/app/frontend
 
 RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 RUN yarn run build
-RUN mv dist/* ../../public
+RUN mv dist/* ../public
 
 # final stage
 FROM ruby:2.5.1-alpine
