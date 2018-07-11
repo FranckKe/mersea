@@ -28,7 +28,7 @@ library.add(faSearch, faThList, faThLarge)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.filter('formatDate', function (value) {
-  return moment(String(value)).format('MM/DD/YYYY hh:mm')
+  return moment(String(value)).format('MM/DD/YYYY')
 })
 
 new Vue({

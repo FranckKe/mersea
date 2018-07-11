@@ -27,7 +27,7 @@
           {{ props.row.origin }}
         </b-table-column>
         <b-table-column field="type" label="Type" sortable>
-          {{ props.row.type }}
+          {{ props.row.kind }}
         </b-table-column>
         <b-table-column field="created_at" label="Created At" sortable>
           {{ props.row.created_at | formatDate }}

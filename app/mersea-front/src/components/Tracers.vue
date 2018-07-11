@@ -31,7 +31,6 @@
   </div>
 </template>
 
-
 <script>
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
@@ -70,15 +69,9 @@ export default {
       }
     },
     async loadTracers() {
-      const tracers = await fetch(`${this.apiUrl}/tracers`, {
-        method: 'get',
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
-      })
+      const tracers = await this.$http.get(`${this.apiUrl}/tracers`)
 
-      this.tracers = await tracers.json()
+      this.tracers = tracers.data
     }
   }
 }
