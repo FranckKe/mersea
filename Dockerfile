@@ -39,7 +39,7 @@ COPY --from=ruby-build-env /usr/src/app /usr/src/app
 
 ENV NODE_ENV production
 
-WORKDIR /usr/src/app/app/mersea-front
+WORKDIR /usr/src/app/frontend
 
 RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 RUN yarn run build
