@@ -3,10 +3,21 @@
   "type": "object",
   "required": ["id", "name", "color", "photo"],
   "properties": {
-    "id": { "type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$" },
+    "id": {
+      "type": "string",
+      "pattern":
+        "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
     "name": { "type": "string" },
-    "color": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" },
-    "photo": { "type": "string" }
+    "color": {
+      "type": "string",
+      "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "photo": { "type": "string" },
+    "description": { "type": "string" },
+    "origin": { "type": "string" },
+    "kind": { "type": "string" },
+    "created_at": { "type": "string" }
   },
   "additionalProperties": false
 }
