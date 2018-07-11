@@ -37,7 +37,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # Hack Devise for Rails 5 API for `DELETE /resource/sign_out`.
   def respond_to_on_destroy
-    render nothing: true, status: :no_content
+    render json: '', status: :no_content
   end
 
   # API mode
