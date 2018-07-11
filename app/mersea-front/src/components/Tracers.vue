@@ -31,7 +31,6 @@
   </div>
 </template>
 
-
 <script>
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
@@ -70,7 +69,8 @@ export default {
       }
     },
     async loadTracers() {
-      let tracers = await this.$http.get(`/tracers`)
+      const tracers = await this.$http.get(`/tracers`)
+
       this.tracers = tracers.data
     }
   }

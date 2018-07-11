@@ -12,11 +12,13 @@
           <div class="content">
             <p class="title is-4"><router-link :to="`/tracers/${tracer.id}`">{{ tracer.name }}</router-link></p>
             <p>{{ tracer.description }}</p>
-            <p>{{ tracer.kind }}</p>
-            <p>{{ tracer.origin }}</p>
-            <time datetime="2016-1-1">{{ tracer.created_at | formatDate }}</time>
           </div>
         </div>
+        <footer class="card-footer">
+          <p class="card-footer-item">{{ tracer.origin }}</p>
+          <p class="card-footer-item">{{ tracer.kind }}</p>
+          <p class="card-footer-item"><time datetime="2016-1-1">{{ tracer.created_at | formatDate }}</time></p>
+        </footer>
       </article>
     </div>
   </div>
