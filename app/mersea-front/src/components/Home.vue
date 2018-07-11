@@ -24,15 +24,13 @@ export default {
   methods: {
     mapLoad: async function() {
       try {
-        var geojson
-        let reports = await fetch(`${this.apiUrl}/reports`, {
-          method: 'get',
-          headers: new Headers({
+        let reports = await this.$http.get(`/reports`, {
+          headers: {
             Accept: 'application/geo+json',
             'Content-Type': 'application/geo+json'
-          })
+          }
         })
-        geojson = await reports.json()
+        var geojson = reports.data
       } catch (e) {
         throw e
       }
