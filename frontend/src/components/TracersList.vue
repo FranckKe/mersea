@@ -74,8 +74,17 @@ export default {
       tracersData: this.tracers,
       defaultSortDirection: 'asc',
       currentPage: 1,
-      perPage: 10,
       defaultOpenedDetails: [1]
+    }
+  },
+  computed: {
+    perPage: {
+      get() {
+        return this.$store.state.tracersListPerPage
+      },
+      set(perPage) {
+        this.$store.commit('updateTracersListPerPage', { perPage })
+      }
     }
   }
 }

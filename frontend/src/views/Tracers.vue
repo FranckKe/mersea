@@ -14,24 +14,25 @@
         <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
       </div>
       <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
-        <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchToGrid">
+        <button class="button" v-bind:class="[this.tracersDisplayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchTo('grid')">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="th-large" />
           </span>
         </button>
-        <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="switchToList">
+        <button class="button" v-bind:class="[this.tracersDisplayFormat === 'list' ? 'is-primary' : '']" v-on:click="switchTo('list')">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="th-list" />
           </span>
         </button>
       </div>
     </div>
-    <tracers-grid v-if="displayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
-    <tracers-list v-if="displayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
+    <tracers-grid v-if="this.tracersDisplayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
+    <tracers-list v-if="this.tracersDisplayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
 
@@ -43,7 +44,6 @@ export default {
   },
   data() {
     return {
-      displayFormat: 'list',
       tracers: [],
       searchKeywords: ''
     }
@@ -52,11 +52,8 @@ export default {
     await this.loadTracers()
   },
   methods: {
-    switchToGrid() {
-      this.displayFormat = 'grid'
-    },
-    switchToList() {
-      this.displayFormat = 'list'
+    switchTo(format) {
+      this.$store.commit('updateTracersDisplayFormat', { format })
     },
     getFilteredTracers() {
       if (this.searchKeywords.trim() !== '') {
@@ -73,7 +70,8 @@ export default {
 
       this.tracers = tracers.data
     }
-  }
+  },
+  computed: mapState(['tracersDisplayFormat'])
 }
 </script>
 <style>

@@ -3,12 +3,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-new */
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
-import Vuex from 'vuex'
+import store from './store'
+import './registerServiceWorker'
+
 import Buefy from 'buefy'
 import axios from 'axios'
 import moment from 'moment'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faSearch,
@@ -18,6 +21,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
 import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
+
 import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
@@ -32,7 +36,6 @@ Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL
 
-Vue.use(Vuex)
 Vue.use(Buefy, {
   defaultIconPack: 'fas'
 })
@@ -46,5 +49,6 @@ Vue.filter('formatDate', function(value) {
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

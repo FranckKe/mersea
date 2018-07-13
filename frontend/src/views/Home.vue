@@ -119,7 +119,7 @@ export default {
 <style>
 .map {
   width: 100%;
-  height: calc(100vh - var(--header-height));
+  height: 100vh;
 }
 
 .mapboxgl-ctrl-group > button {
