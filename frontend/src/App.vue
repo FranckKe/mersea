@@ -9,7 +9,7 @@
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <h1>{{ appName }}</h1>
+        <h1 class="app-title">{{ appName }}</h1>
       </div>
       <div id="flexible-menu" class="navbar-menu">
         <router-link to="/" class="navbar-item">Home</router-link>
@@ -111,7 +111,7 @@ body {
   color: var(--color-primary);
 }
 
-h1 {
+h1.app-title {
   margin: 0;
   height: 100%;
   min-height: 3.25rem;

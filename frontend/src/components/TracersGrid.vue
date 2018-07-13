@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: "tracers-grid",
+  name: 'tracers-grid',
   props: ['tracers'],
   data() {
     return {
@@ -34,3 +34,9 @@ export default {
   }
 }
 </script>
+
+<style>
+button {
+  margin: 0.25rem;
+}
+</style>

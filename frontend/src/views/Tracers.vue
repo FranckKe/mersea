@@ -13,7 +13,7 @@
       <div class="column">
         <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
       </div>
-      <div class="column is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
+      <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
         <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchToGrid">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="th-large" />
@@ -62,7 +62,7 @@ export default {
       if (this.searchKeywords.trim() !== '') {
         let keywords = this.searchKeywords.toLowerCase()
         return this.tracers.filter(
-          (tracer, index) => tracer.name.toLowerCase().indexOf(keywords) !== -1
+          tracer => tracer.name.toLowerCase().indexOf(keywords) !== -1
         )
       } else {
         return this.tracers

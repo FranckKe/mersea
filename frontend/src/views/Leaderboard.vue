@@ -67,12 +67,11 @@ export default {
   },
   computed: {
     filtered: function() {
-      this.filter = this.filter.toLowerCase()
       return this.leaderboard.filter(v => {
         return (
-          v.name.toLowerCase().includes(this.filter) ||
-          v.reports_count.toString().includes(this.filter) ||
-          v.last_activity.includes(this.filter)
+          v.name.toLowerCase().includes(this.filter.toLowerCase()) ||
+          v.reports_count.toString().includes(this.filter.toLowerCase()) ||
+          v.last_activity.includes(this.filter.toLowerCase())
         )
       })
     }

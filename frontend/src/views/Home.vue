@@ -85,7 +85,7 @@ export default {
       })
     },
     createMap() {
-      mapboxgl.accessToken = process.env.MAPBOX_TOKEN
+      mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
       this.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',

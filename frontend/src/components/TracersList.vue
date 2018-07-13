@@ -66,7 +66,7 @@
 
 <script>
 export default {
-  name: "tracers-list",
+  name: 'tracers-list',
   props: ['tracers'],
   data() {
     return {

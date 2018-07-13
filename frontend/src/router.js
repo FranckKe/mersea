@@ -1,27 +1,27 @@
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "./views/Home";
-import Leaderboard from "./views/Leaderboard";
-import Tracers from "./views/Tracers";
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/Home'
+import Leaderboard from './views/Leaderboard'
+import Tracers from './views/Tracers'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "Home",
+      path: '/',
+      name: 'Home',
       component: Home
     },
     {
-      path: "/leaderboard",
-      name: "Leaderboard",
+      path: '/leaderboard',
+      name: 'Leaderboard',
       component: Leaderboard
     },
     {
-      path: "/tracers",
-      name: "Tracers",
+      path: '/tracers',
+      name: 'Tracers',
       component: Tracers
     }
   ]
-});
+})
