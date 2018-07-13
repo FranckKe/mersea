@@ -59,7 +59,7 @@ fr:
       last_activity: Dernière activitée
   reports:
     create:
-      thanks: Merci pour votre signalement
+      thanks: Mersea pour votre signalement
       sucessful_update: Signalement mis à jour
       sucessful_deletion: Signalement supprimé
     new:
