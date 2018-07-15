@@ -50,11 +50,11 @@ $(document).on("turbolinks:load", function() {
       }
     );
 
-    var Esri_WorldImagery = L.tileLayer(
-      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    var mapbox = L.tileLayer(
+      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w",
       {
         attribution:
-          "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
+          "Mapbox"
       }
     );
 
@@ -67,11 +67,11 @@ $(document).on("turbolinks:load", function() {
     );
 
     var map = L.map("map", {
-      layers: [Esri_WorldImagery]
+      layers: [mapbox]
     }).setView([46.2276, -2.2137], 6);
     var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
-    control.addBaseLayer(Esri_WorldImagery, "Earth");
+    control.addBaseLayer(mapbox, "Earth");
     control.addBaseLayer(osm, "Map");
     control.addOverlay(
       OpenSeaMap,
