@@ -42,19 +42,19 @@ $(document).on("turbolinks:load", function() {
   var tracerData = {};
 
   if (mapElement.length > 0) {
-    var osm = L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    var mapboxStreet = L.tileLayer(
+      "https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w",
       {
-        attribution: "Map data &copy; " + mapLink,
+        attribution: "Mapbox",
         maxZoom: 18
       }
     );
 
-    var mapbox = L.tileLayer(
+    var mapboxSatellite = L.tileLayer(
       "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w",
       {
-        attribution:
-          "Mapbox"
+        attribution: "Mapbox",
+          maxZoom: 18
       }
     );
 
@@ -67,12 +67,12 @@ $(document).on("turbolinks:load", function() {
     );
 
     var map = L.map("map", {
-      layers: [mapbox]
+      layers: [mapboxSatellite]
     }).setView([46.2276, -2.2137], 6);
     var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
-    control.addBaseLayer(mapbox, "Earth");
-    control.addBaseLayer(osm, "Map");
+    control.addBaseLayer(mapboxSatellite, "Earth");
+    control.addBaseLayer(mapboxStreet, "Map");
     control.addOverlay(
       OpenSeaMap,
       'OpenSeaMap<div class="leaflet-control-layers-separator"></div>'

@@ -28,6 +28,7 @@
 //= require plugins/video.min
 //= require languages/fr.js
 //= require leaflet
+//= require leaflet-tileborderfix
 
 $(document).on("rails_admin.dom_ready", function() {
   var svgIcon = function(color) {
@@ -64,17 +65,17 @@ $(document).on("rails_admin.dom_ready", function() {
   if (mapElement !== undefined) {
     var latlng = [mapElement.dataset.lat, mapElement.dataset.lng];
     var map = L.map("map").setView(latlng, 7);
-    var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 
-    var osm = L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    var mapbox = L.tileLayer(
+      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjamc5ODhrazUzaXlvMndvaDBzMnZoZXF6In0.ThvS99eoVrbmTC_KAmv_6w",
       {
-        attribution: "Map data &copy; " + mapLink,
-        maxZoom: 18
+        attribution:
+          "Mapbox",
+          maxZoom: 18
       }
     );
 
-    osm.addTo(map);
+    mapbox.addTo(map);
 
     var marker = L.marker(latlng, {
       icon: L.divIcon({
