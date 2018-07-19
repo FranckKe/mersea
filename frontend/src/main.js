@@ -3,11 +3,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-new */
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
-import Vuex from 'vuex'
+import store from './store'
+import './registerServiceWorker'
+
 import Buefy from 'buefy'
 import axios from 'axios'
+import moment from 'moment'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faSearch,
@@ -17,23 +21,21 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
 import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
-import moment from 'moment'
 
 import 'buefy/lib/buefy.css'
 
 Vue.config.productionTip = false
 
 const api = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.VUE_APP_API_URL,
   timeout: 1000,
   headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
 })
 
 Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
-Vue.prototype.$apiUrl = process.env.API_URL
+Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL
 
-Vue.use(Vuex)
 Vue.use(Buefy, {
   defaultIconPack: 'fas'
 })
@@ -41,13 +43,12 @@ Vue.use(Buefy, {
 library.add(faSearch, faThList, faThLarge)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.filter('formatDate', function (value) {
+Vue.filter('formatDate', function(value) {
   return moment(String(value)).format('MM/DD/YYYY')
 })
 
 new Vue({
-  el: '#app',
+  render: h => h(App),
   router,
-  template: '<App/>',
-  components: { App }
-})
+  store
+}).$mount('#app')
