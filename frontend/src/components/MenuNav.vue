@@ -61,8 +61,9 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   }
 })
+
 export default {
-  name: 'menu',
+  name: 'MenuNav',
   data() {
     return {
       apiUrl: this.$apiUrl,

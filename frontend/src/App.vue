@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <menu></menu>
+    <MenuNav></MenuNav>
     <transition name="fade" mode="out-in">
       <router-view>
       </router-view>
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import Menu from './components/Menu'
+import MenuNav from '@/components/MenuNav'
 
 export default {
   name: 'app',
   components: {
-    Menu
+    MenuNav
   },
   data() {
     return {
