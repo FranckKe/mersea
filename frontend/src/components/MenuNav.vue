@@ -34,10 +34,14 @@
         </div>
       </div>
     </div>
+    <p>{{ this.pages }}</p>
   </nav>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('pages')
+
 document.addEventListener('DOMContentLoaded', function() {
   // Get all "navbar-burger" elements
   var $navbarBurgers = Array.prototype.slice.call(
@@ -64,13 +68,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export default {
   name: 'MenuNav',
+  created() {
+    this.loadPages()
+  },
   data() {
     return {
       apiUrl: this.$apiUrl,
       appName: this.$appName
     }
   },
-  computed: {}
+  computed: {
+    ...mapState({
+      pages: state => state.payload
+    })
+  },
+  methods: {
+    ...mapActions(['loadPages'])
+  }
 }
 </script>
 
