@@ -13,7 +13,13 @@ module Concerns
 
         edit do
           field :name
-          field :category
+          field :category, :enum do
+            enum do
+              Page.all.map do |page|
+                [page.category, page.category] # e.g. ["English", :en]
+              end.uniq
+            end
+          end
           field :language, :enum do
             enum do
               I18n.available_locales.map do |lang|
