@@ -26,8 +26,10 @@
         </button>
       </div>
     </div>
-    <tracers-grid v-if="this.tracersDisplayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
-    <tracers-list v-if="this.tracersDisplayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
+    <transition name="fade" mode="out-in">
+      <tracers-grid v-if="this.tracersDisplayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
+      <tracers-list v-if="this.tracersDisplayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
+    </transition>
   </div>
 </template>
 
