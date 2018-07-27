@@ -15,7 +15,7 @@ module Concerns
           field :name
           field :category, :enum do
             enum do
-              Page.categories.map do |category|
+              Page::CATEGORIES.map do |category|
                 [I18n.t(category, scope: 'pages.categories', locale: I18n.locale), category]
               end
             end
