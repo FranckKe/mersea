@@ -43,12 +43,24 @@ Vue.use(Buefy, {
 library.add(faSearch, faThList, faThLarge)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.filter('formatDate', function(value) {
-  return moment(String(value)).format('MM/DD/YYYY')
+Vue.filter('formatDate', value => moment(String(value)).format('MM/DD/YYYY'))
+
+Vue.filter('capitalize', function(value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
-new Vue({
+let app = new Vue({
   render: h => h(App),
   router,
   store
-}).$mount('#app')
+})
+
+if (process.env.NODE_ENV !== 'production') {
+  setTimeout(() => {
+    app.$mount('#app')
+  }, 500)
+} else {
+  app.$mount('#app')
+}

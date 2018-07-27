@@ -16,40 +16,85 @@ Vue.use(Vuex)
 const pages = {
   namespaced: true,
   state: {
-    payload: [],
+    data: [],
     loading: true,
     success: false,
-    error: {}
+    errors: []
+  },
+  getters: {
+    getLoading: state => {
+      return state.loading
+    },
+    geterror: state => {
+      return state.errors
+    },
+    getSuccess: state => {
+      return state.success
+    },
+    getAllPagesByCategory: state => {
+      let categories = [
+        ...new Set(
+          state.data
+            .map(page => page.category)
+            .filter(page => page.category !== 'other')
+        )
+      ]
+      return categories.map(function(category) {
+        return {
+          category: category,
+          pagesName: state.data
+            .filter(page => page.category === category)
+            .map(page => page.name)
+        }
+      })
+    },
+    getPagesByCategory(state) {
+      return category => {
+        return {
+          category: category,
+          pagesName: state.data
+            .filter(page => page.category === category)
+            .map(page => page.name)
+        }
+      }
+    }
   },
   mutations: {
-    updatePayload: (state, { payload }) => {
-      state.payload = payload
+    updateData: (state, { data }) => {
+      state.data = data
     },
-    updateSuccess: (state, { success }) => {
-      state.success = success
+    updateSuccess: state => {
+      state.success = true
       state.loading = false
+      state.errors = []
     },
-    updateError: (state, { error }) => {
-      state.error = error
+    updateError: (state, { errors }) => {
+      state.errors = errors
       state.loading = false
     }
   },
   actions: {
-    loadPages: async ({ commit }) => {
-      try {
-        const pages = await api.get(`/pages`)
-        const payload = pages.data
+    loadPages: ({ commit }) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const pages = await api.get(`/pages`)
+          const data = pages.data
 
-        commit('updatePayload', { payload })
-      } catch (e) {
-        commit('updateError', { e })
-      }
+          commit('updateData', { data })
+          commit('updateSuccess', { data })
+          resolve()
+        } catch (error) {
+          let errors = [error.message]
+          commit('updateError', { errors })
+          reject(error.message)
+        }
+      })
     }
   }
 }
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  // plugins: [createPersistedState()],
   modules: {
     pages: pages
   },
