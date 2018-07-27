@@ -57,6 +57,10 @@ en:
     leaderboard:
       report_count: Report count
       last_activity: Last activity
+    categories:
+      other: Other
+      about: About
+      information: Information
   reports:
     create:
       thanks: Thank you for your report

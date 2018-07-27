@@ -57,6 +57,10 @@ fr:
     leaderboard:
       report_count: Nombre de signalements
       last_activity: Dernière activitée
+    categories:
+      other: Autre
+      about: À propos
+      information: Information
   reports:
     create:
       thanks: Merci pour votre signalement

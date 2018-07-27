@@ -15,9 +15,9 @@ module Concerns
           field :name
           field :category, :enum do
             enum do
-              Page.all.map do |page|
-                [page.category, page.category] # e.g. ["English", :en]
-              end.uniq
+              Page.categories.map do |category|
+                [I18n.t(category, scope: 'pages.categories', locale: I18n.locale), category]
+              end
             end
           end
           field :language, :enum do
