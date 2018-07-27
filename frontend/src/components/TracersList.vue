@@ -42,7 +42,7 @@
             </figure>
             <div class="media-content">
                 <div class="content">
-                    <p>{{ props.row.description }}</p>
+                    <p class="tracer-description">{{ props.row.description }}</p>
                 </div>
             </div>
         </article>
@@ -63,6 +63,12 @@
     </b-table>
   </div>
 </template>
+
+<style>
+.tracer-description {
+  max-width: 700px;
+}
+</style>
 
 <script>
 export default {
