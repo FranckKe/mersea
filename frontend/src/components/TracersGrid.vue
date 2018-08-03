@@ -1,6 +1,6 @@
 <template>
   <div class="columns is-multiline is-mobile">
-    <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop" :key="idx" v-for="(tracer, idx) in tracersData()">
+    <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop" :key="idx" v-for="(tracer, idx) in tracers()">
       <article class="card">
         <div class="card-image">
           <router-link :to="`/tracers/${tracer.id}`">
@@ -28,8 +28,7 @@ export default {
   props: ['tracers'],
   data() {
     return {
-      apiUrl: this.$apiUrl,
-      tracersData: this.tracers
+      apiUrl: this.$apiUrl
     }
   }
 }

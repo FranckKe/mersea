@@ -56,6 +56,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-primary);
-  padding-top: calc(var(--header-height) + 10px);
+  padding-top: calc(var(--header-height) + 40px);
 }
 </style>

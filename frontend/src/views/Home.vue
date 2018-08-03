@@ -5,6 +5,10 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters } = createNamespacedHelpers('reports')
+import store from '../store'
+
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -22,19 +26,8 @@ export default {
     this.createMap()
   },
   methods: {
-    mapLoad: async function() {
-      try {
-        let reports = await this.$http.get(`/reports`, {
-          headers: {
-            Accept: 'application/geo+json',
-            'Content-Type': 'application/geo+json'
-          }
-        })
-        var geojson = reports.data
-      } catch (e) {
-        throw e
-      }
-
+    mapLoad: function() {
+      const geojson = store.state.reports.data
       for (let marker of geojson.features) {
         new mapboxgl.Marker({ color: `${marker.properties.color}` })
           .setLngLat(marker.geometry.coordinates)
@@ -111,7 +104,8 @@ export default {
       this.map.addControl(geolocator)
       this.map.addControl(navigater, 'bottom-right')
       this.map.on('load', this.mapLoad)
-    }
+    },
+    ...mapGetters(['getData'])
   }
 }
 </script>

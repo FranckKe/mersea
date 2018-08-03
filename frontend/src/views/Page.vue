@@ -1,5 +1,5 @@
 <template>
-  <div class="page" :key="this.page" v-html="this.pageContent"></div>
+  <div class="page" v-html="this.pageContent"></div>
 </template>
 
 <script>

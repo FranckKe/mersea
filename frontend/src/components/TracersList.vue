@@ -64,13 +64,12 @@
   </div>
 </template>
 
-<style>
-.tracer-description {
-  max-width: 700px;
-}
-</style>
-
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapGetters, mapMutations } = createNamespacedHelpers(
+  'tracers'
+)
+
 export default {
   name: 'tracers-list',
   props: ['tracers'],
@@ -83,15 +82,30 @@ export default {
       defaultOpenedDetails: [1]
     }
   },
+  methods: {
+    ...mapMutations(['setPerPage']),
+    ...mapGetters(['getPerPage'])
+  },
   computed: {
+    ...mapState({
+      perPage: state => state.perPage
+    }),
+    // Two-way Computed Property
     perPage: {
-      get() {
-        return this.$store.state.tracersListPerPage
+      set(value) {
+        this.setPerPage(value)
       },
-      set(perPage) {
-        this.$store.commit('updateTracersListPerPage', { perPage })
+      get() {
+        return this.getPerPage()
       }
     }
   }
 }
 </script>
+
+
+<style>
+.tracer-description {
+  max-width: 700px;
+}
+</style>
