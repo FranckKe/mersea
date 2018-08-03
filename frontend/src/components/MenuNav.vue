@@ -13,6 +13,7 @@
     <div id="flexible-menu" class="navbar-menu">
       <router-link to="/" class="navbar-item">Home</router-link>
       <router-link to="/tracers" class="navbar-item">Tracers</router-link>
+      <router-link to="/leaderboard" class="navbar-item">Leaderboard</router-link>
 
         <div class="navbar-item has-dropdown is-hoverable"
         v-for="(pageByCategory, index) in this.getAllPagesByCategory"
