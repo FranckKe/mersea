@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from './router'
+import Page from './views/Page.vue'
 import createPersistedState from 'vuex-persistedstate'
 
 const api = axios.create({
@@ -30,6 +32,17 @@ const pages = {
     },
     getSuccess: state => {
       return state.success
+    },
+    getPageContent: state => {
+      return pageInfo => {
+        return (
+          state.data.filter(
+            page =>
+              page.category === pageInfo.category &&
+              page.name === pageInfo.pageName
+          )[0] || {}
+        ).content
+      }
     },
     getAllPagesByCategory: state => {
       let categories = [
@@ -74,27 +87,22 @@ const pages = {
     }
   },
   actions: {
-    loadPages: ({ commit }) => {
-      return new Promise(async (resolve, reject) => {
-        try {
-          const pages = await api.get(`/pages`)
-          const data = pages.data
-
-          commit('updateData', { data })
-          commit('updateSuccess', { data })
-          resolve()
-        } catch (error) {
-          let errors = [error.message]
-          commit('updateError', { errors })
-          reject(error.message)
-        }
-      })
+    async loadPages({ commit }) {
+      try {
+        const pages = await api.get(`/pages`)
+        const data = pages.data
+        commit('updateData', { data })
+        commit('updateSuccess', { data })
+      } catch (error) {
+        let errors = [error.message]
+        commit('updateError', { errors })
+      }
     }
   }
 }
 
-export default new Vuex.Store({
-  // plugins: [createPersistedState()],
+const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   modules: {
     pages: pages
   },
@@ -112,3 +120,7 @@ export default new Vuex.Store({
   },
   actions: {}
 })
+
+store.dispatch('pages/loadPages')
+
+export default store

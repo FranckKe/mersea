@@ -21,7 +21,7 @@
             {{ pageByCategory.category | capitalize}}
           </p>
           <div class="navbar-dropdown">
-            <router-link class="navbar-item" :to="pageName"
+            <router-link class="navbar-item" :to="{name: 'pages', params: {category: pageByCategory.category, page: pageName}}"
             v-for="(pageName, index) in pageByCategory.pagesName"
             v-bind:key="index">{{ pageName }}</router-link>
           </div>
@@ -60,18 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export default {
   name: 'MenuNav',
-  async created() {
-    try {
-      await this.loadPages()
-    } catch (e) {
-      this.$toast.open({
-        duration: 15000,
-        message: `Fail to load menu: ${e}`,
-        position: 'is-bottom-right',
-        type: 'is-danger'
-      })
-    }
-  },
+  async created() {},
   data() {
     return {
       apiUrl: this.$apiUrl,
@@ -85,7 +74,7 @@ export default {
       myerrors: state => state.errors,
       success: state => state.success
     }),
-    ...mapGetters(['getAllPagesByCategory', 'getPagesByCategory'])
+    ...mapGetters(['getAllPagesByCategory'])
   },
   methods: {
     ...mapActions(['loadPages'])

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <MenuNav></MenuNav>
     <transition name="fade" mode="out-in">
       <router-view>
@@ -56,5 +56,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-primary);
+  padding-top: calc(var(--header-height) + 10px);
 }
 </style>
