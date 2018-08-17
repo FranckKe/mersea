@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tracers.vue matches snapshot 1`] = `
+<div class="section">
+  <h1 class="heading_text is-size-3">Tracers</h1>
+  <div class="field">
+    <div class="control has-icons-left"><span class="icon is-small is-left"><font-awesome-icon-stub icon="search"></font-awesome-icon-stub></span>
+      <input type="text" placeholder="Search for a tracer" class="input">
+    </div>
+  </div>
+  <div class="columns is-multiline is-mobile">
+    <div class="column">
+      <p class="has-text-left is-italic">0 tracer displayed (0 total)</p>
+    </div>
+    <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
+      <button class="button is-primary"><span class="icon is-small is-left"><font-awesome-icon-stub icon="th-large"></font-awesome-icon-stub></span></button>
+      <button class="button"><span class="icon is-small is-left"><font-awesome-icon-stub icon="th-list"></font-awesome-icon-stub></span></button>
+    </div>
+  </div>
+  <tracersgrid-stub tracers="" name="fade" mode="out-in"></tracersgrid-stub>
+</div>
+`;
