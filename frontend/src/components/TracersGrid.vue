@@ -12,9 +12,9 @@
           <div class="content">
             <p class="title is-4"><router-link :to="`/tracers/${tracer.id}`">{{ tracer.name }}</router-link></p>
             <p>{{ tracer.description }}</p>
-            <p><strong>Origin: </strong>{{ tracer.origin }}</p>
-            <p><strong>Type: </strong>{{ tracer.kind }}</p>
-            <p><strong>Created at: </strong><time datetime="2016-1-1">{{ tracer.created_at | formatDate }}</time></p>
+            <p><strong>{{ $t('origin') }}: </strong>{{ tracer.origin }}</p>
+            <p><strong>{{ $t('type') }}: </strong>{{ tracer.kind }}</p>
+            <p><strong>{{ $t('created_at') }}: </strong><time datetime="tracer.created_at | formatDate">{{ tracer.created_at | formatDate }}</time></p>
           </div>
         </div>
       </article>
@@ -36,3 +36,24 @@ export default {
 
 <style>
 </style>
+
+
+<i18n>
+{
+  "en": {
+    "origin": "Origin",
+    "type": "Type",
+    "created_at": "Created at"
+  },
+  "fr": {
+    "origin": "Origine",
+    "type": "Type",
+    "created_at": "Créé le"
+  },
+  "es": {
+    "origin": "Origen",
+    "type": "Tipo",
+    "created_at": "Creado en"
+  }
+}
+</i18n>

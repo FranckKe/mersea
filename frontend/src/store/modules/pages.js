@@ -1,4 +1,6 @@
 import axios from 'axios'
+import i18n from '../../i18n'
+import slugify from 'slugify'
 
 const api = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -7,7 +9,7 @@ const api = axios.create({
 })
 
 const state = {
-  data: [],
+  pages: [],
   loading: true,
   success: false,
   errors: []
@@ -25,45 +27,55 @@ const getters = {
   getPageContent: state => {
     return pageInfo => {
       return (
-        state.data.filter(
-          page =>
-            page.category === pageInfo.category &&
-            page.name === pageInfo.pageName
-        )[0] || {}
+        state.pages.filter(page => page.slug === pageInfo.pageName)[0] || {}
       ).content
     }
+  },
+  getCategories: state => {
+    return [
+      ...new Set(
+        state.pages
+          .map(page => page.category)
+          .filter(page => page.category !== 'other')
+      )
+    ]
   },
   getAllPagesByCategory: state => {
     let categories = [
       ...new Set(
-        state.data
+        state.pages
           .map(page => page.category)
           .filter(page => page.category !== 'other')
       )
     ]
     return categories.map(function(category) {
       return {
-        category: category,
-        pagesName: state.data
-          .filter(page => page.category === category)
-          .map(page => page.name)
+        category: slugify(category),
+        pagesName: state.pages
+          .filter(
+            page => page.category === category && page.language === i18n.locale
+          )
+          .map(page => {
+            return { raw: page.name, slug: page.slug }
+          })
       }
     })
   },
   getPagesByCategory(state) {
     return category => {
-      return {
-        category: category,
-        pagesName: state.data
-          .filter(page => page.category === category)
-          .map(page => page.name)
-      }
+      return state.pages
+        .filter(
+          page => page.category === category && page.language === i18n.locale
+        )
+        .map(page => {
+          return { raw: page.name, slug: page.slug }
+        })
     }
   }
 }
 const mutations = {
-  updateData: (state, { data }) => {
-    state.data = data
+  updatePages: (state, { pages }) => {
+    state.pages = pages
   },
   updateSuccess: state => {
     state.success = true
@@ -78,10 +90,10 @@ const mutations = {
 const actions = {
   async loadPages({ commit }) {
     try {
-      const pages = await api.get(`/pages`)
-      const data = pages.data
-      commit('updateData', { data })
-      commit('updateSuccess', { data })
+      const pagesData = await api.get(`/pages`)
+      const pages = pagesData.data
+      commit('updatePages', { pages })
+      commit('updateSuccess', { pages })
     } catch (error) {
       let errors = [error.message]
       commit('updateError', { errors })

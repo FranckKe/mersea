@@ -1,21 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
+exports[`Leaderboard.vue matches snapshot 1`] = `
 <section class="section">
   <div class="container">
     <bfield-stub grouped="true" groupmultiline="true" addons="true">
       <bselect-stub value="10">
-        <option value="5">5 per page</option>
-        <option value="10">10 per page</option>
-        <option value="15">15 per page</option>
-        <option value="20">20 per page</option>
+        <option value="5">5 per_page</option>
+        <option value="10">10 per_page</option>
+        <option value="15">15 per_page</option>
+        <option value="20">20 per_page</option>
       </bselect-stub>
-      <div class="control is-flex">
-        <input type="search" placeholder="Search" class="input">
-      </div>
+      <div class="control is-flex"><input type="search" placeholder="search" class="input"></div>
     </bfield-stub>
-    <btable-stub data="" columns="" isrowcheckable="function (){return!0}" checkedrows="" mobilecards="true" defaultsort="name" defaultsortdirection="asc" paginated="true" currentpage="1" perpage="10" rowclass="function (){return&quot;&quot;}" openeddetailed=""
-      hasdetailedvisible="function (){return!0}" detailkey="" total="0"></btable-stub>
+    <btable-stub data="" columns="" isrowcheckable="function (){return!0}" checkedrows="" mobilecards="true" defaultsort="name" defaultsortdirection="asc" paginated="true" currentpage="1" perpage="10" rowclass="function (){return&quot;&quot;}"
+      openeddetailed="" hasdetailedvisible="function (){return!0}" detailkey="" total="0"></btable-stub>
   </div>
 </section>
 `;

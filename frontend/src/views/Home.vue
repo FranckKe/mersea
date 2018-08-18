@@ -13,6 +13,8 @@ import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import MapboxLanguage from '@mapbox/mapbox-gl-language'
+
 import moment from 'moment'
 
 export default {
@@ -24,6 +26,14 @@ export default {
   },
   mounted() {
     this.createMap()
+    moment.locale(this.$i18n.locale)
+  },
+  watch: {
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
+      this.map.destroy
+      this.createMap()
+    }
   },
   methods: {
     mapLoad: function() {
@@ -51,7 +61,9 @@ export default {
                       </small>
                       <br>
                       <small>
-                        Quantity: ${marker.properties.quantity}
+                        ${this.$i18n.t('quantity')}: ${
+                marker.properties.quantity
+              }
                       </small>
                       <br>
                       <small>${moment(marker.properties.reportedAt).format(
@@ -93,18 +105,26 @@ export default {
         trackUserLocation: true
       })
       let geocoder = new MapboxGeocoder(
-        { accessToken: mapboxgl.accessToken },
+        {
+          accessToken: mapboxgl.accessToken,
+          language: this.$i18n.locale,
+          placeholder: this.$i18n.t('search')
+        },
         'top'
       )
       let scaler = new mapboxgl.ScaleControl()
       let navigater = new mapboxgl.NavigationControl()
-
+      let language = new MapboxLanguage({
+        defaultLanguage: this.$i18n.locale
+      })
+      this.map.addControl(language)
       this.map.addControl(scaler)
       this.map.addControl(geocoder, 'top-left')
       this.map.addControl(geolocator)
       this.map.addControl(navigater, 'bottom-right')
       this.map.on('load', this.mapLoad)
     },
+    destroyMap() {},
     ...mapGetters(['getData'])
   }
 }
@@ -113,7 +133,7 @@ export default {
 <style>
 .map {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 55px); /* header height + margin */
 }
 
 .mapboxgl-ctrl-group > button {
@@ -186,3 +206,20 @@ export default {
   padding: 1.25rem;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "quantity": "Quantity",
+    "search": "Search"
+  },
+  "fr": {
+    "quantity": "Quantité",
+    "search": "Rechercher"
+  },
+  "es": {
+    "quantity": "Cantidad",
+    "search": "Buscar"
+  }
+}
+</i18n>

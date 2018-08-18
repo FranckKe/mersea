@@ -4,6 +4,7 @@
 /* eslint-disable no-new */
 import Vue from 'vue'
 import App from './App.vue'
+import i18n from './i18n'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
@@ -11,6 +12,7 @@ import './registerServiceWorker'
 import Buefy from 'buefy'
 import axios from 'axios'
 import moment from 'moment'
+import slugify from 'slugify'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -19,8 +21,8 @@ import {
   faThList
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import '@fortawesome/fontawesome-free-webfonts/css/fa-solid.css'
-import '@fortawesome/fontawesome-free-webfonts/css/fontawesome.css'
+import '@fortawesome/fontawesome-free/css/solid.css'
+import '@fortawesome/fontawesome-free/css/fontawesome.css'
 
 import 'buefy/lib/buefy.css'
 
@@ -43,6 +45,8 @@ Vue.use(Buefy, {
 library.add(faSearch, faThList, faThLarge)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+Vue.prototype.$filters = Vue.options.filters
+
 Vue.filter('formatDate', value => moment(String(value)).format('MM/DD/YYYY'))
 
 Vue.filter('capitalize', function(value) {
@@ -51,11 +55,24 @@ Vue.filter('capitalize', function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
+Vue.filter('slugify', function(value) {
+  return slugify(value)
+})
+
 let app = new Vue({
   render: h => h(App),
   router,
+  i18n,
   store
 })
+
+// Initialize lang if present in state
+// It is only present in state if user previously visited the app
+if (store.state.lang !== '') {
+  i18n.locale = store.state.lang
+} else {
+  store.state.lang = i18n.locale
+}
 
 if (process.env.NODE_ENV !== 'production') {
   setTimeout(() => {

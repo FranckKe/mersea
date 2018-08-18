@@ -1,17 +1,17 @@
 <template>
   <div class="section">
-    <h1 class="heading_text is-size-3">Tracers</h1>
+    <h1 class="heading_text is-size-3">{{ $tc('tracers', 2) | capitalize }}</h1>
     <div class="field">
       <div class="control has-icons-left">
         <span class="icon is-small is-left">
           <font-awesome-icon icon="search" />
         </span>
-        <input class="input" type="text" placeholder="Search for a tracer" v-model="searchKeywords">
+        <input class="input" type="text" v-bind:placeholder="$t('search')" v-model="searchKeywords">
       </div>
     </div>
     <div class="columns is-multiline is-mobile">
       <div class="column">
-        <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
+        <p class="has-text-left is-italic">{{ getFilteredTracers().length }} {{ $tc('tracers', getFilteredTracers().length) }} {{ $tc('displayed', getFilteredTracers().length) }} ({{ this.tracers.length }} {{ $t('total') }})</p>
       </div>
       <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
         <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="setDisplayFormat('grid')">
@@ -100,3 +100,26 @@ div.section {
   background-size: cover;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "tracers": "tracer | tracers",
+    "search": "Search",
+    "displayed": "displayed | displayed",
+    "total": "total"
+  },
+  "fr": {
+    "tracers": "tracer | tracers",
+    "search": "Rechercher",
+    "displayed": "affiché | affichés",
+    "total": "en tout"
+  },
+  "es": {
+    "tracers": "trazadore | trazadores",
+    "search": "Buscar",
+    "displayed": "desplegado | desplegado",
+    "total": "total"
+  }
+}
+</i18n>

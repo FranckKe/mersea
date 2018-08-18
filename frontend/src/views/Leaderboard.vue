@@ -2,15 +2,15 @@
   <section class="section">
     <div class="container">
       <b-field grouped group-multiline>
-        <b-select v-model="perPage">
-          <option value="5">5 per page</option>
-          <option value="10">10 per page</option>
-          <option value="15">15 per page</option>
-          <option value="20">20 per page</option>
-        </b-select>
+      <b-select v-model="perPage">
+        <option value="5">5 {{ $t('per_page') }}</option>
+        <option value="10">10 {{ $t('per_page') }}</option>
+        <option value="15">15 {{ $t('per_page') }}</option>
+        <option value="20">20 {{ $t('per_page') }}</option>
+      </b-select>
 
         <div class="control is-flex">
-          <input class="input" v-model="filter" type="search" placeholder="Search">
+          <input class="input" v-model="filter" type="search" v-bind:placeholder="$t('search')">
         </div>
       </b-field>
 
@@ -24,15 +24,15 @@
       default-sort="name">
 
       <template slot-scope="props">
-        <b-table-column field="name" label="Name" width="40" sortable numeric>
+        <b-table-column field="name" v-bind:label="$t('name')" width="40" sortable numeric>
           {{ props.row.name }}
         </b-table-column>
 
-        <b-table-column field="reports_count" label="Number of reports" sortable>
+        <b-table-column field="reports_count" v-bind:label="$t('number_of_reports')" sortable>
           {{ props.row.reports_count }}
         </b-table-column>
 
-        <b-table-column field="last_activity" label="Last activity" sortable centered>
+        <b-table-column field="last_activity" v-bind:label="$t('last_activity')" sortable centered>
           {{ props.row.last_activity }}
         </b-table-column>
       </template>
@@ -81,3 +81,29 @@ export default {
 
 <style>
 </style>
+
+<i18n>
+{
+  "en": {
+    "per_page": "per page",
+    "search": "Search",
+    "name": "Name",
+    "last_activity": "Last activity",
+    "number_of_reports": "Number of reports"
+  },
+  "fr": {
+    "per_page": "par page",
+    "search": "Rechercher",
+    "name": "Nom",
+    "last_activity": "Dernière activité",
+    "number_of_reports": "Nombre de témoignages"
+  },
+  "es": {
+    "per_page": "por página",
+    "search": "Buscar",
+    "name": "Apellido",
+    "last_activity": "Última actividad",
+    "number_of_reports": "número de testimonios"
+  }
+}
+</i18n>

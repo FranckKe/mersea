@@ -2,10 +2,10 @@
   <div>
     <b-field grouped group-multiline>
       <b-select v-model="perPage">
-        <option value="5">5 per page</option>
-        <option value="10">10 per page</option>
-        <option value="15">15 per page</option>
-        <option value="20">20 per page</option>
+        <option value="5">5 {{ $t('per_page') }}</option>
+        <option value="10">10 {{ $t('per_page') }}</option>
+        <option value="15">15 {{ $t('per_page') }}</option>
+        <option value="20">20 {{ $t('per_page') }}</option>
       </b-select>
     </b-field>
     <b-table
@@ -20,16 +20,16 @@
       detailed
       detail-key="id">
       <template slot-scope="props">
-        <b-table-column field="name" label="Name" sortable>
+        <b-table-column field="name" v-bind:label="$t('name')" sortable>
           {{ props.row.name }}
         </b-table-column>
-        <b-table-column field="origin" label="Origin" sortable>
+        <b-table-column field="name" v-bind:label="$t('origin')" sortable>
           {{ props.row.origin }}
         </b-table-column>
-        <b-table-column field="kind" label="Type" sortable>
+        <b-table-column field="kind" v-bind:label="$t('type')" sortable>
           {{ props.row.kind }}
         </b-table-column>
-        <b-table-column field="created_at" label="Created At" sortable>
+        <b-table-column field="created_at" v-bind:label="$t('created_at')" sortable>
           {{ props.row.created_at | formatDate }}
         </b-table-column>
       </template>
@@ -56,7 +56,7 @@
                         size="is-large">
                     </b-icon>
                 </p>
-                <p>Nothing here.</p>
+                <p>{{ $t('nothing') }}</p>
             </div>
         </section>
       </template>
@@ -108,3 +108,32 @@ export default {
   max-width: 700px;
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "name": "Name",
+    "nothing": "No data",
+    "per_page": "per page",
+    "origin": "Origin",
+    "type": "Type",
+    "created_at": "Created at"
+  },
+  "fr": {
+    "name": "Nom",
+    "nothing": "Pas de données",
+    "per_page": "par page",
+    "origin": "Origine",
+    "type": "Type",
+    "created_at": "Créé le"
+  },
+  "es": {
+    "name": "Apellido",
+    "nothing": "Sin datos",
+    "per_page": "por página",
+    "origin": "Origen",
+    "type": "Tipo",
+    "created_at": "Creado en"
+  }
+}
+</i18n>

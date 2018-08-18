@@ -50,25 +50,9 @@ jobs:
       # Save artifacts
       - store_test_results:
           path: /tmp/test-results
-  js_test:
-    working_directory: ~/mersea/frontend
-    environment:
-      TZ: "/usr/share/zoneinfo/Europe/Paris"
-    docker:
-      - image: circleci/node:carbon
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: cd frontend && yarn
-
-      - run:
-          name: Test
-          command: "cd frontend && yarn run test:unit"
 
 workflows:
   version: 2
   tests:
     jobs:
       - rails_test
-      - js_test
