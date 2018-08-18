@@ -14,7 +14,9 @@
 
 class Page < ApplicationRecord
   include Concerns::PageManager
-  validates :name, :language, :category, :slug, :content, presence: true
 
   CATEGORIES = %w(other about information).freeze
+
+  validates :name, :language, :category, :slug, :content, presence: true
+  validates :slug, uniqueness: true
 end
