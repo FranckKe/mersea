@@ -52,6 +52,8 @@ jobs:
           path: /tmp/test-results
   js_test:
     working_directory: ~/mersea/frontend
+    environment:
+      TZ: "/usr/share/zoneinfo/Europe/Paris"
     docker:
       - image: circleci/node:carbon
     steps:
