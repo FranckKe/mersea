@@ -36,7 +36,7 @@ describe('Page.vue', () => {
       localVue,
       router,
       propsData: {
-        tracers: tracersData.tracers
+        tracers: tracersData
       }
     })
     expect(wrapper.html()).toMatchSnapshot()
