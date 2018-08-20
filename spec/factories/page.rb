@@ -3,6 +3,6 @@ FactoryBot.define do
     name { Faker::Name.name }
     content { Faker::Lorem.sentence }
     language 'en'
-    slug 'my-page'
+    slug { SecureRandom.uuid }
   end
 end
