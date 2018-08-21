@@ -9,6 +9,7 @@ module Concerns
           field :language
           field :content
           field :category
+          field :slug
         end
 
         edit do
@@ -19,6 +20,9 @@ module Concerns
                 [I18n.t(category, scope: 'pages.categories', locale: I18n.locale), category]
               end
             end
+          end
+          field :slug, :slug do
+            source 'name'
           end
           field :language, :enum do
             enum do

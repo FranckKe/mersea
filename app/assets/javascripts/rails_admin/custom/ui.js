@@ -28,6 +28,7 @@
 //= require plugins/video.min
 //= require languages/fr.js
 //= require leaflet
+//=require 'ra.slug'
 
 $(document).on("rails_admin.dom_ready", function() {
   var svgIcon = function(color) {

@@ -7,5 +7,7 @@ describe PageSerializer do
   it { expect(subject.serializable_hash).to have_key(:id) }
   it { expect(subject.serializable_hash).to have_key(:name) }
   it { expect(subject.serializable_hash).to have_key(:language) }
+  it { expect(subject.serializable_hash).to have_key(:category) }
+  it { expect(subject.serializable_hash).to have_key(:slug) }
   it { expect(subject.serializable_hash).to have_key(:content) }
 end

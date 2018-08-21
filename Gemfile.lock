@@ -255,6 +255,7 @@ GEM
       rails_admin (>= 0.6.6)
       rchardet (~> 1.6)
       simple_xlsx_reader (~> 1.0)
+    rails_admin_slug (0.1.3)
     rails_admin_state (1.6.2)
       rails_admin
     railties (5.2.0)
@@ -403,6 +404,7 @@ DEPENDENCIES
   rails_admin!
   rails_admin-i18n (~> 1)
   rails_admin_import (~> 2)
+  rails_admin_slug (~> 0.1.3)
   rails_admin_state (~> 1)
   rb-readline
   recaptcha
