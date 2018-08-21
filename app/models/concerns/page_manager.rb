@@ -8,10 +8,18 @@ module Concerns
           field :name
           field :language
           field :content
+          field :category
         end
 
         edit do
           field :name
+          field :category, :enum do
+            enum do
+              Page::CATEGORIES.map do |category|
+                [I18n.t(category, scope: 'pages.categories', locale: I18n.locale), category]
+              end
+            end
+          end
           field :language, :enum do
             enum do
               I18n.available_locales.map do |lang|

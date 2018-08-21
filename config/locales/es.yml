@@ -57,6 +57,10 @@ es:
     leaderboard:
       report_count: Recuento de informes
       last_activity: Última actividad
+    categories:
+      other: Otro
+      about: À propos
+      information: Información
   reports:
     create:
       thanks: Gracias por tu informe
