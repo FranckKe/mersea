@@ -1,11 +1,7 @@
-# https://circleci.com/docs/2.0/postgres-config/#example-circleci-configuration-for-a-rails-app-with-structuresql
 version: 2
 jobs:
-  build:
-    working_directory: ~/circleci-demo-ruby-rails
-
-    # Primary container image where all commands run
-
+  rails_test:
+    working_directory: ~/mersea-ruby
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
@@ -13,21 +9,20 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: root
 
-    # Service container image available at `host: localhost`
+      # Service container image available at `host: localhost`
 
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
-
     steps:
       - checkout
 
       # Restore bundle cache
       - restore_cache:
           keys:
-            - rails-demo-{{ checksum "Gemfile.lock" }}
-            - rails-demo-
+            - mersea-{{ checksum "Gemfile.lock" }}
+            - mersea-
 
       # Bundle install dependencies
       - run:
@@ -55,3 +50,25 @@ jobs:
       # Save artifacts
       - store_test_results:
           path: /tmp/test-results
+  js_test:
+    working_directory: ~/mersea/frontend
+    environment:
+      TZ: "/usr/share/zoneinfo/Europe/Paris"
+    docker:
+      - image: circleci/node:carbon
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: cd frontend && yarn
+
+      - run:
+          name: Test
+          command: "cd frontend && yarn run test:unit"
+
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - rails_test
+      - js_test

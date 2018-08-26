@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page.vue matches snapshot 1`] = `
+<div>
+  <bfield-stub grouped="true" groupmultiline="true" addons="true">
+    <bselect-stub value="10">
+      <option value="5">5 per page</option>
+      <option value="10">10 per page</option>
+      <option value="15">15 per page</option>
+      <option value="20">20 per page</option>
+    </bselect-stub>
+  </bfield-stub>
+  <btable-stub data="[object Object],[object Object],[object Object],[object Object]" columns="" detailed="true" isrowcheckable="function (){return!0}" checkedrows="" mobilecards="true" defaultsort="name" defaultsortdirection="asc" paginated="true" currentpage="1"
+    perpage="10" rowclass="function (){return&quot;&quot;}" openeddetailed="1" hasdetailedvisible="function (){return!0}" detailkey="id" total="0"></btable-stub>
+</div>
+`;

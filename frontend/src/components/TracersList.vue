@@ -9,7 +9,7 @@
       </b-select>
     </b-field>
     <b-table
-      :data="tracersData()"
+      :data="tracers"
       :paginated="true"
       :per-page="perPage"
       :current-page.sync="currentPage"
@@ -76,7 +76,6 @@ export default {
   data() {
     return {
       apiUrl: this.$apiUrl,
-      tracersData: this.tracers,
       defaultSortDirection: 'asc',
       currentPage: 1,
       defaultOpenedDetails: [1]

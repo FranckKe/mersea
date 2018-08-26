@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page.vue matches snapshot 1`] = `
+<div class="columns is-multiline is-mobile">
+  <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+    <article class="card">
+      <div class="card-image">
+        <router-link-stub to="/tracers/d791becc-4033-4a92-b83d-6bc572a91266" tag="a" event="click">
+          <div class="img-wrapper" style="background-image: url(undefined/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWsyTURObU5EZzFZUzFpTVRabUxUUm1OMlF0WW1VMk9DMWhOamxtT0dFNFpqQXdOV0VHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--5a84c3ccceb38261d47d65c68d9528dd9de1140c/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lOTWpVMmVESTFOajRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--22c880aec9fc71affcdbe98c951b0b00c24a9ea6/avatar.png);"></div>
+        </router-link-stub>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="title is-4">
+            <router-link-stub to="/tracers/d791becc-4033-4a92-b83d-6bc572a91266" tag="a" event="click">TestActiveStorage</router-link-stub>
+          </p>
+          <p>TestActiveStorage</p>
+          <p><strong>Origin: </strong>TestActiveStorage</p>
+          <p><strong>Type: </strong>TestActiveStorage</p>
+          <p><strong>Created at: </strong>
+            <time datetime="2016-1-1">06/29/2018</time>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+    <article class="card">
+      <div class="card-image">
+        <router-link-stub to="/tracers/42941860-3a23-4187-a47a-2915c5505249" tag="a" event="click">
+          <div class="img-wrapper" style="background-image: url(undefined/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWsxTW1KaE16QTBOeTAwWTJJM0xUUmtaR1l0WVRZd01pMDNZVEUyTVdFeFlUZGpNVE1HT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--6f0e7cdcfe492745f0e65abefd2865ee33c16f2f/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lOTWpVMmVESTFOajRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--22c880aec9fc71affcdbe98c951b0b00c24a9ea6/avatar.png);"></div>
+        </router-link-stub>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="title is-4">
+            <router-link-stub to="/tracers/42941860-3a23-4187-a47a-2915c5505249" tag="a" event="click">Tracer 1</router-link-stub>
+          </p>
+          <p>aa</p>
+          <p><strong>Origin: </strong>aa</p>
+          <p><strong>Type: </strong>aa</p>
+          <p><strong>Created at: </strong>
+            <time datetime="2016-1-1">03/21/2018</time>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+    <article class="card">
+      <div class="card-image">
+        <router-link-stub to="/tracers/7ff25eb9-a7bd-4c57-831f-48857fb6019e" tag="a" event="click">
+          <div class="img-wrapper" style="background-image: url(undefined/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxtWWpaa01qRXhPUzAxTURjMUxUUmhOVEF0WWpRM055MDFPV016Tmprek1HWXdabVlHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--22b1ec5462d0bcc0dc58dfa6440ed17a216cd250/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lOTWpVMmVESTFOajRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--22c880aec9fc71affcdbe98c951b0b00c24a9ea6/blaze-2178749_1920.jpg);"></div>
+        </router-link-stub>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="title is-4">
+            <router-link-stub to="/tracers/7ff25eb9-a7bd-4c57-831f-48857fb6019e" tag="a" event="click">Tracer 2</router-link-stub>
+          </p>
+          <p>test</p>
+          <p><strong>Origin: </strong>test</p>
+          <p><strong>Type: </strong>test</p>
+          <p><strong>Created at: </strong>
+            <time datetime="2016-1-1">03/21/2018</time>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop">
+    <article class="card">
+      <div class="card-image">
+        <router-link-stub to="/tracers/2c1a136d-a22e-4833-9cb8-2a880c77f2ee" tag="a" event="click">
+          <div class="img-wrapper" style="background-image: url(undefined/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWswT0dVeU1qbGtNUzFsTldJd0xUUTFNV0V0T0RreU5DMDFNMk5sTkRVNFpqVmtaamtHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImJsb2JfaWQifX0=--d61ffa72a5b214319321038d34e17c88f6274ea5/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCam9MY21WemFYcGxTU0lOTWpVMmVESTFOajRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--22c880aec9fc71affcdbe98c951b0b00c24a9ea6/salle_de_bain_sous_combles-ploudaniel.jpg);"></div>
+        </router-link-stub>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p class="title is-4">
+            <router-link-stub to="/tracers/2c1a136d-a22e-4833-9cb8-2a880c77f2ee" tag="a" event="click">Tracer3</router-link-stub>
+          </p>
+          <p>Tracer3</p>
+          <p><strong>Origin: </strong>Tracer3</p>
+          <p><strong>Type: </strong>Tracer3</p>
+          <p><strong>Created at: </strong>
+            <time datetime="2016-1-1">05/15/2018</time>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+`;
