@@ -14,12 +14,12 @@
         <p class="has-text-left is-italic">{{ getFilteredTracers().length }} tracer{{ getFilteredTracers().length > 1 ? "s" : "" }} displayed ({{ this.tracers.length }} total)</p>
       </div>
       <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
-        <button class="button" v-bind:class="[this.tracersDisplayFormat === 'grid' ? 'is-primary' : '']" v-on:click="switchTo('grid')">
+        <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="setDisplayFormat('grid')">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="th-large" />
           </span>
         </button>
-        <button class="button" v-bind:class="[this.tracersDisplayFormat === 'list' ? 'is-primary' : '']" v-on:click="switchTo('list')">
+        <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="setDisplayFormat('list')">
           <span class="icon is-small is-left">
             <font-awesome-icon icon="th-list" />
           </span>
@@ -27,14 +27,17 @@
       </div>
     </div>
     <transition name="fade" mode="out-in">
-      <tracers-grid v-if="this.tracersDisplayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
-      <tracers-list v-if="this.tracersDisplayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
+      <tracers-grid v-if="this.displayFormat === 'grid'" :tracers="getFilteredTracers"></tracers-grid>
+      <tracers-list v-if="this.displayFormat === 'list'" :tracers="getFilteredTracers"></tracers-list>
     </transition>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapGetters } = createNamespacedHelpers(
+  'tracers'
+)
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
 
@@ -51,12 +54,9 @@ export default {
     }
   },
   async created() {
-    await this.loadTracers()
+    this.tracers = this.getData()
   },
   methods: {
-    switchTo(format) {
-      this.$store.commit('updateTracersDisplayFormat', { format })
-    },
     getFilteredTracers() {
       if (this.searchKeywords.trim() !== '') {
         let keywords = this.searchKeywords.toLowerCase()
@@ -67,13 +67,15 @@ export default {
         return this.tracers
       }
     },
-    async loadTracers() {
-      const tracers = await this.$http.get(`/tracers`)
-
-      this.tracers = tracers.data
-    }
+    ...mapGetters(['getData']),
+    ...mapMutations(['setDisplayFormat'])
   },
-  computed: mapState(['tracersDisplayFormat'])
+  computed: {
+    ...mapState({
+      displayFormat: state => state.displayFormat,
+      perPage: state => state.perPage
+    })
+  }
 }
 </script>
 <style>
