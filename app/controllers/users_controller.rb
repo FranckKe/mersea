@@ -80,9 +80,8 @@ class UsersController < ApplicationController
   protected
 
   def set_flash_message(key, kind, options = {})
-    if is_flashing_format?
-      set_flash_message(key, kind, options)
-    end
+    # Rails controller not a DeviseController!
+    flash[key] = kind if is_flashing_format?
   end
 
   private
