@@ -22,8 +22,8 @@ class UsersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { set_flash_message :alert, I18n.t('devise.failure.invalid') }
-        format.json { render json: { message: I18n.t('devise.failure.invalid') }, status: :unauthorized }
+        format.html { set_flash_message :alert, I18n.t('devise.failure.invalid', authentication_keys: 'email') }
+        format.json { render json: { message: I18n.t('devise.failure.invalid', authentication_keys: 'email') }, status: :unauthorized }
       end
     end
   end
@@ -71,9 +71,9 @@ class UsersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { seset_flash_message :alert, I18n.t('devise.failure.invalid') }
-        format.json { render json: { message: I18n.t('devise.failure.invalid') }, status: :unauthorized }
-      end
+        format.html { set_flash_message :alert, I18n.t('devise.failure.invalid', authentication_keys: 'email') }
+        format.json { render json: { message: I18n.t('devise.failure.invalid', authentication_keys: 'email') }, status: :unauthorized }
+     end
     end
   end
 
