@@ -3,7 +3,7 @@ class ReportsController < ApiController
 
   def index
     @reports = Report.filter(params.permit(*parameters))
-    @reports = @reports.where(status: 'accepted') unless current_user_reports?
+    @reports = policy_scope(@reports)
 
     respond_to do |format|
       format.json { render json: @reports, status: :ok }
@@ -68,9 +68,5 @@ class ReportsController < ApiController
     [
       :name, :tracer_id, :user_id, :reported_at
     ]
-  end
-
-  def current_user_reports?
-    params[:user_id].present? && params[:user_id] == current_user&.id
   end
 end
