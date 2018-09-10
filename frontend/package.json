@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "mersea",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
+    "@fortawesome/fontawesome-free": "^5.3.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "@fortawesome/vue-fontawesome": "^0.1.0",
@@ -21,12 +21,15 @@
     "mapbox-gl": "^0.46.0",
     "moment": "^2.22.2",
     "register-service-worker": "^1.0.0",
+    "slugify": "^1.3.1",
     "vue": "^2.5.16",
+    "vue-i18n": "^8.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-e2e-cypress": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
@@ -37,6 +40,7 @@
     "@vue/test-utils": "^1.0.0-beta.16",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
+    "vue-cli-plugin-i18n": "^0.5.0",
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [

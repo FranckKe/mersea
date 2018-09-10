@@ -8,7 +8,7 @@ const { mapGetters } = createNamespacedHelpers('pages')
 
 export default {
   name: 'page',
-  props: ['category', 'page'],
+  props: ['category', 'page', 'pageId'],
   data() {
     return {
       pageContent: ''
@@ -25,7 +25,6 @@ export default {
   methods: {
     getContent: function() {
       this.pageContent = this.getPageContent({
-        category: this.$props.category,
         pageName: this.$props.page
       })
       // Not executed without this timeout

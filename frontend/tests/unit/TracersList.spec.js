@@ -1,14 +1,18 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import VueTestUtils from '@vue/test-utils'
 import TracersList from '@/components/TracersList.vue'
 import Vuex from 'vuex'
 import pages from '../../src/store/modules/pages'
 import tracers from '../../src/store/modules/tracers'
 import Buefy from 'buefy'
 import VueRouter from 'vue-router'
+import i18n from '../../src/i18n'
 import moment from 'moment'
 import tracersData from './data/tracers'
 
-const localVue = createLocalVue()
+VueTestUtils.config.mocks.$t = key => key
+VueTestUtils.config.mocks.$tc = (key, count) => (key, count)
+
+const localVue = VueTestUtils.createLocalVue()
 localVue.use(Buefy)
 localVue.use(Vuex)
 localVue.use(VueRouter)
@@ -31,10 +35,11 @@ describe('Page.vue', () => {
   })
 
   it('matches snapshot', () => {
-    const wrapper = shallowMount(TracersList, {
-      store,
+    const wrapper = VueTestUtils.shallowMount(TracersList, {
       localVue,
+      store,
       router,
+      i18n,
       propsData: {
         tracers: tracersData
       }

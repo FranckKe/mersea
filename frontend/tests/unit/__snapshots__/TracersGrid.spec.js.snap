@@ -15,11 +15,9 @@ exports[`Page.vue matches snapshot 1`] = `
             <router-link-stub to="/tracers/d791becc-4033-4a92-b83d-6bc572a91266" tag="a" event="click">TestActiveStorage</router-link-stub>
           </p>
           <p>TestActiveStorage</p>
-          <p><strong>Origin: </strong>TestActiveStorage</p>
-          <p><strong>Type: </strong>TestActiveStorage</p>
-          <p><strong>Created at: </strong>
-            <time datetime="2016-1-1">06/29/2018</time>
-          </p>
+          <p><strong>origin: </strong>TestActiveStorage</p>
+          <p><strong>type: </strong>TestActiveStorage</p>
+          <p><strong>created_at: </strong><time datetime="tracer.created_at | formatDate">06/29/2018</time></p>
         </div>
       </div>
     </article>
@@ -37,11 +35,9 @@ exports[`Page.vue matches snapshot 1`] = `
             <router-link-stub to="/tracers/42941860-3a23-4187-a47a-2915c5505249" tag="a" event="click">Tracer 1</router-link-stub>
           </p>
           <p>aa</p>
-          <p><strong>Origin: </strong>aa</p>
-          <p><strong>Type: </strong>aa</p>
-          <p><strong>Created at: </strong>
-            <time datetime="2016-1-1">03/21/2018</time>
-          </p>
+          <p><strong>origin: </strong>aa</p>
+          <p><strong>type: </strong>aa</p>
+          <p><strong>created_at: </strong><time datetime="tracer.created_at | formatDate">03/21/2018</time></p>
         </div>
       </div>
     </article>
@@ -59,11 +55,9 @@ exports[`Page.vue matches snapshot 1`] = `
             <router-link-stub to="/tracers/7ff25eb9-a7bd-4c57-831f-48857fb6019e" tag="a" event="click">Tracer 2</router-link-stub>
           </p>
           <p>test</p>
-          <p><strong>Origin: </strong>test</p>
-          <p><strong>Type: </strong>test</p>
-          <p><strong>Created at: </strong>
-            <time datetime="2016-1-1">03/21/2018</time>
-          </p>
+          <p><strong>origin: </strong>test</p>
+          <p><strong>type: </strong>test</p>
+          <p><strong>created_at: </strong><time datetime="tracer.created_at | formatDate">03/21/2018</time></p>
         </div>
       </div>
     </article>
@@ -81,11 +75,9 @@ exports[`Page.vue matches snapshot 1`] = `
             <router-link-stub to="/tracers/2c1a136d-a22e-4833-9cb8-2a880c77f2ee" tag="a" event="click">Tracer3</router-link-stub>
           </p>
           <p>Tracer3</p>
-          <p><strong>Origin: </strong>Tracer3</p>
-          <p><strong>Type: </strong>Tracer3</p>
-          <p><strong>Created at: </strong>
-            <time datetime="2016-1-1">05/15/2018</time>
-          </p>
+          <p><strong>origin: </strong>Tracer3</p>
+          <p><strong>type: </strong>Tracer3</p>
+          <p><strong>created_at: </strong><time datetime="tracer.created_at | formatDate">05/15/2018</time></p>
         </div>
       </div>
     </article>

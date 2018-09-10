@@ -11,29 +11,42 @@
       </div>
     </div>
     <div id="flexible-menu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">Home</router-link>
-      <router-link to="/tracers" class="navbar-item">Tracers</router-link>
-      <router-link to="/leaderboard" class="navbar-item">Leaderboard</router-link>
+      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
+      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">{{ $t('tracers') }}</router-link>
+      <router-link :to="`/${$t('leaderboard').toLowerCase()}`" class="navbar-item">{{ $t('leaderboard') }}</router-link>
 
         <div class="navbar-item has-dropdown is-hoverable"
-        v-for="(pageByCategory, index) in this.getAllPagesByCategory"
+        v-for="(category, index) in getCategories"
         v-bind:key="index">
           <p class="navbar-link">
-            {{ pageByCategory.category | capitalize}}
+            {{ $t(category) }}
           </p>
           <div class="navbar-dropdown">
-            <router-link class="navbar-item" :to="{name: 'pages', params: {category: pageByCategory.category, page: pageName}}"
-            v-for="(pageName, index) in pageByCategory.pagesName"
-            v-bind:key="index">{{ pageName }}</router-link>
+            <router-link 
+              class="navbar-item"
+              v-for="(pageName, index) in getPagesByCategory(category)"
+              v-bind:key="index"
+              :to="{
+                name: 'pages', 
+                params: {
+                  category: slugify($t(category)).toLowerCase(), 
+                  page: pageName.slug,
+                }
+              }">
+                {{ pageName.raw }}
+              </router-link>
           </div>
         </div>
+	<lang-switcher></lang-switcher>
     </div>
   </nav>
 </template>
 
 <script>
+import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapActions, mapGetters } = createNamespacedHelpers('pages')
+import LangSwitcher from '@/components/LangSwitcher'
 
 document.addEventListener('DOMContentLoaded', function() {
   // Get all "navbar-burger" elements
@@ -61,24 +74,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
 export default {
   name: 'MenuNav',
-  async created() {},
+  components: {
+    LangSwitcher
+  },
   data() {
     return {
+      locale: 'en',
       apiUrl: this.$apiUrl,
       appName: this.$appName
     }
   },
   computed: {
     ...mapState({
-      pages: state => state.data,
+      pages: state => state.pages,
       loading: state => state.loading,
       myerrors: state => state.errors,
       success: state => state.success
     }),
-    ...mapGetters(['getAllPagesByCategory'])
+    ...mapGetters([
+      'getAllPagesByCategory',
+      'getPagesByCategory',
+      'getCategories'
+    ])
   },
   methods: {
-    ...mapActions(['loadPages'])
+    ...mapActions(['loadPages']),
+    slugify: slugify
   }
 }
 </script>
@@ -108,3 +129,32 @@ p.navbar-link {
   }
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "home": "Home",
+    "tracers": "Tracers",
+    "leaderboard": "Contributions",
+    "about": "About",
+    "information": "Information",
+    "other": "Other"
+  },
+  "fr": {
+    "home": "Accueil",
+    "tracers": "Tracers",
+    "leaderboard": "Contributions",
+    "about": "À propos",
+    "information": "Information",
+    "other": "Autre"
+  },
+  "es": {
+    "home": "Inicio",
+    "tracers": "Trazadores",
+    "leaderboard": "Contribuciones",
+    "about": "Acerca de",
+    "information": "información",
+    "other": "Otro"
+  }
+}
+</i18n>

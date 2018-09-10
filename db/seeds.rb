@@ -1,6 +1,8 @@
 Page.create!(
   name: 'Le projet',
   language: 'fr',
+  category: 'about',
+  slug: 'le-projet',
   content: <<~ABOUT
     <div class="page-container">
         <h1>Description du projet</h1>
@@ -31,6 +33,8 @@ Page.create!(
 Page.create!(
   name: 'ANSEL',
   language: 'fr',
+  category: 'about',
+  slug: 'anssel',
   content: <<~ANSEL
     <div class="page-container">
         <h1>ANSEL &amp; co</h1>
@@ -50,6 +54,8 @@ Page.create!(
 Page.create!(
   name: 'Mentions légales',
   language: 'fr',
+  category: 'information',
+  slug: 'mentions-legales',
   content: <<~DISCLAIMER
     <div class="page-container">
         <h2>Mentions légales</h2>
@@ -68,6 +74,8 @@ Page.create!(
 Page.create!(
   name: 'Liens',
   language: 'fr',
+  category: 'information',
+  slug: 'liens',
   content: <<~LINKS
     <div class="page-container">
         <h1>Liens utiles</h1>
@@ -84,6 +92,8 @@ Page.create!(
 Page.create!(
   name: 'Sécurité',
   language: 'fr',
+  category: 'information',
+  slug: 'securite',
   content: <<~SECURITY
     <div class="page-container">
         <h1>Sécurité</h1>

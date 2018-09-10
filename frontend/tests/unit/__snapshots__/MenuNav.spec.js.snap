@@ -4,14 +4,13 @@ exports[`Page.vue matches snapshot 1`] = `
 <nav role="navigation" aria-label="main navigation" class="navbar is-fixed-top">
   <bloading-stub active="true" animation="fade" cancancel="true" oncancel="function (){}"></bloading-stub>
   <div class="navbar-brand">
-    <div class="navbar-start">
-      <a role="button" aria-label="menu" data-target="flexible-menu" aria-expanded="false" class="navbar-burger"><span aria-hidden="true"></span> <span aria-hidden="true"></span> <span aria-hidden="true"></span></a>
-    </div>
+    <div class="navbar-start"><a role="button" aria-label="menu" data-target="flexible-menu" aria-expanded="false" class="navbar-burger"><span aria-hidden="true"></span> <span aria-hidden="true"></span> <span aria-hidden="true"></span></a></div>
   </div>
   <div id="flexible-menu" class="navbar-menu">
-    <router-link-stub to="/" tag="a" event="click" class="navbar-item">Home</router-link-stub>
-    <router-link-stub to="/tracers" tag="a" event="click" class="navbar-item">Tracers</router-link-stub>
-    <router-link-stub to="/leaderboard" tag="a" event="click" class="navbar-item">Leaderboard</router-link-stub>
+    <router-link-stub to="/" tag="a" event="click" class="navbar-item">home</router-link-stub>
+    <router-link-stub to="/tracers" tag="a" event="click" class="navbar-item">tracers</router-link-stub>
+    <router-link-stub to="/leaderboard" tag="a" event="click" class="navbar-item">leaderboard</router-link-stub>
+    <langswitcher-stub></langswitcher-stub>
   </div>
 </nav>
 `;

@@ -1,11 +1,15 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import VueTestUtils from '@vue/test-utils'
 import Menu from '@/components/MenuNav.vue'
 import Vuex from 'vuex'
 import pages from '../../src/store/modules/pages'
 import Buefy from 'buefy'
 import VueRouter from 'vue-router'
+import i18n from '../../src/i18n'
 
-const localVue = createLocalVue()
+VueTestUtils.config.mocks.$t = key => key
+VueTestUtils.config.mocks.$tc = (key, count) => (key, count)
+
+const localVue = VueTestUtils.createLocalVue()
 localVue.use(Buefy)
 localVue.use(Vuex)
 localVue.use(VueRouter)
@@ -24,7 +28,12 @@ describe('Page.vue', () => {
   })
 
   it('matches snapshot', () => {
-    const wrapper = shallowMount(Menu, { store, localVue, router })
+    const wrapper = VueTestUtils.shallowMount(Menu, {
+      localVue,
+      store,
+      router,
+      i18n
+    })
     expect(wrapper.html()).toMatchSnapshot()
   })
 })
