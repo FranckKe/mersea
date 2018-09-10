@@ -35,29 +35,29 @@
       </template>
       <template slot="detail" slot-scope="props">
         <article class="media">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                    <img :src="`${apiUrl}${props.row.photo}`">
-                </p>
-            </figure>
-            <div class="media-content">
-                <div class="content">
-                    <p class="tracer-description">{{ props.row.description }}</p>
-                </div>
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img :src="`${apiUrl}${props.row.photo}`">
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p class="tracer-description">{{ props.row.description }}</p>
             </div>
+          </div>
         </article>
       </template>
       <template slot="empty">
         <section class="section">
-            <div class="content has-text-grey has-text-centered">
-                <p>
-                    <b-icon
-                        icon="emoticon-sad"
-                        size="is-large">
-                    </b-icon>
-                </p>
-                <p>{{ $t('nothing') }}</p>
-            </div>
+          <div class="content has-text-grey has-text-centered">
+            <p>
+              <b-icon
+                icon="emoticon-sad"
+                size="is-large">
+              </b-icon>
+            </p>
+            <p>{{ $t('nothing') }}</p>
+          </div>
         </section>
       </template>
     </b-table>
@@ -112,28 +112,28 @@ export default {
 <i18n>
 {
   "en": {
+    "created_at": "Created at",
     "name": "Name",
     "nothing": "No data",
-    "per_page": "per page",
     "origin": "Origin",
-    "type": "Type",
-    "created_at": "Created at"
+    "per_page": "per page",
+    "type": "Type"
   },
   "fr": {
+    "created_at": "Créé le",
     "name": "Nom",
     "nothing": "Pas de données",
-    "per_page": "par page",
     "origin": "Origine",
-    "type": "Type",
-    "created_at": "Créé le"
+    "per_page": "par page",
+    "type": "Type"
   },
   "es": {
+    "created_at": "Creado en",
     "name": "Apellido",
     "nothing": "Sin datos",
-    "per_page": "por página",
     "origin": "Origen",
-    "type": "Tipo",
-    "created_at": "Creado en"
+    "per_page": "por página",
+    "type": "Tipo"
   }
 }
 </i18n>

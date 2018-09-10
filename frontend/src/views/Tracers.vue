@@ -1,35 +1,37 @@
 <template>
   <div class="section">
-    <h1 class="heading_text is-size-3">{{ $tc('tracers', 2) | capitalize }}</h1>
-    <div class="field">
-      <div class="control has-icons-left">
-        <span class="icon is-small is-left">
-          <font-awesome-icon icon="search" />
-        </span>
-        <input class="input" type="text" v-bind:placeholder="$t('search')" v-model="searchKeywords">
-      </div>
-    </div>
-    <div class="columns is-multiline is-mobile">
-      <div class="column">
-        <p class="has-text-left is-italic">{{ getFilteredTracers().length }} {{ $tc('tracers', getFilteredTracers().length) }} {{ $tc('displayed', getFilteredTracers().length) }} ({{ this.tracers.length }} {{ $t('total') }})</p>
-      </div>
-      <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
-        <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="setDisplayFormat('grid')">
+    <div class="container">
+      <h1 class="title is-1">{{ $tc('tracers', 2) | capitalize }}</h1>
+      <div class="field">
+        <div class="control has-icons-left">
           <span class="icon is-small is-left">
-            <font-awesome-icon icon="th-large" />
+            <font-awesome-icon icon="search" />
           </span>
-        </button>
-        <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="setDisplayFormat('list')">
-          <span class="icon is-small is-left">
-            <font-awesome-icon icon="th-list" />
-          </span>
-        </button>
+          <input class="input" type="text" v-bind:placeholder="$t('search')" v-model="searchKeywords">
+        </div>
       </div>
+      <div class="columns is-multiline is-mobile">
+        <div class="column">
+          <p class="has-text-left is-italic">{{ getFilteredTracers().length }} {{ $tc('tracers', getFilteredTracers().length) }} {{ $tc('displayed', getFilteredTracers().length) }} ({{ this.tracers.length }} {{ $t('total') }})</p>
+        </div>
+        <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
+          <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="setDisplayFormat('grid')">
+            <span class="icon is-small is-left">
+              <font-awesome-icon icon="th-large" />
+            </span>
+          </button>
+          <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="setDisplayFormat('list')">
+            <span class="icon is-small is-left">
+              <font-awesome-icon icon="th-list" />
+            </span>
+          </button>
+        </div>
+      </div>
+      <transition name="fade" mode="out-in">
+        <tracers-grid v-if="this.displayFormat === 'grid'" :tracers="getFilteredTracers()"></tracers-grid>
+        <tracers-list v-if="this.displayFormat === 'list'" :tracers="getFilteredTracers()"></tracers-list>
+      </transition>
     </div>
-    <transition name="fade" mode="out-in">
-      <tracers-grid v-if="this.displayFormat === 'grid'" :tracers="getFilteredTracers()"></tracers-grid>
-      <tracers-list v-if="this.displayFormat === 'list'" :tracers="getFilteredTracers()"></tracers-list>
-    </transition>
   </div>
 </template>
 

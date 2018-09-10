@@ -11,33 +11,45 @@
       </div>
     </div>
     <div id="flexible-menu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
-      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">{{ $t('tracers') }}</router-link>
-      <router-link :to="`/${$t('leaderboard').toLowerCase()}`" class="navbar-item">{{ $t('leaderboard') }}</router-link>
+      <router-link to="/" class="navbar-item">
+        {{ $t('home') }}
+      </router-link>
+      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">
+        {{ $t('tracers') }}
+      </router-link>
+      <router-link :to="`/${$t('leaderboard').toLowerCase()}`" class="navbar-item">
+        {{ $t('leaderboard') }}
+      </router-link>
 
-        <div class="navbar-item has-dropdown is-hoverable"
+      <div class="navbar-item has-dropdown is-hoverable"
         v-for="(category, index) in getCategories"
         v-bind:key="index">
-          <p class="navbar-link">
-            {{ $t(category) }}
-          </p>
-          <div class="navbar-dropdown">
-            <router-link
-              class="navbar-item"
-              v-for="(pageName, index) in getPagesByCategory(category)"
-              v-bind:key="index"
-              :to="{
-                name: 'pages',
-                params: {
-                  category: slugify($t(category)).toLowerCase(),
-                  page: pageName.slug,
-                }
-              }">
-                {{ pageName.raw }}
-              </router-link>
-          </div>
+        <p class="navbar-link">
+          {{ $t(category) }}
+        </p>
+        <div class="navbar-dropdown">
+          <router-link
+            class="navbar-item"
+            v-for="(pageName, index) in getPagesByCategory(category)"
+            v-bind:key="index"
+            :to="{
+              name: 'pages',
+              params: {
+                category: slugify($t(category)).toLowerCase(),
+                page: pageName.slug,
+              }
+            }">
+              {{ pageName.raw }}
+            </router-link>
         </div>
-	<lang-switcher></lang-switcher>
+      </div>
+      <lang-switcher></lang-switcher>
+      <div class="navbar-end buttons">
+        <button v-if="$auth.check()" v-on:click="logout()" class="button is-danger">{{ $t('logout') }}</button>
+        <router-link v-if="$auth.check()" :to="'me'" class="button">{{ $t('my_account') }}</router-link>
+        <router-link v-if="!$auth.check()" :to="'login'" class="button">{{ $t('login') }}</router-link>
+        <router-link v-if="!$auth.check()" :to="'register'" class="button is-success">{{ $t('register') }}</router-link>
+      </div>
     </div>
   </nav>
 </template>
@@ -49,27 +61,13 @@ const { mapState, mapActions, mapGetters } = createNamespacedHelpers('pages')
 import LangSwitcher from '@/components/LangSwitcher'
 
 const initResponsiveMenu = () => {
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(
-    document.querySelectorAll('.navbar-burger'),
-    0
-  )
+  const navbarBurger = document.querySelector('.navbar-burger')
+  const $target = document.querySelector(`#${navbarBurger.dataset.target}`)
 
-  // Check if there are any navbar burgers
-  if ($navbarBurgers.length > 0) {
-    // Add a click event on each of them
-    $navbarBurgers.forEach(function($el) {
-      $el.addEventListener('click', function() {
-        // Get the target from the "data-target" attribute
-        const target = $el.dataset.target
-        const $target = document.getElementById(target)
-
-        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-        $el.classList.toggle('is-active')
-        $target.classList.toggle('is-active')
-      })
-    })
-  }
+  navbarBurger.addEventListener('click', () => {
+    navbarBurger.classList.toggle('is-active')
+    $target.classList.toggle('is-active')
+  })
 }
 
 export default {
@@ -102,7 +100,27 @@ export default {
   },
   methods: {
     ...mapActions(['loadPages']),
-    slugify: slugify
+    slugify: slugify,
+    logout: function() {
+      this.$auth.logout({
+        makeRequest: true,
+        params: {},
+        success: () => {
+          this.$toast.open({
+            message: this.$t('logout_success'),
+            duration: 5000,
+            type: 'is-success'
+          })
+        },
+        error: () => {
+          this.$toast.open({
+            message: this.$t('logout_failure'),
+            duration: 5000,
+            type: 'is-danger'
+          })
+        }
+      })
+    }
   }
 }
 </script>
@@ -126,6 +144,18 @@ p.navbar-link {
   cursor: default;
 }
 
+.navbar-end {
+  padding: 0.5rem 0.75rem;
+}
+
+.navbar-end.buttons .button {
+  margin-bottom: 0;
+}
+
+.navbar-end.buttons:last-child {
+  margin-bottom: 0;
+}
+
 @media (--below-large) {
   .navbar-menu.is-active {
     height: 100vh;
@@ -136,28 +166,46 @@ p.navbar-link {
 <i18n>
 {
   "en": {
-    "home": "Home",
-    "tracers": "Tracers",
-    "leaderboard": "Contributions",
     "about": "About",
+    "home": "Home",
     "information": "Information",
-    "other": "Other"
+    "leaderboard": "Contributions",
+    "login": "Login",
+    "logout_failure": "Error during logout",
+    "logout_success": "You are now logged out",
+    "logout": "Logout",
+    "my_account": "My account",
+    "other": "Other",
+    "register": "Register",
+    "tracers": "Tracers"
   },
   "fr": {
-    "home": "Accueil",
-    "tracers": "Tracers",
-    "leaderboard": "Contributions",
     "about": "À propos",
+    "home": "Accueil",
     "information": "Information",
-    "other": "Autre"
+    "leaderboard": "Contributions",
+    "login": "Connexion",
+    "logout_failure": "Erreur lors de la déconnexion",
+    "logout_success": "Vous êtes maintenant déconnecté(e)",
+    "logout": "Déconnexion",
+    "my_account": "Mon compte",
+    "other": "Autre",
+    "register": "Inscription",
+    "tracers": "Tracers"
   },
   "es": {
-    "home": "Inicio",
-    "tracers": "Trazadores",
-    "leaderboard": "Contribuciones",
     "about": "Acerca de",
+    "home": "Inicio",
     "information": "información",
-    "other": "Otro"
+    "leaderboard": "Contribuciones",
+    "login": "Iniciar sesión",
+    "logout_failure": "Error durante el sesión finalizada",
+    "logout_success": "Sesión finalizada",
+    "logout": "Sesión finalizada",
+    "my_account": "Mi cuenta",
+    "other": "Otro",
+    "register": "Registrarse",
+    "tracers": "Trazadores"
   }
 }
 </i18n>

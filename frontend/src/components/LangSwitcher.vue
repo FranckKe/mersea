@@ -39,25 +39,26 @@ export default {
 <style>
 .lang-switcher {
   align-self: center;
+  padding: 0.5rem 0.75rem;
 }
 </style>
 
 <i18n>
 {
   "en": {
-    "fr": "Français",
     "en": "English",
-    "es": "Spañish"
+    "es": "Spañish",
+    "fr": "Français"
   },
   "fr": {
-    "fr": "Français",
     "en": "English",
-    "es": "Spañish"
+    "es": "Spañish",
+    "fr": "Français"
   },
   "es": {
-    "fr": "Français",
     "en": "English",
-    "es": "Spañish"
+    "es": "Spañish",
+    "fr": "Français"
   }
 }
 </i18n>
