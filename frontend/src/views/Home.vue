@@ -1,13 +1,17 @@
 <template>
   <div class="">
     <div id="map" class="map"></div>
+    <add-report></add-report>
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('reports')
+const addReportModule = createNamespacedHelpers('addReport')
 import store from '../store'
+
+import AddReport from '@/components/AddReport'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -16,13 +20,18 @@ import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css'
 import MapboxLanguage from '@mapbox/mapbox-gl-language'
 
 import moment from 'moment'
+import axios from 'axios'
 
 export default {
   data() {
     return {
       apiUrl: this.$apiUrl,
-      map: {}
+      map: {},
+      newMarker: ''
     }
+  },
+  components: {
+    AddReport
   },
   mounted() {
     this.createMap()
@@ -33,6 +42,15 @@ export default {
       moment.locale(this.$i18n.locale)
       this.map.destroy
       this.createMap()
+    },
+    isFormActive: function(newValue) {
+      if (newValue && this.coordinates !== '') {
+        this.newMarker = new mapboxgl.Marker()
+          .setLngLat(this.coordinates.split(',').reverse())
+          .addTo(this.map)
+      } else {
+        if (this.newMarker != '') this.newMarker.remove()
+      }
     }
   },
   methods: {
@@ -83,6 +101,9 @@ export default {
       this.map.addLayer({
         id: 'reports',
         type: 'symbol',
+        layout: {
+          'icon-allow-overlap': false
+        },
         source: {
           type: 'geojson',
           data: geojson
@@ -98,6 +119,31 @@ export default {
         zoom: 5,
         center: [0, 46.2276]
       })
+
+      if (this.coordinates !== '')
+        this.newMarker = new mapboxgl.Marker()
+          .setLngLat(this.coordinates.split(',').reverse())
+          .addTo(this.map)
+
+      this.map.on('click', async e => {
+        if (this.newMarker !== '') this.newMarker.remove()
+
+        this.newMarker = new mapboxgl.Marker()
+          .setLngLat(e.lngLat)
+          .addTo(e.target)
+
+        this.coordinates = `${e.lngLat.lat}, ${e.lngLat.lng}`
+        const res = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${
+            e.lngLat.lat
+          }.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`
+        )
+        this.address =
+          res.data.features.length > 0
+            ? res.data.features[0].place_name
+            : 'No address found'
+      })
+
       let geolocator = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
@@ -125,7 +171,65 @@ export default {
       this.map.on('load', this.mapLoad)
     },
     destroyMap() {},
-    ...mapGetters(['getData'])
+    ...mapGetters(['getData']),
+    ...addReportModule.mapGetters([
+      'getCurrentStep',
+      'getAddress',
+      'getIsFormActive',
+      'getCoordinates'
+    ]),
+    ...addReportModule.mapMutations([
+      'setCurrentStep',
+      'setAddress',
+      'setIsFormActive',
+      'setCoordinates'
+    ])
+  },
+  computed: {
+    ...addReportModule.mapState({
+      currentStep: state => state.currentStep
+    }),
+    currentStep: {
+      set(value) {
+        this.setCurrentStep(value)
+      },
+      get() {
+        return this.getCurrentStep()
+      }
+    },
+    ...addReportModule.mapState({
+      address: state => state.address
+    }),
+    address: {
+      set(value) {
+        this.setAddress(value)
+      },
+      get() {
+        return this.getAddress()
+      }
+    },
+    ...addReportModule.mapState({
+      coordinates: state => state.coordinates
+    }),
+    coordinates: {
+      set(value) {
+        this.setCoordinates(value)
+      },
+      get() {
+        return this.getCoordinates()
+      }
+    },
+    ...addReportModule.mapState({
+      isFormActive: state => state.isFormActive
+    }),
+    isFormActive: {
+      set(value) {
+        this.setIsFormActive(value)
+      },
+      get() {
+        return this.getIsFormActive()
+      }
+    }
   }
 }
 </script>
@@ -134,6 +238,12 @@ export default {
 .map {
   width: 100%;
   height: calc(100vh - 55px); /* header height + margin */
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .map {
+    height: 46vh;
+  }
 }
 
 .mapboxgl-ctrl-group > button {

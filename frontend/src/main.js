@@ -15,6 +15,10 @@ import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import moment from 'moment'
 import slugify from 'slugify'
+import en from 'vee-validate/dist/locale/en'
+import es from 'vee-validate/dist/locale/es'
+import fr from 'vee-validate/dist/locale/fr'
+import VeeValidate, { Validator } from 'vee-validate'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
@@ -26,7 +30,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free/css/solid.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 
-import 'buefy/lib/buefy.css'
+import 'buefy/dist/buefy.css'
+import 'bulma-steps/dist/css/bulma-steps.min.css'
 
 Vue.config.productionTip = false
 
@@ -151,6 +156,19 @@ if (store.state.lang !== '') {
 } else {
   store.state.lang = i18n.locale
 }
+
+Validator.localize(i18n.locale)
+
+Vue.use(VeeValidate, {
+  locale: i18n.locale,
+  i18n: i18n,
+  i18nRootKey: 'validations',
+  dictionary: {
+    en: en,
+    fr: fr,
+    es: es
+  }
+})
 
 if (process.env.NODE_ENV !== 'production') {
   setTimeout(() => {

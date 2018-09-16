@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import pages from './modules/pages'
 import reports from './modules/reports'
 import tracers from './modules/tracers'
+import addReport from './modules/addReport'
 import createPersistedState from 'vuex-persistedstate'
 import i18n from '../i18n'
 
@@ -11,6 +12,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
   modules: {
+    addReport: addReport,
     pages: pages,
     reports: reports,
     tracers: tracers

@@ -23,7 +23,7 @@
       :current-page.sync="currentPage"
       :pagination-simple="false"
       :default-sort-direction="defaultSortDirection"
-      default-sort="name">
+      :default-sort="name">
 
       <template slot-scope="props">
         <b-table-column field="name" v-bind:label="$t('name')" width="40" sortable numeric>
