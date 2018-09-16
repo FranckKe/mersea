@@ -12,7 +12,11 @@ const getters = {
   getLoading: state => {
     return state.loading
   },
+<<<<<<< HEAD
   getError: state => {
+=======
+  geterror: state => {
+>>>>>>> 12b50ba... Add report creation
     return state.errors
   },
   getSuccess: state => {
@@ -28,7 +32,11 @@ const getters = {
     return state.address
   },
   getCurrentStep: state => {
+<<<<<<< HEAD
     return state.currentStep
+=======
+    return state.address
+>>>>>>> 12b50ba... Add report creation
   }
 }
 const mutations = {
