@@ -28,6 +28,8 @@ GEM
       actionpack (>= 4.0)
       activemodel (>= 4.0)
       railties (>= 4.0)
+    active_storage_validations (0.3)
+      rails (~> 5.2.0)
     activejob (5.2.1)
       activesupport (= 5.2.1)
       globalid (>= 0.3.6)
@@ -370,6 +372,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (= 0.10)
+  active_storage_validations (~> 0.3)
   annotate
   bugsnag (~> 6.6)
   bulma-rails (~> 0.7.1)
