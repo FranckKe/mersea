@@ -22,14 +22,14 @@
             {{ $t(category) }}
           </p>
           <div class="navbar-dropdown">
-            <router-link 
+            <router-link
               class="navbar-item"
               v-for="(pageName, index) in getPagesByCategory(category)"
               v-bind:key="index"
               :to="{
-                name: 'pages', 
+                name: 'pages',
                 params: {
-                  category: slugify($t(category)).toLowerCase(), 
+                  category: slugify($t(category)).toLowerCase(),
                   page: pageName.slug,
                 }
               }">
@@ -48,9 +48,9 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapActions, mapGetters } = createNamespacedHelpers('pages')
 import LangSwitcher from '@/components/LangSwitcher'
 
-document.addEventListener('DOMContentLoaded', function() {
+const initResponsiveMenu = () => {
   // Get all "navbar-burger" elements
-  var $navbarBurgers = Array.prototype.slice.call(
+  const $navbarBurgers = Array.prototype.slice.call(
     document.querySelectorAll('.navbar-burger'),
     0
   )
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
     $navbarBurgers.forEach(function($el) {
       $el.addEventListener('click', function() {
         // Get the target from the "data-target" attribute
-        var target = $el.dataset.target
-        var $target = document.getElementById(target)
+        const target = $el.dataset.target
+        const $target = document.getElementById(target)
 
         // Toggle the class on both the "navbar-burger" and the "navbar-menu"
         $el.classList.toggle('is-active')
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
     })
   }
-})
+}
 
 export default {
   name: 'MenuNav',
@@ -83,6 +83,9 @@ export default {
       apiUrl: this.$apiUrl,
       appName: this.$appName
     }
+  },
+  mounted() {
+    initResponsiveMenu()
   },
   computed: {
     ...mapState({
