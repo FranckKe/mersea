@@ -11,6 +11,8 @@ import './registerServiceWorker'
 
 import Buefy from 'buefy'
 import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAuth from '@websanova/vue-auth'
 import moment from 'moment'
 import slugify from 'slugify'
 
@@ -31,12 +33,88 @@ Vue.config.productionTip = false
 const api = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   timeout: 1000,
-  headers: { Accept: 'application/json', 'Content-Type': 'application/json' }
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
 })
 
 Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL
+
+Vue.router = router
+router.afterEach(() => {
+  Vue.nextTick(() => {
+    const navbarBurger = document.querySelector('.navbar-burger')
+    if (navbarBurger) {
+      navbarBurger.classList.remove('is-active')
+      document
+        .querySelector(`#${navbarBurger.dataset.target}`)
+        .classList.remove('is-active')
+    }
+  })
+})
+
+Vue.use(VueAxios, api)
+Vue.use(VueAuth, {
+  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+  authRedirect: { name: 'login' },
+  tokenDefaultName: 'mersea_auth_token',
+  registerData: {
+    url: 'users',
+    method: 'POST',
+    redirect: '/'
+  },
+  loginData: {
+    url: 'users/sign_in',
+    method: 'POST',
+    redirect: '/'
+  },
+  logoutData: {
+    url: 'users/sign_out',
+    method: 'DELETE',
+    redirect: '/',
+    makeRequest: true
+  },
+  fetchData: {
+    url: 'users/me',
+    method: 'GET',
+    enabled: true
+  },
+  refreshData: {
+    url: 'users/me',
+    method: 'GET',
+    enabled: false,
+    interval: 30
+  }
+})
+
+api.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    if (
+      error.response.status === 401 &&
+      ['UnauthorizedAccess', 'InvalidToken'].indexOf(error.response.data.code) >
+        -1
+    ) {
+      Vue.auth.logout({
+        redirect: '/'
+      })
+    } else if (error.response.status === 500) {
+      this.$toast.open({
+        message: error.response,
+        duration: 5000,
+        type: 'is-danger'
+      })
+    }
+    return Promise.reject(error)
+  }
+)
 
 Vue.use(Buefy, {
   defaultIconPack: 'fas'

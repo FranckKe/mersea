@@ -37,23 +37,22 @@ export default {
 <style>
 </style>
 
-
 <i18n>
 {
   "en": {
+    "created_at": "Created at",
     "origin": "Origin",
-    "type": "Type",
-    "created_at": "Created at"
+    "type": "Type"
   },
   "fr": {
+    "created_at": "Créé le",
     "origin": "Origine",
-    "type": "Type",
-    "created_at": "Créé le"
+    "type": "Type"
   },
   "es": {
+    "created_at": "Creado en",
     "origin": "Origen",
-    "type": "Tipo",
-    "created_at": "Creado en"
+    "type": "Tipo"
   }
 }
 </i18n>

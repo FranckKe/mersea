@@ -1,5 +1,9 @@
 <template>
-  <div class="page" v-html="this.pageContent"></div>
+<div class="section">
+  <div class="container">
+    <div class="page" v-html="this.pageContent"></div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -44,12 +48,8 @@ export default {
   computed: { ...mapGetters(['getPageContent']) }
 }
 </script>
-<style>
-.page {
-  max-width: 740px;
-  margin: auto;
-}
 
+<style>
 .page-container p {
   margin-bottom: 1rem;
 }

@@ -1,6 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
+      <h1 class="title is-1">{{ $t('contributions') }}</h1>
+
       <b-field grouped group-multiline>
       <b-select v-model="perPage">
         <option value="5">5 {{ $t('per_page') }}</option>
@@ -85,25 +87,28 @@ export default {
 <i18n>
 {
   "en": {
-    "per_page": "per page",
-    "search": "Search",
-    "name": "Name",
+    "contributions": "Contributions",
     "last_activity": "Last activity",
-    "number_of_reports": "Number of reports"
+    "name": "Name",
+    "number_of_reports": "Number of reports",
+    "per_page": "per page",
+    "search": "Search"
   },
   "fr": {
-    "per_page": "par page",
-    "search": "Rechercher",
-    "name": "Nom",
+    "contributions": "Contributions",
     "last_activity": "Dernière activité",
-    "number_of_reports": "Nombre de témoignages"
+    "name": "Nom",
+    "number_of_reports": "Nombre de témoignages",
+    "per_page": "par page",
+    "search": "Rechercher"
   },
   "es": {
-    "per_page": "por página",
-    "search": "Buscar",
-    "name": "Apellido",
+    "contributions": "Contribución",
     "last_activity": "Última actividad",
-    "number_of_reports": "número de testimonios"
+    "name": "Apellido",
+    "number_of_reports": "número de testimonios",
+    "per_page": "por página",
+    "search": "Buscar"
   }
 }
 </i18n>

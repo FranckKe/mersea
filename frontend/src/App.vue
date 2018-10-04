@@ -56,6 +56,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-primary);
-  padding-top: calc(var(--header-height) + 15px);
+  padding-top: calc(var(--header-height) + 12px);
+}
+
+.app > .section {
+  padding-top: 3rem;
+}
+
+/* Bulma toast opacity override */
+body .notices.toast {
+  opacity: 1;
 }
 </style>
