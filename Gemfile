@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.0'
+ruby '2.5.3'
 
 gem 'active_model_serializers', '0.10'
 gem 'devise', '~> 4'
