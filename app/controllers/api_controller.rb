@@ -3,7 +3,7 @@
 class ApiController < ActionController::API
   include ActionController::MimeResponds
   include Pundit
-  before_action :set_locale
+  before_action :set_locale, :set_default_format
 
   def status
     render json: {}, status: :ok
@@ -44,5 +44,9 @@ class ApiController < ActionController::API
   def preferred_locale_from_param
     return unless params[:locale]
     http_accept_language.user_preferred_languages.unshift(params[:locale])
+  end
+
+  def set_default_format
+    request.format = :json if request.headers['ACCEPT'].blank?
   end
 end
