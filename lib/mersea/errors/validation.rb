@@ -24,7 +24,7 @@ module Mersea
           details.each do |k, v|
             fields << {
               name: k,
-              type: v.map { |elt| elt[:error] }
+              type: v.map { |elt| elt[:error] }.uniq
             }
           end
         end
