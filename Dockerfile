@@ -1,5 +1,5 @@
 # build stage
-FROM ruby:2.5.0-alpine as build-env
+FROM ruby:2.5.3-alpine as build-env
 MAINTAINER mdouchement
 
 ARG BUILD_DEPENDENCIES='build-base'
@@ -34,7 +34,7 @@ RUN bundle install --deployment --without development test
 RUN bundle exec rake assets:precompile
 
 # final stage
-FROM ruby:2.5.0-alpine
+FROM ruby:2.5.3-alpine
 MAINTAINER mdouchement
 
 # Set the locale
