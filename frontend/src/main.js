@@ -41,7 +41,7 @@ const api = axios.create({
 
 Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
-Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL
+Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL || ''
 
 Vue.router = router
 router.afterEach(() => {
