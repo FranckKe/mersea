@@ -4,7 +4,7 @@
 
 ## Build Setup
 
-``` bash
+```bash
 # Install dependencies manager
 npm install -g yarn
 
@@ -12,6 +12,7 @@ npm install -g yarn
 yarn install
 
 # serve with hot reload at localhost:8080
+# Configure env variables (see .env)
 yarn run dev
 
 # build for production with minification

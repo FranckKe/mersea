@@ -6,19 +6,22 @@
 
 ## Requirements
 
-- MRI 2.5.x
-- Postgres 9.5 [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
+- Ruby MRI 2.5.x ([rbenv](https://github.com/rbenv/rbenv) recommended)
+- Bundler
+- Rails 5.x
+- Postgres 9.5+ [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
 - [ImageMagick](https://www.imagemagick.org/script/index.php)(for thumbnails)
 
-## Create an admin account
+### Setup
 
-Within a Rails console:
-```rb
-Admin.create(name: 'myname', email: 'myemail@email.local', password: 'mypassword')
+```sh
+rbenv install
+gem install bundler
 ```
 
-
 ## Development
+
+Clone repository.
 
 ```sh
 # Install and configure db
@@ -33,28 +36,52 @@ $ bundle exec rails db:seed
 $ bundle exec rails s
 ```
 
-Configure your reCaptcha keys.
+[Increase inotify watchers](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers).
+
+ReCaptcha is disabled in development. Configure key if needed using `RECAPTCHA_SECRET_KEY` and `RECAPTCHA_SITE_KEY`.
+
+### Create an admin account
+
+Within a Rails console:
+
+```sh
+bundle exec rails console
+```
+
+```rb
+Admin.create(name: 'myname', email: 'myemail@email.local', password: 'mypassword')
+```
+
+Admin section is reachable at `/admin`.
+
+### Frontend
+
+To setup frontend, see readme in `./frontend`.
 
 ## Production with Docker
 
 **Configure your reCaptcha keys as environment variables**
 
 - Start server via Docker Compose
+
 ```sh
 $ cd /path/to/mersea
 $ docker-compose up -d
 ```
+
 > Feel free to modifies the provided docker-compose.yml to your needs.
 
 http://localhost:3000
 
 - Start a Rails console
+
 ```sh
 # mersea_mersea_1 is the container name defined by docker-compose
 $ docker exec -it mersea_mersea_1 bundle exec rails c
 ```
 
 To set any environment variable in the container, use one or more `-e` flags:
+
 - `JWT_SECRET` → the JWT secret
 - `MERSEA_NAMESPACE` → namespace the url
 - `RAILS_SERVE_STATIC_FILES` → the webapp serves all the assets instead of NGINX
@@ -72,6 +99,7 @@ To set any environment variable in the container, use one or more `-e` flags:
 MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) for more details.
 
 ## About
+
 - An application created for [ANSEL](https://www.assoansel.com/) at the [Ocean Hackathon](http://www.seatechevent.eu/Temps-forts-Ocean-Hackathon-_7-au-9-octobre-2016_-696-17-0-0.html)
 - TV News Story on Tébéo, [video@8:30](http://www.tebeo.bzh/replay/23-jt/9478685)
 
