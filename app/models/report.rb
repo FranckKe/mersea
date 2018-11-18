@@ -36,6 +36,7 @@ class Report < ApplicationRecord
   belongs_to :user, optional: true
 
   validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
-  validates :photo, presence: true, if: -> { !self.user&.senior && self.status != 'accepted' }
-  validates :photo, attached: true, content_type: ['image/png', 'image/jpeg', 'image/tiff', 'image/webp']
+  validates :photo, attached: true,
+                    content_type: ['image/png', 'image/jpeg', 'image/tiff', 'image/webp'],
+                    if: -> { !self.user&.senior && self.status != 'accepted' }
 end

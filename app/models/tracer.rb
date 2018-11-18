@@ -20,6 +20,6 @@ class Tracer < ApplicationRecord
   has_one_attached :photo
   has_many :reports, dependent: :destroy
 
-  validates :name, :description, :photo, :origin, :kind, presence: true
+  validates :name, :description, :origin, :kind, presence: true
   validates :photo, attached: true, content_type: ['image/png', 'image/jpeg', 'image/tiff', 'image/webp']
 end
