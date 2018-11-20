@@ -51,7 +51,8 @@ export default {
       filter: '',
       defaultSortDirection: 'asc',
       currentPage: 1,
-      perPage: 10
+      perPage: 10,
+      name: ''
     }
   },
   mounted() {
