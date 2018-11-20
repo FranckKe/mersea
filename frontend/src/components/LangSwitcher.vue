@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .lang-switcher {
   align-self: center;
   padding: 0.5rem 0.75rem;

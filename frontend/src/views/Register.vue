@@ -85,7 +85,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .form-register {
   margin-bottom: 25px;
 }
