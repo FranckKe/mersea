@@ -1140,6 +1140,10 @@
     "@webassemblyjs/wast-parser" "1.7.6"
     "@xtuc/long" "4.2.1"
 
+"@websanova/vue-auth@^2.21.14-beta":
+  version "2.21.14-beta"
+  resolved "https://registry.yarnpkg.com/@websanova/vue-auth/-/vue-auth-2.21.14-beta.tgz#315c24c5ab4c560a46d832cb1f5a702d054a1dc7"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -1147,10 +1151,6 @@
 "@xtuc/long@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
-
-"@websanova/vue-auth@^2.21.14-beta":
-  version "2.21.14-beta"
-  resolved "https://registry.yarnpkg.com/@websanova/vue-auth/-/vue-auth-2.21.14-beta.tgz#315c24c5ab4c560a46d832cb1f5a702d054a1dc7"
 
 abab@^2.0.0:
   version "2.0.0"
@@ -1954,9 +1954,9 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-"bulma-steps@git+https://git@github.com/FranckKe/bulma-steps.git":
+"bulma-steps@https://git@github.com/FranckKe/bulma-steps.git":
   version "2.2.1"
-  resolved "git+https://git@github.com/FranckKe/bulma-steps.git#1aed704846d214b74a180c60601fd69e377c93e1"
+  resolved "https://git@github.com/FranckKe/bulma-steps.git#1aed704846d214b74a180c60601fd69e377c93e1"
 
 bulma@0.7.1:
   version "0.7.1"

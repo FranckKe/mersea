@@ -19,7 +19,7 @@
     "@websanova/vue-auth": "^2.21.14-beta",
     "axios": "^0.18.0",
     "buefy": "^0.6.6",
-    "bulma-steps": "git+https://git@github.com/FranckKe/bulma-steps.git",
+    "bulma-steps": "https://git@github.com/FranckKe/bulma-steps.git",
     "lodash-es": "^4.17.11",
     "mapbox-gl": "^0.46.0",
     "moment": "^2.22.2",
