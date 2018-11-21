@@ -29,7 +29,7 @@
           name="password"
           v-validate="'required'"
           password-reveal>
-      </b-input>
+        </b-input>
       </b-field>
       <div class="field">
         <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>

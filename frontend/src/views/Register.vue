@@ -105,7 +105,7 @@ export default {
             duration: 5000,
             type: 'is-danger'
           })
-          this.errorss = res.response.data.errors[0].metadata.reason.split('.')
+          this.errors = res.response.data.errors[0].metadata.reason.split('.')
         }
       })
     }
