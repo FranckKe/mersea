@@ -47,7 +47,7 @@
       <div class="navbar-end buttons">
         <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
             <button class="button is-primary" slot="trigger">
-                <span>{{ user.email }}</span>
+                <span>{{ userData.email }}</span>
                 <b-icon pack="fas" icon="caret-down"></b-icon>
             </button>
 
@@ -66,7 +66,8 @@
 <script>
 import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers('pages')
+const pagesModule = createNamespacedHelpers('pages')
+const userModule = createNamespacedHelpers('user')
 import LangSwitcher from '@/components/LangSwitcher'
 
 const initResponsiveMenu = () => {
@@ -88,8 +89,7 @@ export default {
     return {
       locale: 'en',
       apiUrl: this.$apiUrl,
-      appName: this.$appName,
-      user: {}
+      appName: this.$appName
     }
   },
   mounted() {
@@ -97,20 +97,23 @@ export default {
     this.load()
   },
   computed: {
-    ...mapState({
+    ...pagesModule.mapState({
       pages: state => state.pages,
       loading: state => state.loading,
       myerrors: state => state.errors,
       success: state => state.success
     }),
-    ...mapGetters([
+    ...pagesModule.mapGetters([
       'getAllPagesByCategory',
       'getPagesByCategory',
       'getCategories'
-    ])
+    ]),
+    ...userModule.mapState({
+      userData: state => state.data
+    })
   },
   methods: {
-    ...mapActions(['loadPages']),
+    ...pagesModule.mapActions(['loadPages']),
     slugify: slugify,
     load: async function() {
       try {

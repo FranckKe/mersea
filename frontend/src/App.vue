@@ -9,17 +9,31 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import MenuNav from '@/components/MenuNav'
+import { createNamespacedHelpers } from 'vuex'
+
+const userModule = createNamespacedHelpers('user')
 
 export default {
   name: 'app',
   components: {
     MenuNav
   },
+  created() {
+    this.$auth.ready()
+
+    this.loadUserData({ vm: this })
+  },
   data() {
     return {
       appName: this.$appName
     }
+  },
+  methods: {
+    ...userModule.mapActions([
+      'loadUserData'
+    ])
   }
 }
 </script>
