@@ -80,7 +80,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 div.section {
   padding-top: 0;
 }

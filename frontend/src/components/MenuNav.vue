@@ -125,22 +125,8 @@ export default {
 }
 </script>
 
-<style>
-h1.app-title {
-  margin: 0;
-  height: 100%;
-  min-height: 3.25rem;
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.navbar {
-  background-color: var(--color-light);
-}
-
-p.navbar-link {
+<style scoped>
+.navbar-link {
   cursor: default;
 }
 

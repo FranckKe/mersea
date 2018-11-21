@@ -103,7 +103,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .tracer-description {
   max-width: 700px;
 }

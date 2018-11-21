@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .page-container p {
   margin-bottom: 1rem;
 }

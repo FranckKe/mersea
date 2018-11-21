@@ -91,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .form-login {
   margin-bottom: 25px;
 }

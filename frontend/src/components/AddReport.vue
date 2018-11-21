@@ -388,7 +388,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .add-report {
   background-color: white;
   display: flex;
@@ -407,6 +407,7 @@ export default {
   min-height: auto;
   margin-top: 0;
 }
+
 @media only screen and (max-device-width: 1024px) {
   .add-report {
     height: auto;
@@ -417,6 +418,7 @@ export default {
     margin-top: 40vh;
     padding: 30px;
   }
+
   .add-report-layer .add-report-button {
     position: absolute;
     top: 45vh;
