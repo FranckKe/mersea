@@ -43,6 +43,10 @@ RUN bundle exec rake assets:precompile
 FROM node:10.5-alpine as js-build-env
 MAINTAINER mdouchement franckke
 
+RUN apk upgrade
+RUN apk add --update --no-cache \
+    git
+
 COPY --from=ruby-build-env /usr/src/app /usr/src/app
 
 ENV NODE_ENV production
