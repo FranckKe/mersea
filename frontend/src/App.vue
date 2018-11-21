@@ -67,4 +67,8 @@ body {
 body .notices.toast {
   opacity: 1;
 }
+
+.loading-overlay.is-active {
+  z-index: 999;
+}
 </style>
