@@ -40,7 +40,7 @@
             v-model="user.password"
             name="password"
             ref="password"
-             v-validate="'required|min:6'"
+            v-validate="'required|min:6'"
             password-reveal>
           </b-input>
         </b-field>
@@ -105,7 +105,7 @@ export default {
             duration: 5000,
             type: 'is-danger'
           })
-          this.errors = res.response.data.errors[0].metadata.reason.split('.')
+          this.formErrors = res.response.data.errors[0].metadata.reason.split('.')
         }
       })
     }
