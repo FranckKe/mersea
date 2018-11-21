@@ -12,7 +12,7 @@ const getters = {
   getLoading: state => {
     return state.loading
   },
-  geterror: state => {
+  getError: state => {
     return state.errors
   },
   getSuccess: state => {
@@ -28,7 +28,7 @@ const getters = {
     return state.address
   },
   getCurrentStep: state => {
-    return state.address
+    return state.currentStep
   }
 }
 const mutations = {

@@ -126,6 +126,7 @@ export default {
           .addTo(this.map)
 
       this.map.on('click', async e => {
+        if (!this.isFormActive) return false
         if (this.newMarker !== '') this.newMarker.remove()
 
         this.newMarker = new mapboxgl.Marker()

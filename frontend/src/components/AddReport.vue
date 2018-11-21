@@ -222,7 +222,7 @@ export default {
       quantity: 1,
       tracerName: '',
       username: '',
-      description: 'bla',
+      description: '',
       reportDate: new Date(),
       addReportErrors: []
     }
@@ -494,7 +494,7 @@ export default {
     "name_pseudo": "Name or pseudo",
     "next": "Next",
     "no_results": "No results found",
-    "optional": "optionnal",
+    "optional": "optional",
     "previous": "Previous",
     "quantity": "Quantity",
     "report_date": "Date of report",

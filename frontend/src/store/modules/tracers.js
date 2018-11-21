@@ -19,7 +19,7 @@ const getters = {
   getLoading: state => {
     return state.loading
   },
-  geterror: state => {
+  getError: state => {
     return state.errors
   },
   getSuccess: state => {
