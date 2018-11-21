@@ -46,9 +46,9 @@
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
         <button v-if="$auth.check()" v-on:click="logout()" class="button is-danger">{{ $t('logout') }}</button>
-        <router-link v-if="$auth.check()" :to="'me'" class="button">{{ $t('my_account') }}</router-link>
-        <router-link v-if="!$auth.check()" :to="'login'" class="button">{{ $t('login') }}</router-link>
-        <router-link v-if="!$auth.check()" :to="'register'" class="button is-success">{{ $t('register') }}</router-link>
+        <router-link v-if="$auth.check()" :to="'/me'" class="button">{{ $t('my_account') }}</router-link>
+        <router-link v-if="!$auth.check()" :to="'/login'" class="button">{{ $t('login') }}</router-link>
+        <router-link v-if="!$auth.check()" :to="'/register'" class="button is-success">{{ $t('register') }}</router-link>
       </div>
     </div>
   </nav>
