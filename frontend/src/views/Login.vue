@@ -8,14 +8,28 @@
     </b-message>
 
     <form class="form-login" v-on:submit.prevent="login()">
-      <b-field :label="$t('email')">
-          <b-input type="email" v-model="email"></b-input>
+      <b-field
+      :label="$t('email')"
+      :type="errors.has('email') ? 'is-danger': ''"
+      :message="errors.has('email') ? errors.first('email') : ''">
+        <b-input
+          v-model="email"
+          type="email"
+          name="email"
+          v-validate="'required|email'">
+        </b-input>
       </b-field>
-      <b-field :label="$t('password')">
-        <b-input type="password"
+      <b-field
+        :label="$t('password')"
+        :type="errors.has('password') ? 'is-danger': ''"
+        :message="errors.has('password') ? errors.first('password') : ''">
+        <b-input
           v-model="password"
+          type="password"
+          name="password"
+          v-validate="'required'"
           password-reveal>
-      </b-input>
+        </b-input>
       </b-field>
       <div class="field">
         <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
@@ -48,7 +62,10 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
+      let validateForm = await this.$validator.validateAll()
+      if (!validateForm) return false
+
       this.$auth
         .login({
           auth: { username: this.email, password: this.password },

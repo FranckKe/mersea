@@ -3,31 +3,57 @@
     <div class="container">
       <h1 class="title is-1">{{ $t('register') }}</h1>
 
-      <b-message v-show="errors.length" :title="$tc('errors', errors.length)" type="is-danger">
+      <b-message v-show="formErrors.length" :title="$tc('errors', formErrors.length)" type="is-danger">
         <ul>
-          <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+          <li v-for="error in formErrors" v-bind:key="error">{{ error }}</li>
         </ul>
       </b-message>
 
       <form class="form-register"  v-on:submit.prevent="register()">
-        <b-field :label="$t('name')">
-          <b-input v-model="user.name"></b-input>
-        </b-field>
-        <b-field :label="$t('email')">
-          <b-input type="email"
-              v-model="user.email"
-              maxlength="30">
+        <b-field
+          :label="$t('name')"
+          :type="errors.has('username') ? 'is-danger': ''"
+          :message="errors.has('username') ? errors.first('username') : ''">
+          <b-input
+            v-model="user.name"
+            name="username"
+            v-validate="'required'">
           </b-input>
         </b-field>
-        <b-field :label="$t('password')">
-          <b-input type="password"
+        <b-field
+          :label="$t('email')"
+          :type="errors.has('email') ? 'is-danger': ''"
+          :message="errors.has('email') ? errors.first('email') : ''">
+          <b-input
+            type="email"
+            v-model="user.email"
+            name="email"
+            v-validate="'required|email'">
+          </b-input>
+        </b-field>
+        <b-field
+          :label="$t('password')"
+          :type="errors.has('password') ? 'is-danger': ''"
+          :message="errors.has('password') ? errors.first('password') : ''">
+          <b-input
+            type="password"
             v-model="user.password"
+            name="password"
+            ref="password"
+            v-validate="'required|min:6'"
             password-reveal>
           </b-input>
         </b-field>
-        <b-field :label="$t('password_confirmation')">
-          <b-input type="password"
-            v-model="user.password_confirmation"
+        <b-field
+          :label="$t('password_confirmation')"
+          :type="errors.has('passwordConfirmation') ? 'is-danger': ''"
+          :message="errors.has('passwordConfirmation') ? errors.first('passwordConfirmation') : ''">
+          <b-input
+            type="password"
+            v-model="user.passwordConfirmation"
+            name="passwordConfirmation"
+            data-vv-as="password"
+            v-validate="'required|confirmed:password'"
             password-reveal>
           </b-input>
         </b-field>
@@ -49,15 +75,17 @@ export default {
         name: '',
         email: '',
         password: '',
-        password_confirmation: ''
+        passwordConfirmation: ''
       },
       autoLogin: true,
       rememberMe: false,
-      errors: ''
+      formErrors: []
     }
   },
   methods: {
-    register() {
+    async register() {
+      let validateForm = await this.$validator.validateAll()
+      if (!validateForm) return false
       this.$auth.register({
         data: {
           user: this.user
@@ -77,7 +105,7 @@ export default {
             duration: 5000,
             type: 'is-danger'
           })
-          this.errors = res.response.data.errors[0].metadata.reason.split('.')
+          this.formErrors = res.response.data.errors[0].metadata.reason.split('.')
         }
       })
     }
