@@ -94,7 +94,8 @@ Vue.use(VueAuth, {
     method: 'GET',
     enabled: false,
     interval: 30
-  }
+  },
+  parseUserData: data => data
 })
 
 api.interceptors.response.use(
