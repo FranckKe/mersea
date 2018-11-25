@@ -93,7 +93,7 @@ const actions = {
       const pagesData = await api.get(`/pages`)
       const pages = pagesData.data
       commit('updatePages', { pages })
-      commit('updateSuccess', { pages })
+      commit('updateSuccess')
     } catch (error) {
       let errors = [error.message]
       commit('updateError', { errors })

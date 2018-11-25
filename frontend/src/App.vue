@@ -74,4 +74,10 @@ body .notices.toast {
 .loading-overlay.is-active {
   z-index: 999;
 }
+
+/* Fix margin for input type file error message */
+.file .is-danger {
+  padding-top: 5px;
+  margin-left: 10px;
+}
 </style>

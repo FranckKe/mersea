@@ -7,7 +7,7 @@ const api = axios.create({
 })
 
 const state = {
-  data: [],
+  reports: [],
   loading: true,
   success: false,
   errors: []
@@ -21,11 +21,14 @@ const getters = {
   },
   getSuccess: state => {
     return state.success
+  },
+  getReports: state => {
+    return state.reports
   }
 }
 const mutations = {
-  updateData: (state, { data }) => {
-    state.data = data
+  updateData: (state, payload) => {
+    state.reports = payload.reports
   },
   updateSuccess: state => {
     state.success = true
@@ -46,9 +49,9 @@ const actions = {
           'Content-Type': 'application/geo+json'
         }
       })
-      const data = reports.data
-      commit('updateData', { data })
-      commit('updateSuccess', { data })
+      let reportsData = reports.data
+      commit('updateData', { reports: reportsData })
+      commit('updateSuccess')
     } catch (error) {
       let errors = [error.message]
       commit('updateError', { errors })

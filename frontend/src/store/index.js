@@ -42,8 +42,4 @@ const store = new Vuex.Store({
   }
 })
 
-store.dispatch('pages/loadPages')
-store.dispatch('reports/loadReports')
-store.dispatch('tracers/loadTracers')
-
 export default store

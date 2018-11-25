@@ -7,9 +7,8 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('reports')
+const { mapGetters, mapActions } = createNamespacedHelpers('reports')
 const addReportModule = createNamespacedHelpers('addReport')
-import store from '../store'
 
 import AddReport from '@/components/AddReport'
 
@@ -34,8 +33,7 @@ export default {
     AddReport
   },
   mounted() {
-    this.createMap()
-    moment.locale(this.$i18n.locale)
+    this.initData()
   },
   watch: {
     '$i18n.locale': function() {
@@ -54,8 +52,22 @@ export default {
     }
   },
   methods: {
+    initData: async function() {
+      moment.locale(this.$i18n.locale)
+      try {
+        await this.loadReports()
+        this.createMap()
+      } catch (e) {
+        this.$toast.open({
+          message: this.$t('map_init_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
+      }
+    },
     mapLoad: function() {
-      const geojson = store.state.reports.data
+      const geojson = this.getReports()
+      if (geojson == null) return false
       for (let marker of geojson.features) {
         new mapboxgl.Marker({ color: `${marker.properties.color}` })
           .setLngLat(marker.geometry.coordinates)
@@ -172,7 +184,7 @@ export default {
       this.map.on('load', this.mapLoad)
     },
     destroyMap() {},
-    ...mapGetters(['getData']),
+    ...mapGetters(['getReports']),
     ...addReportModule.mapGetters([
       'getCurrentStep',
       'getAddress',
@@ -184,7 +196,8 @@ export default {
       'setAddress',
       'setIsFormActive',
       'setCoordinates'
-    ])
+    ]),
+    ...mapActions(['loadReports'])
   },
   computed: {
     ...addReportModule.mapState({
@@ -322,15 +335,18 @@ export default {
 {
   "en": {
     "quantity": "Quantity",
-    "search": "Search"
+    "search": "Search",
+    "map_init_failure": "Error initializing map"
   },
   "fr": {
     "quantity": "Quantité",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "map_init_failure": "Échec d'initialisation de la carte"
   },
   "es": {
     "quantity": "Cantidad",
-    "search": "Buscar"
+    "search": "Buscar",
+    "map_init_failure": "Error al inicializar el mapa"
   }
 }
 </i18n>

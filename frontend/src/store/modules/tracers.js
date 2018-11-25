@@ -60,7 +60,7 @@ const actions = {
       const tracers = await api.get(`/tracers`)
       const data = tracers.data
       commit('setData', { data })
-      commit('setSuccess', { data })
+      commit('setSuccess')
     } catch (error) {
       let errors = [error.message]
       commit('setError', { errors })
