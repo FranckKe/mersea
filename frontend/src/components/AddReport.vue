@@ -3,7 +3,10 @@
     <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
       <b-loading :is-full-page="false" :active.sync="isSubmitting" :can-cancel="false"></b-loading>
 
-      <h2 class="title is-2 has-text-centered">{{ $t('add_report') }}</h2>
+      <h2 class="title is-2">{{ $t('add_report') }}</h2>
+      <a @click="closeAddReportForm" class="button is-danger close-button">
+        <font-awesome-icon icon="times"/>
+      </a>
       <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
           <div class="step-marker">1</div>
@@ -185,18 +188,24 @@
               id="nextAction"
               data-nav="next"
               class="button"
-              :class="{ 'is-success': currentStep === 2 }"
+              :class="{ 'is-success': currentStep === 2 , hidden: currentStep === 3}"
             >{{ currentStep === 2 ? $t('submit') : $t('next') }}</a>
+            <a
+              href="#"
+              class="button is-danger close-button-step"
+              :class="{hidden: currentStep !== 3 }"
+              @click="closeAddReportForm"
+            >{{ $t('close') }}</a>
           </div>
         </div>
       </div>
     </section>
     <a
       href="#"
-      @click="e => { isFormActive = !isFormActive }"
+      @click="e => { isFormActive = true }"
       class="add-report-button button is-success"
-      :class="[isFormActive ? 'is-danger' : 'is-success']"
-    >{{ isFormActive ? $t('cancel_report') : $t('add_report') }}</a>
+      :class="{'hidden': isFormActive}"
+    >{{ $t('add_report') }}</a>
   </div>
 </template>
 
@@ -345,6 +354,9 @@ export default {
         reader.onload = () => resolve(reader.result)
         reader.onerror = error => reject(error)
       })
+    },
+    closeAddReportForm() {
+      this.isFormActive = false
     }
   },
   computed: {
@@ -432,20 +444,11 @@ export default {
     margin-top: 40vh;
     padding: 30px;
   }
-
-  .add-report-layer .add-report-button {
-    position: absolute;
-    top: 45vh;
-  }
 }
 
 @media only screen and (max-device-width: 768px) {
   .add-report {
     padding: 30px 10px 10px 10px;
-  }
-  .add-report-layer .add-report-button {
-    position: absolute;
-    top: 43.5vh;
   }
 }
 
@@ -499,6 +502,13 @@ export default {
 .submit-form-error ul li {
   margin-left: 15px;
 }
+
+.add-report .close-button {
+  width: 35px;
+  position: absolute;
+  right: 0px;
+  top: 10px;
+}
 </style>
 
 <i18n>
@@ -508,6 +518,7 @@ export default {
     "cancel_report": "Close reporting",
     "click_select": "Click to select",
     "click_to_report": "Click on the map to locate the report",
+    "close": "Close",
     "description": "Description",
     "done": "Done",
     "location": "Location",
@@ -530,6 +541,7 @@ export default {
     "cancel_report": "Fermer l'ajout de témoignage",
     "click_select": "Cliquez pour sélectionner",
     "click_to_report": "Cliquer sur la carte pour localiser le témoignage",
+    "close": "Fermer",
     "description": "Description",
     "done": "Fin",
     "location": "Localisation",
@@ -552,6 +564,7 @@ export default {
     "cancel_report": "Cerrar agrega testimonio",
     "click_select": "Clic para seleccionar",
     "click_to_report": "Clic sobre el mapa para localizar el testimonio",
+    "close": "Cerrar",
     "description": "Descripción",
     "done": "Final",
     "location": "Ubicación",
