@@ -1,9 +1,9 @@
 <template>
-<div class="add-report-layer">
-  <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
-    <b-loading :is-full-page="false" :active.sync="isSubmitting" :can-cancel="false"></b-loading>
+  <div class="add-report-layer">
+    <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
+      <b-loading :is-full-page="false" :active.sync="isSubmitting" :can-cancel="false"></b-loading>
 
-    <h2 class="title is-2 has-text-centered">{{ $t('add_report') }}</h2>
+      <h2 class="title is-2 has-text-centered">{{ $t('add_report') }}</h2>
       <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
           <div class="step-marker">1</div>
@@ -29,176 +29,165 @@
             <p class="step-title">{{ $t('done') }}</p>
           </div>
         </div>
-      <form class="add-report-form" @submit.prevent="submitReport">
-      <div class="steps-content">
-        <div class="step-content">
-          <b-field label="coordinates"
-            class="hidden"
-            :type="errors.has('coordinates') ? 'is-danger': ''"
-            :message="errors.has('coordinates') ? errors.first('coordinates') : ''">
-            <b-input
-             v-model="coordinates"
-             type="text"
-             name="coordinates"
-             v-validate="'required'">
-            </b-input>
-          </b-field>
-          <b-field
-            :label="$t('click_to_report')"
-            :type="errors.has('address') ? 'is-danger': ''"
-            :message="errors.has('address') ? errors.first('address') : ''">
-            <b-input
-             v-model="address"
-             type="text"
-             name="address"
-             v-validate="'required'">
-            </b-input>
-          </b-field>
-        </div>
-        <div class="step-content">
-          <b-field
-            :label="$tc('tracers', 1)"
-            :type="errors.has('tracer') ? 'is-danger': ''"
-            :message="errors.has('tracer') ? errors.first('tracer') : ''">
-            <b-autocomplete
-              v-model="tracerName"
-              name="tracer"
-              :data="data"
-              field="name"
-              :open-on-focus=true
-              @select="option => selectedTracer = option"
-              v-validate="'required'">
-              <template slot-scope="props">
-                <div class="media">
-                  <div class="media-left">
-                    <img
-                      class="image is-64x64"
-                      :src="`${apiUrl}${props.option.photo}`">
-                  </div>
-                  <div class="media-content">
-                    {{ props.option.name }}
-                    <br>
-                    <small>
-                      {{ props.option.type }}
-                    </small>
-                  </div>
-                </div>
-              </template>
-              <template slot="empty">{{ $t('no_results') }}</template>
-            </b-autocomplete>
-          </b-field>
-          <b-field
-            :label="$t('quantity')"
-            :type="errors.has('quantity') ? 'is-danger': ''"
-            :message="errors.has('quantity') ? errors.first('quantity') : ''">
-            <b-input
-              v-model="quantity"
-              name="quantity"
-              type="number"
-              step="1"
-              v-validate="'required|min_value:0'">
-            </b-input>
-          </b-field>
-        </div>
-        <div class="step-content">
-          <b-field
-            :label="$t('name_pseudo')"
-            :type="errors.has('username') ? 'is-danger': ''"
-            :message="errors.has('username') ? errors.first('username') : ''">
-            <b-input
-              v-model="username"
-              name="username"
-              v-validate="'required'">
-            </b-input>
-          </b-field>
-          <b-field
-            :label="$t('report_date')"
-            :type="errors.has('reportDate') ? 'is-danger': ''"
-            :message="errors.has('reportDate') ? errors.first('reportDate') : ''">
-            <b-datepicker
-              v-model="reportDate"
-              name="reportDate"
-              placeholder="$t('click_select')"
-              :mobile-native=false
-              v-validate="'required'">
-            </b-datepicker>
-          </b-field>
-          <b-field
-            class="file"
-            :type="errors.has('files') ? 'is-danger': ''"
-            :message="errors.has('files') ? errors.first('files') : ''">
-            <b-upload
-              v-model="files"
-              name="files"
-              v-validate="'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'">
-              <a class="button is-primary">
-                <b-icon icon="upload"></b-icon>
-                <span>Photo</span>
-              </a>
-            </b-upload>
-            <span class="file-name"
-                v-if="files && files.length">
-                {{ files[0].name }}
-            </span>
-          </b-field>
-          <b-field
-            :label="`${$t('description')} (${$t('optional')})`"
-            :type="errors.has('description') ? 'is-danger': ''"
-            :message="errors.has('description') ? errors.first('description') : ''">
-            <b-input
-              v-model="description"
-              name="description"
-              maxlength="300"
-              type="textarea"
-              v-validate="'max:300'">
-            </b-input>
-          </b-field>
-          <b-notification type="is-danger" v-if="addReportErrors.length > 0">
-            <p v-for="addReportError in addReportErrors" :key="addReportError.metadata.id">
-              {{ addReportError.metadata.reason }}
-            </p>
-          </b-notification>
-          <button
-            type="submit"
-            class="button is-success hidden">
-            {{ $t('submit') }}
-          </button>
-        </div>
-        <div class="step-content">
-          <p>{{ $t('report_review') }}</p>
-        </div>
-      </div>
+        <form class="add-report-form" @submit.prevent="submitReport">
+          <div class="steps-content">
+            <div class="step-content">
+              <b-field
+                label="coordinates"
+                class="hidden"
+                :type="errors.has('coordinates') ? 'is-danger': ''"
+                :message="errors.has('coordinates') ? errors.first('coordinates') : ''"
+              >
+                <b-input
+                  v-model="coordinates"
+                  type="text"
+                  name="coordinates"
+                  v-validate="'required'"
+                ></b-input>
+              </b-field>
+              <b-field
+                :label="$t('click_to_report')"
+                :type="errors.has('address') ? 'is-danger': ''"
+                :message="errors.has('address') ? errors.first('address') : ''"
+              >
+                <b-input v-model="address" type="text" name="address" v-validate="'required'"></b-input>
+              </b-field>
+            </div>
+            <div class="step-content">
+              <b-field
+                :label="$tc('tracers', 1)"
+                :type="errors.has('tracer') ? 'is-danger': ''"
+                :message="errors.has('tracer') ? errors.first('tracer') : ''"
+              >
+                <b-autocomplete
+                  v-model="tracerName"
+                  name="tracer"
+                  :data="data"
+                  field="name"
+                  :open-on-focus="true"
+                  @select="option => selectedTracer = option"
+                  v-validate="'required'"
+                >
+                  <template slot-scope="props">
+                    <div class="media">
+                      <div class="media-left">
+                        <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
+                      </div>
+                      <div class="media-content">
+                        {{ props.option.name }}
+                        <br>
+                        <small>{{ props.option.type }}</small>
+                      </div>
+                    </div>
+                  </template>
+                  <template slot="empty">{{ $t('no_results') }}</template>
+                </b-autocomplete>
+              </b-field>
+              <b-field
+                :label="$t('quantity')"
+                :type="errors.has('quantity') ? 'is-danger': ''"
+                :message="errors.has('quantity') ? errors.first('quantity') : ''"
+              >
+                <b-input
+                  v-model="quantity"
+                  name="quantity"
+                  type="number"
+                  step="1"
+                  v-validate="'required|min_value:0'"
+                ></b-input>
+              </b-field>
+            </div>
+            <div class="step-content">
+              <b-field
+                :label="$t('name_pseudo')"
+                :type="errors.has('username') ? 'is-danger': ''"
+                :message="errors.has('username') ? errors.first('username') : ''"
+              >
+                <b-input v-model="username" name="username" v-validate="'required'"></b-input>
+              </b-field>
+              <b-field
+                :label="$t('report_date')"
+                :type="errors.has('reportDate') ? 'is-danger': ''"
+                :message="errors.has('reportDate') ? errors.first('reportDate') : ''"
+              >
+                <b-datepicker
+                  v-model="reportDate"
+                  name="reportDate"
+                  placeholder="$t('click_select')"
+                  :mobile-native="false"
+                  v-validate="'required'"
+                ></b-datepicker>
+              </b-field>
+              <b-field
+                class="file"
+                :type="errors.has('files') ? 'is-danger': ''"
+                :message="errors.has('files') ? errors.first('files') : ''"
+              >
+                <b-upload
+                  v-model="files"
+                  name="files"
+                  v-validate="'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'"
+                >
+                  <a class="button is-primary">
+                    <b-icon icon="upload"></b-icon>
+                    <span>Photo</span>
+                  </a>
+                </b-upload>
+                <span class="file-name" v-if="files && files.length">{{ files[0].name }}</span>
+              </b-field>
+              <b-field
+                :label="`${$t('description')} (${$t('optional')})`"
+                :type="errors.has('description') ? 'is-danger': ''"
+                :message="errors.has('description') ? errors.first('description') : ''"
+              >
+                <b-input
+                  v-model="description"
+                  name="description"
+                  maxlength="300"
+                  type="textarea"
+                  v-validate="'max:300'"
+                ></b-input>
+              </b-field>
+              <b-notification type="is-danger" v-if="addReportErrors.length > 0">
+                <p
+                  v-for="addReportError in addReportErrors"
+                  :key="addReportError.metadata.id"
+                >{{ addReportError.metadata.reason }}</p>
+              </b-notification>
+              <button type="submit" class="button is-success hidden">{{ $t('submit') }}</button>
+            </div>
+            <div class="step-content">
+              <p>{{ $t('report_review') }}</p>
+            </div>
+          </div>
         </form>
-      <div class="steps-actions">
-        <div class="steps-action">
-          <a
-            href="#"
-            id="prevAction"
-            data-nav="previous"
-            class="button is-light">
-            {{ $t('previous') }}
-          </a>
-        </div>
-        <div class="steps-action">
-          <a
-            href="#"
-            id="nextAction"
-            data-nav="next"
-            class="button"
-            :class="{ 'is-success': currentStep === 2 }">
-            {{ currentStep === 2 ? $t('submit') : $t('next') }}
-          </a>
+        <div class="steps-actions">
+          <div class="steps-action">
+            <a
+              href="#"
+              id="prevAction"
+              data-nav="previous"
+              class="button is-light"
+            >{{ $t('previous') }}</a>
+          </div>
+          <div class="steps-action">
+            <a
+              href="#"
+              id="nextAction"
+              data-nav="next"
+              class="button"
+              :class="{ 'is-success': currentStep === 2 }"
+            >{{ currentStep === 2 ? $t('submit') : $t('next') }}</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <a
-    href="#"
-    @click="e => { isFormActive = !isFormActive }"
-    class="add-report-button button is-success"
-    :class="[isFormActive ? 'is-danger' : 'is-success']">
-    {{ isFormActive ? $t('cancel_report') : $t('add_report') }}
-  </a>
+    </section>
+    <a
+      href="#"
+      @click="e => { isFormActive = !isFormActive }"
+      class="add-report-button button is-success"
+      :class="[isFormActive ? 'is-danger' : 'is-success']"
+    >{{ isFormActive ? $t('cancel_report') : $t('add_report') }}</a>
   </div>
 </template>
 
@@ -288,6 +277,7 @@ export default {
 
           const postDataJson = {
             name: this.username,
+            address: this.address,
             latitude: this.coordinates.split(',')[0],
             longitude: this.coordinates.split(',')[1],
             reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),

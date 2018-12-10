@@ -51,19 +51,6 @@ let routes = [
     alias: '/trazadores'
   }
 ]
-
-// Attempt to dynamic routing naming
-// const languages = ['en', 'es', 'fr'] // i18n.locales() doesn't work here
-// languages.forEach(lang => {
-//   defaultRoutes.forEach(route => {
-//     routes.push({
-//       // Translation always endup in 'en' even if locale variable is another value
-//       path: `/${i18n.t(route.name, { locale: lang }).toLowerCase()}`,
-//       component: route.component
-//     })
-//   })
-// })
-
 export default new Router({
   routes: routes
 })

@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import pages from './modules/pages'
 import reports from './modules/reports'
 import tracers from './modules/tracers'
-import user from './modules/user'
 import addReport from './modules/addReport'
 import createPersistedState from 'vuex-persistedstate'
 import i18n from '../i18n'
@@ -16,8 +15,7 @@ const store = new Vuex.Store({
     addReport: addReport,
     pages: pages,
     reports: reports,
-    tracers: tracers,
-    user: user
+    tracers: tracers
   },
   state: {
     lang: 'fr',

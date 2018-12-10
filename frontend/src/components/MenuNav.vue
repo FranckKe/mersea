@@ -3,7 +3,13 @@
     <b-loading :is-full-page="false" :active.sync="this.loading" :can-cancel="true"></b-loading>
     <div class="navbar-brand">
       <div class="navbar-start">
-        <a role="button" class="navbar-burger" aria-label="menu" data-target="flexible-menu" aria-expanded="false">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          data-target="flexible-menu"
+          aria-expanded="false"
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -11,22 +17,19 @@
       </div>
     </div>
     <div id="flexible-menu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">
-        {{ $t('home') }}
-      </router-link>
-      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">
-        {{ $t('tracers') }}
-      </router-link>
-      <router-link :to="`/${$t('leaderboard').toLowerCase()}`" class="navbar-item">
-        {{ $t('leaderboard') }}
-      </router-link>
+      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
+      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">{{ $t('tracers') }}</router-link>
+      <router-link
+        :to="`/${$t('leaderboard').toLowerCase()}`"
+        class="navbar-item"
+      >{{ $t('leaderboard') }}</router-link>
 
-      <div class="navbar-item has-dropdown is-hoverable"
+      <div
+        class="navbar-item has-dropdown is-hoverable"
         v-for="(category, index) in getCategories"
-        v-bind:key="index">
-        <p class="navbar-link">
-          {{ $t(category) }}
-        </p>
+        v-bind:key="index"
+      >
+        <p class="navbar-link">{{ $t(category) }}</p>
         <div class="navbar-dropdown">
           <router-link
             class="navbar-item"
@@ -38,26 +41,40 @@
                 category: slugify($t(category)).toLowerCase(),
                 page: pageName.slug,
               }
-            }">
-              {{ pageName.raw }}
-            </router-link>
+            }"
+          >{{ pageName.raw }}</router-link>
         </div>
       </div>
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
         <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
-            <button class="button is-primary" slot="trigger">
-                <span>{{ userData.email }}</span>
-                <b-icon pack="fas" icon="caret-down"></b-icon>
-            </button>
+          <button class="button is-primary" slot="trigger">
+            <span>{{ $auth.user().email }}</span>
+            <b-icon pack="fas" icon="caret-down"></b-icon>
+          </button>
 
-            <b-dropdown-item><router-link :to="'/me'" class="has-text-dark is-size-6">{{ $t('my_account') }}</router-link></b-dropdown-item>
-            <b-dropdown-item class="has-text-dark is-size-6" disabled>{{ $t('my_reports') }}</b-dropdown-item>
-            <hr class="dropdown-divider">
-            <b-dropdown-item class="has-text-danger is-size-6" v-on:click="logout()">{{ $t('logout') }}</b-dropdown-item>
+          <b-dropdown-item>
+            <router-link :to="'/me'" class="has-text-dark is-size-6">
+              <font-awesome-icon icon="user"/>
+              {{ $t('my_account') }}
+            </router-link>
+          </b-dropdown-item>
+          <b-dropdown-item class="has-text-dark is-size-6" disabled>
+            <font-awesome-icon icon="map-marker-alt"/>
+            {{ $t('my_reports') }}
+          </b-dropdown-item>
+          <hr class="dropdown-divider">
+          <b-dropdown-item class="has-text-danger is-size-6" v-on:click="logout()">
+            <font-awesome-icon icon="sign-out-alt"/>
+            {{ $t('logout') }}
+          </b-dropdown-item>
         </b-dropdown>
         <router-link v-if="!$auth.check()" :to="'/login'" class="button">{{ $t('login') }}</router-link>
-        <router-link v-if="!$auth.check()" :to="'/register'" class="button is-success">{{ $t('register') }}</router-link>
+        <router-link
+          v-if="!$auth.check()"
+          :to="'/register'"
+          class="button is-success"
+        >{{ $t('register') }}</router-link>
       </div>
     </div>
   </nav>
@@ -67,7 +84,6 @@
 import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
 const pagesModule = createNamespacedHelpers('pages')
-const userModule = createNamespacedHelpers('user')
 import LangSwitcher from '@/components/LangSwitcher'
 
 const initResponsiveMenu = () => {
@@ -94,7 +110,6 @@ export default {
   },
   mounted() {
     initResponsiveMenu()
-    this.load()
   },
   computed: {
     ...pagesModule.mapState({
@@ -107,22 +122,11 @@ export default {
       'getAllPagesByCategory',
       'getPagesByCategory',
       'getCategories'
-    ]),
-    ...userModule.mapState({
-      userData: state => state.data
-    })
+    ])
   },
   methods: {
     ...pagesModule.mapActions(['loadPages']),
     slugify: slugify,
-    load: async function() {
-      try {
-        let user = await this.$http.get(`/users/me`)
-        this.user = user.data
-      } catch (e) {
-        throw e
-      }
-    },
     logout: function() {
       this.$auth.logout({
         makeRequest: true,

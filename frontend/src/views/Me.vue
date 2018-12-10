@@ -1,54 +1,30 @@
 <template>
   <section class="section">
     <div class="container">
-    <h1 class="title is-1">{{ $t('my_account') }}</h1>
-      <b-message :title="$t('wip')" type="is-warning">
-        {{ $t('under_construction') }}
-      </b-message>
-      <form class="form-login" v-on:submit.prevent="">
+      <h1 class="title is-1">{{ $t('my_account') }}</h1>
+      <b-message :title="$t('wip')" type="is-warning">{{ $t('under_construction') }}</b-message>
+      <form class="form-login" v-on:submit.prevent>
         <b-field :label="$t('name')">
-          <b-input type="text"
-            v-model="user.name"
-            disabled="disabled">
-          </b-input>
+          <b-input type="text" v-model="$auth.user().name" disabled="disabled"></b-input>
         </b-field>
-       <b-field :label="$t('email')">
-          <b-input type="email"
-            v-model="user.email"
-            disabled="disabled">
-          </b-input>
+        <b-field :label="$t('email')">
+          <b-input type="email" v-model="$auth.user().email" disabled="disabled"></b-input>
         </b-field>
-       <b-field :label="$t('language')">
-          <b-input
-            :value="$t(user.language)"
-            disabled="disabled">
-          </b-input>
+        <b-field :label="$t('language')">
+          <b-input :value="$t($auth.user().language)" disabled="disabled"></b-input>
         </b-field>
       </form>
     </div>
-</section>
+  </section>
 </template>
 
 <script>
 export default {
   data() {
-    return {
-      user: {}
-    }
+    return {}
   },
-  mounted() {
-    this.load()
-  },
-  methods: {
-    load: async function() {
-      try {
-        let user = await this.$http.get(`/users/me`)
-        this.user = user.data
-      } catch (e) {
-        throw e
-      }
-    }
-  }
+  mounted() {},
+  methods: {}
 }
 </script>
 
