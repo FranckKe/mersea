@@ -121,7 +121,12 @@
                 :type="errors.has('username') ? 'is-danger': ''"
                 :message="errors.has('username') ? errors.first('username') : ''"
               >
-                <b-input v-model="username" name="username" v-validate="'required'"></b-input>
+                <b-input
+                  v-model="username"
+                  name="username"
+                  v-validate="'required'"
+                  :disabled="$auth.check()"
+                ></b-input>
               </b-field>
               <b-field
                 :label="$t('report_date')"
@@ -228,7 +233,7 @@ export default {
       files: [],
       quantity: 1,
       tracerName: '',
-      username: '',
+      username: this.$auth.check() ? this.$auth.user().name : '',
       description: '',
       reportDate: new Date(),
       addReportError: '',
@@ -308,7 +313,7 @@ export default {
           let file64 = await this.getBase64(this.files[0])
 
           const postDataJson = {
-            name: this.username,
+            name: this.$auth.check() ? this.$auth.user().name : this.username,
             address: this.address,
             latitude: this.coordinates.split(',')[0],
             longitude: this.coordinates.split(',')[1],

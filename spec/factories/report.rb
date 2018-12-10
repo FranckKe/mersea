@@ -8,6 +8,7 @@ FactoryBot.define do
     longitude { Random.new.rand(42) }
     latitude { Random.new.rand(42) }
     description { Faker::Lorem.sentence }
+    address { Faker::Lorem.sentence }
     status :accepted
     reported_at { Time.now }
 
