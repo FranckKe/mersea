@@ -3,7 +3,13 @@
     <b-loading :is-full-page="false" :active.sync="this.loading" :can-cancel="true"></b-loading>
     <div class="navbar-brand">
       <div class="navbar-start">
-        <a role="button" class="navbar-burger" aria-label="menu" data-target="flexible-menu" aria-expanded="false">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          data-target="flexible-menu"
+          aria-expanded="false"
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -11,22 +17,19 @@
       </div>
     </div>
     <div id="flexible-menu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">
-        {{ $t('home') }}
-      </router-link>
-      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">
-        {{ $t('tracers') }}
-      </router-link>
-      <router-link :to="`/${$t('leaderboard').toLowerCase()}`" class="navbar-item">
-        {{ $t('leaderboard') }}
-      </router-link>
+      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
+      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">{{ $t('tracers') }}</router-link>
+      <router-link
+        :to="`/${$t('leaderboard').toLowerCase()}`"
+        class="navbar-item"
+      >{{ $t('leaderboard') }}</router-link>
 
-      <div class="navbar-item has-dropdown is-hoverable"
+      <div
+        class="navbar-item has-dropdown is-hoverable"
         v-for="(category, index) in getCategories"
-        v-bind:key="index">
-        <p class="navbar-link">
-          {{ $t(category) }}
-        </p>
+        v-bind:key="index"
+      >
+        <p class="navbar-link">{{ $t(category) }}</p>
         <div class="navbar-dropdown">
           <router-link
             class="navbar-item"
@@ -38,17 +41,40 @@
                 category: slugify($t(category)).toLowerCase(),
                 page: pageName.slug,
               }
-            }">
-              {{ pageName.raw }}
-            </router-link>
+            }"
+          >{{ pageName.raw }}</router-link>
         </div>
       </div>
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
-        <button v-if="$auth.check()" v-on:click="logout()" class="button is-danger">{{ $t('logout') }}</button>
-        <router-link v-if="$auth.check()" :to="'/me'" class="button">{{ $t('my_account') }}</router-link>
+        <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
+          <button class="button is-primary" slot="trigger">
+            <span>{{ $auth.user().email }}</span>
+            <b-icon pack="fas" icon="caret-down"></b-icon>
+          </button>
+
+          <b-dropdown-item>
+            <router-link :to="'/me'" class="has-text-dark is-size-6">
+              <font-awesome-icon icon="user"/>
+              {{ $t('my_account') }}
+            </router-link>
+          </b-dropdown-item>
+          <b-dropdown-item class="has-text-dark is-size-6" disabled>
+            <font-awesome-icon icon="map-marker-alt"/>
+            {{ $t('my_reports') }}
+          </b-dropdown-item>
+          <hr class="dropdown-divider">
+          <b-dropdown-item class="has-text-danger is-size-6" v-on:click="logout()">
+            <font-awesome-icon icon="sign-out-alt"/>
+            {{ $t('logout') }}
+          </b-dropdown-item>
+        </b-dropdown>
         <router-link v-if="!$auth.check()" :to="'/login'" class="button">{{ $t('login') }}</router-link>
-        <router-link v-if="!$auth.check()" :to="'/register'" class="button is-success">{{ $t('register') }}</router-link>
+        <router-link
+          v-if="!$auth.check()"
+          :to="'/register'"
+          class="button is-success"
+        >{{ $t('register') }}</router-link>
       </div>
     </div>
   </nav>
@@ -57,7 +83,7 @@
 <script>
 import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapActions, mapGetters } = createNamespacedHelpers('pages')
+const pagesModule = createNamespacedHelpers('pages')
 import LangSwitcher from '@/components/LangSwitcher'
 
 const initResponsiveMenu = () => {
@@ -86,20 +112,20 @@ export default {
     initResponsiveMenu()
   },
   computed: {
-    ...mapState({
+    ...pagesModule.mapState({
       pages: state => state.pages,
       loading: state => state.loading,
       myerrors: state => state.errors,
       success: state => state.success
     }),
-    ...mapGetters([
+    ...pagesModule.mapGetters([
       'getAllPagesByCategory',
       'getPagesByCategory',
       'getCategories'
     ])
   },
   methods: {
-    ...mapActions(['loadPages']),
+    ...pagesModule.mapActions(['loadPages']),
     slugify: slugify,
     logout: function() {
       this.$auth.logout({
@@ -161,6 +187,7 @@ export default {
     "logout_success": "You are now logged out",
     "logout": "Logout",
     "my_account": "My account",
+    "my_reports": "My reports",
     "other": "Other",
     "register": "Register",
     "tracers": "Tracers"
@@ -175,6 +202,7 @@ export default {
     "logout_success": "Vous êtes maintenant déconnecté(e)",
     "logout": "Déconnexion",
     "my_account": "Mon compte",
+    "my_reports": "Mes rapports",
     "other": "Autre",
     "register": "Inscription",
     "tracers": "Tracers"
@@ -189,6 +217,7 @@ export default {
     "logout_success": "Sesión finalizada",
     "logout": "Sesión finalizada",
     "my_account": "Mi cuenta",
+    "my_reports": "Mis informes",
     "other": "Otro",
     "register": "Registrarse",
     "tracers": "Trazadores"
