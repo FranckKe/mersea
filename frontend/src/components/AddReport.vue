@@ -50,7 +50,13 @@
                 :type="errors.has('address') ? 'is-danger': ''"
                 :message="errors.has('address') ? errors.first('address') : ''"
               >
-                <b-input v-model="address" type="text" name="address" v-validate="'required'"></b-input>
+                <b-input
+                  v-model="address"
+                  type="text"
+                  name="address"
+                  v-validate="'required'"
+                  disabled="true"
+                ></b-input>
               </b-field>
             </div>
             <div class="step-content">
@@ -62,7 +68,7 @@
                 <b-autocomplete
                   v-model="tracerName"
                   name="tracer"
-                  :data="data"
+                  :data="tracers"
                   field="name"
                   :open-on-focus="true"
                   @select="option => selectedTracer = option"
@@ -98,6 +104,15 @@
               </b-field>
             </div>
             <div class="step-content">
+              <b-message class="submit-form-error" v-show="addReportError !== ''" type="is-danger">
+                {{ addReportError }}
+                <ul>
+                  <li
+                    v-for="addReportValidationError in addReportValidationErrors"
+                    :key="addReportValidationError.metadata.id"
+                  >- {{ addReportValidationError.metadata.reason }}</li>
+                </ul>
+              </b-message>
               <b-field
                 :label="$t('name_pseudo')"
                 :type="errors.has('username') ? 'is-danger': ''"
@@ -148,12 +163,6 @@
                   v-validate="'max:300'"
                 ></b-input>
               </b-field>
-              <b-notification type="is-danger" v-if="addReportErrors.length > 0">
-                <p
-                  v-for="addReportError in addReportErrors"
-                  :key="addReportError.metadata.id"
-                >{{ addReportError.metadata.reason }}</p>
-              </b-notification>
               <button type="submit" class="button is-success hidden">{{ $t('submit') }}</button>
             </div>
             <div class="step-content">
@@ -204,7 +213,7 @@ export default {
   data() {
     return {
       apiUrl: this.$apiUrl,
-      data: this.getTracersData(),
+      tracers: [],
       selectedTracer: null,
       isSubmitting: false,
       files: [],
@@ -213,10 +222,22 @@ export default {
       username: '',
       description: '',
       reportDate: new Date(),
-      addReportErrors: []
+      addReportError: '',
+      addReportValidationErrors: []
     }
   },
-  mounted() {
+  async mounted() {
+    try {
+      await this.loadTracers()
+    } catch (error) {
+      this.$toast.open({
+        message: this.$t('load_tracers_failure'),
+        duration: 5000,
+        type: 'is-danger'
+      })
+    }
+
+    this.tracers = this.getTracersData()
     new bulmaSteps(document.getElementById('addReportSteps'), {
       beforeNext: step => {
         return new Promise(async (resolve, reject) => {
@@ -268,8 +289,10 @@ export default {
     ...tracersModule.mapGetters({
       getTracersData: 'getData'
     }),
+    ...tracersModule.mapActions(['loadTracers']),
     submitReport() {
-      this.addReportErrors = []
+      this.addReportError = ''
+      this.addReportValidationErrors = ''
       this.isSubmitting = true
       return new Promise(async (resolve, reject) => {
         try {
@@ -304,11 +327,12 @@ export default {
           this.selectedTracer = null
           this.tracerName = ''
           this.username = ''
-
           resolve()
         } catch (error) {
           this.isSubmitting = false
-          this.addReportErrors = error.response.data.errors
+          if ((((error || {}).response || {}).data || {}).errors != null)
+            this.addReportValidationErrors = error.response.data.errors
+          this.addReportError = this.$t('submit_report_failure')
           reject(error)
           throw error
         }
@@ -366,7 +390,7 @@ export default {
       }
     },
     filteredDataObj() {
-      return this.data.filter(
+      return this.tracers.filter(
         option =>
           option.name
             .toString()
@@ -471,6 +495,10 @@ export default {
 .add-report .steps {
   flex-grow: 1;
 }
+
+.submit-form-error ul li {
+  margin-left: 15px;
+}
 </style>
 
 <i18n>
@@ -493,7 +521,9 @@ export default {
     "report_review": "Thank you for your report. It will soon be reviewed by an administrator",
     "report": "Report",
     "submit": "Submit",
-    "tracers": "Tracer | Tracers"
+    "tracers": "Tracer | Tracers",
+    "submit_report_failure": "Fail to submit report",
+    "load_tracers_failure": "Fail to load tracers"
   },
   "fr": {
     "add_report": "Ajouter un témoignage",
@@ -513,7 +543,9 @@ export default {
     "report_review": "Merci pour votre témoignage. Un administrateur va bientôt le passer en revu.",
     "report": "Témoignage",
     "submit": "Soumettre",
-    "tracers": "Tracer | Tracers"
+    "tracers": "Tracer | Tracers",
+    "submit_report_failure": "Échec d'ajout d'un témoignage",
+    "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
     "add_report": "Agrega un testimonio",
@@ -533,7 +565,9 @@ export default {
     "report_review": "Gracias por su testimonio. Uno administrador revisado soon",
     "report": "Testimonio",
     "submit": "Enviar",
-    "tracers": "Trazadore | Trazadores"
+    "tracers": "Trazadore | Trazadores",
+    "submit_report_failure": "Error al enviar el informe",
+    "load_tracers_failure": "Fail to load tracers"
   }
 }
 </i18n>

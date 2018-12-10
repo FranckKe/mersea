@@ -56,15 +56,19 @@ export default {
     }
   },
   mounted() {
-    this.load()
+    this.loadLeaderboard()
   },
   methods: {
-    load: async function() {
+    loadLeaderboard: async function() {
       try {
         let leaderboard = await this.$http.get(`/leaderboard`)
         this.leaderboard = leaderboard.data
       } catch (e) {
-        throw e
+        this.$toast.open({
+          message: this.$t('loading_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
       }
     }
   },
@@ -93,7 +97,8 @@ export default {
     "name": "Name",
     "number_of_reports": "Number of reports",
     "per_page": "per page",
-    "search": "Search"
+    "search": "Search",
+    "loading_failure": "Failed to load contributions"
   },
   "fr": {
     "contributions": "Contributions",
@@ -101,7 +106,8 @@ export default {
     "name": "Nom",
     "number_of_reports": "Nombre de témoignages",
     "per_page": "par page",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "loading_failure": "Échec de chargement des contributions"
   },
   "es": {
     "contributions": "Contribución",
@@ -109,7 +115,8 @@ export default {
     "name": "Apellido",
     "number_of_reports": "número de testimonios",
     "per_page": "por página",
-    "search": "Buscar"
+    "search": "Buscar",
+    "loading_failure": "Error al cargar las contribuciones"
   }
 }
 </i18n>

@@ -37,9 +37,12 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapState, mapMutations, mapGetters } = createNamespacedHelpers(
-  'tracers'
-)
+const {
+  mapState,
+  mapMutations,
+  mapGetters,
+  mapActions
+} = createNamespacedHelpers('tracers')
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
 
@@ -56,6 +59,15 @@ export default {
     }
   },
   async created() {
+    try {
+      await this.loadTracers()
+    } catch (e) {
+      this.$toast.open({
+        message: this.$t('load_tracers_failure'),
+        duration: 5000,
+        type: 'is-danger'
+      })
+    }
     this.tracers = this.getData()
   },
   methods: {
@@ -70,7 +82,8 @@ export default {
       }
     },
     ...mapGetters(['getData']),
-    ...mapMutations(['setDisplayFormat'])
+    ...mapMutations(['setDisplayFormat']),
+    ...mapActions(['loadTracers'])
   },
   computed: {
     ...mapState({
@@ -109,19 +122,22 @@ div.section {
     "tracers": "tracer | tracers",
     "search": "Search",
     "displayed": "displayed | displayed",
-    "total": "total"
+    "total": "total",
+    "load_tracers_failure": "Failed to load tracers"
   },
   "fr": {
     "tracers": "tracer | tracers",
     "search": "Rechercher",
     "displayed": "affiché | affichés",
-    "total": "en tout"
+    "total": "en tout",
+    "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
     "tracers": "trazadore | trazadores",
     "search": "Buscar",
     "displayed": "desplegado | desplegado",
-    "total": "total"
+    "total": "total",
+    "load_tracers_failure": "Error al cargar los trazadores"
   }
 }
 </i18n>
