@@ -27,7 +27,8 @@ import {
   faThList,
   faSignOutAlt,
   faMapMarkerAlt,
-  faUser
+  faUser,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free/css/solid.css'
@@ -129,7 +130,15 @@ Vue.use(Buefy, {
   defaultIconPack: 'fas'
 })
 
-library.add(faSearch, faThList, faThLarge, faSignOutAlt, faMapMarkerAlt, faUser)
+library.add(
+  faSearch,
+  faThList,
+  faThLarge,
+  faTimes,
+  faSignOutAlt,
+  faMapMarkerAlt,
+  faUser
+)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$filters = Vue.options.filters

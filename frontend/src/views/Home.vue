@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class>
     <div id="map" class="map"></div>
     <add-report></add-report>
   </div>
@@ -47,7 +47,7 @@ export default {
           .setLngLat(this.coordinates.split(',').reverse())
           .addTo(this.map)
       } else {
-        if (this.newMarker != '') this.newMarker.remove()
+        if (this.newMarker !== '') this.newMarker.remove()
       }
     }
   },
@@ -132,13 +132,13 @@ export default {
         center: [0, 46.2276]
       })
 
-      if (this.coordinates !== '')
+      if (this.isFormActive && this.coordinates !== '')
         this.newMarker = new mapboxgl.Marker()
           .setLngLat(this.coordinates.split(',').reverse())
           .addTo(this.map)
 
       this.map.on('click', async e => {
-        if (!this.isFormActive) return false
+        if (!this.isFormActive || this.currentStep !== 0) return false
         if (this.newMarker !== '') this.newMarker.remove()
 
         this.newMarker = new mapboxgl.Marker()
@@ -252,12 +252,6 @@ export default {
 .map {
   width: 100%;
   height: calc(100vh - 55px); /* header height + margin */
-}
-
-@media only screen and (max-device-width: 1024px) {
-  .map {
-    height: 46vh;
-  }
 }
 
 .mapboxgl-ctrl-group > button {
