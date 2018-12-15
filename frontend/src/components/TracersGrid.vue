@@ -1,20 +1,33 @@
 <template>
   <div class="columns is-multiline is-mobile">
-    <div class="column is-half-mobile is-one-third-tablet is-one-quarter-desktop" :key="idx" v-for="(tracer, idx) in tracers">
+    <div
+      class="column is-full-mobile is-half-tablet is-one-third-desktop"
+      :key="idx"
+      v-for="(tracer, idx) in tracers"
+    >
       <article class="card">
         <div class="card-image">
-          <router-link :to="`/tracers/${tracer.id}`">
-          <div class="img-wrapper" :style="`background-image: url('${apiUrl}${tracer.photo}')`">
-          </div>
-          </router-link>
+          <div
+            class="img-wrapper image"
+            :style="`background-image: url('${apiUrl}${tracer.photo}') `"
+          ></div>
         </div>
         <div class="card-content">
           <div class="content">
-            <p class="title is-4"><router-link :to="`/tracers/${tracer.id}`">{{ tracer.name }}</router-link></p>
+            <p class="title is-4">{{ tracer.name }}</p>
             <p>{{ tracer.description }}</p>
-            <p><strong>{{ $t('origin') }}: </strong>{{ tracer.origin }}</p>
-            <p><strong>{{ $t('type') }}: </strong>{{ tracer.kind }}</p>
-            <p><strong>{{ $t('created_at') }}: </strong><time datetime="tracer.created_at | formatDate">{{ tracer.created_at | formatDate }}</time></p>
+            <p>
+              <strong>{{ $t('origin') }}:</strong>
+              {{ tracer.origin }}
+            </p>
+            <p>
+              <strong>{{ $t('type') }}:</strong>
+              {{ tracer.kind }}
+            </p>
+            <p>
+              <strong>{{ $t('created_at') }}:</strong>
+              <time datetime="tracer.created_at | formatDate">{{ tracer.created_at | formatDate }}</time>
+            </p>
           </div>
         </div>
       </article>
@@ -35,6 +48,12 @@ export default {
 </script>
 
 <style scoped>
+.img-wrapper {
+  height: 254px;
+  padding-top: 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 </style>
 
 <i18n>
