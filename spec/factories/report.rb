@@ -9,7 +9,7 @@ FactoryBot.define do
     latitude { Random.new.rand(42) }
     description { Faker::Lorem.sentence }
     address { Faker::Lorem.sentence }
-    status :accepted
+    status { :accepted }
     reported_at { Time.now }
 
     after(:build) do |instance|
