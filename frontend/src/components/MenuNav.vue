@@ -54,19 +54,23 @@
           </button>
 
           <b-dropdown-item>
-            <router-link :to="'/me'" class="has-text-dark is-size-6">
+            <router-link :to="'/me'" class="has-text-dark is-size-6 nav-dropdown-link">
               <font-awesome-icon icon="user"/>
               {{ $t('my_account') }}
             </router-link>
           </b-dropdown-item>
-          <b-dropdown-item class="has-text-dark is-size-6" disabled>
-            <font-awesome-icon icon="map-marker-alt"/>
-            {{ $t('my_reports') }}
+          <b-dropdown-item class="has-text-dark is-size-6">
+            <router-link :to="'/me/reports'" class="has-text-dark is-size-6 nav-dropdown-link">
+              <font-awesome-icon icon="map-marker-alt"/>
+              {{ $t('my_reports') }}
+            </router-link>
           </b-dropdown-item>
           <hr class="dropdown-divider">
-          <b-dropdown-item class="has-text-danger is-size-6" v-on:click="logout()">
-            <font-awesome-icon icon="sign-out-alt"/>
-            {{ $t('logout') }}
+          <b-dropdown-item class="has-text-danger is-size-6">
+            <a href="#" class="has-text-danger is-size-6 nav-dropdown-link" v-on:click="logout()">
+              <font-awesome-icon icon="sign-out-alt"/>
+              {{ $t('logout') }}
+            </a>
           </b-dropdown-item>
         </b-dropdown>
         <router-link v-if="!$auth.check()" :to="'/login'" class="button">{{ $t('login') }}</router-link>
@@ -167,6 +171,18 @@ export default {
 
 .navbar-end.buttons:last-child {
   margin-bottom: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  padding: 0;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav-dropdown-link {
+  width: 100%;
+  padding: 0.375rem 1rem;
 }
 
 @media (--below-large) {

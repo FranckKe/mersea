@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home'
 import Register from './views/Register'
 import Me from './views/Me'
+import MyReports from './views/MyReports'
 import Login from './views/Login'
 import Leaderboard from './views/Leaderboard'
 import Tracers from './views/Tracers'
@@ -33,6 +34,14 @@ let routes = [
       auth: true
     },
     component: Me
+  },
+  {
+    path: '/me/reports',
+    name: 'myReports',
+    meta: {
+      auth: true
+    },
+    component: MyReports
   },
   {
     path: '/pages/:category/:page',
