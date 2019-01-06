@@ -1,5 +1,5 @@
 # ruby build stage
-FROM ruby:2.5-alpine as ruby-build-env
+FROM ruby:2.6-alpine as ruby-build-env
 MAINTAINER mdouchement
 
 # Set the locale
@@ -59,7 +59,7 @@ RUN yarn run build
 RUN mv dist/* ../public
 
 # final stage
-FROM ruby:2.5-alpine
+FROM ruby:2.6-alpine
 MAINTAINER mdouchement
 
 # Set the locale
