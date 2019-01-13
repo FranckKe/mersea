@@ -2,7 +2,6 @@
   <div class="add-report-layer">
     <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
       <b-loading :is-full-page="false" :active.sync="isSubmitting" :can-cancel="false"></b-loading>
-
       <h2 class="title is-2">{{ $t('add_report') }}</h2>
       <a @click="closeAddReportForm" class="button is-danger close-button">
         <font-awesome-icon icon="times"/>
@@ -246,7 +245,8 @@ export default {
       description: '',
       reportDate: new Date(),
       addReportError: '',
-      addReportValidationErrors: []
+      addReportValidationErrors: [],
+      bulmaSteps: {}
     }
   },
   async mounted() {
@@ -262,40 +262,44 @@ export default {
     }
 
     this.tracers = this.getTracersData()
-    new bulmaSteps(document.getElementById('addReportSteps'), {
-      beforeNext: step => {
-        return new Promise(async (resolve, reject) => {
-          if (step === 0) {
-            resolve(
-              this.$validator.validate('coordinates') &&
-                this.$validator.validate('address')
-            )
-          }
-          if (step === 1) {
-            resolve(this.$validator.validate('tracer'))
-          }
-          if (step === 2) {
-            let validateForm = await this.$validator.validateAll()
-            if (validateForm) {
-              try {
-                await this.submitReport()
-                resolve(true)
-              } catch (error) {
+    this.bulmaSteps = new bulmaSteps(
+      document.getElementById('addReportSteps'),
+      {
+        beforeNext: step => {
+          return new Promise(async (resolve, reject) => {
+            if (step === 0) {
+              resolve(
+                this.$validator.validate('coordinates') &&
+                  this.$validator.validate('address')
+              )
+            }
+            if (step === 1) {
+              resolve(this.$validator.validate('tracer'))
+              this.username = this.$auth.check() ? this.$auth.user().name : ''
+            }
+            if (step === 2) {
+              let validateForm = await this.$validator.validateAll()
+              if (validateForm) {
+                try {
+                  await this.submitReport()
+                  resolve(true)
+                } catch (error) {
+                  reject(false)
+                }
+              } else {
+                console.warn(this.$validator.errors)
+                console.warn(this.$validator.fields)
                 reject(false)
               }
-            } else {
-              console.warn(this.$validator.errors)
-              console.warn(this.$validator.fields)
-              reject(false)
             }
-          }
-          resolve(true)
-        })
-      },
-      onShow: step => {
-        this.currentStep = step
+            resolve(true)
+          })
+        },
+        onShow: step => {
+          this.currentStep = step
+        }
       }
-    })
+    )
   },
   methods: {
     ...addReportModule.mapMutations([
@@ -352,6 +356,8 @@ export default {
           this.selectedTracer = null
           this.tracerName = ''
           this.username = ''
+          this.$validator.reset()
+
           resolve()
         } catch (error) {
           this.isSubmitting = false
@@ -373,6 +379,12 @@ export default {
     },
     closeAddReportForm() {
       this.isFormActive = false
+      const currentStep = this.bulmaSteps.get_current_step_id()
+      if (currentStep === 3) {
+        for (let i = 0; i < currentStep; i++) {
+          this.bulmaSteps.previous_step()
+        }
+      }
     }
   },
   computed: {
