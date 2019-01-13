@@ -1,11 +1,13 @@
 <template>
-<div class="lang-switcher">
-  <b-select v-model="lang">
-    <option v-for="(language, i) in getAvailableLangs()" :key="`language${i}`" :value="language">
-      {{ $t(language) }}
-    </option>
-  </b-select>
-</div>
+  <div class="lang-switcher">
+    <b-select v-model="lang">
+      <option
+        v-for="(language, i) in getAvailableLangs()"
+        :key="`language${i}`"
+        :value="language"
+      >{{ $t(language) }}</option>
+    </b-select>
+  </div>
 </template>
 
 <script>

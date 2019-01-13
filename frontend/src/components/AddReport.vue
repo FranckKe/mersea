@@ -48,8 +48,9 @@
                   v-validate="'required'"
                 ></b-input>
               </b-field>
+              <p>{{ $t('click_to_report') }}</p>
               <b-field
-                :label="$t('click_to_report')"
+                :label="$t('address')"
                 :type="errors.has('address') ? 'is-danger': ''"
                 :message="errors.has('address') ? errors.first('address') : ''"
               >
@@ -57,6 +58,7 @@
                   v-model="address"
                   type="text"
                   name="address"
+                  :data-vv-as="$t('address')|lowercase"
                   v-validate="'required'"
                   disabled="true"
                 ></b-input>
@@ -75,6 +77,7 @@
                   field="name"
                   :open-on-focus="true"
                   @select="option => selectedTracer = option"
+                  :data-vv-as="$tc('tracers', 1)|lowercase"
                   v-validate="'required'"
                 >
                   <template slot-scope="props">
@@ -102,6 +105,7 @@
                   name="quantity"
                   type="number"
                   step="1"
+                  :data-vv-as="$t('quantity')|lowercase"
                   v-validate="'required|min_value:0'"
                 ></b-input>
               </b-field>
@@ -124,6 +128,7 @@
                 <b-input
                   v-model="username"
                   name="username"
+                  :data-vv-as="$t('name_pseudo')|lowercase"
                   v-validate="'required'"
                   :disabled="this.$auth.check()"
                 ></b-input>
@@ -138,6 +143,7 @@
                   name="reportDate"
                   placeholder="$t('click_select')"
                   :mobile-native="false"
+                  :data-vv-as="$t('report_date')|lowercase"
                   v-validate="'required'"
                 ></b-datepicker>
               </b-field>
@@ -150,11 +156,12 @@
                 <b-upload
                   v-model="files"
                   name="files"
+                  :data-vv-as="$t('photo')|lowercase"
                   v-validate="'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'"
                 >
                   <a class="button is-primary">
                     <b-icon icon="upload"></b-icon>
-                    <span>Photo</span>
+                    <span>{{ $t('photo') }}</span>
                   </a>
                 </b-upload>
                 <span class="file-name" v-if="files && files.length">{{ files[0].name }}</span>
@@ -169,6 +176,7 @@
                   name="description"
                   maxlength="300"
                   type="textarea"
+                  :data-vv-as="$t('description')|lowercase"
                   v-validate="'max:300'"
                 ></b-input>
               </b-field>
@@ -523,6 +531,7 @@ export default {
 {
   "en": {
     "add_report": "Add a report",
+    "address": "Address",
     "cancel_report": "Close reporting",
     "click_select": "Click to select",
     "click_to_report": "Click on the map to locate the report",
@@ -542,10 +551,12 @@ export default {
     "submit": "Submit",
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Fail to submit report",
+    "photo": "Photo",
     "load_tracers_failure": "Fail to load tracers"
   },
   "fr": {
     "add_report": "Ajouter un témoignage",
+    "address": "Adresse",
     "cancel_report": "Fermer l'ajout de témoignage",
     "click_select": "Cliquez pour sélectionner",
     "click_to_report": "Cliquer sur la carte pour localiser le témoignage",
@@ -565,10 +576,12 @@ export default {
     "submit": "Soumettre",
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Échec d'ajout d'un témoignage",
+    "photo": "Photo",
     "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
     "add_report": "Agrega un testimonio",
+    "address": "Dirección",
     "cancel_report": "Cerrar agrega testimonio",
     "click_select": "Clic para seleccionar",
     "click_to_report": "Clic sobre el mapa para localizar el testimonio",
@@ -588,6 +601,7 @@ export default {
     "submit": "Enviar",
     "tracers": "Trazadore | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
+    "photo": "Foto",
     "load_tracers_failure": "Fail to load tracers"
   }
 }
