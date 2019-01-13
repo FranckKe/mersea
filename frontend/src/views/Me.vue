@@ -199,7 +199,7 @@ export default {
     },
 
     async updateUserPassword() {
-      this.userPassword.formErrors = ['']
+      this.userPassword.formErrors = []
       let validateForm = await this.$validator.validateAll(
         'update-user-password'
       )
@@ -213,10 +213,9 @@ export default {
         ]
         return false
       }
-      let updateUserPasswordRes
 
       try {
-        updateUserPasswordRes = await this.$http({
+        await this.$http({
           method: 'PATCH',
           url: `/users/update_password`,
           data: this.userPassword
