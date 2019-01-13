@@ -151,6 +151,11 @@ Vue.filter('capitalize', function(value) {
   return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
+Vue.filter('lowercase', function(value) {
+  if (!value) return ''
+  return value.toString().toLowerCase()
+})
+
 Vue.filter('slugify', function(value) {
   return slugify(value)
 })
