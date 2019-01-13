@@ -125,7 +125,7 @@
                   v-model="username"
                   name="username"
                   v-validate="'required'"
-                  :disabled="$auth.check()"
+                  :disabled="this.$auth.check()"
                 ></b-input>
               </b-field>
               <b-field
@@ -145,6 +145,7 @@
                 class="file"
                 :type="errors.has('files') ? 'is-danger': ''"
                 :message="errors.has('files') ? errors.first('files') : ''"
+                v-if="this.$auth.user() && !this.$auth.user().senior"
               >
                 <b-upload
                   v-model="files"
@@ -243,6 +244,7 @@ export default {
   async mounted() {
     try {
       await this.loadTracers()
+      if (this.$auth.check()) this.username = this.$auth.user().name
     } catch (error) {
       this.$toast.open({
         message: this.$t('load_tracers_failure'),
@@ -310,7 +312,8 @@ export default {
       this.isSubmitting = true
       return new Promise(async (resolve, reject) => {
         try {
-          let file64 = await this.getBase64(this.files[0])
+          let file64 =
+            this.files.length > 0 ? await this.getBase64(this.files[0]) : ''
 
           const postDataJson = {
             name: this.$auth.check() ? this.$auth.user().name : this.username,
@@ -320,9 +323,9 @@ export default {
             reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
             tracer_id: this.selectedTracer.id,
             quantity: this.quantity,
-            photo: file64,
             description: this.description
           }
+          if (file64.length > 0) postDataJson.photo = file64
 
           await this.$http({
             method: 'POST',
