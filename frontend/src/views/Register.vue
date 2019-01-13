@@ -3,59 +3,70 @@
     <div class="container">
       <h1 class="title is-1">{{ $t('register') }}</h1>
 
-      <b-message v-show="formErrors.length" :title="$tc('errors', formErrors.length)" type="is-danger">
+      <b-message
+        v-show="formErrors.length"
+        :title="$tc('errors', formErrors.length)"
+        type="is-danger"
+      >
         <ul>
           <li v-for="error in formErrors" v-bind:key="error">{{ error }}</li>
         </ul>
       </b-message>
 
-      <form class="form-register"  v-on:submit.prevent="register()">
+      <form class="form-register" v-on:submit.prevent="register()">
         <b-field
           :label="$t('name')"
           :type="errors.has('username') ? 'is-danger': ''"
-          :message="errors.has('username') ? errors.first('username') : ''">
+          :message="errors.has('username') ? errors.first('username') : ''"
+        >
           <b-input
             v-model="user.name"
             name="username"
-            v-validate="'required'">
-          </b-input>
+            :data-vv-as="$t('name')|lowercase"
+            v-validate="'required'"
+          ></b-input>
         </b-field>
         <b-field
           :label="$t('email')"
           :type="errors.has('email') ? 'is-danger': ''"
-          :message="errors.has('email') ? errors.first('email') : ''">
+          :message="errors.has('email') ? errors.first('email') : ''"
+        >
           <b-input
             type="email"
             v-model="user.email"
             name="email"
-            v-validate="'required|email'">
-          </b-input>
+            :data-vv-as="$t('email')|lowercase"
+            v-validate="'required|email'"
+          ></b-input>
         </b-field>
         <b-field
           :label="$t('password')"
           :type="errors.has('password') ? 'is-danger': ''"
-          :message="errors.has('password') ? errors.first('password') : ''">
+          :message="errors.has('password') ? errors.first('password') : ''"
+        >
           <b-input
             type="password"
             v-model="user.password"
             name="password"
             ref="password"
+            :data-vv-as="$t('password')|lowercase"
             v-validate="'required|min:6'"
-            password-reveal>
-          </b-input>
+            password-reveal
+          ></b-input>
         </b-field>
         <b-field
           :label="$t('password_confirmation')"
           :type="errors.has('passwordConfirmation') ? 'is-danger': ''"
-          :message="errors.has('passwordConfirmation') ? errors.first('passwordConfirmation') : ''">
+          :message="errors.has('passwordConfirmation') ? errors.first('passwordConfirmation') : ''"
+        >
           <b-input
             type="password"
             v-model="user.passwordConfirmation"
             name="passwordConfirmation"
-            data-vv-as="password"
+            :data-vv-as="$t('password_confirmation')|lowercase"
             v-validate="'required|confirmed:password'"
-            password-reveal>
-          </b-input>
+            password-reveal
+          ></b-input>
         </b-field>
         <div class="field">
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>

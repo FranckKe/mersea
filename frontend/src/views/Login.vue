@@ -1,43 +1,45 @@
 <template>
-<div class="section">
-  <div class="container">
-    <h1 class="title is-1">{{ $t('login') }}</h1>
+  <div class="section">
+    <div class="container">
+      <h1 class="title is-1">{{ $t('login') }}</h1>
 
-    <b-message v-show="error.length" :title="$t('error')" type="is-danger">
-      {{ error }}
-    </b-message>
+      <b-message v-show="error.length" :title="$t('error')" type="is-danger">{{ error }}</b-message>
 
-    <form class="form-login" v-on:submit.prevent="login()">
-      <b-field
-      :label="$t('email')"
-      :type="errors.has('email') ? 'is-danger': ''"
-      :message="errors.has('email') ? errors.first('email') : ''">
-        <b-input
-          v-model="email"
-          type="email"
-          name="email"
-          v-validate="'required|email'">
-        </b-input>
-      </b-field>
-      <b-field
-        :label="$t('password')"
-        :type="errors.has('password') ? 'is-danger': ''"
-        :message="errors.has('password') ? errors.first('password') : ''">
-        <b-input
-          v-model="password"
-          type="password"
-          name="password"
-          v-validate="'required'"
-          password-reveal>
-        </b-input>
-      </b-field>
-      <div class="field">
-        <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
-      </div>
-      <button type="submit" class="button is-success">{{ $t('login') }}</button>
-    </form>
+      <form class="form-login" v-on:submit.prevent="login()">
+        <b-field
+          :label="$t('email')"
+          :type="errors.has('email') ? 'is-danger': ''"
+          :message="errors.has('email') ? errors.first('email') : ''"
+        >
+          <b-input
+            v-model="email"
+            type="email"
+            name="email"
+            :data-vv-as="$t('email')|lowercase"
+            v-validate="'required|email'"
+          ></b-input>
+        </b-field>
+        <b-field
+          :label="$t('password')"
+          :type="errors.has('password') ? 'is-danger': ''"
+          :message="errors.has('password') ? errors.first('password') : ''"
+        >
+          <b-input
+            v-model="password"
+            type="password"
+            name="password"
+            :data-vv-as="$t('password')|lowercase"
+            v-validate="'required'"
+            password-reveal
+          ></b-input>
+        </b-field>
+        <div class="field">
+          <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
+        </div>
+        <button type="submit" class="button is-success">{{ $t('login') }}</button>
+      </form>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
