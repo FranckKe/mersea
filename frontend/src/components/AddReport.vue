@@ -64,49 +64,72 @@
               </b-field>
             </div>
             <div class="step-content">
-              <b-field
-                :label="$tc('tracers', 1)"
-                :type="errors.has('tracer') ? 'is-danger': ''"
-                :message="errors.has('tracer') ? errors.first('tracer') : ''"
-              >
-                <b-autocomplete
-                  v-model="tracerName"
-                  name="tracer"
-                  :data="tracers"
-                  field="name"
-                  :open-on-focus="true"
-                  @select="option => selectedTracer = option"
-                  :data-vv-as="$tc('tracers', 1)|lowercase"
-                  v-validate="'required'"
+              <div v-for="(tracer, index) in selectedTracers" :key="index">
+                <hr v-if="index > 0">
+                <b-field key="key" grouped>
+                  <b-field>
+                    <a
+                      @click="removeTracerInput(index)"
+                      class="button is-danger remove-tracer-input"
+                    >
+                      <b-icon icon="minus" size="is-small"></b-icon>
+                    </a>
+                  </b-field>
+                  <b-field
+                    :label="$tc('tracers', 1)"
+                    :type="errors.has('tracer') ? 'is-danger': ''"
+                    :message="errors.has('tracer') ? errors.first('tracer') : ''"
+                  >
+                    <b-autocomplete
+                      v-model="tracerNames[index]"
+                      name="tracer"
+                      :data="tracers"
+                      field="name"
+                      :open-on-focus="true"
+                      @select="option => selectedTracers[index] = option"
+                      :data-vv-as="$tc('tracers', 1)|lowercase"
+                      v-validate="'required'"
+                    >
+                      <template slot-scope="props">
+                        <div class="media">
+                          <div class="media-left">
+                            <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
+                          </div>
+                          <div class="media-content">
+                            {{ props.option.name }}
+                            <br>
+                            <small>{{ props.option.type }}</small>
+                          </div>
+                        </div>
+                      </template>
+                      <template slot="empty">{{ $t('no_results') }}</template>
+                    </b-autocomplete>
+                  </b-field>
+                  <b-field
+                    :label="$t('quantity')"
+                    :type="errors.has('quantity') ? 'is-danger': ''"
+                    :message="errors.has('quantity') ? errors.first('quantity') : ''"
+                    expanded
+                  >
+                    <b-input
+                      v-model="quantities[index]"
+                      name="quantity"
+                      type="number"
+                      step="1"
+                      :data-vv-as="$t('quantity')|lowercase"
+                      v-validate="'required|min_value:0'"
+                    ></b-input>
+                  </b-field>
+                </b-field>
+              </div>
+              <b-field style="text-align: center;">
+                <a
+                  class="button is-primary add-tracer-input"
+                  @click="addTracerInput"
+                  :disabled="selectedTracers.length >= 4"
                 >
-                  <template slot-scope="props">
-                    <div class="media">
-                      <div class="media-left">
-                        <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
-                      </div>
-                      <div class="media-content">
-                        {{ props.option.name }}
-                        <br>
-                        <small>{{ props.option.type }}</small>
-                      </div>
-                    </div>
-                  </template>
-                  <template slot="empty">{{ $t('no_results') }}</template>
-                </b-autocomplete>
-              </b-field>
-              <b-field
-                :label="$t('quantity')"
-                :type="errors.has('quantity') ? 'is-danger': ''"
-                :message="errors.has('quantity') ? errors.first('quantity') : ''"
-              >
-                <b-input
-                  v-model="quantity"
-                  name="quantity"
-                  type="number"
-                  step="1"
-                  :data-vv-as="$t('quantity')|lowercase"
-                  v-validate="'required|min_value:0'"
-                ></b-input>
+                  <b-icon icon="plus"></b-icon>
+                </a>
               </b-field>
             </div>
             <div class="step-content">
@@ -236,11 +259,11 @@ export default {
     return {
       apiUrl: this.$apiUrl,
       tracers: [],
-      selectedTracer: null,
+      selectedTracers: [null],
       isSubmitting: false,
       files: [],
-      quantity: 1,
-      tracerName: '',
+      quantities: [1],
+      tracerNames: [''],
       username: this.$auth.check() ? this.$auth.user().name : '',
       description: '',
       reportDate: new Date(),
@@ -351,10 +374,10 @@ export default {
           this.files = []
           this.isSubmitting = false
           this.photo = ''
-          this.quantity = 1
+          this.quantities = [1]
           this.reportDate = new Date()
-          this.selectedTracer = null
-          this.tracerName = ''
+          this.selectedTracers = [null]
+          this.tracerNames = ['']
           this.username = ''
           this.$validator.reset()
 
@@ -385,6 +408,17 @@ export default {
           this.bulmaSteps.previous_step()
         }
       }
+    },
+    removeTracerInput(index) {
+      this.selectedTracers.splice(index, 1)
+      this.quantities.splice(index, 1)
+    },
+    addTracerInput() {
+      if (this.selectedTracers.length >= 4) {
+        return
+      }
+      this.selectedTracers.push(null)
+      this.quantities.push(1)
     }
   },
   computed: {
@@ -428,15 +462,6 @@ export default {
       get() {
         return this.getAddress()
       }
-    },
-    filteredDataObj() {
-      return this.tracers.filter(
-        option =>
-          option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.tracerName.toLowerCase()) >= 0
-      )
     }
   }
 }
@@ -493,6 +518,10 @@ export default {
 .add-report::-webkit-scrollbar-thumb {
   background-color: var(--color-primary);
   border-radius: 0px;
+}
+
+.add-tracer-input {
+  margin-top: 20px;
 }
 
 .close-icon {
