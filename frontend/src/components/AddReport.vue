@@ -1,10 +1,18 @@
 <template>
   <div class="add-report-layer">
-    <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
-      <b-loading :is-full-page="false" :active.sync="isSubmitting" :can-cancel="false"></b-loading>
+    <section
+      id="addReport"
+      class="add-report"
+      :class="{ hidden: !isFormActive }"
+    >
+      <b-loading
+        :is-full-page="false"
+        :active.sync="areSubmitting.every(s => s)"
+        :can-cancel="false"
+      ></b-loading>
       <h2 class="title is-2">{{ $t('add_report') }}</h2>
       <a @click="closeAddReportForm" class="button is-danger close-button">
-        <font-awesome-icon icon="times"/>
+        <font-awesome-icon icon="times" />
       </a>
       <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
@@ -28,17 +36,25 @@
         <div class="step-item">
           <div class="step-marker">4</div>
           <div class="step-details">
+            <p class="step-title">{{ 'Saving' }}</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-marker">5</div>
+          <div class="step-details">
             <p class="step-title">{{ $t('done') }}</p>
           </div>
         </div>
-        <form class="add-report-form" @submit.prevent="submitReport">
+        <form class="add-report-form" @submit.prevent="submitReports">
           <div class="steps-content">
             <div class="step-content">
               <b-field
                 label="coordinates"
                 class="hidden"
-                :type="errors.has('coordinates') ? 'is-danger': ''"
-                :message="errors.has('coordinates') ? errors.first('coordinates') : ''"
+                :type="errors.has('coordinates') ? 'is-danger' : ''"
+                :message="
+                  errors.has('coordinates') ? errors.first('coordinates') : ''
+                "
               >
                 <b-input
                   v-model="coordinates"
@@ -50,14 +66,14 @@
               <p>{{ $t('click_to_report') }}</p>
               <b-field
                 :label="$t('address')"
-                :type="errors.has('address') ? 'is-danger': ''"
+                :type="errors.has('address') ? 'is-danger' : ''"
                 :message="errors.has('address') ? errors.first('address') : ''"
               >
                 <b-input
                   v-model="address"
                   type="text"
                   name="address"
-                  :data-vv-as="$t('address')|lowercase"
+                  :data-vv-as="$t('address') | lowercase"
                   v-validate="'required'"
                   disabled="true"
                 ></b-input>
@@ -65,9 +81,9 @@
             </div>
             <div class="step-content">
               <div v-for="(tracer, index) in selectedTracers" :key="index">
-                <hr v-if="index > 0">
+                <hr v-if="index > 0" />
                 <b-field key="key" grouped>
-                  <b-field>
+                  <b-field v-if="selectedTracers.length > 1">
                     <a
                       @click="removeTracerInput(index)"
                       class="button is-danger remove-tracer-input"
@@ -77,8 +93,10 @@
                   </b-field>
                   <b-field
                     :label="$tc('tracers', 1)"
-                    :type="errors.has('tracer') ? 'is-danger': ''"
-                    :message="errors.has('tracer') ? errors.first('tracer') : ''"
+                    :type="errors.has('tracer') ? 'is-danger' : ''"
+                    :message="
+                      errors.has('tracer') ? errors.first('tracer') : ''
+                    "
                   >
                     <b-autocomplete
                       v-model="tracerNames[index]"
@@ -86,18 +104,20 @@
                       :data="tracers"
                       field="name"
                       :open-on-focus="true"
-                      @select="option => selectedTracers[index] = option"
-                      :data-vv-as="$tc('tracers', 1)|lowercase"
+                      @select="option => (selectedTracers[index] = option)"
+                      :data-vv-as="$tc('tracers', 1) | lowercase"
                       v-validate="'required'"
                     >
                       <template slot-scope="props">
                         <div class="media">
                           <div class="media-left">
-                            <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
+                            <img
+                              class="image is-64x64"
+                              :src="`${apiUrl}${props.option.photo}`"
+                            />
                           </div>
                           <div class="media-content">
-                            {{ props.option.name }}
-                            <br>
+                            {{ props.option.name }} <br />
                             <small>{{ props.option.type }}</small>
                           </div>
                         </div>
@@ -107,8 +127,10 @@
                   </b-field>
                   <b-field
                     :label="$t('quantity')"
-                    :type="errors.has('quantity') ? 'is-danger': ''"
-                    :message="errors.has('quantity') ? errors.first('quantity') : ''"
+                    :type="errors.has('quantity') ? 'is-danger' : ''"
+                    :message="
+                      errors.has('quantity') ? errors.first('quantity') : ''
+                    "
                     expanded
                   >
                     <b-input
@@ -116,7 +138,7 @@
                       name="quantity"
                       type="number"
                       step="1"
-                      :data-vv-as="$t('quantity')|lowercase"
+                      :data-vv-as="$t('quantity') | lowercase"
                       v-validate="'required|min_value:0'"
                     ></b-input>
                   </b-field>
@@ -133,76 +155,107 @@
               </b-field>
             </div>
             <div class="step-content">
-              <b-message class="submit-form-error" v-show="addReportError !== ''" type="is-danger">
+              <b-message
+                v-for="(addReportError, index) in addReportsErrors"
+                class="submit-form-error"
+                :key="index"
+                v-show="addReportError !== ''"
+                type="is-danger"
+              >
                 {{ addReportError }}
                 <ul>
+                  <!-- TODO: See if we need to create an array of arrays-->
                   <li
-                    v-for="addReportValidationError in addReportValidationErrors"
+                    v-for="addReportValidationError in addReportsValidationErrors"
                     :key="addReportValidationError.metadata.id"
-                  >- {{ addReportValidationError.metadata.reason }}</li>
+                  >
+                    - {{ addReportValidationError.metadata.reason }}
+                  </li>
                 </ul>
               </b-message>
               <b-field
                 :label="$t('name_pseudo')"
-                :type="errors.has('username') ? 'is-danger': ''"
-                :message="errors.has('username') ? errors.first('username') : ''"
+                :type="errors.has('username') ? 'is-danger' : ''"
+                :message="
+                  errors.has('username') ? errors.first('username') : ''
+                "
               >
                 <b-input
                   v-model="username"
                   name="username"
-                  :data-vv-as="$t('name_pseudo')|lowercase"
+                  :data-vv-as="$t('name_pseudo') | lowercase"
                   v-validate="'required'"
                   :disabled="this.$auth.check()"
                 ></b-input>
               </b-field>
               <b-field
                 :label="$t('report_date')"
-                :type="errors.has('reportDate') ? 'is-danger': ''"
-                :message="errors.has('reportDate') ? errors.first('reportDate') : ''"
+                :type="errors.has('reportDate') ? 'is-danger' : ''"
+                :message="
+                  errors.has('reportDate') ? errors.first('reportDate') : ''
+                "
               >
                 <b-datepicker
                   v-model="reportDate"
                   name="reportDate"
                   placeholder="$t('click_select')"
                   :mobile-native="false"
-                  :data-vv-as="$t('report_date')|lowercase"
+                  :data-vv-as="$t('report_date') | lowercase"
                   v-validate="'required'"
                 ></b-datepicker>
               </b-field>
               <b-field
                 class="file"
-                :type="errors.has('files') ? 'is-danger': ''"
+                :type="errors.has('files') ? 'is-danger' : ''"
                 :message="errors.has('files') ? errors.first('files') : ''"
                 v-if="this.$auth.user() && !this.$auth.user().senior"
               >
                 <b-upload
                   v-model="files"
                   name="files"
-                  :data-vv-as="$t('photo')|lowercase"
-                  v-validate="'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'"
+                  :data-vv-as="$t('photo') | lowercase"
+                  v-validate="
+                    'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'
+                  "
                 >
                   <a class="button is-primary">
                     <b-icon icon="upload"></b-icon>
                     <span>{{ $t('photo') }}</span>
                   </a>
                 </b-upload>
-                <span class="file-name" v-if="files && files.length">{{ files[0].name }}</span>
+                <span class="file-name" v-if="files && files.length">
+                  {{ files[0].name }}
+                </span>
               </b-field>
               <b-field
                 :label="`${$t('description')} (${$t('optional')})`"
-                :type="errors.has('description') ? 'is-danger': ''"
-                :message="errors.has('description') ? errors.first('description') : ''"
+                :type="errors.has('description') ? 'is-danger' : ''"
+                :message="
+                  errors.has('description') ? errors.first('description') : ''
+                "
               >
                 <b-input
                   v-model="description"
                   name="description"
                   maxlength="300"
                   type="textarea"
-                  :data-vv-as="$t('description')|lowercase"
+                  :data-vv-as="$t('description') | lowercase"
                   v-validate="'max:300'"
                 ></b-input>
               </b-field>
-              <button type="submit" class="button is-success hidden">{{ $t('submit') }}</button>
+              <button type="submit" class="button is-success hidden">
+                {{ $t('submit') }}
+              </button>
+            </div>
+            <div class="step-content">
+              <p
+                v-for="(selectedTracer, index) in selectedTracers.filter(
+                  s => s !== null
+                )"
+                :key="index"
+              >
+                {{ selectedTracer.name }}
+              </p>
             </div>
             <div class="step-content">
               <p>{{ $t('report_review') }}</p>
@@ -216,7 +269,8 @@
               id="prevAction"
               data-nav="previous"
               class="button is-light"
-            >{{ $t('previous') }}</a>
+              >{{ $t('previous') }}</a
+            >
           </div>
           <div class="steps-action">
             <a
@@ -224,24 +278,34 @@
               id="nextAction"
               data-nav="next"
               class="button"
-              :class="{ 'is-success': currentStep === 2 , hidden: currentStep === 3}"
-            >{{ currentStep === 2 ? $t('submit') : $t('next') }}</a>
+              :class="{
+                'is-success': currentStep === 2,
+                hidden: currentStep === 4
+              }"
+              >{{ currentStep === 2 ? $t('submit') : $t('next') }}</a
+            >
             <a
               href="#"
               class="button is-danger close-button-step"
-              :class="{hidden: currentStep !== 3 }"
+              :class="{ hidden: currentStep !== 4 }"
               @click="closeAddReportForm"
-            >{{ $t('close') }}</a>
+              >{{ $t('close') }}</a
+            >
           </div>
         </div>
       </div>
     </section>
     <a
       href="#"
-      @click="e => { isFormActive = true }"
+      @click="
+        e => {
+          isFormActive = true
+        }
+      "
       class="add-report-button button is-success"
-      :class="{'hidden': isFormActive}"
-    >{{ $t('add_report') }}</a>
+      :class="{ hidden: isFormActive }"
+      >{{ $t('add_report') }}</a
+    >
   </div>
 </template>
 
@@ -259,16 +323,17 @@ export default {
     return {
       apiUrl: this.$apiUrl,
       tracers: [],
-      selectedTracers: [null],
-      isSubmitting: false,
+      selectedTracers: [{}],
+      areSubmitting: [false],
       files: [],
+      isSaved: [false],
       quantities: [1],
       tracerNames: [''],
       username: this.$auth.check() ? this.$auth.user().name : '',
       description: '',
       reportDate: new Date(),
-      addReportError: '',
-      addReportValidationErrors: [],
+      addReportsErrors: [],
+      addReportsValidationErrors: [],
       bulmaSteps: {}
     }
   },
@@ -304,7 +369,6 @@ export default {
               let validateForm = await this.$validator.validateAll()
               if (validateForm) {
                 try {
-                  await this.submitReport()
                   resolve(true)
                 } catch (error) {
                   reject(false)
@@ -315,11 +379,48 @@ export default {
                 reject(false)
               }
             }
+            console.log(step)
             resolve(true)
           })
         },
         onShow: step => {
-          this.currentStep = step
+          return new Promise(async (resolve, reject) => {
+            this.currentStep = step
+
+            if (step === 3) {
+              console.log('Step 3')
+              try {
+                console.log('Submitting')
+                await this.submitReports()
+                console.log('Submitted')
+
+                this.bulmaSteps.next_step()
+
+                resolve(true)
+              } catch (error) {
+                console.log(error)
+                reject(false)
+              }
+            }
+
+            if (step === 4) {
+              this.address = ''
+              this.coordinates = ''
+              this.description = ''
+              this.files = []
+              this.areSubmitting = [false]
+              this.isSaved = [false]
+              this.photo = ''
+              this.quantities = [1]
+              this.reportDate = new Date()
+              this.selectedTracers = [{}]
+              this.tracerNames = ['']
+              this.username = this.$auth.check() ? this.$auth.user().name : ''
+              this.$validator.reset()
+            }
+
+            resolve()
+          })
         }
       }
     )
@@ -341,10 +442,43 @@ export default {
       getTracersData: 'getData'
     }),
     ...tracersModule.mapActions(['loadTracers']),
-    submitReport() {
-      this.addReportError = ''
-      this.addReportValidationErrors = ''
-      this.isSubmitting = true
+    submitReports() {
+      return new Promise(async (resolve, reject) => {
+        this.addReportsErrors = []
+        this.addReportsValidationErrors = []
+
+        const promises = []
+        for (let index = 0; index < this.selectedTracers.length; index++) {
+          const promise = this.submitReport(index)
+            .then(index => {
+              this.isSaved[index] = true
+            })
+            .catch((error, index) => {
+              if ((((error || {}).response || {}).data || {}).errors != null)
+                this.addReportsValidationErrors[index] =
+                  error.response.data.errors
+              this.addReportsErrors[index] = this.$t('submit_report_failure')
+              console.log(this.isSaved)
+              console.log(index)
+              this.isSaved[index] = false
+            })
+            .finally(() => {
+              this.areSubmitting[index] = false
+            })
+          promises.push(promise)
+        }
+
+        try {
+          this.areSubmitting = promises.map(() => true)
+          await Promise.all(promises)
+
+          resolve()
+        } catch (e) {
+          reject(e)
+        }
+      })
+    },
+    submitReport(index) {
       return new Promise(async (resolve, reject) => {
         try {
           let file64 =
@@ -356,8 +490,8 @@ export default {
             latitude: this.coordinates.split(',')[0],
             longitude: this.coordinates.split(',')[1],
             reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
-            tracer_id: this.selectedTracer.id,
-            quantity: this.quantity,
+            tracer_id: this.selectedTracers[index].id,
+            quantity: this.quantities[index],
             description: this.description
           }
           if (file64.length > 0) postDataJson.photo = file64
@@ -368,26 +502,9 @@ export default {
             data: postDataJson
           })
 
-          this.address = ''
-          this.coordinates = ''
-          this.description = ''
-          this.files = []
-          this.isSubmitting = false
-          this.photo = ''
-          this.quantities = [1]
-          this.reportDate = new Date()
-          this.selectedTracers = [null]
-          this.tracerNames = ['']
-          this.username = ''
-          this.$validator.reset()
-
-          resolve()
+          resolve(index)
         } catch (error) {
-          this.isSubmitting = false
-          if ((((error || {}).response || {}).data || {}).errors != null)
-            this.addReportValidationErrors = error.response.data.errors
-          this.addReportError = this.$t('submit_report_failure')
-          reject(error)
+          reject(error, index)
           throw error
         }
       })
@@ -403,7 +520,7 @@ export default {
     closeAddReportForm() {
       this.isFormActive = false
       const currentStep = this.bulmaSteps.get_current_step_id()
-      if (currentStep === 3) {
+      if (currentStep === 4) {
         for (let i = 0; i < currentStep; i++) {
           this.bulmaSteps.previous_step()
         }
@@ -417,7 +534,7 @@ export default {
       if (this.selectedTracers.length >= 4) {
         return
       }
-      this.selectedTracers.push(null)
+      this.selectedTracers.push({})
       this.quantities.push(1)
     }
   },
