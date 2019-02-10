@@ -68,35 +68,138 @@ export default {
     mapLoad: function() {
       const geojson = this.getReports()
       if (geojson == null) return false
-      for (let marker of geojson.features) {
-        new mapboxgl.Marker({ color: `${marker.properties.color}` })
-          .setLngLat(marker.geometry.coordinates)
-          .setPopup(
-            new mapboxgl.Popup({ offset: 25 }).setHTML(
-              `<article class="media">
+
+      this.map.addSource('reports', {
+        type: 'geojson',
+        data: geojson,
+        cluster: true,
+        clusterMaxZoom: 10, // Disable clustering after zoom N
+        clusterRadius: 15 // Radius to cluster points
+      })
+
+      this.map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'reports',
+        filter: ['has', 'point_count'],
+        paint: {
+          // Blue, 15px circles when point count is less than 100
+          // Yellow, 20px circles when point count is between 100 and 300
+          // Pink, 30px circles when point count is greater than or equal to 300
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#000',
+          'circle-color': [
+            'step',
+            ['get', 'point_count'],
+            '#51bbd6',
+            100,
+            '#f1f075',
+            750,
+            '#f28cb1'
+          ],
+          'circle-radius': [
+            'step',
+            ['get', 'point_count'],
+            15,
+            100,
+            20,
+            750,
+            30
+          ]
+        }
+      })
+
+      this.map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'reports',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        }
+      })
+
+      this.map.addLayer({
+        id: 'unclustered-reports',
+        type: 'circle',
+        source: 'reports',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': ['get', 'color'],
+          'circle-radius': 6,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#fff'
+        }
+      })
+
+      // Zoom on cluster click
+      this.map.on('click', 'clusters', e => {
+        let features = this.map.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+        })
+        let clusterId = features[0].properties.cluster_id
+        this.map
+          .getSource('reports')
+          .getClusterExpansionZoom(clusterId, (err, zoom) => {
+            if (err) return
+
+            this.map.easeTo({
+              center: features[0].geometry.coordinates,
+              zoom: zoom
+            })
+          })
+      })
+
+      this.map.on('mouseenter', 'clusters', () => {
+        this.map.getCanvas().style.cursor = 'pointer'
+      })
+      this.map.on('mouseleave', 'clusters', () => {
+        this.map.getCanvas().style.cursor = ''
+      })
+
+      // Add popup on report circle click
+      this.map.on('click', 'unclustered-reports', e => {
+        let coordinates = e.features[0].geometry.coordinates.slice()
+        let reportProperties = e.features[0].properties
+        let tracerProperties = JSON.parse(e.features[0].properties.tracer)
+        let userProperties = JSON.parse(e.features[0].properties.user)
+
+        // Ensure that if the map is zoomed out such that multiple
+        // copies of the feature are visible, the popup appears
+        // over the copy being pointed to.
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+        }
+
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(
+            `<article class="media">
                 <div class="media-left">
                   <figure class="image is-64x64">
                     <img src="${this.apiUrl}${
-                marker.properties.tracer.photo
-              }" alt="Image">
+              tracerProperties.photo
+            }" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <strong>${marker.properties.tracer.name}</strong>
+                      <strong>${tracerProperties.name}</strong>
                       <br>
                       <small>
-                        ${marker.properties.user.name}
+                        ${userProperties.name}
                       </small>
                       <br>
                       <small>
                         ${this.$i18n.t('quantity')}: ${
-                marker.properties.quantity
-              }
+              reportProperties.quantity
+            }
                       </small>
                       <br>
-                      <small>${moment(marker.properties.reportedAt).format(
+                      <small>${moment(reportProperties.reportedAt).format(
                         'LL'
                       )}</small>
                     </p>
@@ -105,21 +208,16 @@ export default {
                 <div class="media-right">
                 </div>
               </article>`
-            )
           )
           .addTo(this.map)
-      }
+      })
 
-      this.map.addLayer({
-        id: 'reports',
-        type: 'symbol',
-        layout: {
-          'icon-allow-overlap': false
-        },
-        source: {
-          type: 'geojson',
-          data: geojson
-        }
+      this.map.on('mouseenter', 'unclustered-reports', () => {
+        this.map.getCanvas().style.cursor = 'pointer'
+      })
+
+      this.map.on('mouseleave', 'unclustered-reports', () => {
+        this.map.getCanvas().style.cursor = ''
       })
     },
     createMap() {
@@ -310,6 +408,10 @@ export default {
 .mapboxgl-popup-close-button::after {
   height: 50%;
   width: 2px;
+}
+
+.mapboxgl-popup-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Style mapbox popup as Bulma .box */
