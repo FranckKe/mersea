@@ -15,13 +15,13 @@ module Mersea
         Validation.new(error)
       when Pundit::NotAuthorizedError
         NotAuthorized.new(error)
+      when ActiveRecord::RecordNotFound
+        RecordNotFound.new(error)
       when ActiveRecord::StatementInvalid
         if error.message.start_with?('PG::InvalidDatetimeFormat')
           return BadRequest.new('Invalid datetime format')
         end
         as_internal_server_error(error)
-      when ActiveRecord::RecordNotFound
-        RecordNotFound.new(error)
       else
         as_internal_server_error(error)
       end
@@ -30,7 +30,7 @@ module Mersea
 
     def as_internal_server_error(e)
       Rails.logger.error(e.message)
-      e.backtrace.each do |trace|
+      e.backtrace&.each do |trace|
         Rails.logger.error(trace)
       end
       InternalServer.new(e) # TODO

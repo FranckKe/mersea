@@ -16,15 +16,15 @@ module Mersea
       context 'when an ActiveModel::Errors is provided' do
         let(:err) { ActiveModel::Errors.new('message') }
 
-        it 'returns an Validation class' do
+        it 'returns a Validation class' do
           expect(described_class.format(err)).to be_an_instance_of(Errors::Validation)
         end
       end
 
-      context 'when an Pundit::NotAuthorizedError is provided' do
+      context 'when a Pundit::NotAuthorizedError is provided' do
         let(:err) { Pundit::NotAuthorizedError.new(record: Class) }
 
-        it 'returns an NotAuthorized class' do
+        it 'returns a NotAuthorized class' do
           expect(described_class.format(err)).to be_an_instance_of(Errors::NotAuthorized)
         end
       end
@@ -32,8 +32,26 @@ module Mersea
       context 'when an ActiveRecord::RecordNotFound is provided' do
         let(:err) { ActiveRecord::RecordNotFound.new }
 
-        it 'returns an RecordNotFound class' do
+        it 'returns a RecordNotFound class' do
           expect(described_class.format(err)).to be_an_instance_of(Errors::RecordNotFound)
+        end
+      end
+
+      context 'when an ActiveRecord::StatementInvalid is provided' do
+        context 'with a PG::InvalidDatetimeFormat' do
+          let(:err) { ActiveRecord::StatementInvalid.new('PG::InvalidDatetimeFormat ....') }
+
+          it 'returns a BadRequest class' do
+            expect(described_class.format(err)).to be_an_instance_of(Errors::BadRequest)
+          end
+        end
+
+        context 'with an unknown message' do
+          let(:err) { ActiveRecord::StatementInvalid.new('trololo i do not know this one') }
+
+          it 'returns an InternalServer class' do
+            expect(described_class.format(err)).to be_an_instance_of(Errors::InternalServer)
+          end
         end
       end
 
