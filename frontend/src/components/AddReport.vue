@@ -7,7 +7,7 @@
     >
       <b-loading
         :is-full-page="false"
-        :active.sync="areSubmitting.every(s => s)"
+        :active.sync="areAllReportsSubmitting"
         :can-cancel="false"
       ></b-loading>
       <h2 class="title is-2">{{ $t('add_report') }}</h2>
@@ -385,21 +385,26 @@ export default {
         },
         onShow: step => {
           return new Promise(async (resolve, reject) => {
+            const oldStep = this.currentStep
+
             this.currentStep = step
 
             if (step === 3) {
-              console.log('Step 3')
-              try {
-                console.log('Submitting')
-                await this.submitReports()
-                console.log('Submitted')
+              // Skip this step (3) when going backwards
+              // This prevents the reports from being re-submitted
+              if (oldStep === 4) {
+                this.bulmaSteps.previous_step()
+                resolve()
+              } else {
+                try {
+                  await this.submitReports()
 
-                this.bulmaSteps.next_step()
+                  this.bulmaSteps.next_step()
 
-                resolve(true)
-              } catch (error) {
-                console.log(error)
-                reject(false)
+                  resolve(true)
+                } catch (error) {
+                  reject(false)
+                }
               }
             }
 
@@ -578,6 +583,14 @@ export default {
       },
       get() {
         return this.getAddress()
+      }
+    },
+    areAllReportsSubmitting: {
+      set(areAllReportsSubmitting) {
+        this.areAllReportsSubmitting = areAllReportsSubmitting
+      },
+      get() {
+        return this.areSubmitting.every(isSubmitting => isSubmitting)
       }
     }
   }
