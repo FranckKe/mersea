@@ -138,6 +138,7 @@
                       name="quantity"
                       type="number"
                       step="1"
+                      min="0"
                       :data-vv-as="$t('quantity') | lowercase"
                       v-validate="'required|min_value:0'"
                     ></b-input>
