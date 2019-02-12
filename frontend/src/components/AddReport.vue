@@ -81,18 +81,21 @@
             </div>
             <div class="step-content">
               <div v-for="(tracer, index) in selectedTracers" :key="index">
-                <hr v-if="index > 0" />
                 <b-field key="key" grouped>
-                  <b-field v-if="selectedTracers.length > 1">
+                  <b-field
+                    :label="index === 0 ? '-' : ''"
+                    v-if="selectedTracers.length > 1"
+                    custom-class="remove-tracer-input-label"
+                  >
                     <a
                       @click="removeTracerInput(index)"
-                      class="button is-danger remove-tracer-input"
+                      class="button is-danger"
                     >
-                      <b-icon icon="minus" size="is-small"></b-icon>
+                      <b-icon icon="minus" size=""></b-icon>
                     </a>
                   </b-field>
                   <b-field
-                    :label="$tc('tracers', 1)"
+                    :label="index === 0 ? $tc('tracers', 1) : ''"
                     :type="errors.has('tracer') ? 'is-danger' : ''"
                     :message="
                       errors.has('tracer') ? errors.first('tracer') : ''
@@ -126,7 +129,7 @@
                     </b-autocomplete>
                   </b-field>
                   <b-field
-                    :label="$t('quantity')"
+                    :label="index === 0 ? $t('quantity') : ''"
                     :type="errors.has('quantity') ? 'is-danger' : ''"
                     :message="
                       errors.has('quantity') ? errors.first('quantity') : ''
@@ -149,7 +152,7 @@
                 <a
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
-                  :disabled="selectedTracers.length >= 4"
+                  :disabled="selectedTracers.length >= 8"
                 >
                   <b-icon icon="plus"></b-icon>
                 </a>
@@ -535,13 +538,15 @@ export default {
     removeTracerInput(index) {
       this.selectedTracers.splice(index, 1)
       this.quantities.splice(index, 1)
+      this.tracerNames.splice(index, 1)
     },
     addTracerInput() {
-      if (this.selectedTracers.length >= 4) {
+      if (this.selectedTracers.length >= 8) {
         return
       }
       this.selectedTracers.push({})
       this.quantities.push(1)
+      this.tracerNames.push('')
     }
   },
   computed: {
@@ -634,6 +639,10 @@ export default {
   .add-report {
     padding: 30px 10px 10px 10px;
   }
+}
+
+.add-report-form >>> .remove-tracer-input-label {
+  color: white;
 }
 
 .add-report::-webkit-scrollbar {
