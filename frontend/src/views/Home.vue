@@ -73,7 +73,7 @@ export default {
         type: 'geojson',
         data: geojson,
         cluster: true,
-        clusterMaxZoom: 10, // Disable clustering after zoom N
+        clusterMaxZoom: 11, // Disable clustering after zoom N
         clusterRadius: 15 // Radius to cluster points
       })
 
@@ -83,19 +83,31 @@ export default {
         source: 'reports',
         filter: ['has', 'point_count'],
         paint: {
-          // Blue, 15px circles when point count is less than 100
-          // Yellow, 20px circles when point count is between 100 and 300
-          // Pink, 30px circles when point count is greater than or equal to 300
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#000',
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.93,
+          'circle-stroke-color': [
+            'step',
+            ['get', 'point_count'],
+            '#4dd0e1',
+            100,
+            '#FFDC00',
+            350,
+            '#FF851B',
+            500,
+            '#FF4136'
+          ],
+          'circle-opacity': 0.75,
+          'circle-blur': 0.1,
           'circle-color': [
             'step',
             ['get', 'point_count'],
-            '#51bbd6',
+            '#4dd0e1',
             100,
-            '#f1f075',
-            750,
-            '#f28cb1'
+            '#FFDC00',
+            350,
+            '#FF851B',
+            500,
+            '#FF4136'
           ],
           'circle-radius': [
             'step',
@@ -103,7 +115,9 @@ export default {
             15,
             100,
             20,
-            750,
+            350,
+            25,
+            500,
             30
           ]
         }
@@ -118,6 +132,11 @@ export default {
           'text-field': '{point_count_abbreviated}',
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
           'text-size': 12
+        },
+        paint: {
+          'text-color': '#fff',
+          'text-halo-color': '#000',
+          'text-halo-width': 1
         }
       })
 
