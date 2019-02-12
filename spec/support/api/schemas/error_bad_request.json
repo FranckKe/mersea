@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["status", "status_text", "errors"],
+  "properties": {
+    "status": { "enum": [400] },
+    "status_text": { "type": "string" },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "type", "metadata"],
+        "properties": {
+          "code": { "enum": ["MERSEA-400-000"] },
+          "type": { "enum": ["request"] },
+          "metadata": {
+            "type": "object",
+            "required": ["reason"],
+            "properties": {
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      },
+      "minItems": 1
+    }
+  },
+  "additionalProperties": false
+}

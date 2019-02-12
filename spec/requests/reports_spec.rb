@@ -83,6 +83,29 @@ describe 'ReportsController', type: :request do
           end
         end
       end
+
+      context 'when user asking for reports in a time lapse' do
+        let(:another_user) { FactoryBot.create(:user) } # Need for RequestsHelper module.
+        let(:queries) { { r_min_reported_at: '2018-02-12', r_max_reported_at: '20180214' } }
+        let(:request) do
+          -> { get reports_path, params: queries, headers: headers_with_auth }
+        end
+
+        before do
+          FactoryBot.create(:report, status: :accepted, reported_at: '2011-01-10')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2018-02-11')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2018-02-12')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2018-02-13')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2018-02-14')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2018-11-01')
+          FactoryBot.create(:report, status: :accepted, reported_at: '2042-01-01')
+        end
+
+        it 'returns three reports' do
+          request.call
+          expect(JSON.parse(response.body).count).to eq 3
+        end
+      end
     end
 
     context 'when geojson rendering' do

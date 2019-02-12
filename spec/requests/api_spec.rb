@@ -37,6 +37,22 @@ describe 'ApiController', type: :request do
     end
   end
 
+  describe 'bad request' do
+    let(:request) do
+      -> { get reports_path, params: { r_min_reported_at: '2018-0212' }, headers: headers }
+    end
+
+    it 'fails' do
+      request.call
+      expect(response.status).to eq 400
+    end
+
+    it 'compliances to json-schema' do
+      request.call
+      expect(response).to match_response_schema('error_bad_request')
+    end
+  end
+
   describe 'unprocessable entity' do
     let(:parameters) do
       {
