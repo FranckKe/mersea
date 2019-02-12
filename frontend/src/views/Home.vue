@@ -1,5 +1,6 @@
 <template>
   <div class>
+    <b-loading :is-full-page="false" :active.sync="this.getLoading()" :can-cancel="false"></b-loading>
     <div id="map" class="map"></div>
     <add-report></add-report>
   </div>
@@ -54,9 +55,73 @@ export default {
   methods: {
     initData: async function() {
       moment.locale(this.$i18n.locale)
+      this.createMap()
+    },
+    createMap() {
+      mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/satellite-streets-v9',
+        minzoom: 2,
+        zoom: 5,
+        center: [0, 46.2276]
+      })
+
+      // Restore marker if the page loads on a unfinished reporting
+      if (this.isFormActive && this.coordinates !== '')
+        this.newMarker = new mapboxgl.Marker()
+          .setLngLat(this.coordinates.split(',').reverse())
+          .addTo(this.map)
+
+      this.map.on('click', async e => {
+        if (!this.isFormActive || this.currentStep !== 0) return false
+        if (this.newMarker !== '') this.newMarker.remove()
+
+        this.newMarker = new mapboxgl.Marker()
+          .setLngLat(e.lngLat)
+          .addTo(e.target)
+
+        this.coordinates = `${e.lngLat.lat}, ${e.lngLat.lng}`
+        const res = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${
+            e.lngLat.lat
+          }.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`
+        )
+        this.address =
+          res.data.features.length > 0
+            ? res.data.features[0].place_name
+            : 'No address found'
+      })
+
+      let geolocator = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true
+      })
+      let geocoder = new MapboxGeocoder(
+        {
+          accessToken: mapboxgl.accessToken,
+          language: this.$i18n.locale,
+          placeholder: this.$i18n.t('search')
+        },
+        'top'
+      )
+      let scaler = new mapboxgl.ScaleControl()
+      let navigater = new mapboxgl.NavigationControl()
+      let language = new MapboxLanguage({
+        defaultLanguage: this.$i18n.locale
+      })
+      this.map.addControl(language)
+      this.map.addControl(scaler)
+      this.map.addControl(geocoder, 'top-left')
+      this.map.addControl(geolocator)
+      this.map.addControl(navigater, 'bottom-right')
+      this.map.on('load', this.mapLoad)
+    },
+    mapLoad: async function() {
       try {
         await this.loadReports()
-        this.createMap()
       } catch (e) {
         this.$toast.open({
           message: this.$t('map_init_failure'),
@@ -64,10 +129,16 @@ export default {
           type: 'is-danger'
         })
       }
-    },
-    mapLoad: function() {
+
       const geojson = this.getReports()
-      if (geojson == null) return false
+      if (this.getErrors().length > 0 || geojson == null) {
+        this.$toast.open({
+          message: this.$t('map_init_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
+        return false
+      }
 
       this.map.addSource('reports', {
         type: 'geojson',
@@ -220,69 +291,8 @@ export default {
         this.map.getCanvas().style.cursor = ''
       })
     },
-    createMap() {
-      mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/satellite-streets-v9',
-        minzoom: 2,
-        zoom: 5,
-        center: [0, 46.2276]
-      })
-
-      if (this.isFormActive && this.coordinates !== '')
-        this.newMarker = new mapboxgl.Marker()
-          .setLngLat(this.coordinates.split(',').reverse())
-          .addTo(this.map)
-
-      this.map.on('click', async e => {
-        if (!this.isFormActive || this.currentStep !== 0) return false
-        if (this.newMarker !== '') this.newMarker.remove()
-
-        this.newMarker = new mapboxgl.Marker()
-          .setLngLat(e.lngLat)
-          .addTo(e.target)
-
-        this.coordinates = `${e.lngLat.lat}, ${e.lngLat.lng}`
-        const res = await axios.get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${
-            e.lngLat.lat
-          }.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`
-        )
-        this.address =
-          res.data.features.length > 0
-            ? res.data.features[0].place_name
-            : 'No address found'
-      })
-
-      let geolocator = new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true
-      })
-      let geocoder = new MapboxGeocoder(
-        {
-          accessToken: mapboxgl.accessToken,
-          language: this.$i18n.locale,
-          placeholder: this.$i18n.t('search')
-        },
-        'top'
-      )
-      let scaler = new mapboxgl.ScaleControl()
-      let navigater = new mapboxgl.NavigationControl()
-      let language = new MapboxLanguage({
-        defaultLanguage: this.$i18n.locale
-      })
-      this.map.addControl(language)
-      this.map.addControl(scaler)
-      this.map.addControl(geocoder, 'top-left')
-      this.map.addControl(geolocator)
-      this.map.addControl(navigater, 'bottom-right')
-      this.map.on('load', this.mapLoad)
-    },
     destroyMap() {},
-    ...mapGetters(['getReports']),
+    ...mapGetters(['getReports', 'getLoading', 'getErrors']),
     ...addReportModule.mapGetters([
       'getCurrentStep',
       'getAddress',
