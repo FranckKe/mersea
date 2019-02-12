@@ -5,11 +5,6 @@
       class="add-report"
       :class="{ hidden: !isFormActive }"
     >
-      <b-loading
-        :is-full-page="false"
-        :active.sync="areAllReportsSubmitting"
-        :can-cancel="false"
-      ></b-loading>
       <h2 class="title is-2">{{ $t('add_report') }}</h2>
       <a @click="closeAddReportForm" class="button is-danger close-button">
         <font-awesome-icon icon="times" />
@@ -257,8 +252,15 @@
                   s => s !== null
                 )"
                 :key="index"
+                v-bind:class="{
+                  'has-text-success': !areSubmitting[index] && isSaved[index],
+                  'has-text-danger': !areSubmitting[index] && !isSaved[index]
+                }"
               >
                 {{ selectedTracer.name }}
+                <b-icon v-if="areSubmitting[index]" icon="circle-notch" class="fa-spin"></b-icon>
+                <b-icon v-if="!areSubmitting[index] && isSaved[index]" icon="check"></b-icon>
+                <b-icon v-if="!areSubmitting[index] && !isSaved[index]" icon="close"></b-icon>
               </p>
             </div>
             <div class="step-content">
