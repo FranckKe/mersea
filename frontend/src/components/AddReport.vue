@@ -91,7 +91,7 @@
                       @click="removeTracerInput(index)"
                       class="button is-danger"
                     >
-                      <b-icon icon="minus" size=""></b-icon>
+                      <b-icon icon="minus"></b-icon>
                     </a>
                   </b-field>
                   <b-field
@@ -472,7 +472,7 @@ export default {
               this.isSaved[index] = false
             })
             .finally(() => {
-              this.areSubmitting[index] = false
+              this.areSubmitting.splice(index, 1, false)
             })
           promises.push(promise)
         }
