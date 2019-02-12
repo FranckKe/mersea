@@ -66,7 +66,7 @@ class ReportsController < ApiController
 
   def parameters
     [
-      :name, :tracer_id, :user_id, :reported_at
+      :name, :tracer_id, :user_id, :reported_at, :r_min_reported_at, :r_max_reported_at
     ]
   end
 end
