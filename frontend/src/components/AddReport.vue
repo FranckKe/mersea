@@ -348,14 +348,15 @@ export default {
 
               // The 'files' field does not always exist
               // and vee-validate complains when it does not
-              if(this.$auth.check() && this.$auth.user() && !this.$auth.user().senior) {
+              if(!this.$auth.check() || (this.$auth.user() && !this.$auth.user().senior)) {
                 validateFiles = this.$validator.validate('files');
               }
 
               resolve(
                 this.$validator.validate('username') &&
                 this.$validator.validate('reportDate') &&
-                this.$validator.validate('description')
+                this.$validator.validate('description') &&
+                validateFiles
               )
             }
             if (step === 2) {
