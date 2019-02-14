@@ -18,10 +18,14 @@ module Mersea
       when ActiveRecord::RecordNotFound
         RecordNotFound.new(error)
       when ActiveRecord::StatementInvalid
-        if error.message.start_with?('PG::InvalidDatetimeFormat')
-          return BadRequest.new('Invalid datetime format')
+        case
+        when error.message.start_with?('PG::InvalidDatetimeFormat')
+          BadRequest.new('Invalid datetime format')
+        when error.message.start_with?('PG::DatetimeFieldOverflow')
+          BadRequest.new('Invalid datetime value')
+        else
+          as_internal_server_error(error)
         end
-        as_internal_server_error(error)
       else
         as_internal_server_error(error)
       end

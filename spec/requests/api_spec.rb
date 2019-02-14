@@ -38,18 +38,36 @@ describe 'ApiController', type: :request do
   end
 
   describe 'bad request' do
-    let(:request) do
-      -> { get reports_path, params: { r_min_reported_at: '2018-0212' }, headers: headers }
+    describe 'on date format' do
+      let(:request) do
+        -> { get reports_path, params: { r_min_reported_at: '2018-0212' }, headers: headers }
+      end
+
+      it 'fails' do
+        request.call
+        expect(response.status).to eq 400
+      end
+
+      it 'compliances to json-schema' do
+        request.call
+        expect(response).to match_response_schema('error_bad_request')
+      end
     end
 
-    it 'fails' do
-      request.call
-      expect(response.status).to eq 400
-    end
+    describe 'on date value' do
+      let(:request) do
+        -> { get reports_path, params: { r_min_reported_at: '2018-02-42' }, headers: headers }
+      end
 
-    it 'compliances to json-schema' do
-      request.call
-      expect(response).to match_response_schema('error_bad_request')
+      it 'fails' do
+        request.call
+        expect(response.status).to eq 400
+      end
+
+      it 'compliances to json-schema' do
+        request.call
+        expect(response).to match_response_schema('error_bad_request')
+      end
     end
   end
 
