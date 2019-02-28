@@ -41,7 +41,7 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :assets, :development, :test, :production do
-  gem 'devise-foundation-views', '~> 0.1'
+  gem 'devise-foundation-views', git: 'https://github.com/FranckKe/devise-foundation-views.git'
   gem 'foundation-icons-sass-rails', '~> 3'
   gem 'foundation-rails', '~> 6'
   gem 'jquery-rails', '~> 4'

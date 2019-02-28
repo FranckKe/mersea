@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/FranckKe/devise-foundation-views.git
+  revision: a0665879e39adf41332a8d21438b0b13cdc66fb7
+  specs:
+    devise-foundation-views (0.1.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -87,7 +93,6 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise-foundation-views (0.1.1)
     devise-i18n (1.6.5)
       devise (>= 4.4)
     erubi (1.7.1)
@@ -339,7 +344,7 @@ DEPENDENCIES
   bugsnag (~> 6.6)
   debbie
   devise (~> 4)
-  devise-foundation-views (~> 0.1)
+  devise-foundation-views!
   devise-i18n (~> 1)
   foundation-icons-sass-rails (~> 3)
   foundation-rails (~> 6)
@@ -379,4 +384,4 @@ RUBY VERSION
    ruby 2.5.3p105
 
 BUNDLED WITH
-   1.16.6
+   1.17.1
