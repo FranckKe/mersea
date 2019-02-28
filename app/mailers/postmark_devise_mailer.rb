@@ -6,7 +6,10 @@ class PostmarkDeviseMailer < Devise::Mailer
   def reset_password_instructions(record, token, _)
     case record
     when User
-      url = edit_user_password_url(record, reset_password_token: token)
+      params = {
+        reset_password_token: token
+      }
+      url = "#{Rails.application.secrets.host}/#/users/reset_password#{params.to_query}"
     when Admin
       url = edit_admin_password_url(record, reset_password_token: token)
     end

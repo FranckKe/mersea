@@ -36,7 +36,10 @@
         <div class="field">
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
-        <button type="submit" class="button is-success">{{ $t('login') }}</button>
+        <div class="buttons">
+          <button type="submit" class="button is-success">{{ $t('login') }}</button>
+          <router-link to="/users/send_reset_password/">{{ $t('reset_password') }}</router-link>
+        </div>
       </form>
     </div>
   </div>
@@ -109,7 +112,8 @@ export default {
     "login_success": "You are now logged in",
     "login": "Login",
     "password": "Password",
-    "remember_me": "Remember me"
+    "remember_me": "Remember me",
+    "reset_password": "Forgot password?"
   },
   "fr": {
     "email": "Email",
@@ -119,7 +123,8 @@ export default {
     "login_success": "Vous êtes maintenant connecté",
     "login": "Connexion",
     "password": "Mot de passe",
-    "remember_me": "Se souvenir de moi"
+    "remember_me": "Se souvenir de moi",
+    "reset_password": "Mot de passe oublié ?"
   },
   "es": {
     "email": "Email",
@@ -127,9 +132,10 @@ export default {
     "login_already": "Ya has iniciado sesión",
     "login_failure": "Error durante el inicio de sesión",
     "login_success": "Iniciaste sesión correctamente",
-    "login": "Iniciar sesión ",
+    "login": "Iniciar sesión",
     "password": "Contraseña",
-    "remember_me": "Recordarme"
+    "remember_me": "Recordarme",
+    "reset_password": "Se te olvidó tu contraseña ?"
   }
 }
 </i18n>
