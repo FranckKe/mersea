@@ -68,6 +68,7 @@ export default {
           duration: 5000,
           type: 'is-success'
         })
+        this.$router.push({ name: 'home' })
       } catch (e) {
         this.$toast.open({
           message: this.$t('reset_failure'),
