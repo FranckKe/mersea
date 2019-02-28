@@ -7,7 +7,7 @@ class PostmarkDeviseMailer < Devise::Mailer
   def reset_password_instructions(record, token, _)
     case record
     when User
-      uri = URI.join(HOST, '#', 'users', 'reset_password')
+      uri = URI.join(HOST, '/#/users/reset_password')
       uri.query = {reset_password_token: token}.to_query
       uri.to_s
     when Admin

@@ -97,7 +97,7 @@ export default {
     "login": "Login",
     "reset_failure": "Error during reset",
     "reset_password": "Reset password",
-    "reset_success": "Password reset"
+    "reset_success": "Email sent"
   },
   "fr": {
     "email": "Email",
@@ -106,7 +106,7 @@ export default {
     "login": "Connexion",
     "reset_failure": "Erreur lors de la réinitialisation",
     "reset_password": "Réinitialiser le mot de passe",
-    "reset_success": "Mot de passe réinitialisé"
+    "reset_success": "Email envoyé"
   },
   "es": {
     "email": "Email",
@@ -115,7 +115,7 @@ export default {
     "login": "Iniciar sesión",
     "reset_failure": "Error durante el reinicio",
     "reset_password": "Restablecer la contraseña",
-    "reset_success": "Restablecer contraseña"
+    "reset_success": "Email enviado"
   }
 }
 </i18n>
