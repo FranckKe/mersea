@@ -6,19 +6,11 @@
     "type": { "enum": ["Feature"] },
     "properties": {
       "type": "object",
-      "required": [
-        "user",
-        "reported_at",
-        "user",
-        "tracer",
-        "color",
-        "quantity"
-      ],
+      "required": ["user", "reported_at", "tracer_id", "color", "quantity"],
       "properties": {
         "id": {
           "type": "string",
-          "pattern":
-            "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
         },
         "reported_at": {
           "type": "string",
@@ -27,14 +19,9 @@
         "user": {
           "name": { "type": "string" }
         },
-        "tracer": {
-          "id": {
-            "type": "string",
-            "pattern":
-              "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
-          },
-          "name": { "type": "string" },
-          "photo": { "type": "string" }
+        "tracer_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
         },
         "color": {
           "type": "string",

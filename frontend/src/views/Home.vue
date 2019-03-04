@@ -10,6 +10,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions } = createNamespacedHelpers('reports')
 const addReportModule = createNamespacedHelpers('addReport')
+const tracersModule = createNamespacedHelpers('tracers')
 
 import AddReport from '@/components/AddReport'
 
@@ -253,7 +254,8 @@ export default {
       this.map.on('click', 'unclustered-reports', e => {
         let coordinates = e.features[0].geometry.coordinates.slice()
         let reportProperties = e.features[0].properties
-        let tracerProperties = JSON.parse(e.features[0].properties.tracer)
+        let tracerId = e.features[0].properties.tracer_id
+        let tracer = this.getTracerById()(tracerId)
         let userProperties = JSON.parse(e.features[0].properties.user)
 
         // Ensure that if the map is zoomed out such that multiple
@@ -269,15 +271,13 @@ export default {
             `<article class="media">
                 <div class="media-left">
                   <figure class="image is-64x64">
-                    <img src="${this.apiUrl}${
-              tracerProperties.photo
-            }" alt="Image">
+                    <img src="${this.apiUrl}${tracer.photo}" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <strong>${tracerProperties.name}</strong>
+                      <strong>${tracer.name}</strong>
                       <br>
                       <small>
                         ${userProperties.name}
@@ -312,6 +312,7 @@ export default {
     },
     destroyMap() {},
     ...mapGetters(['getReports', 'getLoading', 'getErrors']),
+    ...tracersModule.mapGetters(['getTracerById']),
     ...addReportModule.mapGetters([
       'getCurrentStep',
       'getAddress',
