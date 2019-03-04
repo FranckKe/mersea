@@ -45,7 +45,6 @@
         </b-field>
         <div class="buttons">
           <button type="submit" class="button is-success">{{ $t('reset_password') }}</button>
-          <button type="submit" class="button">{{ $t('login') }}</button>
         </div>
       </form>
     </div>
@@ -77,10 +76,9 @@ export default {
       if (!validateForm) return false
       let resetPasswordRes
       try {
-        debugger
         resetPasswordRes = await this.$http({
           method: 'PATCH',
-          url: `/users/password`,
+          url: '/users/password',
           data: {
             user: {
               reset_password_token: this.$route.query.reset_password_token,
@@ -91,13 +89,14 @@ export default {
         })
 
         this.$toast.open({
-          message: this.$t('reset_password_success'),
+          message: this.$t('reset_success'),
           duration: 5000,
           type: 'is-success'
         })
+        this.$router.push({ name: 'login' })
       } catch (e) {
         this.$toast.open({
-          message: this.$t('reset_password_failure'),
+          message: this.$t('reset_failure'),
           duration: 5000,
           type: 'is-danger'
         })

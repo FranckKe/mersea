@@ -14,6 +14,7 @@
       </b-message>
 
       <form class="form-reset-password" v-on:submit.prevent="resetPassword()">
+        <b-loading :is-full-page="false" :active.sync="isSendingEmail" :can-cancel="false"></b-loading>
         <b-field
           :label="$t('email')"
           :type="errors.has('email') ? 'is-danger': ''"
@@ -38,7 +39,8 @@ export default {
   data() {
     return {
       email: '',
-      formErrors: []
+      formErrors: [],
+      isSendingEmail: false
     }
   },
   created() {
@@ -57,19 +59,24 @@ export default {
       if (!validateForm) return false
       let resetPasswordRes
       try {
+        this.isSendingEmail = true
         resetPasswordRes = await this.$http({
           method: 'POST',
           url: `/users/password`,
           data: { user: { email: this.email } }
         })
 
+        this.isSendingEmail = false
+
         this.$toast.open({
           message: this.$t('reset_success'),
           duration: 5000,
           type: 'is-success'
         })
+
         this.$router.push({ name: 'home' })
       } catch (e) {
+        this.isSendingEmail = false
         this.$toast.open({
           message: this.$t('reset_failure'),
           duration: 5000,
@@ -95,7 +102,7 @@ export default {
     "errors": "Error | Errors",
     "login_already": "You are already signed in",
     "login": "Login",
-    "reset_failure": "Error during reset",
+    "reset_failure": "Error while sending reset password email",
     "reset_password": "Reset password",
     "reset_success": "Email sent"
   },
@@ -104,7 +111,7 @@ export default {
     "errors": "Erreur | Erreurs",
     "login_already": "Vous êtes déjà connecté(e)",
     "login": "Connexion",
-    "reset_failure": "Erreur lors de la réinitialisation",
+    "reset_failure": "Erreur lors de l'envoi du mail de réinitialisation",
     "reset_password": "Réinitialiser le mot de passe",
     "reset_success": "Email envoyé"
   },
@@ -113,7 +120,7 @@ export default {
     "errors": "Error | Errores",
     "login_already": "Ya has iniciado sesión",
     "login": "Iniciar sesión",
-    "reset_failure": "Error durante el reinicio",
+    "reset_failure": "Error while sending reset password email",
     "reset_password": "Restablecer la contraseña",
     "reset_success": "Email enviado"
   }
