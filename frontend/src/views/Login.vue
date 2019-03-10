@@ -135,7 +135,7 @@ export default {
     "login": "Iniciar sesión",
     "password": "Contraseña",
     "remember_me": "Recordarme",
-    "reset_password": "Se te olvidó tu contraseña ?"
+    "reset_password": "¿Se te olvidó tu contraseña?"
   }
 }
 </i18n>
