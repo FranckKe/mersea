@@ -8,6 +8,8 @@ import Login from './views/Login'
 import Leaderboard from './views/Leaderboard'
 import Tracers from './views/Tracers'
 import Page from './views/Page'
+import SendResetPassword from './views/SendResetPassword'
+import ResetPassword from './views/ResetPassword'
 
 Vue.use(Router)
 
@@ -58,6 +60,14 @@ let routes = [
     path: '/tracers',
     component: Tracers,
     alias: '/trazadores'
+  },
+  {
+    path: '/users/send_reset_password',
+    component: SendResetPassword
+  },
+  {
+    path: '/users/reset_password',
+    component: ResetPassword
   }
 ]
 export default new Router({
