@@ -157,6 +157,10 @@ export default {
 </script>
 
 <style scoped>
+.navbar {
+  z-index: 99;
+}
+
 .navbar-link {
   cursor: default;
 }

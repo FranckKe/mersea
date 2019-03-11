@@ -80,4 +80,10 @@ body .notices.toast {
   padding-top: 5px;
   margin-left: 10px;
 }
+
+@media only screen and (max-device-width: 768px) {
+  .app {
+    padding-top: 0; /* Overlap nav bar with tool bar */
+  }
+}
 </style>

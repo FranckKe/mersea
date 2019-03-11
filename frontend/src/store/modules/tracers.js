@@ -6,7 +6,8 @@ const api = axios.create({
 })
 
 const state = {
-  data: [],
+  tracers: [],
+  filteredTracers: [],
   loading: true,
   success: false,
   errors: [],
@@ -15,6 +16,9 @@ const state = {
 }
 
 const getters = {
+  getFilteredTracers: state => {
+    return state.filteredTracers
+  },
   getLoading: state => {
     return state.loading
   },
@@ -24,19 +28,19 @@ const getters = {
   getSuccess: state => {
     return state.success
   },
-  getData: state => {
-    return state.data
+  getTracers: state => {
+    return state.tracers
   },
   getPerPage: state => {
     return state.perPage
   },
   getTracerById: state => tracerId =>
-    state.data.filter(tracer => tracerId === tracer.id)[0]
+    state.tracers.filter(tracer => tracerId === tracer.id)[0]
 }
 
 const mutations = {
-  setData: (state, { data }) => {
-    state.data = data
+  setTracers: (state, { tracers }) => {
+    state.tracers = tracers
   },
   setSuccess: state => {
     state.success = true
@@ -52,15 +56,19 @@ const mutations = {
   },
   setPerPage: (state, perPage) => {
     state.perPage = perPage
+  },
+  setFilteredTracers: (state, filteredTracers) => {
+    state.filteredTracers = filteredTracers
   }
 }
 
 const actions = {
   async loadTracers({ commit }) {
     try {
-      const tracers = await api.get(`/tracers`)
-      const data = tracers.data
-      commit('setData', { data })
+      const tracersRes = await api.get(`/tracers`)
+      const tracers = tracersRes.data
+      commit('setTracers', { tracers })
+      commit('setFilteredTracers', tracers.map(t => t.id))
       commit('setSuccess')
     } catch (error) {
       let errors = [error.message]

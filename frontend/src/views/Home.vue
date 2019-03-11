@@ -1,6 +1,7 @@
 <template>
-  <div class>
+  <div class="home">
     <b-loading :is-full-page="false" :active.sync="this.getLoading()" :can-cancel="false"></b-loading>
+    <ToolBar></ToolBar>
     <div id="map" class="map"></div>
     <add-report></add-report>
   </div>
@@ -13,6 +14,7 @@ const addReportModule = createNamespacedHelpers('addReport')
 const tracersModule = createNamespacedHelpers('tracers')
 
 import AddReport from '@/components/AddReport'
+import ToolBar from '@/components/ToolBar'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -32,10 +34,23 @@ export default {
     }
   },
   components: {
-    AddReport
+    AddReport,
+    ToolBar
   },
   mounted() {
     this.initData()
+    this.$store.watch(
+      (state, getters) => getters['tracers/getFilteredTracers'],
+      filteredTracers => {
+        // Return early if map is not ready
+        if (this.map.getSource('reports') == null) return false
+        if (this.map.getLayer('unclustered-reports') == null) return false
+        // Reset map source data with filtered geojson
+        this.map
+          .getSource('reports')
+          .setData(this.getFilteredReports()(filteredTracers))
+      }
+    )
   },
   watch: {
     '$i18n.locale': function() {
@@ -131,8 +146,7 @@ export default {
         })
       }
 
-      const geojson = this.getReports()
-      if (this.getErrors().length > 0 || geojson == null) {
+      if (this.getErrors().length > 0 || this.getReports() == null) {
         this.$toast.open({
           message: this.$t('map_init_failure'),
           duration: 5000,
@@ -143,7 +157,7 @@ export default {
 
       this.map.addSource('reports', {
         type: 'geojson',
-        data: geojson,
+        data: this.getReports(),
         cluster: true,
         clusterMaxZoom: 11, // Disable clustering after zoom N
         clusterRadius: 15 // Radius to cluster points
@@ -311,8 +325,13 @@ export default {
       })
     },
     destroyMap() {},
-    ...mapGetters(['getReports', 'getLoading', 'getErrors']),
-    ...tracersModule.mapGetters(['getTracerById']),
+    ...mapGetters([
+      'getReports',
+      'getFilteredReports',
+      'getLoading',
+      'getErrors'
+    ]),
+    ...tracersModule.mapGetters(['getTracerById', 'getFilteredTracers']),
     ...addReportModule.mapGetters([
       'getCurrentStep',
       'getAddress',
@@ -377,6 +396,11 @@ export default {
 </script>
 
 <style>
+.home {
+  display: flex;
+  flex-direction: row;
+}
+
 .map {
   width: 100%;
   height: calc(100vh - 55px); /* header height + margin */
@@ -454,6 +478,12 @@ export default {
   color: #4a4a4a;
   display: block;
   padding: 1.25rem;
+}
+
+@media only screen and (max-device-width: 768px) {
+  .home {
+    flex-direction: column;
+  }
 }
 </style>
 

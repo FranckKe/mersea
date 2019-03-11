@@ -28,6 +28,7 @@ import {
   faSignOutAlt,
   faMapMarkerAlt,
   faUser,
+  faFilter,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -134,6 +135,7 @@ library.add(
   faThList,
   faThLarge,
   faTimes,
+  faFilter,
   faSignOutAlt,
   faMapMarkerAlt,
   faUser

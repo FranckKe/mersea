@@ -5,24 +5,41 @@
       <div class="field">
         <div class="control has-icons-left">
           <span class="icon is-small is-left">
-            <font-awesome-icon icon="search" />
+            <font-awesome-icon icon="search"/>
           </span>
-          <input class="input" type="text" v-bind:placeholder="$t('search')" v-model="searchKeywords">
+          <input
+            class="input"
+            type="text"
+            v-bind:placeholder="$t('search')"
+            v-model="searchKeywords"
+          >
         </div>
       </div>
       <div class="columns is-multiline is-mobile">
         <div class="column">
-          <p class="has-text-left is-italic">{{ getFilteredTracers().length }} {{ $tc('tracers', getFilteredTracers().length) }} {{ $tc('displayed', getFilteredTracers().length) }} ({{ this.tracers.length }} {{ $t('total') }})</p>
+          <p
+            class="has-text-left is-italic"
+          >{{ getFilteredTracers().length }} {{ $tc('tracers', getFilteredTracers().length) }} {{ $tc('displayed', getFilteredTracers().length) }} ({{ this.tracers.length }} {{ $t('total') }})</p>
         </div>
-        <div class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right">
-          <button class="button" v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']" v-on:click="setDisplayFormat('grid')">
+        <div
+          class="column buttons is-one-half-mobile is-one-quarter-tablet is-one-quarter-desktop has-text-right"
+        >
+          <button
+            class="button"
+            v-bind:class="[this.displayFormat === 'grid' ? 'is-primary' : '']"
+            v-on:click="setDisplayFormat('grid')"
+          >
             <span class="icon is-small is-left">
-              <font-awesome-icon icon="th-large" />
+              <font-awesome-icon icon="th-large"/>
             </span>
           </button>
-          <button class="button" v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']" v-on:click="setDisplayFormat('list')">
+          <button
+            class="button"
+            v-bind:class="[this.displayFormat === 'list' ? 'is-primary' : '']"
+            v-on:click="setDisplayFormat('list')"
+          >
             <span class="icon is-small is-left">
-              <font-awesome-icon icon="th-list" />
+              <font-awesome-icon icon="th-list"/>
             </span>
           </button>
         </div>
@@ -68,7 +85,7 @@ export default {
         type: 'is-danger'
       })
     }
-    this.tracers = this.getData()
+    this.tracers = this.getTracers()
   },
   methods: {
     getFilteredTracers() {
@@ -81,7 +98,7 @@ export default {
         return this.tracers
       }
     },
-    ...mapGetters(['getData']),
+    ...mapGetters(['getTracers']),
     ...mapMutations(['setDisplayFormat']),
     ...mapActions(['loadTracers'])
   },

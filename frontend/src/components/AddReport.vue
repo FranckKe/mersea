@@ -261,7 +261,7 @@ export default {
       })
     }
 
-    this.tracers = this.getTracersData()
+    this.tracers = this.getTracers()
     this.bulmaSteps = new bulmaSteps(
       document.getElementById('addReportSteps'),
       {
@@ -314,9 +314,7 @@ export default {
       'getAddress',
       'getCurrentStep'
     ]),
-    ...tracersModule.mapGetters({
-      getTracersData: 'getData'
-    }),
+    ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
     submitReport() {
       this.addReportError = ''
