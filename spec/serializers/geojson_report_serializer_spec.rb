@@ -10,10 +10,7 @@ describe GeojsonReportSerializer do
   it { expect(subject.serializable_hash[:properties]).to have_key(:reported_at) }
   it { expect(subject.serializable_hash[:properties]).to have_key(:user) }
   it { expect(subject.serializable_hash[:properties][:user]).to have_key(:name) }
-  it { expect(subject.serializable_hash[:properties]).to have_key(:tracer) }
-  it { expect(subject.serializable_hash[:properties][:tracer]).to have_key(:id) }
-  it { expect(subject.serializable_hash[:properties][:tracer]).to have_key(:name) }
-  it { expect(subject.serializable_hash[:properties][:tracer]).to have_key(:photo) }
+  it { expect(subject.serializable_hash[:properties]).to have_key(:tracer_id) }
   it { expect(subject.serializable_hash[:properties]).to have_key(:color) }
   it { expect(subject.serializable_hash[:properties]).to have_key(:quantity) }
   it { expect(subject.serializable_hash).to have_key(:geometry) }

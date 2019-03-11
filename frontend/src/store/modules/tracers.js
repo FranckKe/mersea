@@ -29,7 +29,9 @@ const getters = {
   },
   getPerPage: state => {
     return state.perPage
-  }
+  },
+  getTracerById: state => tracerId =>
+    state.data.filter(tracer => tracerId === tracer.id)[0]
 }
 
 const mutations = {
