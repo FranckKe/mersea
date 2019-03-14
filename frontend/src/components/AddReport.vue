@@ -27,7 +27,7 @@
         <div class="step-item">
           <div class="step-marker">4</div>
           <div class="step-details">
-            <p class="step-title">{{ 'Saving' }}</p>
+            <p class="step-title">{{ $t('done') }}</p>
           </div>
         </div>
         <form class="add-report-form" @submit.prevent="submitReports">
@@ -156,7 +156,7 @@
                     <a
                       @click="removeTracerInput(index)"
                       class="button is-outlined"
-                      :disabled="selectedTracers.length == 1"
+                      :disabled="selectedTracers.length === 1"
                     >
                       <b-icon icon="times"/>
                     </a>
@@ -213,17 +213,17 @@
                   </b-field>
                   <b-field :label="index === 0 ? '-' : ''" customClass="remove-tracer-input-label">
                     <span
-                      @click="getSubmissionStatus(index) == 'failed' && submitReport(index)"
+                      @click="getSubmissionStatus(index) === 'failed' && submitReport(index)"
                       :class="{
                         'report-submission-status': true,
-                        'has-text-success': getSubmissionStatus(index) == 'saved',
-                        'has-text-danger': getSubmissionStatus(index) == 'failed',
+                        'has-text-success': getSubmissionStatus(index) === 'saved',
+                        'has-text-danger': getSubmissionStatus(index) === 'failed',
                       }"
-                      :disabled="!(getSubmissionStatus(index) == 'failed')"
+                      :disabled="!(getSubmissionStatus(index) === 'failed')"
                     >
                       <b-icon
                         :icon="getSubmissionStatusIcon(index)"
-                        :custom-class="getSubmissionStatus(index) == 'submitting' ? 'fa-spin' : ''"
+                        :custom-class="getSubmissionStatus(index) === 'submitting' ? 'fa-spin' : ''"
                       />
                     </span>
                   </b-field>
