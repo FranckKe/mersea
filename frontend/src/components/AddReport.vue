@@ -1,13 +1,9 @@
 <template>
   <div class="add-report-layer">
-    <section
-      id="addReport"
-      class="add-report"
-      :class="{ hidden: !isFormActive }"
-    >
+    <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
       <h2 class="title is-2">{{ $t('add_report') }}</h2>
       <a @click="closeAddReportForm" class="button is-danger close-button">
-        <font-awesome-icon icon="times" />
+        <font-awesome-icon icon="times"/>
       </a>
       <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
@@ -69,24 +65,6 @@
               </b-field>
             </div>
             <div class="step-content">
-              <b-message
-                v-for="(addReportError, index) in addReportsErrors"
-                class="submit-form-error"
-                :key="index"
-                v-show="addReportError !== ''"
-                type="is-danger"
-              >
-                {{ addReportError }}
-                <ul>
-                  <!-- TODO: See if we need to create an array of arrays-->
-                  <li
-                    v-for="addReportValidationError in addReportsValidationErrors"
-                    :key="addReportValidationError.metadata.id"
-                  >
-                    - {{ addReportValidationError.metadata.reason }}
-                  </li>
-                </ul>
-              </b-message>
               <b-field
                 :label="$t('name_pseudo')"
                 :type="errors.has('username') ? 'is-danger' : ''"
@@ -137,9 +115,7 @@
                     <span>{{ $t('photo') }}</span>
                   </a>
                 </b-upload>
-                <span class="file-name" v-if="files && files.length">
-                  {{ files[0].name }}
-                </span>
+                <span class="file-name" v-if="files && files.length">{{ files[0].name }}</span>
               </b-field>
               <b-field
                 :label="`${$t('description')} (${$t('optional')})`"
@@ -159,18 +135,30 @@
               </b-field>
             </div>
             <div class="step-content">
+              <b-message
+                v-for="(addReportError, index) in addReportsErrors"
+                class="submit-form-error"
+                :key="'reportError' + index"
+                v-show="addReportError !== ''"
+                type="is-danger"
+              >
+                {{ addReportError }}
+                <ul>
+                  <li
+                    v-for="(addReportValidationError, index) in addReportsValidationErrors[index]"
+                    :key="index"
+                  >- {{ addReportValidationError.metadata.reason }}</li>
+                </ul>
+              </b-message>
               <div v-for="(tracer, index) in selectedTracers" :key="index">
                 <b-field key="key" grouped>
-                  <b-field
-                    :label="index === 0 ? '-' : ''"
-                    v-if="selectedTracers.length > 1"
-                    custom-class="remove-tracer-input-label"
-                  >
+                  <b-field :label="index === 0 ? '-' : ''" custom-class="remove-tracer-input-label">
                     <a
                       @click="removeTracerInput(index)"
-                      class="button is-danger"
+                      class="button is-outlined"
+                      :disabled="selectedTracers.length == 1"
                     >
-                      <b-icon icon="minus"></b-icon>
+                      <b-icon icon="times"/>
                     </a>
                   </b-field>
                   <b-field
@@ -193,13 +181,11 @@
                       <template slot-scope="props">
                         <div class="media">
                           <div class="media-left">
-                            <img
-                              class="image is-64x64"
-                              :src="`${apiUrl}${props.option.photo}`"
-                            />
+                            <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
                           </div>
                           <div class="media-content">
-                            {{ props.option.name }} <br />
+                            {{ props.option.name }}
+                            <br>
                             <small>{{ props.option.type }}</small>
                           </div>
                         </div>
@@ -225,6 +211,22 @@
                       v-validate="'required|min_value:0'"
                     ></b-input>
                   </b-field>
+                  <b-field :label="index === 0 ? '-' : ''" customClass="remove-tracer-input-label">
+                    <span
+                      @click="getSubmissionStatus(index) == 'failed' && submitReport(index)"
+                      :class="{
+                        'report-submission-status': true,
+                        'has-text-success': getSubmissionStatus(index) == 'saved',
+                        'has-text-danger': getSubmissionStatus(index) == 'failed',
+                      }"
+                      :disabled="!(getSubmissionStatus(index) == 'failed')"
+                    >
+                      <b-icon
+                        :icon="getSubmissionStatusIcon(index)"
+                        :custom-class="getSubmissionStatus(index) == 'submitting' ? 'fa-spin' : ''"
+                      />
+                    </span>
+                  </b-field>
                 </b-field>
               </div>
               <b-field style="text-align: center;">
@@ -249,8 +251,7 @@
               id="prevAction"
               data-nav="previous"
               class="button is-light"
-              >{{ $t('previous') }}</a
-            >
+            >{{ $t('previous') }}</a>
           </div>
           <div class="steps-action">
             <button
@@ -263,14 +264,13 @@
                 hidden: currentStep === 3,
                 'is-loading': currentStep === 2 && this.areSomeReportsSubmitting
               }"
-              >{{ currentStep === 2 && !this.areAllReportsSubmitted ? $t('submit') : $t('next') }}</button>
+            >{{ currentStep === 2 && !this.areAllReportsSubmitted ? $t('submit') : $t('next') }}</button>
             <a
               href="#"
               class="button is-danger close-button-step"
               :class="{ hidden: currentStep !== 3 }"
               @click="closeAddReportForm"
-              >{{ $t('close') }}</a
-            >
+            >{{ $t('close') }}</a>
           </div>
         </div>
       </div>
@@ -284,8 +284,7 @@
       "
       class="add-report-button button is-success"
       :class="{ hidden: isFormActive }"
-      >{{ $t('add_report') }}</a
-    >
+    >{{ $t('add_report') }}</a>
   </div>
 </template>
 
@@ -340,23 +339,26 @@ export default {
               this.username = this.$auth.check() ? this.$auth.user().name : ''
               resolve(
                 this.$validator.validate('coordinates') &&
-                this.$validator.validate('address')
+                  this.$validator.validate('address')
               )
             }
             if (step === 1) {
-              let validateFiles = true;
+              let validateFiles = true
 
               // The 'files' field does not always exist
               // and vee-validate complains when it does not
-              if(!this.$auth.check() || (this.$auth.user() && !this.$auth.user().senior)) {
-                validateFiles = this.$validator.validate('files');
+              if (
+                !this.$auth.check() ||
+                (this.$auth.user() && !this.$auth.user().senior)
+              ) {
+                validateFiles = this.$validator.validate('files')
               }
 
               resolve(
                 this.$validator.validate('username') &&
-                this.$validator.validate('reportDate') &&
-                this.$validator.validate('description') &&
-                validateFiles
+                  this.$validator.validate('reportDate') &&
+                  this.$validator.validate('description') &&
+                  validateFiles
               )
             }
             if (step === 2) {
@@ -367,8 +369,9 @@ export default {
                 try {
                   await this.submitReports()
                   resolve(false)
-                } catch(err) {
+                } catch (err) {
                   console.warn(err)
+                  reject(false)
                 }
               } else {
                 console.warn(this.$validator.errors)
@@ -385,26 +388,6 @@ export default {
             const oldStep = this.currentStep
 
             this.currentStep = step
-            console.log(step)
-
-            /*if (step === 3) {
-              // Skip this step (3) when going backwards
-              // This prevents the reports from being re-submitted
-              if (oldStep === 4) {
-                this.bulmaSteps.previous_step()
-                resolve()
-              } else {
-                try {
-                  await this.submitReports()
-
-                  this.bulmaSteps.next_step()
-
-                  resolve(true)
-                } catch (error) {
-                  reject(false)
-                }
-              }
-            }*/
 
             if (step === 3) {
               this.address = ''
@@ -413,6 +396,8 @@ export default {
               this.files = []
               this.areSubmitting = [false]
               this.areSubmitted = [false]
+              this.addReportsErrors = []
+              this.addReportsValidationErrors = []
               this.isSaved = [false]
               this.photo = ''
               this.quantities = [1]
@@ -454,26 +439,10 @@ export default {
         const promises = []
         for (let index = 0; index < this.selectedTracers.length; index++) {
           const promise = this.submitReport(index)
-            .then(index => {
-              this.isSaved[index] = true
-            })
-            .catch((error, index) => {
-              if ((((error || {}).response || {}).data || {}).errors != null)
-                this.addReportsValidationErrors[index] =
-                  error.response.data.errors
-              this.addReportsErrors[index] = this.$t('submit_report_failure')
-              this.isSaved[index] = false
-            })
-            .finally(() => {
-              this.areSubmitting.splice(index, 1, false)
-              this.areSubmitted.splice(index, 1, true)
-            })
           promises.push(promise)
         }
 
         try {
-          this.areSubmitting = promises.map(() => true)
-          this.areSubmitted = promises.map(() => false)
           await Promise.all(promises)
 
           resolve()
@@ -483,6 +452,35 @@ export default {
       })
     },
     submitReport(index) {
+      this.areSubmitting.splice(index, 1, true)
+      this.areSubmitted.splice(index, 1, false)
+
+      return this.submitReportPromise(index)
+        .then(() => {
+          this.isSaved.splice(index, 1, true)
+          delete this.addReportsErrors[index]
+          delete this.addReportsValidationErrors[index]
+        })
+        .catch(error => {
+          if ((((error || {}).response || {}).data || {}).errors != null)
+            this.addReportsValidationErrors.splice(
+              index,
+              1,
+              error.response.data.errors
+            )
+          this.addReportsErrors.splice(
+            index,
+            1,
+            this.$t('submit_report_failure')
+          )
+          this.isSaved.splice(index, 1, false)
+        })
+        .finally(() => {
+          this.areSubmitting.splice(index, 1, false)
+          this.areSubmitted.splice(index, 1, true)
+        })
+    },
+    submitReportPromise(index) {
       return new Promise(async (resolve, reject) => {
         try {
           let file64 =
@@ -509,6 +507,7 @@ export default {
           resolve(index)
         } catch (error) {
           reject(error, index)
+
           throw error
         }
       })
@@ -544,6 +543,27 @@ export default {
       this.tracerNames.push('')
       this.areSubmitting.push(false)
       this.areSubmitted.push(false)
+    },
+    getSubmissionStatusIcon(index) {
+      switch (this.getSubmissionStatus(index)) {
+        case 'failed':
+          return 'redo'
+        case 'saved':
+          return 'check'
+        case 'submitting':
+          return 'spinner'
+        default:
+          return ''
+      }
+    },
+    getSubmissionStatus(index) {
+      return !this.areSubmitting[index]
+        ? this.areSubmitted[index]
+          ? this.isSaved[index]
+            ? 'saved'
+            : 'failed'
+          : ''
+        : 'submitting'
     }
   },
   computed: {
@@ -667,6 +687,10 @@ export default {
 
 .add-tracer-input {
   margin-top: 20px;
+}
+
+.report-submission-status > .icon {
+  height: 36px;
 }
 
 .close-icon {
