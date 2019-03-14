@@ -609,17 +609,11 @@ export default {
       }
     },
     areAllReportsSubmitted: {
-      set(areAllReportsSubmitted) {
-        this.areAllReportsSubmitted = areAllReportsSubmitted
-      },
       get() {
         return this.areSubmitted.every(isSubmitting => isSubmitting)
       }
     },
     areSomeReportsSubmitting: {
-      set(areAllReportsSubmitting) {
-        this.areAllReportsSubmitting = areAllReportsSubmitting
-      },
       get() {
         return this.areSubmitting.some(isSubmitting => isSubmitting)
       }
