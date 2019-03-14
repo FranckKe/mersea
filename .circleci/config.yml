@@ -18,6 +18,9 @@ jobs:
     steps:
       - checkout
 
+      # Bundler v2
+      - run: gem install bundler
+
       # Restore bundle cache
       - restore_cache:
           keys:
