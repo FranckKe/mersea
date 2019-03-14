@@ -233,7 +233,7 @@
                 <a
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
-                  :disabled="selectedTracers.length >= 8"
+                  :disabled="selectedTracers.length >= this.tracerInputsLimit"
                 >
                   <b-icon icon="plus"></b-icon>
                 </a>
@@ -298,6 +298,10 @@ import moment from 'moment'
 
 export default {
   name: 'add-report',
+  created() {
+    // The limit of tracers for bulk reporting
+    this.tracerInputsLimit = 8
+  },
   data() {
     return {
       apiUrl: this.$apiUrl,
@@ -535,7 +539,7 @@ export default {
       this.tracerNames.splice(index, 1)
     },
     addTracerInput() {
-      if (this.selectedTracers.length >= 8) {
+      if (this.selectedTracers.length >= this.tracerInputsLimit) {
         return
       }
       this.selectedTracers.push({})
