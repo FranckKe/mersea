@@ -1,24 +1,34 @@
 <template>
   <div class="tool-bar">
-    <FilterReports></FilterReports>
+    <Tool
+      toolComponent="FilterReports"
+      :toolTitle="$t('tracers')"
+      :toolViewTitle="$t('filter_tracers_title')"
+      toolIcon="filter"
+      :class="{active: getActiveTool === 'FilterReports'}"
+    ></Tool>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-import FilterReports from '@/components/tools/FilterReports'
+import { createNamespacedHelpers } from 'vuex'
+import Tool from '@/components/Tool'
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'ToolBar',
   components: {
-    FilterReports
+    Tool
   },
   data() {
-    return {}
+    return {
+      currentTool: ''
+    }
   },
   methods: {
-    ...mapGetters(['']),
-    ...mapActions([''])
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapMutations(['setActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent'])
   }
 }
 </script>
@@ -34,6 +44,10 @@ export default {
   min-width: 100px;
   background-color: white;
   z-index: 30;
+}
+
+.active {
+  background-color: purple;
 }
 
 @media only screen and (max-device-width: 768px) {
@@ -52,19 +66,16 @@ export default {
 <i18n>
 {
   "en": {
-    "en": "English",
-    "es": "Spañish",
-    "fr": "Français"
+    "tracers": "Tracers",
+    "filter_tracers_title": "Filter by tracers"
   },
   "fr": {
-    "en": "English",
-    "es": "Spañish",
-    "fr": "Français"
+    "tracers": "Tracers",
+    "filter_tracers_title": "Filtrer par tracers"
   },
   "es": {
-    "en": "English",
-    "es": "Spañish",
-    "fr": "Français"
+    "tracers": "Trazadores",
+    "filter_tracers_title": "Filtrar por trazadores"
   }
 }
 </i18n>
