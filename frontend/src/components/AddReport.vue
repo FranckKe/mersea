@@ -156,7 +156,7 @@
                     <a
                       @click="removeTracerInput(index)"
                       class="button is-outlined"
-                      :disabled="selectedTracers.length === 1"
+                      :disabled="selectedTracers.length === 1 || areSubmitting[index]"
                     >
                       <b-icon icon="times"/>
                     </a>
