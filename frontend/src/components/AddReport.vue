@@ -234,7 +234,11 @@
                 <a
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
-                  :disabled="selectedTracers.length >= this.tracerInputsLimit"
+                  :disabled="
+                    selectedTracers.length >= this.tracerInputsLimit
+                    || !selectedTracers[selectedTracers.length - 1]
+                    || !selectedTracers[selectedTracers.length - 1].id
+                  "
                 >
                   <b-icon icon="plus"></b-icon>
                 </a>
