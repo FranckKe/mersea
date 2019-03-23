@@ -178,6 +178,7 @@
                       :data-vv-as="$tc('tracers', 1) | lowercase"
                       v-validate="'required'"
                       customClass="tracer-input"
+                      ref="tracer-input"
                     >
                       <template slot-scope="props">
                         <div class="media">
@@ -555,6 +556,7 @@ export default {
       this.tracerNames.push('')
       this.areSubmitting.push(false)
       this.areSubmitted.push(false)
+      this.$nextTick(() => this.$refs['tracer-input'][this.$refs['tracer-input'].length - 1].focus())
     },
     getSubmissionStatusIcon(index) {
       switch (this.getSubmissionStatus(index)) {
