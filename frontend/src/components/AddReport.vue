@@ -151,7 +151,7 @@
                 </ul>
               </b-message>
               <div v-for="(tracer, index) in selectedTracers" :key="index">
-                <b-field key="key" grouped>
+                <b-field grouped>
                   <b-field :label="index === 0 ? '-' : ''" custom-class="remove-tracer-input-label">
                     <a
                       @click="removeTracerInput(index)"
@@ -163,20 +163,21 @@
                   </b-field>
                   <b-field
                     :label="index === 0 ? $tc('tracers', 1) : ''"
-                    :type="errors.has('tracer') ? 'is-danger' : ''"
+                    :type="errors.has(`tracer-${index}`) ? 'is-danger' : ''"
                     :message="
-                      errors.has('tracer') ? errors.first('tracer') : ''
+                      errors.has(`tracer-${index}`) ? errors.first(`tracer-${index}`) : ''
                     "
                   >
                     <b-autocomplete
                       v-model="tracerNames[index]"
-                      name="tracer"
-                      :data="tracers"
+                      :name="`tracer-${index}`"
+                      :data="tracers.filter((t, tIndex) => tIndex === index || !tracerNames.includes(t.name))"
                       field="name"
                       :open-on-focus="true"
                       @select="option => (selectedTracers[index] = option)"
                       :data-vv-as="$tc('tracers', 1) | lowercase"
                       v-validate="'required'"
+                      customClass="tracer-input"
                     >
                       <template slot-scope="props">
                         <div class="media">
@@ -455,34 +456,35 @@ export default {
         }
       })
     },
-    submitReport(index) {
+    async submitReport(index) {
       this.areSubmitting.splice(index, 1, true)
       this.areSubmitted.splice(index, 1, false)
 
-      return this.submitReportPromise(index)
-        .then(() => {
-          this.isSaved.splice(index, 1, true)
-          delete this.addReportsErrors[index]
-          delete this.addReportsValidationErrors[index]
-        })
-        .catch(error => {
-          if ((((error || {}).response || {}).data || {}).errors != null)
-            this.addReportsValidationErrors.splice(
-              index,
-              1,
-              error.response.data.errors
-            )
-          this.addReportsErrors.splice(
+      try {
+        await this.submitReportPromise(index)
+
+        this.isSaved.splice(index, 1, true)
+        delete this.addReportsErrors[index]
+        delete this.addReportsValidationErrors[index]
+      } catch(error) {
+        if ((((error || {}).response || {}).data || {}).errors != null) {
+          this.addReportsValidationErrors.splice(
             index,
             1,
-            this.$t('submit_report_failure')
+            error.response.data.errors
           )
-          this.isSaved.splice(index, 1, false)
-        })
-        .finally(() => {
-          this.areSubmitting.splice(index, 1, false)
-          this.areSubmitted.splice(index, 1, true)
-        })
+        }
+
+        this.addReportsErrors.splice(
+          index,
+          1,
+          this.$t('submit_report_failure')
+        )
+        this.isSaved.splice(index, 1, false)
+      }
+
+      this.areSubmitting.splice(index, 1, false)
+      this.areSubmitted.splice(index, 1, true)
     },
     submitReportPromise(index) {
       return new Promise(async (resolve, reject) => {
@@ -534,8 +536,10 @@ export default {
       }
     },
     removeTracerInput(index) {
-      this.selectedTracers.splice(index, 1)
+      this.areSubmitted.splice(index, 1)
+      this.areSubmitting.splice(index, 1)
       this.quantities.splice(index, 1)
+      this.selectedTracers.splice(index, 1)
       this.tracerNames.splice(index, 1)
     },
     addTracerInput() {
@@ -685,6 +689,10 @@ export default {
 
 .add-tracer-input {
   margin-top: 20px;
+}
+
+.add-report-form >>> .tracer-input {
+  padding-right: 2.25em;
 }
 
 .report-submission-status > .icon {
