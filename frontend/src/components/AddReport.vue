@@ -218,6 +218,7 @@
                       @click="getSubmissionStatus(index) === 'failed' && submitReport(index)"
                       :class="{
                         'report-submission-status': true,
+                        'report-submission-status--clickable': getSubmissionStatus(index) === 'failed',
                         'has-text-success': getSubmissionStatus(index) === 'saved',
                         'has-text-danger': getSubmissionStatus(index) === 'failed',
                       }"
@@ -469,8 +470,8 @@ export default {
         await this.submitReportPromise(index)
 
         this.isSaved.splice(index, 1, true)
-        delete this.addReportsErrors[index]
-        delete this.addReportsValidationErrors[index]
+        this.addReportsErrors.splice(index, 1)
+        this.addReportsValidationErrors.splice(index, 1)
       } catch(error) {
         if ((((error || {}).response || {}).data || {}).errors != null) {
           this.addReportsValidationErrors.splice(
@@ -699,6 +700,10 @@ export default {
 
 .add-report-form >>> .tracer-input {
   padding-right: 2.25em;
+}
+
+.report-submission-status--clickable {
+  cursor: pointer;
 }
 
 .report-submission-status > .icon {
