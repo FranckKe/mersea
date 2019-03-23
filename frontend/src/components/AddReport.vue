@@ -456,6 +456,8 @@ export default {
         try {
           await Promise.all(promises)
 
+          this.bulmaSteps.next_step()
+
           resolve()
         } catch (e) {
           reject(e)
