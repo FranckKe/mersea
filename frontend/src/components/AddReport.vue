@@ -30,7 +30,7 @@
             <p class="step-title">{{ $t('done') }}</p>
           </div>
         </div>
-        <form class="add-report-form" @submit.prevent="submitReports">
+        <form class="add-report-form">
           <div class="steps-content">
             <div class="step-content">
               <b-field
@@ -372,6 +372,7 @@ export default {
                   validateFiles
               )
             }
+
             if (step === 2) {
               let validateForm = await this.$validator.validateAll()
               if (this.areAllReportsSubmitted) {
@@ -399,6 +400,10 @@ export default {
             const oldStep = this.currentStep
 
             this.currentStep = step
+
+            if (oldStep === 3 && step === 2) {
+              this.goToFirstStep();
+            }
 
             if (step === 3) {
               this.address = ''
@@ -442,8 +447,7 @@ export default {
       getTracersData: 'getData'
     }),
     ...tracersModule.mapActions(['loadTracers']),
-    submitReports() {
-      return new Promise(async (resolve, reject) => {
+    async submitReports() {
         this.addReportsErrors = []
         this.addReportsValidationErrors = []
 
@@ -458,11 +462,12 @@ export default {
 
           this.bulmaSteps.next_step()
 
-          resolve()
+          return true
         } catch (e) {
-          reject(e)
+          console.error(e)
+          console.trace(e)
+          return false
         }
-      })
     },
     async submitReport(index) {
       this.areSubmitting.splice(index, 1, true)
@@ -494,37 +499,33 @@ export default {
       this.areSubmitting.splice(index, 1, false)
       this.areSubmitted.splice(index, 1, true)
     },
-    submitReportPromise(index) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          let file64 =
-            this.files.length > 0 ? await this.getBase64(this.files[0]) : ''
+    async submitReportPromise(index) {
+      try {
+        let file64 =
+          this.files.length > 0 ? await this.getBase64(this.files[0]) : ''
 
-          const postDataJson = {
-            name: this.$auth.check() ? this.$auth.user().name : this.username,
-            address: this.address,
-            latitude: this.coordinates.split(',')[0],
-            longitude: this.coordinates.split(',')[1],
-            reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
-            tracer_id: this.selectedTracers[index].id,
-            quantity: this.quantities[index],
-            description: this.description
-          }
-          if (file64.length > 0) postDataJson.photo = file64
-
-          await this.$http({
-            method: 'POST',
-            url: `/reports`,
-            data: postDataJson
-          })
-
-          resolve(index)
-        } catch (error) {
-          reject(error, index)
-
-          throw error
+        const postDataJson = {
+          name: this.$auth.check() ? this.$auth.user().name : this.username,
+          address: this.address,
+          latitude: this.coordinates.split(',')[0],
+          longitude: this.coordinates.split(',')[1],
+          reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
+          tracer_id: this.selectedTracers[index].id,
+          quantity: this.quantities[index],
+          description: this.description
         }
-      })
+        if (file64.length > 0) postDataJson.photo = file64
+
+        await this.$http({
+          method: 'POST',
+          url: `/reports`,
+          data: postDataJson
+        })
+
+        return true
+      } catch (error) {
+        throw error
+      }
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -536,11 +537,14 @@ export default {
     },
     closeAddReportForm() {
       this.isFormActive = false
-      const currentStep = this.bulmaSteps.get_current_step_id()
-      if (currentStep === 3) {
-        for (let i = 0; i < currentStep; i++) {
-          this.bulmaSteps.previous_step()
-        }
+
+      if (this.bulmaSteps.get_current_step_id() === 3) {
+        this.goToFirstStep()
+      }
+    },
+    goToFirstStep() {
+      for (let i = 0; i < this.currentStep + 1; i++) {
+        this.bulmaSteps.previous_step()
       }
     },
     removeTracerInput(index) {
