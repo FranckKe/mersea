@@ -155,7 +155,7 @@
                   <b-field :label="index === 0 ? '-' : ''" custom-class="remove-tracer-input-label">
                     <a
                       @click="removeTracerInput(index)"
-                      class="button is-outlined"
+                      class="button is-danger is-outlined"
                       :disabled="selectedTracers.length === 1 || areSubmitting[index]"
                     >
                       <b-icon icon="times"/>
@@ -395,7 +395,6 @@ export default {
                 reject(false)
               }
             }
-
             resolve(true)
           })
         },
@@ -463,8 +462,6 @@ export default {
 
       try {
         await Promise.all(promises)
-
-        this.bulmaSteps.next_step()
 
         return true
       } catch (e) {
@@ -547,6 +544,8 @@ export default {
       }
     },
     removeTracerInput(index) {
+      if (this.selectedTracers.length === 1 || this.areSubmitting[index])
+        return false
       this.areSubmitted.splice(index, 1)
       this.areSubmitting.splice(index, 1)
       this.quantities.splice(index, 1)
@@ -554,8 +553,12 @@ export default {
       this.tracerNames.splice(index, 1)
     },
     addTracerInput() {
-      if (this.selectedTracers.length >= this.tracerInputsLimit) {
-        return
+      if (
+        this.selectedTracers.length >= this.tracerInputsLimit ||
+        !this.selectedTracers[this.selectedTracers.length - 1] ||
+        !this.selectedTracers[this.selectedTracers.length - 1].id
+      ) {
+        return false
       }
       this.selectedTracers.push({})
       this.quantities.push(1)
