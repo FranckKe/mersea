@@ -98,16 +98,16 @@
               </b-field>
               <b-field
                 class="file"
-                :type="errors.has('files') ? 'is-danger' : ''"
-                :message="errors.has('files') ? errors.first('files') : ''"
+                :type="errors.has('file') ? 'is-danger' : ''"
+                :message="errors.has('file') ? errors.first('file') : ''"
                 v-if="this.$auth.user() && !this.$auth.user().senior"
               >
                 <b-upload
-                  v-model="files"
-                  name="files"
+                  v-model="file"
+                  name="file"
                   :data-vv-as="$t('photo') | lowercase"
                   v-validate="
-                    'required|size:4000|ext:jpg,JPG,jpeg,JPEG,png,PNG,tiff,TIFF,webp,WEBP'
+                    'required|size:4000'
                   "
                 >
                   <a class="button is-primary">
@@ -115,7 +115,7 @@
                     <span>{{ $t('photo') }}</span>
                   </a>
                 </b-upload>
-                <span class="file-name" v-if="files && files.length">{{ files[0].name }}</span>
+                <span class="file-name" v-if="file">{{ file.name }}</span>
               </b-field>
               <b-field
                 :label="`${$t('description')} (${$t('optional')})`"
@@ -316,7 +316,7 @@ export default {
       selectedTracers: [{}],
       areSubmitting: [false],
       areSubmitted: [false],
-      files: [],
+      file: null,
       isSaved: [false],
       quantities: [1],
       tracerNames: [''],
@@ -348,29 +348,33 @@ export default {
           return new Promise(async (resolve, reject) => {
             if (step === 0) {
               this.username = this.$auth.check() ? this.$auth.user().name : ''
-              resolve(
-                this.$validator.validate('coordinates') &&
-                  this.$validator.validate('address')
-              )
+              let validation = await Promise.all([
+                this.$validator.validate('coordinates'),
+                this.$validator.validate('address')
+              ])
+              resolve(validation.every(v => v))
             }
             if (step === 1) {
-              let validateFiles = true
+              let validatefile = new Promise((resolve, reject) => {
+                resolve(true)
+              })
 
-              // The 'files' field does not always exist
-              // and vee-validate complains when it does not
+              // The 'file' field does not always exist
+              // vee-validate complains when it does not
               if (
                 !this.$auth.check() ||
                 (this.$auth.user() && !this.$auth.user().senior)
               ) {
-                validateFiles = this.$validator.validate('files')
+                validatefile = this.$validator.validate('file')
               }
 
-              resolve(
-                this.$validator.validate('username') &&
-                  this.$validator.validate('reportDate') &&
-                  this.$validator.validate('description') &&
-                  validateFiles
-              )
+              let validation = await Promise.all([
+                this.$validator.validate('username'),
+                this.$validator.validate('reportDate'),
+                this.$validator.validate('description'),
+                validatefile
+              ])
+              resolve(validation.every(v => v))
             }
 
             if (step === 2) {
@@ -402,14 +406,14 @@ export default {
             this.currentStep = step
 
             if (oldStep === 3 && step === 2) {
-              this.goToFirstStep();
+              this.goToFirstStep()
             }
 
             if (step === 3) {
               this.address = ''
               this.coordinates = ''
               this.description = ''
-              this.files = []
+              this.file = []
               this.areSubmitting = [false]
               this.areSubmitted = [false]
               this.addReportsErrors = []
@@ -448,26 +452,26 @@ export default {
     }),
     ...tracersModule.mapActions(['loadTracers']),
     async submitReports() {
-        this.addReportsErrors = []
-        this.addReportsValidationErrors = []
+      this.addReportsErrors = []
+      this.addReportsValidationErrors = []
 
-        const promises = []
-        for (let index = 0; index < this.selectedTracers.length; index++) {
-          const promise = this.submitReport(index)
-          promises.push(promise)
-        }
+      const promises = []
+      for (let index = 0; index < this.selectedTracers.length; index++) {
+        const promise = this.submitReport(index)
+        promises.push(promise)
+      }
 
-        try {
-          await Promise.all(promises)
+      try {
+        await Promise.all(promises)
 
-          this.bulmaSteps.next_step()
+        this.bulmaSteps.next_step()
 
-          return true
-        } catch (e) {
-          console.error(e)
-          console.trace(e)
-          return false
-        }
+        return true
+      } catch (e) {
+        console.error(e)
+        console.trace(e)
+        return false
+      }
     },
     async submitReport(index) {
       this.areSubmitting.splice(index, 1, true)
@@ -479,7 +483,7 @@ export default {
         this.isSaved.splice(index, 1, true)
         this.addReportsErrors.splice(index, 1)
         this.addReportsValidationErrors.splice(index, 1)
-      } catch(error) {
+      } catch (error) {
         if ((((error || {}).response || {}).data || {}).errors != null) {
           this.addReportsValidationErrors.splice(
             index,
@@ -488,11 +492,7 @@ export default {
           )
         }
 
-        this.addReportsErrors.splice(
-          index,
-          1,
-          this.$t('submit_report_failure')
-        )
+        this.addReportsErrors.splice(index, 1, this.$t('submit_report_failure'))
         this.isSaved.splice(index, 1, false)
       }
 
@@ -501,8 +501,7 @@ export default {
     },
     async submitReportPromise(index) {
       try {
-        let file64 =
-          this.files.length > 0 ? await this.getBase64(this.files[0]) : ''
+        let file64 = this.file != null ? await this.getBase64(this.file) : ''
 
         const postDataJson = {
           name: this.$auth.check() ? this.$auth.user().name : this.username,
@@ -563,7 +562,11 @@ export default {
       this.tracerNames.push('')
       this.areSubmitting.push(false)
       this.areSubmitted.push(false)
-      this.$nextTick(() => this.$refs['tracer-input'][this.$refs['tracer-input'].length - 1].focus())
+      this.$nextTick(() =>
+        this.$refs['tracer-input'][
+          this.$refs['tracer-input'].length - 1
+        ].focus()
+      )
     },
     getSubmissionStatusIcon(index) {
       switch (this.getSubmissionStatus(index)) {
