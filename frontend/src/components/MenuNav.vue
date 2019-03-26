@@ -157,8 +157,9 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  z-index: 99;
+.navbar-menu.is-active {
+  width: 100%;
+  position: absolute;
 }
 
 .navbar-link {

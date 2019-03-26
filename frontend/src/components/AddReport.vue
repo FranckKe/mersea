@@ -451,7 +451,7 @@ export default {
   z-index: 5;
   border-radius: 3px;
   top: 115px;
-  left: 10px;
+  left: 110px;
   padding: 15px;
   flex-direction: column;
   overflow-y: scroll;

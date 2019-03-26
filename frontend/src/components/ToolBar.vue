@@ -43,7 +43,7 @@ export default {
   max-width: 100px;
   min-width: 100px;
   background-color: white;
-  z-index: 30;
+  z-index: 10;
 }
 
 .active {
