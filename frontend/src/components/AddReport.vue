@@ -215,12 +215,12 @@
                   </b-field>
                   <b-field :label="index === 0 ? '-' : ''" customClass="remove-tracer-input-label">
                     <span
-                      @click="getSubmissionStatus(index) === 'failed' && submitReport(index)"
+                      @click="retrySubmitReport(index)"
                       :class="{
                         'report-submission-status': true,
                         'report-submission-status--clickable': getSubmissionStatus(index) === 'failed',
                         'has-text-success': getSubmissionStatus(index) === 'saved',
-                        'has-text-danger': getSubmissionStatus(index) === 'failed',
+                        'button is-primary is-outlined': getSubmissionStatus(index) === 'failed',
                       }"
                       :disabled="!(getSubmissionStatus(index) === 'failed')"
                     >
@@ -271,6 +271,7 @@
                 hidden: currentStep === 3,
                 'is-loading': currentStep === 2 && this.areSomeReportsSubmitting
               }"
+              :disabled="this.anySubmitFailed === true ? 'disabled' : ''"
             >{{ currentStep === 2 && !this.areAllReportsSubmitted ? $t('submit') : $t('next') }}</button>
             <a
               href="#"
@@ -359,7 +360,7 @@ export default {
                 resolve(true)
               })
 
-              // The 'file' field does not always exist
+              // The 'file' field does not always exist depending if the user is senior or not
               // vee-validate complains when it does not
               if (
                 !this.$auth.check() ||
@@ -412,7 +413,7 @@ export default {
               this.address = ''
               this.coordinates = ''
               this.description = ''
-              this.file = []
+              this.file = null
               this.areSubmitting = [false]
               this.areSubmitted = [false]
               this.addReportsErrors = []
@@ -496,32 +497,36 @@ export default {
       this.areSubmitting.splice(index, 1, false)
       this.areSubmitted.splice(index, 1, true)
     },
-    async submitReportPromise(index) {
-      try {
-        let file64 = this.file != null ? await this.getBase64(this.file) : ''
+    submitReportPromise(index) {
+      return new Promise(async (resolve, reject) => {
+        try {
+          let file64 =
+            this.file != null ? await this.getBase64(this.file) : null
 
-        const postDataJson = {
-          name: this.$auth.check() ? this.$auth.user().name : this.username,
-          address: this.address,
-          latitude: this.coordinates.split(',')[0],
-          longitude: this.coordinates.split(',')[1],
-          reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
-          tracer_id: this.selectedTracers[index].id,
-          quantity: this.quantities[index],
-          description: this.description
+          const postDataJson = {
+            name: this.$auth.check() ? this.$auth.user().name : this.username,
+            address: this.address,
+            latitude: this.coordinates.split(',')[0],
+            longitude: this.coordinates.split(',')[1],
+            reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
+            tracer_id: (this.selectedTracers[index] || {}).id,
+            quantity: this.quantities[index],
+            description: this.description
+          }
+          if (file64 != null) postDataJson.photo = file64
+
+          await this.$http({
+            method: 'POST',
+            url: `/reports`,
+            data: postDataJson
+          })
+
+          resolve(true)
+        } catch (error) {
+          console.error(error)
+          reject(error)
         }
-        if (file64.length > 0) postDataJson.photo = file64
-
-        await this.$http({
-          method: 'POST',
-          url: `/reports`,
-          data: postDataJson
-        })
-
-        return true
-      } catch (error) {
-        throw error
-      }
+      })
     },
     getBase64(file) {
       return new Promise((resolve, reject) => {
@@ -591,6 +596,14 @@ export default {
             : 'failed'
           : ''
         : 'submitting'
+    },
+    async retrySubmitReport(index) {
+      if (this.getSubmissionStatus(index) !== 'failed') return false
+      try {
+        await this.submitReport(index)
+      } catch (e) {
+        console.error(e)
+      }
     }
   },
   computed: {
@@ -635,15 +648,20 @@ export default {
         return this.getAddress()
       }
     },
-    areAllReportsSubmitted: {
-      get() {
-        return this.areSubmitted.every(isSubmitting => isSubmitting)
-      }
+    areAllReportsSubmitted: function() {
+      return this.areSubmitted.every(isSubmitting => isSubmitting)
     },
-    areSomeReportsSubmitting: {
-      get() {
-        return this.areSubmitting.some(isSubmitting => isSubmitting)
-      }
+    areSomeReportsSubmitting: function() {
+      return this.areSubmitting.some(isSubmitting => isSubmitting)
+    },
+    anySubmitFailed: function() {
+      console.log('anySubmitFailed', this.isSaved.some(v => v === false))
+      return this.isSaved.some(v => v === false)
+    }
+  },
+  watch: {
+    isSaved: function(val) {
+      if (!this.anySubmitFailed) this.bulmaSteps.next_step()
     }
   }
 }
@@ -712,6 +730,12 @@ export default {
 
 .add-report-form >>> .tracer-input {
   padding-right: 2.25em;
+}
+
+.report-submission-status {
+  width: 36px;
+  display: flex;
+  justify-content: center;
 }
 
 .report-submission-status--clickable {
@@ -841,7 +865,7 @@ export default {
     "tracers": "Trazadore | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
-    "load_tracers_failure": "Fail to load tracers"
+    "load_tracers_failure": "Fallo al cargar los trazadores"
   }
 }
 </i18n>
