@@ -35,13 +35,7 @@
             class="navbar-item"
             v-for="(pageName, index) in getPagesByCategory(category)"
             v-bind:key="index"
-            :to="{
-              name: 'pages',
-              params: {
-                category: slugify($t(category)).toLowerCase(),
-                page: pageName.slug,
-              }
-            }"
+            :to="`/pages/${slugify($t(category)).toLowerCase()}/${pageName.slug}`"
           >{{ pageName.raw }}</router-link>
         </div>
       </div>
