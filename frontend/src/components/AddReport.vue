@@ -156,7 +156,7 @@
                     <a
                       @click="removeTracerInput(index)"
                       class="button is-danger is-outlined"
-                      :disabled="selectedTracers.length === 1 || areSubmitting[index]"
+                      :disabled="selectedTracers.length === 1 || areSubmitting[index] || areSomeReportsSubmitted"
                     >
                       <b-icon icon="times"/>
                     </a>
@@ -240,6 +240,7 @@
                     selectedTracers.length >= this.tracerInputsLimit
                     || !selectedTracers[selectedTracers.length - 1]
                     || !selectedTracers[selectedTracers.length - 1].id
+                    || areSomeReportsSubmitted
                   "
                 >
                   <b-icon icon="plus"></b-icon>
@@ -549,7 +550,11 @@ export default {
       }
     },
     removeTracerInput(index) {
-      if (this.selectedTracers.length === 1 || this.areSubmitting[index])
+      if (
+        this.selectedTracers.length === 1 ||
+        this.areSubmitting[index] ||
+        this.areSomeReportsSubmitted
+      )
         return false
       this.areSubmitted.splice(index, 1)
       this.areSubmitting.splice(index, 1)
@@ -561,7 +566,8 @@ export default {
       if (
         this.selectedTracers.length >= this.tracerInputsLimit ||
         !this.selectedTracers[this.selectedTracers.length - 1] ||
-        !this.selectedTracers[this.selectedTracers.length - 1].id
+        !this.selectedTracers[this.selectedTracers.length - 1].id ||
+        this.areSomeReportsSubmitted
       ) {
         return false
       }
@@ -649,7 +655,10 @@ export default {
       }
     },
     areAllReportsSubmitted: function() {
-      return this.areSubmitted.every(isSubmitting => isSubmitting)
+      return this.areSubmitted.every(isSubmitted => isSubmitted)
+    },
+    areSomeReportsSubmitted: function() {
+      return this.areSubmitted.some(isSubmitted => isSubmitted)
     },
     areSomeReportsSubmitting: function() {
       return this.areSubmitting.some(isSubmitting => isSubmitting)
