@@ -664,7 +664,6 @@ export default {
       return this.areSubmitting.some(isSubmitting => isSubmitting)
     },
     anySubmitFailed: function() {
-      console.log('anySubmitFailed', this.isSaved.some(v => v === false))
       return this.isSaved.some(v => v === false)
     }
   },
