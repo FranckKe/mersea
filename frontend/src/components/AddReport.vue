@@ -342,7 +342,7 @@ export default {
       })
     }
 
-    this.tracers = this.getTracersData()
+    this.tracers = this.getTracers()
     this.bulmaSteps = new bulmaSteps(
       document.getElementById('addReportSteps'),
       {
@@ -448,9 +448,7 @@ export default {
       'getAddress',
       'getCurrentStep'
     ]),
-    ...tracersModule.mapGetters({
-      getTracersData: 'getData'
-    }),
+    ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
     async submitReports() {
       this.addReportsErrors = []
@@ -686,7 +684,7 @@ export default {
   z-index: 5;
   border-radius: 3px;
   top: 115px;
-  left: 10px;
+  left: 110px;
   padding: 15px;
   flex-direction: column;
   overflow-y: scroll;

@@ -157,6 +157,15 @@ export default {
 </script>
 
 <style scoped>
+.navbar {
+  width: 52px;
+}
+
+.navbar-menu.is-active {
+  width: 100vw;
+  position: absolute;
+}
+
 .navbar-link {
   cursor: default;
 }

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import addReport from './modules/addReport'
 import pages from './modules/pages'
 import reports from './modules/reports'
+import toolBar from './modules/toolBar'
 import tracers from './modules/tracers'
-import addReport from './modules/addReport'
 import createPersistedState from 'vuex-persistedstate'
 import i18n from '../i18n'
 
@@ -15,6 +16,7 @@ const store = new Vuex.Store({
     addReport: addReport,
     pages: pages,
     reports: reports,
+    toolBar: toolBar,
     tracers: tracers
   },
   state: {

@@ -23,7 +23,19 @@ const getters = {
   },
   getReports: state => {
     return state.reports
-  }
+  },
+  getFilteredReports: state => tracerIds => {
+    return {
+      features: state.reports.features.filter(report =>
+        tracerIds.includes(report.properties.tracer_id)
+      ),
+      type: 'FeatureCollection'
+    }
+  },
+  getReportCount: state => tracerId =>
+    state.reports.features.filter(
+      report => tracerId === report.properties.tracer_id
+    ).length
 }
 const mutations = {
   updateData: (state, payload) => {
