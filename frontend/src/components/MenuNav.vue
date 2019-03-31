@@ -195,7 +195,7 @@ export default {
 
 <style scoped>
 .navbar {
-  width: 52px;
+  width: 51px;
 }
 
 .navbar-menu {

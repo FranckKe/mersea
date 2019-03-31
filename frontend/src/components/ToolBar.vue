@@ -61,11 +61,11 @@ export default {
 
 @media only screen and (max-device-width: 768px) {
   .tool-bar {
-    width: calc(100% - 52px);
-    min-width: calc(100% - 52px);
-    max-width: calc(100% - 52px);
-    height: 52px;
-    margin-left: 52px;
+    width: calc(100% - 51px);
+    min-width: calc(100% - 51px);
+    max-width: calc(100% - 51px);
+    height: 51px;
+    margin-left: 50px;
     align-items: flex-start;
     flex-direction: row;
   }
