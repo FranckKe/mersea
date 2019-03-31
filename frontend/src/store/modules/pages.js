@@ -73,15 +73,15 @@ const getters = {
   }
 }
 const mutations = {
-  updatePages: (state, { pages }) => {
+  setPages: (state, { pages }) => {
     state.pages = pages
   },
-  updateSuccess: state => {
+  setSuccess: state => {
     state.success = true
     state.loading = false
     state.errors = []
   },
-  updateError: (state, { errors }) => {
+  setError: (state, { errors }) => {
     state.errors = errors
     state.loading = false
   }
@@ -91,11 +91,11 @@ const actions = {
     try {
       const pagesData = await api.get(`/pages`)
       const pages = pagesData.data
-      commit('updatePages', { pages })
-      commit('updateSuccess')
+      commit('setPages', { pages })
+      commit('setSuccess')
     } catch (error) {
       let errors = [error.message]
-      commit('updateError', { errors })
+      commit('setError', { errors })
     }
   }
 }

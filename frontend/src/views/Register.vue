@@ -16,32 +16,32 @@
       <form class="form-register" v-on:submit.prevent="register()">
         <b-field
           :label="$t('name')"
-          :type="errors.has('username') ? 'is-danger': ''"
+          :type="errors.has('username') ? 'is-danger' : ''"
           :message="errors.has('username') ? errors.first('username') : ''"
         >
           <b-input
             v-model="user.name"
             name="username"
-            :data-vv-as="$t('name')|lowercase"
+            :data-vv-as="$t('name') | lowercase"
             v-validate="'required'"
           ></b-input>
         </b-field>
         <b-field
           :label="$t('email')"
-          :type="errors.has('email') ? 'is-danger': ''"
+          :type="errors.has('email') ? 'is-danger' : ''"
           :message="errors.has('email') ? errors.first('email') : ''"
         >
           <b-input
             type="email"
             v-model="user.email"
             name="email"
-            :data-vv-as="$t('email')|lowercase"
+            :data-vv-as="$t('email') | lowercase"
             v-validate="'required|email'"
           ></b-input>
         </b-field>
         <b-field
           :label="$t('password')"
-          :type="errors.has('password') ? 'is-danger': ''"
+          :type="errors.has('password') ? 'is-danger' : ''"
           :message="errors.has('password') ? errors.first('password') : ''"
         >
           <b-input
@@ -49,21 +49,25 @@
             v-model="user.password"
             name="password"
             ref="password"
-            :data-vv-as="$t('password')|lowercase"
+            :data-vv-as="$t('password') | lowercase"
             v-validate="'required|min:6'"
             password-reveal
           ></b-input>
         </b-field>
         <b-field
           :label="$t('password_confirmation')"
-          :type="errors.has('passwordConfirmation') ? 'is-danger': ''"
-          :message="errors.has('passwordConfirmation') ? errors.first('passwordConfirmation') : ''"
+          :type="errors.has('passwordConfirmation') ? 'is-danger' : ''"
+          :message="
+            errors.has('passwordConfirmation')
+              ? errors.first('passwordConfirmation')
+              : ''
+          "
         >
           <b-input
             type="password"
             v-model="user.passwordConfirmation"
             name="passwordConfirmation"
-            :data-vv-as="$t('password_confirmation')|lowercase"
+            :data-vv-as="$t('password_confirmation') | lowercase"
             v-validate="'required|confirmed:password'"
             password-reveal
           ></b-input>
@@ -71,7 +75,9 @@
         <div class="field">
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
-        <button type="submit" class="button is-success">{{ $t('register') }}</button>
+        <button type="submit" class="button is-success">
+          {{ $t('register') }}
+        </button>
       </form>
     </div>
   </div>

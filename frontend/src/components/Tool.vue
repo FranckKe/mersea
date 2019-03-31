@@ -1,14 +1,24 @@
 <template>
   <div class="tool">
-    <div class="tool-tab" @click="toggleActiveComponent(toolComponent)" :class="{active: isActive}">
-      <font-awesome-icon :icon="toolIcon"/>
+    <div
+      class="tool-tab"
+      @click="toggleActiveComponent(toolComponent)"
+      :class="{ active: isActive }"
+    >
+      <font-awesome-icon :icon="toolIcon" />
       <p>{{ toolTitle }}</p>
     </div>
-    <div class="tool-view" v-if="isActive">
+    <div
+      class="tool-view"
+      v-if="isActive"
+    >
       <div class="title-wrapper">
         <h4 class="title is-4">{{ toolViewTitle }}</h4>
-        <a @click="toggleActiveComponent(toolComponent)" class="button is-danger close-tool-button">
-          <font-awesome-icon icon="times"/>
+        <a
+          @click="toggleActiveComponent(toolComponent)"
+          class="button is-danger close-tool-button"
+        >
+          <font-awesome-icon icon="times" />
         </a>
       </div>
       <component :is="toolComponent"></component>
@@ -18,14 +28,16 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import FilterReports from '@/components/tools/FilterReports'
+import FilterReportsByTracer from '@/components/tools/FilterReportsByTracer'
+import FilterReportsByDate from '@/components/tools/FilterReportsByDate'
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'Tool',
   props: ['toolComponent', 'toolTitle', 'toolViewTitle', 'toolIcon'],
   components: {
-    FilterReports
+    FilterReportsByTracer,
+    FilterReportsByDate
   },
   data() {
     return {}
@@ -46,7 +58,7 @@ export default {
 <style>
 .tool-tab {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   padding: 0.5em;
   width: 100%;
@@ -69,24 +81,28 @@ export default {
 }
 .tool p {
   text-align: center;
+  margin-left: 0.25em;
   cursor: pointer;
 }
 .tool-view {
   width: 350px;
-  height: calc(100vh - 52px);
+  height: calc(100vh - 55px);
   position: fixed;
-  top: 51px; /* Menu heigth */
-  left: 100px; /* Tool bar width */
+  top: 0; /* Menu heigth */
+  left: 124px; /* Tool bar width */
   background-color: whitesmoke;
   z-index: 11;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 }
+
 .title-wrapper {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5em;
+  min-height: 36px;
 }
 .tool-view h4.title {
   display: flex;
@@ -104,7 +120,7 @@ export default {
     height: 100%;
   }
   .tool {
-    max-width: 80px;
+    width: auto;
   }
   .tool-view {
     height: calc(100vh - 52px - 2em); /* - menu-height - margin */
@@ -120,7 +136,6 @@ export default {
   }
 }
 </style>
-
 
 <i18n>
 {

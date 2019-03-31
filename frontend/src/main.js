@@ -51,6 +51,8 @@ const api = axios.create({
 Vue.prototype.$http = api
 Vue.prototype.$appName = 'Ocean Plastic Tracker'
 Vue.prototype.$apiUrl = process.env.VUE_APP_API_URL || ''
+Vue.prototype.$reported_at_min = moment('2018-01-01').format('YYYY-MM-DD')
+Vue.prototype.$reported_at_max = moment().format('YYYY-MM-DD')
 
 Vue.router = router
 router.afterEach(() => {

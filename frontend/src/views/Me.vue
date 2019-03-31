@@ -11,7 +11,9 @@
           type="is-danger"
         >
           <ul>
-            <li v-for="error in userInfo.formErrors" v-bind:key="error">{{ error }}</li>
+            <li v-for="error in userInfo.formErrors" v-bind:key="error">
+              {{ error }}
+            </li>
           </ul>
         </b-message>
         <form
@@ -21,57 +23,78 @@
         >
           <b-field
             :label="$t('name')"
-            :type="errors.has('update-user-info.name') ? 'is-danger': ''"
-            :message="errors.has('update-user-info.name') ? errors.first('update-user-info.name') : ''"
+            :type="errors.has('update-user-info.name') ? 'is-danger' : ''"
+            :message="
+              errors.has('update-user-info.name')
+                ? errors.first('update-user-info.name')
+                : ''
+            "
           >
             <b-input
               v-model="userInfo.name"
               name="name"
-              :data-vv-as="$t('name')|lowercase"
+              :data-vv-as="$t('name') | lowercase"
               v-validate="'required'"
             ></b-input>
           </b-field>
           <b-field
             :label="$t('email')"
-            :type="errors.has('update-user-info.email') ? 'is-danger': ''"
-            :message="errors.has('update-user-info.email') ? errors.first('update-user-info.email') : ''"
+            :type="errors.has('update-user-info.email') ? 'is-danger' : ''"
+            :message="
+              errors.has('update-user-info.email')
+                ? errors.first('update-user-info.email')
+                : ''
+            "
           >
             <b-input
               type="email"
               v-model="userInfo.email"
               name="email"
-              :data-vv-as="$t('email')|lowercase"
+              :data-vv-as="$t('email') | lowercase"
               v-validate="'required|email'"
             ></b-input>
           </b-field>
           <b-field
             :label="$t('language')"
-            :type="errors.has('update-user-info.language') ? 'is-danger': ''"
-            :message="errors.has('update-user-info.language') ? errors.first('update-user-info.language') : ''"
+            :type="errors.has('update-user-info.language') ? 'is-danger' : ''"
+            :message="
+              errors.has('update-user-info.language')
+                ? errors.first('update-user-info.language')
+                : ''
+            "
           >
             <b-select v-model="userInfo.language">
               <option
                 v-for="(language, i) in getAvailableLangs()"
                 :key="`language${i}`"
                 :value="language"
-              >{{ $t(language) }}</option>
+                >{{ $t(language) }}</option
+              >
             </b-select>
           </b-field>
           <b-field
             :label="$t('current_password')"
-            :type="errors.has('update-user-info.current_password') ? 'is-danger': ''"
-            :message="errors.has('update-user-info.current_password') ? errors.first('update-user-info.current_password') : ''"
+            :type="
+              errors.has('update-user-info.current_password') ? 'is-danger' : ''
+            "
+            :message="
+              errors.has('update-user-info.current_password')
+                ? errors.first('update-user-info.current_password')
+                : ''
+            "
           >
             <b-input
               type="password"
               v-model="userInfo.current_password"
               name="current_password"
-              :data-vv-as="$t('current_password')|lowercase"
+              :data-vv-as="$t('current_password') | lowercase"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
           </b-field>
-          <button type="submit" class="button is-success">{{ $t('update') }}</button>
+          <button type="submit" class="button is-success">
+            {{ $t('update') }}
+          </button>
         </form>
       </div>
       <div class="container">
@@ -82,7 +105,9 @@
           type="is-danger"
         >
           <ul>
-            <li v-for="error in userPassword.formErrors" v-bind:key="error">{{ error }}</li>
+            <li v-for="error in userPassword.formErrors" v-bind:key="error">
+              {{ error }}
+            </li>
           </ul>
         </b-message>
         <form
@@ -92,48 +117,72 @@
         >
           <b-field
             :label="$t('current_password')"
-            :type="errors.has('update-user-password.current_password') ? 'is-danger': ''"
-            :message="errors.has('update-user-password.current_password') ? errors.first('update-user-password.current_password') : ''"
+            :type="
+              errors.has('update-user-password.current_password')
+                ? 'is-danger'
+                : ''
+            "
+            :message="
+              errors.has('update-user-password.current_password')
+                ? errors.first('update-user-password.current_password')
+                : ''
+            "
           >
             <b-input
               type="password"
               v-model="userPassword.current_password"
               name="current_password"
-              :data-vv-as="$t('current_password')|lowercase"
+              :data-vv-as="$t('current_password') | lowercase"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
           </b-field>
           <b-field
             :label="$t('new_password')"
-            :type="errors.has('update-user-password.new_password') ? 'is-danger': ''"
-            :message="errors.has('update-user-password.new_password') ? errors.first('update-user-password.new_password') : ''"
+            :type="
+              errors.has('update-user-password.new_password') ? 'is-danger' : ''
+            "
+            :message="
+              errors.has('update-user-password.new_password')
+                ? errors.first('update-user-password.new_password')
+                : ''
+            "
           >
             <b-input
               type="password"
               v-model="userPassword.password"
               name="new_password"
               ref="new_password"
-              :data-vv-as="$t('new_password')|lowercase"
+              :data-vv-as="$t('new_password') | lowercase"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
           </b-field>
           <b-field
             :label="$t('new_password_confirmation')"
-            :type="errors.has('update-user-password.password_confirmation') ? 'is-danger': ''"
-            :message="errors.has('update-user-password.password_confirmation') ? errors.first('update-user-password.password_confirmation') : ''"
+            :type="
+              errors.has('update-user-password.password_confirmation')
+                ? 'is-danger'
+                : ''
+            "
+            :message="
+              errors.has('update-user-password.password_confirmation')
+                ? errors.first('update-user-password.password_confirmation')
+                : ''
+            "
           >
             <b-input
               type="password"
               v-model="userPassword.password_confirmation"
               name="new_password_confirmation"
-              :data-vv-as="$t('new_password_confirmation')|lowercase"
+              :data-vv-as="$t('new_password_confirmation') | lowercase"
               v-validate="'required|confirmed:new_password'"
               password-reveal
             ></b-input>
           </b-field>
-          <button type="submit" class="button is-success">{{ $t('update') }}</button>
+          <button type="submit" class="button is-success">
+            {{ $t('update') }}
+          </button>
         </form>
       </div>
     </div>
@@ -246,7 +295,6 @@ export default {
   margin-bottom: 25px;
 }
 </style>
-
 
 <i18n>
 {

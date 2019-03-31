@@ -1,8 +1,15 @@
 <template>
   <div class="home">
-    <b-loading :is-full-page="false" :active.sync="this.getLoading()" :can-cancel="false"></b-loading>
+    <b-loading
+      :is-full-page="false"
+      :active.sync="this.getLoading()"
+      :can-cancel="false"
+    ></b-loading>
     <ToolBar></ToolBar>
-    <div id="map" class="map"></div>
+    <div
+      id="map"
+      class="map"
+    ></div>
     <add-report></add-report>
   </div>
 </template>
@@ -51,6 +58,16 @@ export default {
           .setData(this.getFilteredReports()(filteredTracers))
       }
     )
+    this.$store.watch(
+      (state, getters) => getters['reports/getReports'],
+      () => {
+        // Return early if map is not ready
+        if (this.map.getSource('reports') == null) return false
+        if (this.map.getLayer('unclustered-reports') == null) return false
+        // Reset map source data with filtered geojson
+        this.map.getSource('reports').setData(this.getReports())
+      }
+    )
   },
   watch: {
     '$i18n.locale': function() {
@@ -78,9 +95,11 @@ export default {
       this.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
-        minzoom: 2,
+        minZoom: 4,
         zoom: 5,
-        center: [0, 46.2276]
+        maxZoom: 10,
+        center: [0, 46.2276],
+        refreshExpiredTiles: false
       })
 
       // Restore marker if the page loads on a unfinished reporting
@@ -137,7 +156,10 @@ export default {
     },
     mapLoad: async function() {
       try {
-        await this.loadReports()
+        await this.loadReports({
+          reported_at_min: this.$reported_at_min,
+          reported_at_max: this.$reported_at_max
+        })
       } catch (e) {
         this.$toast.open({
           message: this.$t('map_init_failure'),
@@ -402,7 +424,9 @@ export default {
 }
 
 .map {
-  width: 100%;
+  width: calc(100% - 125px); /* toolbar width */
+  position: fixed;
+  right: 0;
   height: calc(100vh - 55px); /* header height + margin */
 }
 
@@ -483,6 +507,10 @@ export default {
 @media only screen and (max-device-width: 768px) {
   .home {
     flex-direction: column;
+  }
+  .map {
+    width: 100vw;
+    height: 100vh;
   }
 }
 </style>

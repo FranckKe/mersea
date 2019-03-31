@@ -32,12 +32,12 @@ const getters = {
   }
 }
 const mutations = {
-  updateSuccess: state => {
+  setSuccess: state => {
     state.success = true
     state.loading = false
     state.errors = []
   },
-  updateError: (state, { errors }) => {
+  setError: (state, { errors }) => {
     state.errors = errors
     state.loading = false
   },

@@ -16,7 +16,7 @@
       <form class="form-reset-password" v-on:submit.prevent="resetPassword()">
         <b-field
           :label="$t('password')"
-          :type="errors.has('password') ? 'is-danger': ''"
+          :type="errors.has('password') ? 'is-danger' : ''"
           :message="errors.has('password') ? errors.first('password') : ''"
         >
           <b-input
@@ -24,27 +24,33 @@
             v-model="password"
             name="password"
             ref="password"
-            :data-vv-as="$t('password')|lowercase"
+            :data-vv-as="$t('password') | lowercase"
             v-validate="'required|min:6'"
             password-reveal
           ></b-input>
         </b-field>
         <b-field
           :label="$t('password_confirmation')"
-          :type="errors.has('passwordConfirmation') ? 'is-danger': ''"
-          :message="errors.has('passwordConfirmation') ? errors.first('passwordConfirmation') : ''"
+          :type="errors.has('passwordConfirmation') ? 'is-danger' : ''"
+          :message="
+            errors.has('passwordConfirmation')
+              ? errors.first('passwordConfirmation')
+              : ''
+          "
         >
           <b-input
             type="password"
             v-model="passwordConfirmation"
             name="passwordConfirmation"
-            :data-vv-as="$t('password_confirmation')|lowercase"
+            :data-vv-as="$t('password_confirmation') | lowercase"
             v-validate="'required|confirmed:password'"
             password-reveal
           ></b-input>
         </b-field>
         <div class="buttons">
-          <button type="submit" class="button is-success">{{ $t('reset_password') }}</button>
+          <button type="submit" class="button is-success">
+            {{ $t('reset_password') }}
+          </button>
         </div>
       </form>
     </div>
@@ -74,9 +80,8 @@ export default {
     async resetPassword() {
       let validateForm = await this.$validator.validateAll()
       if (!validateForm) return false
-      let resetPasswordRes
       try {
-        resetPasswordRes = await this.$http({
+        await this.$http({
           method: 'PATCH',
           url: '/users/password',
           data: {

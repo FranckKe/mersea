@@ -12,7 +12,12 @@
         </b-select>
 
         <div class="control is-flex">
-          <input class="input" v-model="filter" type="search" v-bind:placeholder="$t('search')">
+          <input
+            class="input"
+            v-model="filter"
+            type="search"
+            v-bind:placeholder="$t('search')"
+          />
         </div>
       </b-field>
 
@@ -31,34 +36,39 @@
             v-bind:label="$t('tracer')"
             width="40"
             sortable
-          >{{ props.row.tracer }}</b-table-column>
+            >{{ props.row.tracer }}</b-table-column
+          >
 
           <b-table-column
             field="quantity"
             v-bind:label="$t('quantity')"
             sortable
-          >{{ props.row.quantity }}</b-table-column>
+            >{{ props.row.quantity }}</b-table-column
+          >
 
           <b-table-column
             field="reported_at"
             v-bind:label="$t('reported_at')"
             sortable
             centered
-          >{{ props.row.reported_at }}</b-table-column>
+            >{{ props.row.reported_at }}</b-table-column
+          >
 
           <b-table-column
             field="address"
             v-bind:label="$t('address')"
             sortable
             centered
-          >{{ props.row.address }}</b-table-column>
+            >{{ props.row.address }}</b-table-column
+          >
 
           <b-table-column
             field="status"
             v-bind:label="$t('status')"
             sortable
             centered
-          >{{ props.row.status | capitalize }}</b-table-column>
+            >{{ props.row.status | capitalize }}</b-table-column
+          >
         </template>
       </b-table>
     </div>
@@ -108,8 +118,7 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <i18n>
 {

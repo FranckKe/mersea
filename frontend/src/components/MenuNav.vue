@@ -1,6 +1,14 @@
 <template>
-  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-    <b-loading :is-full-page="false" :active.sync="this.loading" :can-cancel="true"></b-loading>
+  <nav
+    class="navbar is-fixed-top"
+    role="navigation"
+    aria-label="main navigation"
+  >
+    <b-loading
+      :is-full-page="false"
+      :active.sync="this.loading"
+      :can-cancel="true"
+    ></b-loading>
     <div class="navbar-brand">
       <div class="navbar-start">
         <a
@@ -16,9 +24,18 @@
         </a>
       </div>
     </div>
-    <div id="flexible-menu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
-      <router-link :to="`/${$t('tracers').toLowerCase()}`" class="navbar-item">{{ $t('tracers') }}</router-link>
+    <div
+      id="flexible-menu"
+      class="navbar-menu"
+    >
+      <router-link
+        to="/"
+        class="navbar-item"
+      >{{ $t('home') }}</router-link>
+      <router-link
+        :to="`/${$t('tracers').toLowerCase()}`"
+        class="navbar-item"
+      >{{ $t('tracers') }}</router-link>
       <router-link
         :to="`/${$t('leaderboard').toLowerCase()}`"
         class="navbar-item"
@@ -41,33 +58,59 @@
       </div>
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
-        <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
-          <button class="button is-primary" slot="trigger">
+        <b-dropdown
+          v-if="$auth.check()"
+          position="is-bottom-left"
+          paddingless
+        >
+          <button
+            class="button is-primary"
+            slot="trigger"
+          >
             <span>{{ $auth.user().email }}</span>
-            <b-icon pack="fas" icon="caret-down"></b-icon>
+            <b-icon
+              pack="fas"
+              icon="caret-down"
+            ></b-icon>
           </button>
 
           <b-dropdown-item>
-            <router-link :to="'/me'" class="has-text-dark is-size-6 nav-dropdown-link">
-              <font-awesome-icon icon="user"/>
+            <router-link
+              :to="'/me'"
+              class="has-text-dark is-size-6 nav-dropdown-link"
+            >
+              <font-awesome-icon icon="user" />
               {{ $t('my_account') }}
             </router-link>
           </b-dropdown-item>
           <b-dropdown-item class="has-text-dark is-size-6">
-            <router-link :to="'/me/reports'" class="has-text-dark is-size-6 nav-dropdown-link">
-              <font-awesome-icon icon="map-marker-alt"/>
+            <router-link
+              :to="'/me/reports'"
+              class="has-text-dark is-size-6 nav-dropdown-link"
+            >
+              <font-awesome-icon icon="map-marker-alt" />
               {{ $t('my_reports') }}
             </router-link>
           </b-dropdown-item>
-          <hr class="dropdown-divider">
+          <hr class="dropdown-divider" />
           <b-dropdown-item class="has-text-danger is-size-6">
-            <a href="#" class="has-text-danger is-size-6 nav-dropdown-link" v-on:click="logout()">
-              <font-awesome-icon icon="sign-out-alt"/>
+            <a
+              href="#"
+              class="has-text-danger is-size-6 nav-dropdown-link"
+              v-on:click="logout()"
+            >
+              <font-awesome-icon icon="sign-out-alt" />
               {{ $t('logout') }}
             </a>
           </b-dropdown-item>
         </b-dropdown>
-        <router-link v-if="!$auth.check()" :to="'/login'" class="button">{{ $t('login') }}</router-link>
+        <router-link
+          v-if="!$auth.check()"
+          :to="'/login'"
+          class="button"
+        >
+          {{ $t('login') }}
+        </router-link>
         <router-link
           v-if="!$auth.check()"
           :to="'/register'"
@@ -155,8 +198,10 @@ export default {
   width: 52px;
 }
 
-.navbar-menu.is-active {
+.navbar-menu {
   width: 100vw;
+}
+.navbar-menu.is-active {
   position: absolute;
 }
 
@@ -166,6 +211,7 @@ export default {
 
 .navbar-end {
   padding: 0.5rem 0.75rem;
+  margin-right: 1em;
 }
 
 .navbar-end.buttons .button {
@@ -230,7 +276,7 @@ export default {
   "es": {
     "about": "Acerca de",
     "home": "Inicio",
-    "information": "información",
+    "information": "Información",
     "leaderboard": "Contribuciones",
     "login": "Iniciar sesión",
     "logout_failure": "Error durante el sesión finalizada",

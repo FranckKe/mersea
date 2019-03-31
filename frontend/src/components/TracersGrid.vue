@@ -26,7 +26,9 @@
             </p>
             <p>
               <strong>{{ $t('created_at') }}:</strong>
-              <time datetime="tracer.created_at | formatDate">{{ tracer.created_at | formatDate }}</time>
+              <time datetime="tracer.created_at | formatDate">
+                {{ tracer.created_at | formatDate }}
+              </time>
             </p>
           </div>
         </div>

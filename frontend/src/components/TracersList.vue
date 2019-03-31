@@ -21,20 +21,27 @@
       detail-key="id"
     >
       <template slot-scope="props">
-        <b-table-column field="name" v-bind:label="$t('name')" sortable>{{ props.row.name }}</b-table-column>
-        <b-table-column field="name" v-bind:label="$t('origin')" sortable>{{ props.row.origin }}</b-table-column>
-        <b-table-column field="kind" v-bind:label="$t('type')" sortable>{{ props.row.kind }}</b-table-column>
+        <b-table-column field="name" v-bind:label="$t('name')" sortable>
+          {{ props.row.name }}
+        </b-table-column>
+        <b-table-column field="name" v-bind:label="$t('origin')" sortable>
+          {{ props.row.origin }}
+        </b-table-column>
+        <b-table-column field="kind" v-bind:label="$t('type')" sortable>
+          {{ props.row.kind }}
+        </b-table-column>
         <b-table-column
           field="created_at"
           v-bind:label="$t('created_at')"
           sortable
-        >{{ props.row.created_at | formatDate }}</b-table-column>
+          >{{ props.row.created_at | formatDate }}</b-table-column
+        >
       </template>
       <template slot="detail" slot-scope="props">
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img :src="`${apiUrl}${props.row.photo}`">
+              <img :src="`${apiUrl}${props.row.photo}`" />
             </p>
           </figure>
           <div class="media-content">
@@ -95,7 +102,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 .tracer-description {
