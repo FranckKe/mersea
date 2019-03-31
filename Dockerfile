@@ -27,6 +27,9 @@ RUN apk add --update --no-cache \
     tzdata \
     nodejs
 
+# Bundler 2.x.x
+RUN gem install bundler
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
@@ -90,6 +93,9 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY --from=js-build-env /usr/src/app /usr/src/app
+
+# Bundler 2.x.x
+RUN gem install bundler
 
 # Resync bundler
 RUN bundle install --deployment --without development test
