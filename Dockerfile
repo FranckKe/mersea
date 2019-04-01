@@ -53,7 +53,7 @@ RUN apk add --update --no-cache \
 COPY --from=ruby-build-env /usr/src/app /usr/src/app
 
 ENV NODE_ENV production
-ENV VUE_APP_MAPBOX_TOKEN pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjanNianhvM3owY2thNGJycGs4eTRtNmlmIn0.C-IMo3-GDK62hskzUEIJxA
+ENV VUE_APP_MAPBOX_TOKEN pk.eyJ1IjoiZmJsYWNrdGVtcGxhciIsImEiOiJjanR5cXlneG0xYnhjNGZwbDQzMmFxY3FjIn0.UBR9fSD1kVNQuOPh_sWmqQ
 
 WORKDIR /usr/src/app/frontend
 
