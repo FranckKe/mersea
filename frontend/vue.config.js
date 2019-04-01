@@ -6,5 +6,11 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: true
     }
+  },
+  pwa: {
+    workboxPluginMode: 'GenerateSW',
+    workboxOptions: {
+      skipWaiting: true
+    }
   }
 }
