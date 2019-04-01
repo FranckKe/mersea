@@ -8,10 +8,7 @@
       <font-awesome-icon :icon="toolIcon" />
       <p>{{ toolTitle }}</p>
     </div>
-    <div
-      class="tool-view"
-      v-if="isActive"
-    >
+    <div class="tool-view" v-if="isActive">
       <div class="title-wrapper">
         <h4 class="title is-4">{{ toolViewTitle }}</h4>
         <a
@@ -85,7 +82,7 @@ export default {
   cursor: pointer;
 }
 .tool-view {
-  width: 350px;
+  width: 362px;
   height: calc(100vh - 55px);
   position: fixed;
   top: 52px; /* Menu heigth */

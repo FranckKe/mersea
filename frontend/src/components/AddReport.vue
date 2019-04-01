@@ -7,17 +7,11 @@
     >
       <div class="title-wrapper">
         <h2 class="title is-2">{{ $t('add_report') }}</h2>
-        <a
-          @click="closeAddReportForm"
-          class="button is-danger close-button"
-        >
+        <a @click="closeAddReportForm" class="button is-danger close-button">
           <font-awesome-icon icon="times" />
         </a>
       </div>
-      <div
-        class="steps"
-        id="addReportSteps"
-      >
+      <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
           <div class="step-marker">1</div>
           <div class="step-details">
@@ -110,10 +104,7 @@
                   </a>
                   <p>{{ $t('photo_multiple_tracer') }}</p>
                 </b-upload>
-                <span
-                  class="file-name"
-                  v-if="file"
-                >{{ file.name }}</span>
+                <span class="file-name" v-if="file">{{ file.name }}</span>
               </b-field>
               <b-field
                 :label="$t('report_date')"
@@ -167,10 +158,7 @@
                   </li>
                 </ul>
               </b-message>
-              <div
-                v-for="(tracer, index) in selectedTracers"
-                :key="index"
-              >
+              <div v-for="(tracer, index) in selectedTracers" :key="index">
                 <b-field grouped>
                   <b-field
                     :label="index === 0 ? '-' : ''"
@@ -306,7 +294,8 @@
               id="prevAction"
               data-nav="previous"
               class="button is-light"
-            >{{ $t('previous') }}</a>
+              >{{ $t('previous') }}</a
+            >
           </div>
           <div class="steps-action">
             <button
@@ -322,9 +311,9 @@
               :disabled="this.anySubmitFailed === true ? 'disabled' : ''"
             >
               {{
-              currentStep === 2 && !this.areAllReportsSubmitted
-              ? $t('submit')
-              : $t('next')
+                currentStep === 2 && !this.areAllReportsSubmitted
+                  ? $t('submit')
+                  : $t('next')
               }}
             </button>
             <a
@@ -332,7 +321,8 @@
               class="button is-danger close-button-step"
               :class="{ hidden: currentStep !== 3 }"
               @click="closeAddReportForm"
-            >{{ $t('close') }}</a>
+              >{{ $t('close') }}</a
+            >
           </div>
         </div>
       </div>
@@ -346,7 +336,8 @@
       "
       class="add-report-button button is-success"
       :class="{ hidden: isFormActive }"
-    >{{ $t('add_report') }}</a>
+      >{{ $t('add_report') }}</a
+    >
   </div>
 </template>
 
@@ -780,6 +771,7 @@ export default {
 
 .title-wrapper .close-button {
   width: 35px;
+  align-self: flex-start;
 }
 
 .add-report-form >>> .remove-tracer-input-label {

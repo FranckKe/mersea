@@ -24,22 +24,18 @@
         </a>
       </div>
     </div>
-    <div
-      id="flexible-menu"
-      class="navbar-menu"
-    >
-      <router-link
-        to="/"
-        class="navbar-item"
-      >{{ $t('home') }}</router-link>
+    <div id="flexible-menu" class="navbar-menu">
+      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
       <router-link
         :to="`/${$t('tracers').toLowerCase()}`"
         class="navbar-item"
-      >{{ $t('tracers') }}</router-link>
+        >{{ $t('tracers') }}</router-link
+      >
       <router-link
         :to="`/${$t('leaderboard').toLowerCase()}`"
         class="navbar-item"
-      >{{ $t('leaderboard') }}</router-link>
+        >{{ $t('leaderboard') }}</router-link
+      >
 
       <div
         class="navbar-item has-dropdown is-hoverable"
@@ -52,26 +48,19 @@
             class="navbar-item"
             v-for="(pageName, index) in getPagesByCategory(category)"
             v-bind:key="index"
-            :to="`/pages/${slugify($t(category)).toLowerCase()}/${pageName.slug}`"
-          >{{ pageName.raw }}</router-link>
+            :to="
+              `/pages/${slugify($t(category)).toLowerCase()}/${pageName.slug}`
+            "
+            >{{ pageName.raw }}</router-link
+          >
         </div>
       </div>
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
-        <b-dropdown
-          v-if="$auth.check()"
-          position="is-bottom-left"
-          paddingless
-        >
-          <button
-            class="button is-primary"
-            slot="trigger"
-          >
+        <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
+          <button class="button is-primary" slot="trigger">
             <span>{{ $auth.user().email }}</span>
-            <b-icon
-              pack="fas"
-              icon="caret-down"
-            ></b-icon>
+            <b-icon pack="fas" icon="caret-down"></b-icon>
           </button>
 
           <b-dropdown-item>
@@ -104,18 +93,15 @@
             </a>
           </b-dropdown-item>
         </b-dropdown>
-        <router-link
-          v-if="!$auth.check()"
-          :to="'/login'"
-          class="button"
-        >
+        <router-link v-if="!$auth.check()" :to="'/login'" class="button">
           {{ $t('login') }}
         </router-link>
         <router-link
           v-if="!$auth.check()"
           :to="'/register'"
           class="button is-success"
-        >{{ $t('register') }}</router-link>
+          >{{ $t('register') }}</router-link
+        >
       </div>
     </div>
   </nav>

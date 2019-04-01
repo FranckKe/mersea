@@ -1,15 +1,12 @@
 <template>
   <div class="home">
     <b-loading
-      :is-full-page="false"
+      :is-full-page="true"
       :active.sync="this.getLoading()"
       :can-cancel="false"
     ></b-loading>
     <ToolBar></ToolBar>
-    <div
-      id="map"
-      class="map"
-    ></div>
+    <div id="map" class="map"></div>
     <add-report></add-report>
   </div>
 </template>
@@ -502,6 +499,10 @@ export default {
   color: #4a4a4a;
   display: block;
   padding: 1.25rem;
+}
+
+.loading-overlay.is-active.is-full-page {
+  z-index: 999999999;
 }
 
 @media only screen and (max-device-width: 768px) {

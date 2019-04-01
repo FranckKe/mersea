@@ -9,18 +9,10 @@
       />
     </div>
     <div class="check-buttons">
-      <button
-        type="submit"
-        class="button"
-        @click="checkAll"
-      >
+      <button type="submit" class="button" @click="checkAll">
         {{ $t('check_all') }}
       </button>
-      <button
-        type="submit"
-        class="button"
-        @click="unCheckAll"
-      >
+      <button type="submit" class="button" @click="unCheckAll">
         {{ $t('uncheck_all') }}
       </button>
     </div>
@@ -30,10 +22,7 @@
         :key="tracer.id"
         v-for="tracer in filteredTracersList"
       >
-        <b-checkbox
-          v-model="filteredTracers"
-          :native-value="tracer.id"
-        >
+        <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
           <svg
             class="legend-circle"
             viewBox="0 0 20 20"
@@ -57,7 +46,6 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import moment from 'moment'
 const tracersModule = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
 
