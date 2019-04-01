@@ -43,7 +43,7 @@ $(document).on("turbolinks:load", function() {
 
   if (mapElement.length > 0) {
     var mapboxStreet = L.tileLayer(
-      "https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjanNianhvM3owY2thNGJycGs4eTRtNmlmIn0.C-IMo3-GDK62hskzUEIJxA",
+      "https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmJsYWNrdGVtcGxhciIsImEiOiJjanR5cXlneG0xYnhjNGZwbDQzMmFxY3FjIn0.UBR9fSD1kVNQuOPh_sWmqQ",
       {
         attribution: "Mapbox",
         maxZoom: 18
@@ -51,7 +51,7 @@ $(document).on("turbolinks:load", function() {
     );
 
     var mapboxSatellite = L.tileLayer(
-      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjanNianhvM3owY2thNGJycGs4eTRtNmlmIn0.C-IMo3-GDK62hskzUEIJxA",
+      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmJsYWNrdGVtcGxhciIsImEiOiJjanR5cXlneG0xYnhjNGZwbDQzMmFxY3FjIn0.UBR9fSD1kVNQuOPh_sWmqQ",
       {
         attribution: "Mapbox",
         maxZoom: 18

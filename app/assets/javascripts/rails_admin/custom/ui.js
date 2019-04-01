@@ -67,7 +67,7 @@ $(document).on("rails_admin.dom_ready", function() {
     var map = L.map("map").setView(latlng, 7);
 
     var mapbox = L.tileLayer(
-      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZnJhbmNrayIsImEiOiJjanNianhvM3owY2thNGJycGs4eTRtNmlmIn0.C-IMo3-GDK62hskzUEIJxA",
+      "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmJsYWNrdGVtcGxhciIsImEiOiJjanR5cXlneG0xYnhjNGZwbDQzMmFxY3FjIn0.UBR9fSD1kVNQuOPh_sWmqQ",
       {
         attribution: "Mapbox",
         maxZoom: 18
