@@ -42,6 +42,9 @@ const mutations = {
   setTracers: (state, { tracers }) => {
     state.tracers = tracers
   },
+  setLoading: (state, loading) => {
+    state.loading = loading
+  },
   setSuccess: state => {
     state.success = true
     state.loading = false
@@ -65,6 +68,8 @@ const mutations = {
 const actions = {
   async loadTracers({ commit }) {
     try {
+      commit('setLoading', true)
+
       const tracersRes = await api.get(`/tracers`)
       const tracers = tracersRes.data
       commit('setTracers', { tracers })

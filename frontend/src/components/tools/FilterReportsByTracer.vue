@@ -6,17 +6,36 @@
         v-model="search"
         type="search"
         v-bind:placeholder="$t('search')"
-      >
+      />
     </div>
     <div class="check-buttons">
-      <button type="submit" class="button" @click="checkAll">{{ $t('check_all') }}</button>
-      <button type="submit" class="button" @click="unCheckAll">{{ $t('uncheck_all') }}</button>
+      <button type="submit" class="button" @click="checkAll">
+        {{ $t('check_all') }}
+      </button>
+      <button type="submit" class="button" @click="unCheckAll">
+        {{ $t('uncheck_all') }}
+      </button>
     </div>
     <div class="legend-tracers">
-      <div class="legend-tracer" :key="tracer.id" v-for="tracer in filteredTracersList">
+      <div
+        class="legend-tracer"
+        :key="tracer.id"
+        v-for="tracer in filteredTracersList"
+      >
         <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
-          <svg class="legend-circle" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2.5" :fill="tracer.color"></circle>
+          <svg
+            class="legend-circle"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="10"
+              cy="10"
+              r="7"
+              stroke="white"
+              stroke-width="2.5"
+              :fill="tracer.color"
+            ></circle>
           </svg>
           {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
         </b-checkbox>
@@ -31,11 +50,13 @@ const tracersModule = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
 
 export default {
-  name: 'filterReports',
+  name: 'filterReportsByTracer',
   data() {
     return {
       isActive: false,
       apiUrl: this.$apiUrl,
+      reported_at_min: new Date(this.$reported_at_min),
+      reported_at_max: new Date(this.$reported_at_max),
       search: ''
     }
   },
@@ -77,8 +98,7 @@ export default {
   margin: 0.5em 0;
 }
 .legend-tracers {
-  overflow-y: scroll;
-  flex-shrink: 999;
+  margin-bottom: 1.5em;
 }
 .legend-tracer {
   width: 100%;
@@ -138,7 +158,6 @@ export default {
   }
 }
 </style>
-
 
 <i18n>
 {

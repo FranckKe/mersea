@@ -1,11 +1,18 @@
 <template>
   <div class="tool-bar">
     <Tool
-      toolComponent="FilterReports"
+      toolComponent="FilterReportsByTracer"
       :toolTitle="$t('tracers')"
-      :toolViewTitle="$t('filter_tracers_title')"
+      :toolViewTitle="$t('filter_reports_by_tracer_title')"
       toolIcon="filter"
-      :class="{active: getActiveTool === 'FilterReports'}"
+      :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
+    ></Tool>
+    <Tool
+      toolComponent="FilterReportsByDate"
+      :toolTitle="$t('date')"
+      :toolViewTitle="$t('filter_reports_by_date_title')"
+      toolIcon="filter"
+      :class="{ active: getActiveTool === 'FilterReportsByDate' }"
     ></Tool>
   </div>
 </template>
@@ -39,11 +46,13 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
+  width: 125px;
+  max-width: 125px;
+  min-width: 125px;
   background-color: white;
   z-index: 10;
+  position: fixed;
+  height: calc(100vh - 50px);
 }
 
 .active {
@@ -52,11 +61,11 @@ export default {
 
 @media only screen and (max-device-width: 768px) {
   .tool-bar {
-    width: calc(100% - 52px);
-    min-width: calc(100% - 52px);
-    max-width: calc(100% - 52px);
-    height: 52px;
-    margin-left: 52px;
+    width: calc(100% - 51px);
+    min-width: calc(100% - 51px);
+    max-width: calc(100% - 51px);
+    height: 51px;
+    margin-left: 50px;
     align-items: flex-start;
     flex-direction: row;
   }
@@ -67,15 +76,21 @@ export default {
 {
   "en": {
     "tracers": "Tracers",
-    "filter_tracers_title": "Filter by tracers"
+    "filter_reports_by_tracer_title": "Filter by tracers",
+    "date": "Date",
+    "filter_reports_by_date_title": "Filter by date"
   },
   "fr": {
     "tracers": "Tracers",
-    "filter_tracers_title": "Filtrer par tracers"
+    "filter_reports_by_tracer_title": "Filtrer par tracers",
+    "date": "Date",
+    "filter_reports_by_date_title": "Filtrer par date"
   },
   "es": {
     "tracers": "Trazadores",
-    "filter_tracers_title": "Filtrar por trazadores"
+    "filter_reports_by_tracer_title": "Filtrar por trazadores",
+    "date": "Fecha",
+    "filter_reports_by_date_title": "Filtrar por fecha"
   }
 }
 </i18n>

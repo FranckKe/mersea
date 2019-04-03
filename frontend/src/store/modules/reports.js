@@ -38,34 +38,41 @@ const getters = {
     ).length
 }
 const mutations = {
-  updateData: (state, payload) => {
+  setLoading: (state, loading) => {
+    state.loading = loading
+  },
+  setData: (state, payload) => {
     state.reports = payload.reports
   },
-  updateSuccess: state => {
+  setSuccess: state => {
     state.success = true
     state.loading = false
     state.errors = []
   },
-  updateError: (state, { errors }) => {
+  setError: (state, { errors }) => {
     state.errors = errors
     state.loading = false
   }
 }
 const actions = {
-  async loadReports({ commit }) {
+  async loadReports({ commit }, { reported_at_min, reported_at_max }) {
     try {
-      const reports = await api.get(`/reports`, {
-        headers: {
-          Accept: 'application/geo+json',
-          'Content-Type': 'application/geo+json'
+      commit('setLoading', true)
+      const reports = await api.get(
+        `/reports?r_min_reported_at=${reported_at_min}&r_max_reported_at=${reported_at_max}`,
+        {
+          headers: {
+            Accept: 'application/geo+json',
+            'Content-Type': 'application/geo+json'
+          }
         }
-      })
+      )
       let reportsData = reports.data
-      commit('updateData', { reports: reportsData })
-      commit('updateSuccess')
+      commit('setData', { reports: reportsData })
+      commit('setSuccess')
     } catch (error) {
       let errors = [error.message]
-      commit('updateError', { errors })
+      commit('setError', { errors })
     }
   }
 }

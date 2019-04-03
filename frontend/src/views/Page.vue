@@ -1,9 +1,9 @@
 <template>
-<div class="section">
-  <div class="container">
-    <div class="page" v-html="this.pageContent"></div>
+  <div class="section">
+    <div class="container">
+      <div class="page" v-html="this.pageContent"></div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ export default {
           header.classList.add(`title`)
           header.classList.add(`is-${header.tagName[1]}`)
         })
-      }, 1)
+      }, 250)
     }
   },
   computed: { ...mapGetters(['getPageContent']) }

@@ -5,7 +5,8 @@
         v-for="(language, i) in getAvailableLangs()"
         :key="`language${i}`"
         :value="language"
-      >{{ $t(language) }}</option>
+        >{{ $t(language) }}</option
+      >
     </b-select>
   </div>
 </template>

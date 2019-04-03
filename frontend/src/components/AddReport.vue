@@ -1,10 +1,16 @@
 <template>
   <div class="add-report-layer">
-    <section id="addReport" class="add-report" :class="{ hidden: !isFormActive }">
-      <h2 class="title is-2">{{ $t('add_report') }}</h2>
-      <a @click="closeAddReportForm" class="button is-danger close-button">
-        <font-awesome-icon icon="times"/>
-      </a>
+    <section
+      id="addReport"
+      class="add-report"
+      :class="{ hidden: !isFormActive }"
+    >
+      <div class="title-wrapper">
+        <h2 class="title is-2">{{ $t('add_report') }}</h2>
+        <a @click="closeAddReportForm" class="button is-danger close-button">
+          <font-awesome-icon icon="times" />
+        </a>
+      </div>
       <div class="steps" id="addReportSteps">
         <div class="step-item is-active is-success">
           <div class="step-marker">1</div>
@@ -81,6 +87,26 @@
                 ></b-input>
               </b-field>
               <b-field
+                class="file"
+                :type="errors.has('file') ? 'is-danger' : ''"
+                :message="errors.has('file') ? errors.first('file') : ''"
+                v-if="this.$auth.user() && !this.$auth.user().senior"
+              >
+                <b-upload
+                  v-model="file"
+                  name="file"
+                  :data-vv-as="$t('photo') | lowercase"
+                  v-validate="'required|size:4000'"
+                >
+                  <a class="button is-primary">
+                    <b-icon icon="upload"></b-icon>
+                    <span>{{ $t('photo') }}</span>
+                  </a>
+                  <p>{{ $t('photo_multiple_tracer') }}</p>
+                </b-upload>
+                <span class="file-name" v-if="file">{{ file.name }}</span>
+              </b-field>
+              <b-field
                 :label="$t('report_date')"
                 :type="errors.has('reportDate') ? 'is-danger' : ''"
                 :message="
@@ -91,31 +117,10 @@
                   v-model="reportDate"
                   name="reportDate"
                   placeholder="$t('click_select')"
-                  :mobile-native="false"
+                  inline
                   :data-vv-as="$t('report_date') | lowercase"
                   v-validate="'required'"
                 ></b-datepicker>
-              </b-field>
-              <b-field
-                class="file"
-                :type="errors.has('file') ? 'is-danger' : ''"
-                :message="errors.has('file') ? errors.first('file') : ''"
-                v-if="this.$auth.user() && !this.$auth.user().senior"
-              >
-                <b-upload
-                  v-model="file"
-                  name="file"
-                  :data-vv-as="$t('photo') | lowercase"
-                  v-validate="
-                    'required|size:4000'
-                  "
-                >
-                  <a class="button is-primary">
-                    <b-icon icon="upload"></b-icon>
-                    <span>{{ $t('photo') }}</span>
-                  </a>
-                </b-upload>
-                <span class="file-name" v-if="file">{{ file.name }}</span>
               </b-field>
               <b-field
                 :label="`${$t('description')} (${$t('optional')})`"
@@ -145,33 +150,50 @@
                 {{ addReportError }}
                 <ul>
                   <li
-                    v-for="(addReportValidationError, index) in addReportsValidationErrors[index]"
+                    v-for="(addReportValidationError,
+                    index) in addReportsValidationErrors[index]"
                     :key="index"
-                  >- {{ addReportValidationError.metadata.reason }}</li>
+                  >
+                    - {{ addReportValidationError.metadata.reason }}
+                  </li>
                 </ul>
               </b-message>
               <div v-for="(tracer, index) in selectedTracers" :key="index">
                 <b-field grouped>
-                  <b-field :label="index === 0 ? '-' : ''" custom-class="remove-tracer-input-label">
+                  <b-field
+                    :label="index === 0 ? '-' : ''"
+                    custom-class="remove-tracer-input-label"
+                  >
                     <a
                       @click="removeTracerInput(index)"
                       class="button is-danger is-outlined"
-                      :disabled="selectedTracers.length === 1 || areSubmitting[index] || areSomeReportsSubmitted"
+                      :disabled="
+                        selectedTracers.length === 1 ||
+                          areSubmitting[index] ||
+                          areSomeReportsSubmitted
+                      "
                     >
-                      <b-icon icon="times"/>
+                      <b-icon icon="times" />
                     </a>
                   </b-field>
                   <b-field
                     :label="index === 0 ? $tc('tracers', 1) : ''"
                     :type="errors.has(`tracer-${index}`) ? 'is-danger' : ''"
                     :message="
-                      errors.has(`tracer-${index}`) ? errors.first(`tracer-${index}`) : ''
+                      errors.has(`tracer-${index}`)
+                        ? errors.first(`tracer-${index}`)
+                        : ''
                     "
                   >
                     <b-autocomplete
                       v-model="tracerNames[index]"
                       :name="`tracer-${index}`"
-                      :data="tracers.filter((t, tIndex) => tIndex === index || !tracerNames.includes(t.name))"
+                      :data="
+                        tracers.filter(
+                          (t, tIndex) =>
+                            tIndex === index || !tracerNames.includes(t.name)
+                        )
+                      "
                       field="name"
                       :open-on-focus="true"
                       @select="option => (selectedTracers[index] = option)"
@@ -183,11 +205,14 @@
                       <template slot-scope="props">
                         <div class="media">
                           <div class="media-left">
-                            <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`">
+                            <img
+                              class="image is-64x64"
+                              :src="`${apiUrl}${props.option.photo}`"
+                            />
                           </div>
                           <div class="media-content">
                             {{ props.option.name }}
-                            <br>
+                            <br />
                             <small>{{ props.option.type }}</small>
                           </div>
                         </div>
@@ -213,20 +238,30 @@
                       v-validate="'required|min_value:0'"
                     ></b-input>
                   </b-field>
-                  <b-field :label="index === 0 ? '-' : ''" customClass="remove-tracer-input-label">
+                  <b-field
+                    :label="index === 0 ? '-' : ''"
+                    customClass="remove-tracer-input-label"
+                  >
                     <span
                       @click="retrySubmitReport(index)"
                       :class="{
                         'report-submission-status': true,
-                        'report-submission-status--clickable': getSubmissionStatus(index) === 'failed',
-                        'has-text-success': getSubmissionStatus(index) === 'saved',
-                        'button is-primary is-outlined': getSubmissionStatus(index) === 'failed',
+                        'report-submission-status--clickable':
+                          getSubmissionStatus(index) === 'failed',
+                        'has-text-success':
+                          getSubmissionStatus(index) === 'saved',
+                        'button is-primary is-outlined':
+                          getSubmissionStatus(index) === 'failed'
                       }"
                       :disabled="!(getSubmissionStatus(index) === 'failed')"
                     >
                       <b-icon
                         :icon="getSubmissionStatusIcon(index)"
-                        :custom-class="getSubmissionStatus(index) === 'submitting' ? 'fa-spin' : ''"
+                        :custom-class="
+                          getSubmissionStatus(index) === 'submitting'
+                            ? 'fa-spin'
+                            : ''
+                        "
                       />
                     </span>
                   </b-field>
@@ -237,10 +272,10 @@
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
                   :disabled="
-                    selectedTracers.length >= this.tracerInputsLimit
-                    || !selectedTracers[selectedTracers.length - 1]
-                    || !selectedTracers[selectedTracers.length - 1].id
-                    || areSomeReportsSubmitted
+                    selectedTracers.length >= this.tracerInputsLimit ||
+                      !selectedTracers[selectedTracers.length - 1] ||
+                      !selectedTracers[selectedTracers.length - 1].id ||
+                      areSomeReportsSubmitted
                   "
                 >
                   <b-icon icon="plus"></b-icon>
@@ -259,7 +294,8 @@
               id="prevAction"
               data-nav="previous"
               class="button is-light"
-            >{{ $t('previous') }}</a>
+              >{{ $t('previous') }}</a
+            >
           </div>
           <div class="steps-action">
             <button
@@ -273,13 +309,20 @@
                 'is-loading': currentStep === 2 && this.areSomeReportsSubmitting
               }"
               :disabled="this.anySubmitFailed === true ? 'disabled' : ''"
-            >{{ currentStep === 2 && !this.areAllReportsSubmitted ? $t('submit') : $t('next') }}</button>
+            >
+              {{
+                currentStep === 2 && !this.areAllReportsSubmitted
+                  ? $t('submit')
+                  : $t('next')
+              }}
+            </button>
             <a
               href="#"
               class="button is-danger close-button-step"
               :class="{ hidden: currentStep !== 3 }"
               @click="closeAddReportForm"
-            >{{ $t('close') }}</a>
+              >{{ $t('close') }}</a
+            >
           </div>
         </div>
       </div>
@@ -293,7 +336,8 @@
       "
       class="add-report-button button is-success"
       :class="{ hidden: isFormActive }"
-    >{{ $t('add_report') }}</a>
+      >{{ $t('add_report') }}</a
+    >
   </div>
 </template>
 
@@ -354,10 +398,11 @@ export default {
                 this.$validator.validate('coordinates'),
                 this.$validator.validate('address')
               ])
-              resolve(validation.every(v => v))
+              let validateResult = validation.every(v => v)
+              validateResult ? resolve(validateResult) : reject(validateResult)
             }
             if (step === 1) {
-              let validatefile = new Promise((resolve, reject) => {
+              let validatefile = new Promise(resolve => {
                 resolve(true)
               })
 
@@ -401,7 +446,7 @@ export default {
           })
         },
         onShow: step => {
-          return new Promise(async (resolve, reject) => {
+          return new Promise(async resolve => {
             const oldStep = this.currentStep
 
             this.currentStep = step
@@ -666,7 +711,7 @@ export default {
     }
   },
   watch: {
-    isSaved: function(val) {
+    isSaved: function() {
       if (!this.anySubmitFailed) this.bulmaSteps.next_step()
     }
   }
@@ -684,7 +729,7 @@ export default {
   z-index: 5;
   border-radius: 3px;
   top: 115px;
-  left: 110px;
+  left: 135px;
   padding: 15px;
   flex-direction: column;
   overflow-y: scroll;
@@ -697,9 +742,9 @@ export default {
   .add-report {
     height: auto;
     min-height: calc(60vh - 115px);
-    width: 100%;
+    width: calc(100% - 124px); /* toolbar width + margin */
     max-width: 100%;
-    left: 0;
+    left: 125px; /* toolbar width */
     margin-top: 40vh;
     padding: 30px;
   }
@@ -707,27 +752,30 @@ export default {
 
 @media only screen and (max-device-width: 768px) {
   .add-report {
-    padding: 30px 10px 10px 10px;
+    padding: 30px 10pxc 10px 10px;
+    width: 100%;
+    left: 0;
   }
+}
+
+.title-wrapper {
+  display: flex;
+  margin-bottom: 25px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-wrapper .title {
+  margin-bottom: 0;
+}
+
+.title-wrapper .close-button {
+  width: 35px;
+  align-self: flex-start;
 }
 
 .add-report-form >>> .remove-tracer-input-label {
   color: white;
-}
-
-.add-report::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-.add-report::-webkit-scrollbar-track {
-  background-color: var(--color-primary-light);
-  border-radius: 0px;
-}
-
-.add-report::-webkit-scrollbar-thumb {
-  background-color: var(--color-primary);
-  border-radius: 0px;
 }
 
 .add-tracer-input {
@@ -788,11 +836,8 @@ export default {
   margin-left: 15px;
 }
 
-.add-report .close-button {
-  width: 35px;
-  position: absolute;
-  right: 0px;
-  top: 10px;
+.upload {
+  margin-bottom: 0.5em;
 }
 </style>
 
@@ -821,6 +866,7 @@ export default {
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Fail to submit report",
     "photo": "Photo",
+    "photo_multiple_tracer": "A photo can contain several tracers",
     "load_tracers_failure": "Fail to load tracers"
   },
   "fr": {
@@ -846,6 +892,7 @@ export default {
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Échec d'ajout d'un témoignage",
     "photo": "Photo",
+    "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
     "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
@@ -871,6 +918,7 @@ export default {
     "tracers": "Trazadore | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
+    "photo_multiple_tracer": "Una foto puede contener varios marcadores",
     "load_tracers_failure": "Fallo al cargar los trazadores"
   }
 }

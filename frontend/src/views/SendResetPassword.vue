@@ -14,21 +14,27 @@
       </b-message>
 
       <form class="form-reset-password" v-on:submit.prevent="resetPassword()">
-        <b-loading :is-full-page="false" :active.sync="isSendingEmail" :can-cancel="false"></b-loading>
+        <b-loading
+          :is-full-page="false"
+          :active.sync="isSendingEmail"
+          :can-cancel="false"
+        ></b-loading>
         <b-field
           :label="$t('email')"
-          :type="errors.has('email') ? 'is-danger': ''"
+          :type="errors.has('email') ? 'is-danger' : ''"
           :message="errors.has('email') ? errors.first('email') : ''"
         >
           <b-input
             v-model="email"
             type="email"
             name="email"
-            :data-vv-as="$t('email')|lowercase"
+            :data-vv-as="$t('email') | lowercase"
             v-validate="'required|email'"
           ></b-input>
         </b-field>
-        <button type="submit" class="button is-success">{{ $t('reset_password') }}</button>
+        <button type="submit" class="button is-success">
+          {{ $t('reset_password') }}
+        </button>
       </form>
     </div>
   </div>
@@ -57,10 +63,9 @@ export default {
     async resetPassword() {
       let validateForm = await this.$validator.validateAll()
       if (!validateForm) return false
-      let resetPasswordRes
       try {
         this.isSendingEmail = true
-        resetPasswordRes = await this.$http({
+        await this.$http({
           method: 'POST',
           url: `/users/password`,
           data: { user: { email: this.email } }
