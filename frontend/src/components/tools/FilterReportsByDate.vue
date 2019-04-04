@@ -30,6 +30,24 @@
       <button class="button is-primary" @click="dateRange(2, 'years')">
         <span>{{ $t('last_2_years') }}</span>
       </button>
+      <button class="button is-primary" @click="
+          reported_at_min = new Date('2016-01-01')
+          reported_at_max = new Date('2016-12-31')
+        ">
+        <span>2016</span>
+      </button>
+      <button class="button is-primary" @click="
+          reported_at_min = new Date('2017-01-01')
+          reported_at_max = new Date('2017-12-31')
+        ">
+        <span>2017</span>
+      </button>
+      <button class="button is-primary" @click="
+          reported_at_min = new Date('2018-01-01')
+          reported_at_max = new Date('2018-12-31')
+        ">
+        <span>2018</span>
+      </button>
       <button
         class="button is-primary"
         @click="
@@ -67,6 +85,10 @@
         </button>
       </b-datepicker>
     </b-field>
+    <button
+        class="button is-primary"@click="startOfRange('year')">
+        <span>Reset</span>
+    </button>
   </div>
 </template>
 
@@ -151,13 +173,13 @@ export default {
     "from": "From",
     "until": "Until",
     "quick_selection": "Quick selection",
-    "this_week": "This week",
+    "this_week": "Week to date",
     "last_7_days": "Last 7 days",
     "last_30_days": "Last 30 days",
-    "this_month": "This month",
+    "this_month": "Month to date",
     "last_6_months": "Last 6 months",
     "last_12_months": "Last 12 months",
-    "this_year": "This year",
+    "this_year": "Year to date",
     "last_2_years": "Last 2 years",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",

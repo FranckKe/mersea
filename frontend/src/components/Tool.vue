@@ -1,13 +1,15 @@
 <template>
   <div class="tool">
-    <div
-      class="tool-tab"
+    <a
+      class="tool-tab button is-primary"
+      :class="{ 'is-active': isActive }"
       @click="toggleActiveComponent(toolComponent)"
-      :class="{ active: isActive }"
     >
-      <font-awesome-icon :icon="toolIcon" />
-      <p>{{ toolTitle }}</p>
-    </div>
+      <span class="icon is-small">
+        <font-awesome-icon :icon="toolIcon" />
+      </span>
+      <span class="tool-title">{{ toolTitle }}</span>
+    </a>
     <div class="tool-view" v-if="isActive">
       <div class="title-wrapper">
         <h4 class="title is-4">{{ toolViewTitle }}</h4>
@@ -52,20 +54,7 @@ export default {
 }
 </script>
 
-<style>
-.tool-tab {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0.5em;
-  width: 100%;
-  height: 50px;
-  background-color: whitesmoke;
-}
-.tool-tab:hover,
-.tool-tab.active {
-  background-color: gainsboro;
-}
+<style lang="scss">
 .tool {
   width: 100%;
   height: 50px;
@@ -73,9 +62,22 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .tool:hover {
   cursor: pointer;
 }
+
+.tool-tab.button {
+    width: 95%;
+    height: 90%;
+    border-radius: 3px;
+}
+
+.tool-title {
+  flex: 1;
+}
+
+
 .tool p {
   text-align: center;
   margin-left: 0.25em;
@@ -85,7 +87,7 @@ export default {
   width: 362px;
   height: calc(100vh - 55px);
   position: fixed;
-  top: 52px; /* Menu heigth */
+  top: var(--header-height); /* Menu heigth */
   left: 124px; /* Tool bar width */
   background-color: whitesmoke;
   z-index: 11;
@@ -111,22 +113,33 @@ export default {
   display: none;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 1024px) {
   .tool-tab,
   .tool {
     height: 100%;
+    margin-top: 0;
   }
+
   .tool {
     width: auto;
   }
+  .tool:first-of-type {
+    margin-left: 0.25em
+  }
+  .tool-tab.button {
+    width: 90%;
+    height: 90%;
+  }
+
   .tool-view {
-    height: calc(100vh - 51px - 2em); /* - menu-height - margin */
+    height: calc(100vh - var(--header-height) - 2em);
     border-radius: 6px;
     width: 90%;
     top: calc(50% + 20px);
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
   .close-tool-button {
     align-self: flex-end;
     display: inline-flex;

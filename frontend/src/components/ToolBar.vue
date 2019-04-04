@@ -59,12 +59,12 @@ export default {
   background-color: purple;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 1024px) {
   .tool-bar {
-    width: calc(100% - 51px);
-    min-width: calc(100% - 51px);
-    max-width: calc(100% - 51px);
-    height: 51px;
+    width: calc(100% - var(--header-height));
+    min-width: calc(100% - var(--header-height));
+    max-width: calc(100% - var(--header-height));
+    height: 52px;
     margin-left: 50px;
     align-items: flex-start;
     flex-direction: row;
