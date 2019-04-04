@@ -87,11 +87,19 @@ export default {
   },
   methods: {
     ...reportsModule.mapActions(['loadReports']),
-    updateReports: function() {
-      this.loadReports({
-        reported_at_min: moment(this.reported_at_min).format('YYYY-MM-DD'),
-        reported_at_max: moment(this.reported_at_max).format('YYYY-MM-DD')
-      })
+    updateReports: async function() {
+      try {
+        await this.loadReports({
+          reported_at_min: moment(this.reported_at_min).format('YYYY-MM-DD'),
+          reported_at_max: moment(this.reported_at_max).format('YYYY-MM-DD')
+        })
+      } catch (e) {
+        this.$toast.open({
+          message: this.$t('load_reports_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
+      }
     },
     dateRange: function(numberToSubstract, typeOf) {
       this.reported_at_min = moment()
@@ -153,6 +161,7 @@ export default {
     "last_2_years": "Last 2 years",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",
+    "load_reports_failure": "Fail to load reports",
     "by_date": "By date"
   },
   "fr": {
@@ -169,6 +178,7 @@ export default {
     "last_2_years": "2 dernières années",
     "from_beginning": "Depuis le début",
     "custom_range": "Période personnalisée",
+    "load_reports_failure": "Échec de chargement des raports",
     "by_date": "Rechercher"
   },
   "es": {
@@ -185,6 +195,7 @@ export default {
     "last_2_years": "últimos 2 años",
     "from_beginning": "Desde el principio",
     "custom_range": "Rango personalizado",
+    "load_reports_failure": "Fallo al cargar informes",
     "by_date": "Por fecha"
   }
 }

@@ -75,8 +75,8 @@ const actions = {
       commit('setTracers', { tracers })
       commit('setFilteredTracers', tracers.map(t => t.id))
       commit('setSuccess')
-    } catch (error) {
-      let errors = [error.message]
+    } catch (e) {
+      let errors = [e.message]
       commit('setError', { errors })
     }
   }
