@@ -54,6 +54,7 @@ COPY --from=ruby-build-env /usr/src/app /usr/src/app
 
 ENV NODE_ENV production
 ENV VUE_APP_MAPBOX_TOKEN pk.eyJ1IjoiZmJsYWNrdGVtcGxhciIsImEiOiJjanR5cXlneG0xYnhjNGZwbDQzMmFxY3FjIn0.UBR9fSD1kVNQuOPh_sWmqQ
+ENV VUE_APP_BUGSNAG_TOKEN b4eb2302530535245e3e25639d385ea8
 
 WORKDIR /usr/src/app/frontend
 
