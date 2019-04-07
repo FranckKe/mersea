@@ -53,12 +53,12 @@ export default {
 
 <style>
 .page {
-  margin:40px auto;
-  max-width:650px;
-  line-height:1.6;
-  font-size:18px;
-  color:#444;
-  padding:0 10px
+  margin: 40px auto;
+  max-width: 650px;
+  line-height: 1.6;
+  font-size: 18px;
+  color: #444;
+  padding: 0 10px
 }
 .page-container p {
   margin-bottom: 1rem;

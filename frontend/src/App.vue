@@ -136,9 +136,9 @@ body .notices.toast {
 }
 
 .app .steps .step-item::before {
-background: linear-gradient(to left,#dbdbdb 50%,$primary 50%);
-    background-size: 200% 100%;
-    background-position: right bottom;
+  background: linear-gradient(to left,#dbdbdb 50%,$primary 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
 }
 
 @media only screen and (max-device-width: 1024px) {
