@@ -58,12 +58,14 @@ export default {
   line-height: 1.6;
   font-size: 18px;
   color: #444;
-  padding: 0 10px
+  padding: 0 10px;
 }
 .page-container p {
   margin-bottom: 1rem;
 }
-h1, h2, h3{
-  line-height: 1.2
+h1,
+h2,
+h3 {
+  line-height: 1.2;
 }
 </style>

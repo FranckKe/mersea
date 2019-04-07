@@ -30,12 +30,11 @@
       <button class="button is-primary" @click="dateRange(2, 'years')">
         <span>{{ $t('last_2_years') }}</span>
       </button>
-      <button 
+      <button
         v-for="years in [3, 2, 1]"
-        :key="years" class="button is-primary"
-        @click="
-          previousYearRange(years)
-        "
+        :key="years"
+        class="button is-primary"
+        @click="previousYearRange(years)"
       >
         <span>{{ previousYearLabel(years) }}</span>
       </button>

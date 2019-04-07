@@ -29,53 +29,84 @@ export default {
 
 <style lang="scss">
 // Import Bulma's core
-@import "~bulma/sass/utilities/_all";
+@import '~bulma/sass/utilities/_all';
 
 // Bulma color customization
-$primary: #4099FF;
+$primary: #4099ff;
 $primary-invert: findColorInvert($primary);
 
 $colors: (
-    "white": ($white, $black),
-    "black": ($black, $white),
-    "light": ($light, $light-invert),
-    "dark": ($dark, $dark-invert),
-    "primary": ($primary, $primary-invert),
-    "info": ($info, $info-invert),
-    "success": ($success, $success-invert),
-    "warning": ($warning, $warning-invert),
-    "danger": ($danger, $danger-invert)
+  'white': (
+    $white,
+    $black
+  ),
+  'black': (
+    $black,
+    $white
+  ),
+  'light': (
+    $light,
+    $light-invert
+  ),
+  'dark': (
+    $dark,
+    $dark-invert
+  ),
+  'primary': (
+    $primary,
+    $primary-invert
+  ),
+  'info': (
+    $info,
+    $info-invert
+  ),
+  'success': (
+    $success,
+    $success-invert
+  ),
+  'warning': (
+    $warning,
+    $warning-invert
+  ),
+  'danger': (
+    $danger,
+    $danger-invert
+  )
 );
-
 
 $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
 $navbar-breakpoint: 1024px;
 
-.app .button.is-primary:active, .app .button.is-primary.is-active {
+.app .button.is-primary:active,
+.app .button.is-primary.is-active {
   background-color: darken($primary, 25%);
 }
 
-.app .button.is-info:active, .app .button.is-info.is-active {
+.app .button.is-info:active,
+.app .button.is-info.is-active {
   background-color: darken($info, 25%);
 }
 
-.app .button.is-success:active, .app .button.is-success.is-active {
+.app .button.is-success:active,
+.app .button.is-success.is-active {
   background-color: darken($success, 25%);
 }
 
-.app .button.is-warning:active, .app .button.is-warning.is-active {
+.app .button.is-warning:active,
+.app .button.is-warning.is-active {
   background-color: darken($warning, 25%);
 }
 
-.app .button.is-danger:active, .app .button.is-danger.is-active {
+.app .button.is-danger:active,
+.app .button.is-danger.is-active {
   background-color: darken($danger, 25%);
 }
 
 // Import Bulma and Buefy styles
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+@import '~bulma';
+@import '~buefy/src/scss/buefy';
 
 :root {
   --header-height: 52px;
@@ -105,7 +136,6 @@ body {
   }
 }
 
-
 /* Bulma toast opacity override */
 body .notices.toast {
   opacity: 1;
@@ -123,20 +153,23 @@ body .notices.toast {
 
 /* Bulma-step override */
 
-.app .steps .step-item.is-active .step-marker, .app .steps .step-item.is-success.is-active .step-marker {
+.app .steps .step-item.is-active .step-marker,
+.app .steps .step-item.is-success.is-active .step-marker {
   color: $primary;
 }
 
-.app .steps .step-item.is-success.is-active .step-marker, .app .steps .step-item.is-active .step-marker {
+.app .steps .step-item.is-success.is-active .step-marker,
+.app .steps .step-item.is-active .step-marker {
   border-color: $primary;
 }
 
-.app .steps .step-item.is-success.is-completed .step-marker, .app .steps .step-item.is-completed .step-marker {
+.app .steps .step-item.is-success.is-completed .step-marker,
+.app .steps .step-item.is-completed .step-marker {
   background-color: $primary;
 }
 
 .app .steps .step-item::before {
-  background: linear-gradient(to left,#dbdbdb 50%,$primary 50%);
+  background: linear-gradient(to left, #dbdbdb 50%, $primary 50%);
   background-size: 200% 100%;
   background-position: right bottom;
 }

@@ -70,9 +70,9 @@ export default {
 }
 
 .tool-tab.button {
-    width: 95%;
-    height: 90%;
-    border-radius: 3px;
+  width: 95%;
+  height: 90%;
+  border-radius: 3px;
 }
 
 .tool-title {
@@ -120,9 +120,9 @@ export default {
 
   .tool {
     width: auto;
-    
+
     &:first-of-type {
-      margin-left: 0.25em
+      margin-left: 0.25em;
     }
   }
 
