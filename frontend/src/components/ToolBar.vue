@@ -64,8 +64,8 @@ export default {
     width: calc(100% - var(--header-height));
     min-width: calc(100% - var(--header-height));
     max-width: calc(100% - var(--header-height));
-    height: 52px;
-    margin-left: 50px;
+    height: var(--header-height);
+    margin-left: var(--header-height);
     align-items: flex-start;
     flex-direction: row;
   }
