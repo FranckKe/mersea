@@ -23,6 +23,10 @@ class ReportsController < ApiController
     authorize @report
 
     @report.photo.attach(Uploads.call(params[:photo])) if params[:photo].present?
+
+    @report.longitude = @report.longitude.round(4) if @report.longitude
+    @report.latitude = @report.latitude.round(4) if @report.latitude
+
     if @report.save
       render json: @report, status: :created
     else
