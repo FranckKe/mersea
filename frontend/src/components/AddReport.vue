@@ -549,8 +549,8 @@ export default {
           const postDataJson = {
             name: this.$auth.check() ? this.$auth.user().name : this.username,
             address: this.address,
-            latitude: this.coordinates.split(',')[0],
-            longitude: this.coordinates.split(',')[1],
+            latitude: parseFloat(this.coordinates.split(',')[0]).toFixed(4),
+            longitude: parseFloat(this.coordinates.split(',')[1]).toFixed(4),
             reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
             tracer_id: (this.selectedTracers[index] || {}).id,
             quantity: this.quantities[index],
