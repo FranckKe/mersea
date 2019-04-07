@@ -30,32 +30,14 @@
       <button class="button is-primary" @click="dateRange(2, 'years')">
         <span>{{ $t('last_2_years') }}</span>
       </button>
-      <button
-        class="button is-primary"
-        @click="
-          reported_at_min = new Date('2016-01-01')
-          reported_at_max = new Date('2016-12-31')
-        "
-      >
-        <span>2016</span>
-      </button>
       <button 
-        class="button is-primary"
+        v-for="years in [3, 2, 1]"
+        :key="years" class="button is-primary"
         @click="
-          reported_at_min = new Date('2017-01-01')
-          reported_at_max = new Date('2017-12-31')
+          previousYearRange(years)
         "
       >
-        <span>2017</span>
-      </button>
-      <button
-        class="button is-primary"
-        @click="
-          reported_at_min = new Date('2018-01-01')
-          reported_at_max = new Date('2018-12-31')
-        "
-      >
-        <span>2018</span>
+        <span>{{ previousYearLabel(years) }}</span>
       </button>
       <button
         class="button is-primary"
@@ -142,6 +124,16 @@ export default {
         .startOf(typeOf)
         .toDate()
       this.reported_at_max = new Date()
+    },
+    previousYearRange(yearsToGoBack) {
+      const previousYear = moment().subtract(yearsToGoBack, 'years')
+      this.reported_at_min = previousYear.startOf('year').toDate()
+      this.reported_at_max = previousYear.endOf('year').toDate()
+    },
+    previousYearLabel(yearsToGoBack) {
+      const previousYear = moment().subtract(yearsToGoBack, 'years')
+
+      return previousYear.format('YYYY')
     }
   },
   computed: {

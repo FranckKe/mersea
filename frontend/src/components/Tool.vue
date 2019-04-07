@@ -61,10 +61,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-.tool:hover {
-  cursor: pointer;
+  p {
+    text-align: center;
+    margin-left: 0.25em;
+    cursor: pointer;
+  }
 }
 
 .tool-tab.button {
@@ -77,12 +79,6 @@ export default {
   flex: 1;
 }
 
-
-.tool p {
-  text-align: center;
-  margin-left: 0.25em;
-  cursor: pointer;
-}
 .tool-view {
   width: 362px;
   height: calc(100vh - 55px);
@@ -103,12 +99,14 @@ export default {
   margin-bottom: 0.5em;
   min-height: 36px;
 }
+
 .tool-view h4.title {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 0;
 }
+
 .close-tool-button {
   display: none;
 }
@@ -122,10 +120,12 @@ export default {
 
   .tool {
     width: auto;
+    
+    &:first-of-type {
+      margin-left: 0.25em
+    }
   }
-  .tool:first-of-type {
-    margin-left: 0.25em
-  }
+
   .tool-tab.button {
     width: 90%;
     height: 90%;
