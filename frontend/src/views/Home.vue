@@ -2,7 +2,7 @@
   <div class="home">
     <b-loading
       :is-full-page="true"
-      :active.sync="this.getLoading()"
+      :active.sync="!this.isMapReady || this.getLoading()"
       :can-cancel="false"
     ></b-loading>
     <ToolBar></ToolBar>
@@ -13,7 +13,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions } = createNamespacedHelpers('reports')
+const reportsModule = createNamespacedHelpers('reports')
 const addReportModule = createNamespacedHelpers('addReport')
 const tracersModule = createNamespacedHelpers('tracers')
 
@@ -34,7 +34,8 @@ export default {
     return {
       apiUrl: this.$apiUrl,
       map: {},
-      newMarker: ''
+      newMarker: '',
+      isMapReady: false
     }
   },
   components: {
@@ -42,7 +43,8 @@ export default {
     ToolBar
   },
   mounted() {
-    this.initData()
+    moment.locale(this.$i18n.locale)
+    this.createMap()
     this.$store.watch(
       (state, getters) => getters['tracers/getFilteredTracers'],
       filteredTracers => {
@@ -83,10 +85,6 @@ export default {
     }
   },
   methods: {
-    initData: async function() {
-      moment.locale(this.$i18n.locale)
-      this.createMap()
-    },
     createMap() {
       mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
       this.map = new mapboxgl.Map({
@@ -342,9 +340,10 @@ export default {
       this.map.on('mouseleave', 'unclustered-reports', () => {
         this.map.getCanvas().style.cursor = ''
       })
+      this.isMapReady = true
     },
     destroyMap() {},
-    ...mapGetters([
+    ...reportsModule.mapGetters([
       'getReports',
       'getFilteredReports',
       'getLoading',
@@ -363,7 +362,7 @@ export default {
       'setIsFormActive',
       'setCoordinates'
     ]),
-    ...mapActions(['loadReports'])
+    ...reportsModule.mapActions(['loadReports'])
   },
   computed: {
     ...addReportModule.mapState({

@@ -38,6 +38,9 @@ import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import 'buefy/dist/buefy.css'
 import 'bulma-steps/dist/css/bulma-steps.min.css'
 
+import bugsnag from '@bugsnag/js'
+import bugsnagVue from '@bugsnag/plugin-vue'
+
 Vue.config.productionTip = false
 
 const api = axios.create({
@@ -167,7 +170,24 @@ let app = new Vue({
   render: h => h(App),
   router,
   i18n,
-  store
+  store,
+  mounted() {
+    if (process.env.VUE_APP_BUGSNAG_TOKEN != null) {
+      const bugsnagClient = bugsnag({
+        apiKey: process.env.VUE_APP_BUGSNAG_TOKEN,
+        collectUserIp: false,
+        beforeSend: function(report) {
+          if (Vue.auth.check())
+            report.user = {
+              name: Vue.auth.user().name,
+              id: Vue.auth.user().id,
+              email: Vue.auth.user().email
+            }
+        }
+      })
+      bugsnagClient.use(bugsnagVue, Vue)
+    }
+  }
 })
 
 // Initialize lang if present in state

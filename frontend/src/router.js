@@ -70,6 +70,13 @@ let routes = [
     component: ResetPassword
   }
 ]
-export default new Router({
+
+const router = new Router({
   routes: routes
 })
+
+router.afterEach(to => {
+  window.fathom('trackPageview', { path: to.fullPath })
+})
+
+export default router

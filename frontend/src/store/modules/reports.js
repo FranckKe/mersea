@@ -70,8 +70,8 @@ const actions = {
       let reportsData = reports.data
       commit('setData', { reports: reportsData })
       commit('setSuccess')
-    } catch (error) {
-      let errors = [error.message]
+    } catch (e) {
+      let errors = [e.message]
       commit('setError', { errors })
     }
   }

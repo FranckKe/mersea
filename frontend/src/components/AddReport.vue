@@ -378,7 +378,7 @@ export default {
     try {
       await this.loadTracers()
       if (this.$auth.check()) this.username = this.$auth.user().name
-    } catch (error) {
+    } catch (e) {
       this.$toast.open({
         message: this.$t('load_tracers_failure'),
         duration: 5000,
@@ -432,8 +432,8 @@ export default {
                 try {
                   await this.submitReports()
                   resolve(false)
-                } catch (err) {
-                  console.warn(err)
+                } catch (e) {
+                  console.warn(e)
                   reject(false)
                 }
               } else {
@@ -510,8 +510,7 @@ export default {
 
         return true
       } catch (e) {
-        console.error(e)
-        console.trace(e)
+        console.warn(e)
         return false
       }
     },
@@ -525,12 +524,12 @@ export default {
         this.isSaved.splice(index, 1, true)
         this.addReportsErrors.splice(index, 1)
         this.addReportsValidationErrors.splice(index, 1)
-      } catch (error) {
-        if ((((error || {}).response || {}).data || {}).errors != null) {
+      } catch (e) {
+        if ((((e || {}).response || {}).data || {}).errors != null) {
           this.addReportsValidationErrors.splice(
             index,
             1,
-            error.response.data.errors
+            e.response.data.errors
           )
         }
 
@@ -566,9 +565,9 @@ export default {
           })
 
           resolve(true)
-        } catch (error) {
-          console.error(error)
-          reject(error)
+        } catch (e) {
+          console.warn(e)
+          reject(e)
         }
       })
     },
@@ -651,7 +650,7 @@ export default {
       try {
         await this.submitReport(index)
       } catch (e) {
-        console.error(e)
+        console.warn(e)
       }
     }
   },

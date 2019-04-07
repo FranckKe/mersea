@@ -10,6 +10,8 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@bugsnag/js": "^6.0.0",
+    "@bugsnag/plugin-vue": "^6.0.0",
     "@fortawesome/fontawesome-free": "^5.3.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",

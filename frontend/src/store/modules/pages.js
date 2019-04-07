@@ -93,8 +93,8 @@ const actions = {
       const pages = pagesData.data
       commit('setPages', { pages })
       commit('setSuccess')
-    } catch (error) {
-      let errors = [error.message]
+    } catch (e) {
+      let errors = [e.message]
       commit('setError', { errors })
     }
   }
