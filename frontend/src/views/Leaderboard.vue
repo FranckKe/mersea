@@ -25,6 +25,7 @@
         :data="filtered"
         :paginated="true"
         :per-page="perPage"
+        :striped="true"
         :current-page.sync="currentPage"
         :pagination-simple="false"
         :default-sort-direction="defaultSortDirection"
@@ -34,8 +35,8 @@
           <b-table-column
             field="name"
             v-bind:label="$t('name')"
-            width="40"
             sortable
+            centered
             numeric
             >{{ props.row.name }}</b-table-column
           >
@@ -44,6 +45,7 @@
             field="reports_count"
             v-bind:label="$t('number_of_reports')"
             sortable
+            centered
             >{{ props.row.reports_count }}</b-table-column
           >
 

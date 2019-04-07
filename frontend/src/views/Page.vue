@@ -31,20 +31,6 @@ export default {
       this.pageContent = this.getPageContent({
         pageName: this.$props.page
       })
-      // Style html from backend with bulma
-      // Not executed without this timeout
-
-      setTimeout(function() {
-        ;[
-          ...document.querySelectorAll(
-            '.page-container h1, .page-container h2, .page-container h3, .page-container h4, .page-container h5, .page-container h6'
-          )
-        ].forEach(header => {
-          // Add bulma classes
-          header.classList.add(`title`)
-          header.classList.add(`is-${header.tagName[1]}`)
-        })
-      }, 250)
     }
   },
   computed: { ...mapGetters(['getPageContent']) }
@@ -53,19 +39,44 @@ export default {
 
 <style>
 .page {
-  margin: 40px auto;
+  margin: auto;
   max-width: 650px;
   line-height: 1.6;
   font-size: 18px;
   color: #444;
   padding: 0 10px;
 }
-.page-container p {
+.page p {
   margin-bottom: 1rem;
 }
 h1,
 h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #363636;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.125;
+  margin-bottom: 1rem;
+}
+h1 {
+  font-size: 3rem;
+}
+h2 {
+  font-size: 2.5rem;
+}
 h3 {
-  line-height: 1.2;
+  font-size: 2rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
 }
 </style>

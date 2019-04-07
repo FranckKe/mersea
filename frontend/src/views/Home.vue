@@ -501,7 +501,7 @@ export default {
 }
 
 .loading-overlay.is-active.is-full-page {
-  z-index: 999999999;
+  z-index: 999;
 }
 
 @media only screen and (max-device-width: 1024px) {
@@ -510,7 +510,8 @@ export default {
   }
   .map {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - var(--header-height));
+    top: var(--header-height);
   }
 }
 </style>

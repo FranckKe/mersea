@@ -107,10 +107,6 @@ export default {
   margin-bottom: 0;
 }
 
-.close-tool-button {
-  display: none;
-}
-
 @media only screen and (max-device-width: 1024px) {
   .tool-tab,
   .tool {

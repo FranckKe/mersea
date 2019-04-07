@@ -122,9 +122,6 @@ export default {
 }
 </script>
 <style scoped>
-div.section {
-  padding-top: 0;
-}
 .card-image {
   height: 200px;
 }

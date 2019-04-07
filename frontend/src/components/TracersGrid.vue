@@ -56,6 +56,10 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.card-content .content p {
+  margin-bottom: 0.25em;
+}
 </style>
 
 <i18n>
