@@ -15,7 +15,7 @@
           role="button"
           class="navbar-burger"
           aria-label="menu"
-          data-target="flexible-menu"
+          data-target="flexibleMenu"
           aria-expanded="false"
         >
           <span aria-hidden="true"></span>
@@ -24,7 +24,7 @@
         </a>
       </div>
     </div>
-    <div id="flexible-menu" class="navbar-menu">
+    <div id="flexibleMenu" class="navbar-menu">
       <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
       <router-link
         :to="`/${$t('tracers').toLowerCase()}`"
@@ -69,7 +69,7 @@
               class="has-text-dark is-size-6 nav-dropdown-link"
             >
               <font-awesome-icon icon="user" />
-              {{ $t('my_account') }}
+              <p>{{ $t('my_account') }}</p>
             </router-link>
           </b-dropdown-item>
           <b-dropdown-item class="has-text-dark is-size-6">
@@ -78,7 +78,7 @@
               class="has-text-dark is-size-6 nav-dropdown-link"
             >
               <font-awesome-icon icon="map-marker-alt" />
-              {{ $t('my_reports') }}
+              <p>{{ $t('my_reports') }}</p>
             </router-link>
           </b-dropdown-item>
           <hr class="dropdown-divider" />
@@ -89,18 +89,18 @@
               v-on:click="logout()"
             >
               <font-awesome-icon icon="sign-out-alt" />
-              {{ $t('logout') }}
+              <p>{{ $t('logout') }}</p>
             </a>
           </b-dropdown-item>
         </b-dropdown>
         <router-link v-if="!$auth.check()" :to="'/login'" class="button">
-          {{ $t('login') }}
+          <p>{{ $t('login') }}</p>
         </router-link>
         <router-link
           v-if="!$auth.check()"
           :to="'/register'"
           class="button is-success"
-          >{{ $t('register') }}</router-link
+          ><p>{{ $t('register') }}</p></router-link
         >
       </div>
     </div>
@@ -181,12 +181,14 @@ export default {
 
 <style scoped>
 .navbar {
-  width: 51px;
+  width: var(--header-height);
 }
 
 .navbar-menu {
   width: 100vw;
+  background-color: white;
 }
+
 .navbar-menu.is-active {
   position: absolute;
 }
@@ -218,6 +220,14 @@ export default {
 .nav-dropdown-link {
   width: 100%;
   padding: 0.375rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-dropdown-link p {
+  text-align: center;
+  flex: 1;
 }
 
 @media (--below-large) {

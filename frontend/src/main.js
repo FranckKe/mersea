@@ -35,7 +35,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free/css/solid.css'
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 
-import 'buefy/dist/buefy.css'
 import 'bulma-steps/dist/css/bulma-steps.min.css'
 
 import bugsnag from '@bugsnag/js'

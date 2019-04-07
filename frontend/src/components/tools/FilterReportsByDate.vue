@@ -31,6 +31,14 @@
         <span>{{ $t('last_2_years') }}</span>
       </button>
       <button
+        v-for="years in [3, 2, 1]"
+        :key="years"
+        class="button is-primary"
+        @click="previousYearRange(years)"
+      >
+        <span>{{ previousYearLabel(years) }}</span>
+      </button>
+      <button
         class="button is-primary"
         @click="
           reported_at_min = new Date('2016-01-01')
@@ -67,6 +75,9 @@
         </button>
       </b-datepicker>
     </b-field>
+    <button class="button is-primary" @click="startOfRange('year')">
+      <span>Reset</span>
+    </button>
   </div>
 </template>
 
@@ -112,6 +123,16 @@ export default {
         .startOf(typeOf)
         .toDate()
       this.reported_at_max = new Date()
+    },
+    previousYearRange(yearsToGoBack) {
+      const previousYear = moment().subtract(yearsToGoBack, 'years')
+      this.reported_at_min = previousYear.startOf('year').toDate()
+      this.reported_at_max = previousYear.endOf('year').toDate()
+    },
+    previousYearLabel(yearsToGoBack) {
+      const previousYear = moment().subtract(yearsToGoBack, 'years')
+
+      return previousYear.format('YYYY')
     }
   },
   computed: {
@@ -151,13 +172,13 @@ export default {
     "from": "From",
     "until": "Until",
     "quick_selection": "Quick selection",
-    "this_week": "This week",
+    "this_week": "Week to date",
     "last_7_days": "Last 7 days",
     "last_30_days": "Last 30 days",
-    "this_month": "This month",
+    "this_month": "Month to date",
     "last_6_months": "Last 6 months",
     "last_12_months": "Last 12 months",
-    "this_year": "This year",
+    "this_year": "Year to date",
     "last_2_years": "Last 2 years",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",

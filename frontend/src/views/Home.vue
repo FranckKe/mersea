@@ -92,7 +92,7 @@ export default {
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
         minZoom: 4,
         zoom: 5,
-        maxZoom: 10,
+        maxZoom: 13,
         center: [0, 46.2276],
         refreshExpiredTiles: false
       })
@@ -504,7 +504,7 @@ export default {
   z-index: 999999999;
 }
 
-@media only screen and (max-device-width: 768px) {
+@media only screen and (max-device-width: 1024px) {
   .home {
     flex-direction: column;
   }
