@@ -62,7 +62,13 @@ WORKDIR /usr/src/app/frontend
 
 RUN yarn install --production=false --frozen-lockfile && yarn cache clean
 RUN yarn run build
-RUN mv dist/* ../public
+
+WORKDIR /usr/src/app
+RUN mv frontend/dist/* public/
+
+# Remove this huge folder to prepare the next stage.
+RUN rm -rf frontend .git
+
 
 # final stage
 FROM ruby:2.6-alpine
