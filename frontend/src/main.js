@@ -189,13 +189,8 @@ let app = new Vue({
   }
 })
 
-// Initialize lang if present in state
-// It is only present in state if user previously visited the app
-if (store.state.lang !== '') {
-  i18n.locale = store.state.lang
-} else {
-  store.state.lang = i18n.locale
-}
+// Override language with user's last visit language
+if (store.state.lang !== '') i18n.locale = store.state.lang
 
 Validator.localize(i18n.locale)
 

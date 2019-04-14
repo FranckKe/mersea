@@ -20,8 +20,19 @@ function loadLocaleMessages() {
   return messages
 }
 
+// Detect browser language and strip the "region" language
+// en-GB => en
+let browserI18n = navigator.language
+if (navigator.language.indexOf('-'))
+  browserI18n = navigator.language.substring(0, navigator.language.indexOf('-'))
+
+// Default to english if browser language is not supported
+let initializedLocal = ['en', 'es', 'fr'].includes(browserI18n)
+  ? browserI18n
+  : 'en'
+
 export default new VueI18n({
-  locale: process.env.VUE_APP_I18N_LOCALE || 'en',
-  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
+  locale: initializedLocal,
+  fallbackLocale: 'en',
   messages: loadLocaleMessages()
 })
