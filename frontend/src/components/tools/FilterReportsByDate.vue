@@ -189,7 +189,7 @@ export default {
   "fr": {
     "from": "De",
     "until": "Jusqu'à",
-    "quick_selection": "Selection rapide",
+    "quick_selection": "Sélection rapide",
     "this_week": "Cette semaine",
     "last_7_days": "7 derniers jours",
     "last_30_days": "30 derniers jours",
@@ -200,8 +200,8 @@ export default {
     "last_2_years": "2 dernières années",
     "from_beginning": "Depuis le début",
     "custom_range": "Période personnalisée",
-    "reset": "Réinitialiser le fitre de date",
-    "load_reports_failure": "Échec de chargement des raports",
+    "reset": "Réinitialiser le filtre de date",
+    "load_reports_failure": "Échec de chargement des rapports",
     "by_date": "Rechercher"
   },
   "es": {
