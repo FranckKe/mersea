@@ -413,7 +413,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .home {
   display: flex;
   flex-direction: row;
@@ -498,6 +498,10 @@ export default {
   color: #4a4a4a;
   display: block;
   padding: 1.25rem;
+
+  .media-content {
+    font-size: 1.1rem;
+  }
 }
 
 .loading-overlay.is-active.is-full-page {
