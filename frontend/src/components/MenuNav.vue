@@ -130,7 +130,6 @@ export default {
   },
   data() {
     return {
-      locale: 'en',
       apiUrl: this.$apiUrl,
       appName: this.$appName
     }

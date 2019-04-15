@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     tracers: tracers
   },
   state: {
-    lang: 'fr',
+    lang: i18n.locale,
     availableLangs: ['fr', 'en', 'es']
   },
   getters: {

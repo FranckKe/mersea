@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -73,6 +75,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setLocale']),
     async login() {
       let validateForm = await this.$validator.validateAll()
       if (!validateForm) return false
@@ -81,6 +84,9 @@ export default {
         .login({
           auth: { username: this.email, password: this.password },
           rememberMe: this.rememberMe
+        })
+        .then(request => {
+          this.setLocale(request.data.language)
         })
         .then(() => {
           this.$toast.open({
