@@ -76,7 +76,7 @@
       </b-datepicker>
     </b-field>
     <button class="button is-primary" @click="startOfRange('year')">
-      <span>Reset</span>
+      <span>{{ $t('reset') }}</span>
     </button>
   </div>
 </template>
@@ -182,13 +182,14 @@ export default {
     "last_2_years": "Last 2 years",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",
+    "reset": "Reset date filter",
     "load_reports_failure": "Fail to load reports",
     "by_date": "By date"
   },
   "fr": {
     "from": "De",
     "until": "Jusqu'à",
-    "quick_selection": "Selection rapide",
+    "quick_selection": "Sélection rapide",
     "this_week": "Cette semaine",
     "last_7_days": "7 derniers jours",
     "last_30_days": "30 derniers jours",
@@ -199,7 +200,8 @@ export default {
     "last_2_years": "2 dernières années",
     "from_beginning": "Depuis le début",
     "custom_range": "Période personnalisée",
-    "load_reports_failure": "Échec de chargement des raports",
+    "reset": "Réinitialiser le filtre de date",
+    "load_reports_failure": "Échec de chargement des rapports",
     "by_date": "Rechercher"
   },
   "es": {
@@ -216,6 +218,7 @@ export default {
     "last_2_years": "últimos 2 años",
     "from_beginning": "Desde el principio",
     "custom_range": "Rango personalizado",
+    "reset": "Restablecer filtro de fecha",
     "load_reports_failure": "Fallo al cargar informes",
     "by_date": "Por fecha"
   }

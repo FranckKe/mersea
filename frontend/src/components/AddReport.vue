@@ -751,7 +751,7 @@ export default {
 
 @media only screen and (max-device-width: 1024px) {
   .add-report {
-    padding: 30px 10pxc 10px 10px;
+    padding: 30px 10px 10px 10px;
     width: 100%;
     left: 0;
   }

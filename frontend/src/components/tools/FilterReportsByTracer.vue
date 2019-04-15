@@ -9,10 +9,10 @@
       />
     </div>
     <div class="check-buttons">
-      <button type="submit" class="button" @click="checkAll">
+      <button type="submit" class="button is-primary" @click="checkAll">
         {{ $t('check_all') }}
       </button>
-      <button type="submit" class="button" @click="unCheckAll">
+      <button type="submit" class="button is-primary" @click="unCheckAll">
         {{ $t('uncheck_all') }}
       </button>
     </div>

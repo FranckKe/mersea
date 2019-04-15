@@ -132,7 +132,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding-top: var(--header-height);
   & > .section {
-    padding-top: 3rem;
+    padding-top: var(--header-height);
   }
 }
 

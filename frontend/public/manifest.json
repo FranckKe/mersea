@@ -1,20 +1,20 @@
 {
-  "name": "Mersea",
-  "short_name": "Mersea",
+  "name": "Ocean Plastic Tracker",
+  "short_name": "Ocean Plastic Tracker",
   "icons": [
-    {
-      "src": "/img/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/img/icons/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+      {
+          "src": "/img/icons/android-chrome-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+      },
+      {
+          "src": "/img/icons/android-chrome-384x384.png",
+          "sizes": "384x384",
+          "type": "image/png"
+      }
   ],
   "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
 }
