@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <b-loading
-      :is-full-page="true"
+      :is-full-page="false"
       :active.sync="!this.isMapReady || this.getLoading()"
       :can-cancel="false"
     ></b-loading>
@@ -91,8 +91,8 @@ export default {
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
         minZoom: 4,
-        zoom: 5,
-        maxZoom: 13,
+        zoom: 0,
+        maxZoom: 15,
         center: [0, 46.2276],
         refreshExpiredTiles: false
       })
@@ -120,7 +120,7 @@ export default {
         this.address =
           res.data.features.length > 0
             ? res.data.features[0].place_name
-            : 'No address found'
+            : $t('no_address_found')
       })
 
       let geolocator = new mapboxgl.GeolocateControl({
@@ -156,6 +156,7 @@ export default {
           reported_at_max: this.$reported_at_max
         })
       } catch (e) {
+        this.isMapReady = true
         this.$toast.open({
           message: this.$t('map_init_failure'),
           duration: 5000,
@@ -164,6 +165,7 @@ export default {
       }
 
       if (this.getErrors().length > 0 || this.getReports() == null) {
+        this.isMapReady = true
         this.$toast.open({
           message: this.$t('map_init_failure'),
           duration: 5000,
@@ -234,7 +236,7 @@ export default {
         layout: {
           'text-field': '{point_count_abbreviated}',
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 12
+          'text-size': 16
         },
         paint: {
           'text-color': '#fff',
@@ -250,7 +252,7 @@ export default {
         filter: ['!', ['has', 'point_count']],
         paint: {
           'circle-color': ['get', 'color'],
-          'circle-radius': 6,
+          'circle-radius': 10,
           'circle-stroke-width': 2,
           'circle-stroke-color': '#fff'
         }
@@ -301,29 +303,20 @@ export default {
           .setHTML(
             `<article class="media">
                 <div class="media-left">
-                  <figure class="image is-64x64">
+                  <figure class="image">
                     <img src="${this.apiUrl}${tracer.photo}" alt="Image">
                   </figure>
                 </div>
                 <div class="media-content">
                   <div class="content">
-                    <p>
-                      <strong>${tracer.name}</strong>
-                      <br>
-                      <small>
-                        ${userProperties.name}
-                      </small>
-                      <br>
-                      <small>
-                        ${this.$i18n.t('quantity')}: ${
+                    <h5 class="title is-5"><b>${tracer.name}</b></h5>
+                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
+                    <p>${
               reportProperties.quantity
-            }
-                      </small>
-                      <br>
-                      <small>${moment(reportProperties.reportedAt).format(
+            } ${this.$i18n.tc('object', reportProperties.quantity)} </p>
+                    <p>${moment(reportProperties.reportedAt).format(
                         'LL'
-                      )}</small>
-                    </p>
+                      )}</p>
                   </div>
                 </div>
                 <div class="media-right">
@@ -439,25 +432,30 @@ export default {
 
 .mapboxgl-popup-close-button {
   -webkit-appearance: none;
-  background-color: rgba(10, 10, 10, 0.2);
-  border: none;
-  border-radius: 290486px;
+  border-radius: 4px;
   cursor: pointer;
   display: inline-block;
   flex-grow: 0;
   flex-shrink: 0;
   font-size: 0;
-  height: 24px;
-  max-height: 24px;
-  max-width: 24px;
-  min-height: 24px;
-  min-width: 24px;
-  width: 24px;
+  height: 28px;
+  max-height: 28px;
+  max-width: 28px;
+  min-height: 28px;
+  min-width: 28px;
+  width: 28px;
   outline: 0;
   vertical-align: top;
   position: absolute;
   top: 5px;
   right: 5px;
+  background-color: #ff3860;
+  border-color: transparent;
+  color: #fff;
+}
+
+.mapboxgl-popup-content .mapboxgl-popup-close-button:hover {
+  background-color: #ff3860;
 }
 
 .mapboxgl-popup-close-button::before,
@@ -499,14 +497,37 @@ export default {
   display: block;
   padding: 1.25rem;
 
+  .media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
   .media-content {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    max-width: 200px;
+    align-self: flex-start;
+
+    h5 {
+      text-transform: capitalize;
+    }
+
+    p {
+      margin-bottom: 0.5rem;
+      word-break: break-word;
+    }
+  }
+
+  .image {
+    width: 128px;
   }
 }
 
-.loading-overlay.is-active.is-full-page {
-  z-index: 999;
+.loading-overlay.is-active {
+  z-index: 20;
 }
+
 
 @media only screen and (max-device-width: 1024px) {
   .home {
@@ -523,18 +544,24 @@ export default {
 <i18n>
 {
   "en": {
-    "quantity": "Quantity",
+    "object": "item | items",
     "search": "Search",
+    "no_address_found": "No address found",
+    "by": "By",
     "map_init_failure": "Error initializing map"
   },
   "fr": {
-    "quantity": "Quantité",
+    "object": "exemplaire | exemplaires",
     "search": "Rechercher",
+    "no_address_found": "Pas d'addresse trouvé",
+    "by": "Par",
     "map_init_failure": "Échec d'initialisation de la carte"
   },
   "es": {
-    "quantity": "Cantidad",
+    "object": "objeto | objetos",
     "search": "Buscar",
+    "no_address_found": "No se encontró dirección",
+    "by": "pro",
     "map_init_failure": "Error al inicializar el mapa"
   }
 }
