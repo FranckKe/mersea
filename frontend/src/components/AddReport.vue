@@ -102,9 +102,9 @@
                     <b-icon icon="upload"></b-icon>
                     <span>{{ $t('photo') }}</span>
                   </a>
-                  <p>{{ $t('photo_multiple_tracer') }}</p>
                 </b-upload>
                 <span class="file-name" v-if="file">{{ file.name }}</span>
+                  <p>{{ $t('photo_multiple_tracer') }}</p>
               </b-field>
               <b-field
                 :label="$t('report_date')"
@@ -422,6 +422,7 @@ export default {
                 validatefile
               ])
               resolve(validation.every(v => v))
+              document.querySelector('.add-report').scrollTop = 0;
             }
 
             if (step === 2) {
@@ -731,7 +732,7 @@ export default {
   left: 135px;
   padding: 15px;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   min-height: auto;
   margin-top: 0;
@@ -888,7 +889,7 @@ export default {
     "report_review": "Merci pour votre témoignage. Un administrateur va bientôt le passer en revu.",
     "report": "Témoignage",
     "submit": "Soumettre",
-    "tracers": "Tracer | Tracers",
+    "tracers": "Traceur | Traceurs",
     "submit_report_failure": "Échec d'ajout d'un témoignage",
     "photo": "Photo",
     "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
@@ -914,7 +915,7 @@ export default {
     "report_review": "Gracias por su testimonio. Uno administrador revisado soon",
     "report": "Testimonio",
     "submit": "Enviar",
-    "tracers": "Trazadore | Trazadores",
+    "tracers": "Trazador | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
     "photo_multiple_tracer": "Una foto puede contener varios marcadores",

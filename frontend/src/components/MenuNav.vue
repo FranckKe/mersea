@@ -198,7 +198,6 @@ export default {
 
 .navbar-end {
   padding: 0.5rem 0.75rem;
-  margin-right: 1em;
 }
 
 .navbar-end.buttons .button {
@@ -266,7 +265,7 @@ export default {
     "my_reports": "Mes rapports",
     "other": "Autre",
     "register": "Inscription",
-    "tracers": "Tracers"
+    "tracers": "Traceurs"
   },
   "es": {
     "about": "Acerca de",
