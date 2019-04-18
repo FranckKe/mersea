@@ -151,14 +151,14 @@ export default {
     "load_tracers_failure": "Failed to load tracers"
   },
   "fr": {
-    "tracers": "tracer | tracers",
+    "tracers": "traceur | traceurs",
     "search": "Rechercher",
     "displayed": "affiché | affichés",
     "total": "en tout",
     "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
-    "tracers": "trazadore | trazadores",
+    "tracers": "trazador | trazadores",
     "search": "Buscar",
     "displayed": "desplegado | desplegado",
     "total": "total",

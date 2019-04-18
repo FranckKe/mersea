@@ -81,7 +81,7 @@ export default {
     "filter_reports_by_date_title": "Filter by date"
   },
   "fr": {
-    "tracers": "Tracers",
+    "tracers": "Traceurs",
     "filter_reports_by_tracer_title": "Filtrer par tracers",
     "date": "Date",
     "filter_reports_by_date_title": "Filtrer par date"

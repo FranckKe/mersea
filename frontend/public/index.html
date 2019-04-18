@@ -8,9 +8,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<%= BASE_URL %>img/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<%= BASE_URL %>img/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="<%= BASE_URL %>img/icons/favicon-16x16.png">
-    <link rel="manifest" href="<%= BASE_URL %>img/icons/site.webmanifest">
+    <link rel="manifest" href="<%= BASE_URL %>manifest.json">
     <link rel="mask-icon" href="<%= BASE_URL %>img/icons/safari-pinned-tab.svg" color="#5bbad5">
-    <link rel="shortcut icon" href="<%= BASE_URL %>img/icons/favicon.ico">
+    <link rel="shortcut icon" href="<%= BASE_URL %>favicon.ico">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="msapplication-config" content="<%= BASE_URL %>img/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
@@ -36,7 +36,7 @@
         m=f.getElementsByTagName('script')[0];
         o.async=1; o.src=t; o.id='fathom-script';
         m.parentNode.insertBefore(o,m)
-      })(document, window, '//<%= VUE_APP_FATHOM_HOSTNAME != null ? VUE_APP_FATHOM_HOSTNAME : '' %>', 'fathom');
+      })(document, window, '//<%= VUE_APP_FATHOM_HOSTNAME != null ? VUE_APP_FATHOM_HOSTNAME : '' %>/tracker.js', 'fathom');
       fathom('set', 'siteId', '<%= VUE_APP_FATHOM_SITE_ID != null ? VUE_APP_FATHOM_SITE_ID : '' %>');
       fathom('trackPageview');
       </script>
