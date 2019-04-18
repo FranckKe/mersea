@@ -120,7 +120,7 @@ export default {
         this.address =
           res.data.features.length > 0
             ? res.data.features[0].place_name
-            : $t('no_address_found')
+            : this.$t('no_address_found')
       })
 
       let geolocator = new mapboxgl.GeolocateControl({
@@ -311,12 +311,11 @@ export default {
                   <div class="content">
                     <h5 class="title is-5"><b>${tracer.name}</b></h5>
                     <p>${this.$i18n.t('by')} ${userProperties.name}</p>
-                    <p>${
-              reportProperties.quantity
-            } ${this.$i18n.tc('object', reportProperties.quantity)} </p>
-                    <p>${moment(reportProperties.reportedAt).format(
-                        'LL'
-                      )}</p>
+                    <p>
+                      ${reportProperties.quantity}${' '}
+                      ${this.$i18n.tc('object', reportProperties.quantity)}
+                    </p>
+                    <p>${moment(reportProperties.reportedAt).format('LL')}</p>
                   </div>
                 </div>
                 <div class="media-right">
@@ -528,7 +527,6 @@ export default {
   z-index: 20;
 }
 
-
 @media only screen and (max-device-width: 1024px) {
   .home {
     flex-direction: column;
@@ -553,7 +551,7 @@ export default {
   "fr": {
     "object": "exemplaire | exemplaires",
     "search": "Rechercher",
-    "no_address_found": "Pas d'addresse trouvé",
+    "no_address_found": "Pas d'adresse trouvée",
     "by": "Par",
     "map_init_failure": "Échec d'initialisation de la carte"
   },
