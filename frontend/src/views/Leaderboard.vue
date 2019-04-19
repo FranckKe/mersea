@@ -122,7 +122,7 @@ export default {
     "contributions": "Contributions",
     "last_activity": "Dernière activité",
     "name": "Nom",
-    "number_of_reports": "Nombre de témoignages",
+    "number_of_reports": "Nombre de signalements",
     "per_page": "par page",
     "search": "Rechercher",
     "loading_failure": "Échec de chargement des contributions"

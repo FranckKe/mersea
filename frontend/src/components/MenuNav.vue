@@ -178,9 +178,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .navbar {
   width: var(--header-height);
+  height: var(--header-height);
 }
 
 .navbar-menu {
@@ -228,6 +229,14 @@ export default {
   flex: 1;
 }
 
+.navbar-burger {
+  color: var(--primary);
+  width: var(--header-height);
+  height: var(--header-height);
+  span {
+    height: 2px;
+  }
+}
 @media (--below-large) {
   .navbar-menu.is-active {
     height: 100vh;

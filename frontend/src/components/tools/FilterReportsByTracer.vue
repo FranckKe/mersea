@@ -75,7 +75,10 @@ export default {
     },
     filteredTracersList: function() {
       return this.tracers.filter(t => {
-        return t.name.toLowerCase().includes(this.search.toLowerCase())
+        return (
+          t.name.toLowerCase().includes(this.search.toLowerCase()) &&
+          this.getReportCount()(t.id) > 0
+        )
       })
     }
   },
@@ -93,13 +96,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .filter-report-search {
   margin: 0.5em 0;
 }
+
 .legend-tracers {
   margin-bottom: 1.5em;
 }
+
 .legend-tracer {
   width: 100%;
   display: flex;
@@ -107,22 +112,28 @@ export default {
   padding-left: 0.5em;
   flex-direction: column;
   min-height: 25px;
+
+  &:hover {
+    background-color: gainsboro;
+  }
+
+  label {
+    width: 100%;
+    display: flex;
+    height: 35px;
+    height: 100%;
+    padding: 5px 0;
+  }
+
+  .control-label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    text-transform: capitalize;
+  }
 }
-.legend-tracer:hover {
-  background-color: gainsboro;
-}
-.legend-tracer label {
-  width: 100%;
-  display: flex;
-  height: 35px;
-}
-.legend-tracer .control-label {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  text-transform: capitalize;
-}
+
 .legend-circle {
   width: 20px;
   height: 20px;
@@ -131,6 +142,7 @@ export default {
   align-items: center;
   margin-right: 0.5em;
 }
+
 .check-buttons {
   display: flex;
   align-items: center;
@@ -145,6 +157,7 @@ export default {
 .check-buttons button:first-child {
   margin-right: 0.5em;
 }
+
 .close-filter-button {
   display: none;
 }

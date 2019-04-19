@@ -109,7 +109,7 @@ $navbar-breakpoint: 1024px;
 @import '~buefy/src/scss/buefy';
 
 :root {
-  --header-height: 52px;
+  --header-height: 56px;
   --primary: #{$primary};
   @custom-media --only-small (width < 500px);
   @custom-media --only-medium (width >= 500px) and (width <= 839px);
@@ -120,10 +120,14 @@ $navbar-breakpoint: 1024px;
 
 html {
   overflow-y: auto;
+  height: 100vh;
+  width: 100%;
 }
 
 body {
   margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .app {
@@ -131,6 +135,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-top: var(--header-height);
+  height: 100%;
+  width: 100%;
+
   & > .section {
     padding-top: var(--header-height);
   }

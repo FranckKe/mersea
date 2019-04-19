@@ -104,7 +104,7 @@
                   </a>
                 </b-upload>
                 <span class="file-name" v-if="file">{{ file.name }}</span>
-                  <p>{{ $t('photo_multiple_tracer') }}</p>
+                <p>{{ $t('photo_multiple_tracer') }}</p>
               </b-field>
               <b-field
                 :label="$t('report_date')"
@@ -336,7 +336,13 @@
       "
       class="add-report-button button is-success"
       :class="{ hidden: isFormActive }"
-      >{{ $t('add_report') }}</a
+    >
+      <span class="icon is-small">
+        <font-awesome-icon icon="plus" />
+      </span>
+      <span class="add-report-button-text">
+        {{ $t('report_verb') }}
+      </span></a
     >
   </div>
 </template>
@@ -422,7 +428,7 @@ export default {
                 validatefile
               ])
               resolve(validation.every(v => v))
-              document.querySelector('.add-report').scrollTop = 0;
+              document.querySelector('.add-report').scrollTop = 0
             }
 
             if (step === 2) {
@@ -844,7 +850,8 @@ export default {
 <i18n>
 {
   "en": {
-    "add_report": "Add a report",
+    "report_verb": "Report",
+    "add_report": "Report a waste",
     "address": "Address",
     "cancel_report": "Close reporting",
     "click_select": "Click to select",
@@ -870,11 +877,12 @@ export default {
     "load_tracers_failure": "Fail to load tracers"
   },
   "fr": {
-    "add_report": "Ajouter un témoignage",
+    "report_verb": "Signaler",
+    "add_report": "Signaler un déchêt",
     "address": "Adresse",
-    "cancel_report": "Fermer l'ajout de témoignage",
+    "cancel_report": "Fermer l'ajout de signalement",
     "click_select": "Cliquez pour sélectionner",
-    "click_to_report": "Cliquer sur la carte pour localiser le témoignage",
+    "click_to_report": "Cliquer sur la carte pour localiser le signalement",
     "close": "Fermer",
     "description": "Description",
     "done": "Fin",
@@ -885,18 +893,19 @@ export default {
     "optional": "optionnel",
     "previous": "Précédent",
     "quantity": "Quantité",
-    "report_date": "Date de témoignage",
-    "report_review": "Merci pour votre témoignage. Un administrateur va bientôt le passer en revu.",
-    "report": "Témoignage",
+    "report_date": "Date de signalement",
+    "report_review": "Merci pour votre signalement. Un administrateur va bientôt le passer en revu.",
+    "report": "Signalement",
     "submit": "Soumettre",
     "tracers": "Traceur | Traceurs",
-    "submit_report_failure": "Échec d'ajout d'un témoignage",
+    "submit_report_failure": "Échec d'ajout d'un signalement",
     "photo": "Photo",
     "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
     "load_tracers_failure": "Échec de chargement des tracers"
   },
   "es": {
-    "add_report": "Agrega un testimonio",
+    "report_verb": "Informe",
+    "add_report": "Reportar un desperdicio",
     "address": "Dirección",
     "cancel_report": "Cerrar agrega testimonio",
     "click_select": "Clic para seleccionar",
