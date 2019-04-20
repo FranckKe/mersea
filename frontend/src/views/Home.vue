@@ -35,6 +35,7 @@ export default {
       apiUrl: this.$apiUrl,
       map: {},
       newMarker: '',
+      popup: '',
       isMapReady: false
     }
   },
@@ -51,6 +52,7 @@ export default {
         // Return early if map is not ready
         if (this.map.getSource('reports') == null) return false
         if (this.map.getLayer('unclustered-reports') == null) return false
+        if (this.popup) this.popup.remove()
         // Reset map source data with filtered geojson
         this.map
           .getSource('reports')
@@ -63,6 +65,7 @@ export default {
         // Return early if map is not ready
         if (this.map.getSource('reports') == null) return false
         if (this.map.getLayer('unclustered-reports') == null) return false
+        if (this.popup) this.popup.remove()
         // Reset map source data with filtered geojson
         this.map.getSource('reports').setData(this.getReports())
       }
@@ -133,7 +136,7 @@ export default {
         {
           accessToken: mapboxgl.accessToken,
           language: this.$i18n.locale,
-          placeholder: this.$i18n.t('search')
+          placeholder: this.$i18n.t('search_location')
         },
         'top'
       )
@@ -298,7 +301,7 @@ export default {
           coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
         }
 
-        new mapboxgl.Popup()
+        this.popup = new mapboxgl.Popup()
           .setLngLat(coordinates)
           .setHTML(
             `<article class="media">
@@ -409,6 +412,8 @@ export default {
 .home {
   display: flex;
   flex-direction: row;
+  height: 100%;
+  width: 100%;
 }
 
 .map {
@@ -495,6 +500,7 @@ export default {
   color: #4a4a4a;
   display: block;
   padding: 1.25rem;
+  padding-right: 0;
 
   .media {
     display: flex;
@@ -505,11 +511,17 @@ export default {
 
   .media-content {
     font-size: 1rem;
-    max-width: 200px;
+    min-width: 125px;
+    max-width: 175px;
     align-self: flex-start;
 
     h5 {
-      text-transform: capitalize;
+      display:inline-block;
+      max-width: calc(100% - 20px);
+    }
+
+    h5:first-letter {
+      text-transform: uppercase;
     }
 
     p {
@@ -531,10 +543,38 @@ export default {
   .home {
     flex-direction: column;
   }
+
   .map {
     width: 100vw;
     height: calc(100vh - var(--header-height));
     top: var(--header-height);
+  }
+
+  .mapboxgl-popup-content {
+    padding: 0.5rem;
+
+    .media {
+      flex-direction: column-reverse;
+    }
+
+    .media-left {
+      margin-right: 0;
+    }
+
+    .media-content {
+      font-size: 0.75rem;
+      max-width: 200px;
+      margin-bottom: 0.5rem;
+      width: 100%;
+
+      h5 {
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
   }
 }
 </style>
@@ -543,21 +583,21 @@ export default {
 {
   "en": {
     "object": "item | items",
-    "search": "Search",
+    "search_location": "Find a place",
     "no_address_found": "No address found",
     "by": "By",
     "map_init_failure": "Error initializing map"
   },
   "fr": {
     "object": "exemplaire | exemplaires",
-    "search": "Rechercher",
+    "search_location": "Rechercher un endroit",
     "no_address_found": "Pas d'adresse trouvée",
     "by": "Par",
     "map_init_failure": "Échec d'initialisation de la carte"
   },
   "es": {
     "object": "objeto | objetos",
-    "search": "Buscar",
+    "search_location": "Encontrar un lugar",
     "no_address_found": "No se encontró dirección",
     "by": "pro",
     "map_init_failure": "Error al inicializar el mapa"

@@ -59,7 +59,7 @@ let routes = [
   {
     path: '/tracers',
     component: Tracers,
-    alias: '/trazadores'
+    alias: ['/traceurs', 'trazadores']
   },
   {
     path: '/users/send_reset_password',

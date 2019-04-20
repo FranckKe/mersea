@@ -29,6 +29,7 @@
         :pagination-simple="false"
         :default-sort-direction="defaultSortDirection"
         :default-sort="reported_at"
+        striped
       >
         <template slot-scope="props">
           <b-table-column
@@ -43,6 +44,8 @@
             field="quantity"
             v-bind:label="$t('quantity')"
             sortable
+            centered
+            width="20"
             >{{ props.row.quantity }}</b-table-column
           >
 
@@ -51,6 +54,7 @@
             v-bind:label="$t('reported_at')"
             sortable
             centered
+            width="125"
             >{{ props.row.reported_at }}</b-table-column
           >
 
@@ -134,7 +138,7 @@ export default {
   },
   "fr": {
     "tracer": "Tracer",
-    "my_reports": "Mes témoignages",
+    "my_reports": "Mes signalements",
     "status": "Status",
     "address": "Adresse",
     "reported_at": "Témoigné le",

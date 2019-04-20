@@ -18,6 +18,7 @@
       :opened-detailed="defaultOpenedDetails"
       default-sort="name"
       detailed
+      striped
       detail-key="id"
     >
       <template slot-scope="props">
@@ -34,13 +35,21 @@
           field="created_at"
           v-bind:label="$t('created_at')"
           sortable
-          >{{ props.row.created_at | formatDate }}</b-table-column
-        >
+          >{{ props.row.created_at | formatDate }}
+        </b-table-column>
+        <b-table-column
+          field="reported_quantity"
+          v-bind:label="$t('reported_quantity')"
+          sortable
+          width="100"
+          centered
+          >{{ getReportCount()(props.row.id) }}
+        </b-table-column>
       </template>
       <template slot="detail" slot-scope="props">
         <article class="media">
           <figure class="media-left">
-            <p class="image is-64x64">
+            <p class="image">
               <img :src="`${apiUrl}${props.row.photo}`" />
             </p>
           </figure>
@@ -70,6 +79,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapState, mapGetters, mapMutations } = createNamespacedHelpers(
   'tracers'
 )
+const reportsModule = createNamespacedHelpers('reports')
 
 export default {
   name: 'tracers-list',
@@ -84,7 +94,8 @@ export default {
   },
   methods: {
     ...mapMutations(['setPerPage']),
-    ...mapGetters(['getPerPage'])
+    ...mapGetters(['getPerPage']),
+    ...reportsModule.mapGetters(['getReportCount'])
   },
   computed: {
     ...mapState({
@@ -107,6 +118,9 @@ export default {
 .tracer-description {
   max-width: 700px;
 }
+.detail .image {
+  width: 128px;
+}
 </style>
 
 <i18n>
@@ -117,6 +131,7 @@ export default {
     "nothing": "No data",
     "origin": "Origin",
     "per_page": "per page",
+    "reported_quantity": "Reported quantity",
     "type": "Type"
   },
   "fr": {
@@ -125,6 +140,7 @@ export default {
     "nothing": "Pas de données",
     "origin": "Origine",
     "per_page": "par page",
+    "reported_quantity": "Quantité signalée",
     "type": "Type"
   },
   "es": {
@@ -133,6 +149,7 @@ export default {
     "nothing": "Sin datos",
     "origin": "Origen",
     "per_page": "por página",
+    "reported_quantity": "Cantidad testificada",
     "type": "Tipo"
   }
 }

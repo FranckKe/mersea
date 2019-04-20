@@ -30,6 +30,10 @@
                 {{ tracer.created_at | formatDate }}
               </time>
             </p>
+            <p>
+              <strong>{{ $t('reported_quantity') }}:</strong>
+              {{ getReportCount()(tracer.id) }}
+            </p>
           </div>
         </div>
       </article>
@@ -38,6 +42,9 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const reportsModule = createNamespacedHelpers('reports')
+
 export default {
   name: 'tracers-grid',
   props: ['tracers'],
@@ -45,6 +52,9 @@ export default {
     return {
       apiUrl: this.$apiUrl
     }
+  },
+  methods: {
+    ...reportsModule.mapGetters(['getReportCount'])
   }
 }
 </script>
@@ -67,16 +77,19 @@ export default {
   "en": {
     "created_at": "Created at",
     "origin": "Origin",
+    "reported_quantity": "Reported quantity",
     "type": "Type"
   },
   "fr": {
     "created_at": "Créé le",
     "origin": "Origine",
+    "reported_quantity": "Quantité signalée",
     "type": "Type"
   },
   "es": {
     "created_at": "Creado en",
     "origin": "Origen",
+    "reported_quantity": "Cantidad testificada",
     "type": "Tipo"
   }
 }
