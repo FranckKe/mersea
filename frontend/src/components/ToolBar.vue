@@ -7,7 +7,7 @@
       toolIcon="info-circle"
       :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
     ></Tool>
-    <p>
+    <p class="filter-by">
       <span class="icon"> <font-awesome-icon icon="filter" /> </span
       >{{ $t('filter_by') }}
     </p>
@@ -87,6 +87,11 @@ p {
     margin-left: var(--header-height);
     align-items: flex-start;
     flex-direction: row;
+    overflow: scroll;
+  }
+
+  .filter-by {
+    display: none;
   }
 }
 </style>
