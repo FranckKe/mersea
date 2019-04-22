@@ -93,7 +93,6 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5em;
-  min-height: 36px;
 }
 
 .tool-view h4.title {
@@ -133,7 +132,7 @@ export default {
   }
 
   .close-tool-button {
-    align-self: flex-end;
+    align-self: center;
     display: inline-flex;
   }
 }
