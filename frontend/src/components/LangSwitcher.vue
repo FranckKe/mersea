@@ -50,17 +50,17 @@ export default {
 {
   "en": {
     "en": "English",
-    "es": "Spañish",
+    "es": "Español",
     "fr": "Français"
   },
   "fr": {
     "en": "English",
-    "es": "Spañish",
+    "es": "Español",
     "fr": "Français"
   },
   "es": {
     "en": "English",
-    "es": "Spañish",
+    "es": "Español",
     "fr": "Français"
   }
 }
