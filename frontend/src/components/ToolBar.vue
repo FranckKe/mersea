@@ -1,6 +1,17 @@
 <template>
   <div class="tool-bar">
     <Tool
+      toolComponent="Information"
+      :toolTitle="$t('information')"
+      toolViewTitle="Ocean Plastic Tracker"
+      toolIcon="info-circle"
+      :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
+    ></Tool>
+    <p>
+      <span class="icon"> <font-awesome-icon icon="filter" /> </span
+      >{{ $t('filter_by') }}
+    </p>
+    <Tool
       toolComponent="FilterReportsByTracer"
       :toolTitle="$t('tracers')"
       :toolViewTitle="$t('filter_reports_by_tracer_title')"
@@ -59,6 +70,14 @@ export default {
   background-color: purple;
 }
 
+p {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
 @media only screen and (max-device-width: 1024px) {
   .tool-bar {
     width: calc(100% - var(--header-height));
@@ -76,18 +95,24 @@ export default {
 {
   "en": {
     "tracers": "Tracers",
+    "information": "Information",
+    "filter_by": "Filter by",
     "filter_reports_by_tracer_title": "Filter by tracers",
     "date": "Date",
     "filter_reports_by_date_title": "Filter by date"
   },
   "fr": {
     "tracers": "Traceurs",
+    "information": "Information",
+    "filter_by": "Filtrer par",
     "filter_reports_by_tracer_title": "Filtrer par tracers",
     "date": "Date",
     "filter_reports_by_date_title": "Filtrer par date"
   },
   "es": {
     "tracers": "Trazadores",
+    "information": "Información",
+    "filter_by": "Filtrado por",
     "filter_reports_by_tracer_title": "Filtrar por trazadores",
     "date": "Fecha",
     "filter_reports_by_date_title": "Filtrar por fecha"

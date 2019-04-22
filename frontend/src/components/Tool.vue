@@ -29,12 +29,14 @@
 import { createNamespacedHelpers } from 'vuex'
 import FilterReportsByTracer from '@/components/tools/FilterReportsByTracer'
 import FilterReportsByDate from '@/components/tools/FilterReportsByDate'
+import Information from '@/components/tools/Information'
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'Tool',
   props: ['toolComponent', 'toolTitle', 'toolViewTitle', 'toolIcon'],
   components: {
+    Information,
     FilterReportsByTracer,
     FilterReportsByDate
   },
@@ -61,12 +63,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  p {
-    text-align: center;
-    margin-left: 0.25em;
-    cursor: pointer;
-  }
 }
 
 .tool-tab.button {
@@ -85,7 +81,7 @@ export default {
   position: fixed;
   top: var(--header-height); /* Menu heigth */
   left: 124px; /* Tool bar width */
-  background-color: whitesmoke;
+  background-color: white;
   z-index: 11;
   padding: 10px;
   display: flex;

@@ -2,7 +2,7 @@
   <div class="section">
     <div class="container">
       <h1 class="title is-1">{{ $t('register') }}</h1>
-
+      <p>{{ $t('why_account') }}</p>
       <b-message
         v-show="formErrors.length"
         :title="$tc('errors', formErrors.length)"
@@ -149,7 +149,8 @@ export default {
     "register_failure": "Error during registration",
     "register_success": "Welcome! You have signed up successfully",
     "register": "Register",
-    "remember_me": "Remember me"
+    "remember_me": "Remember me",
+    "why_account": "Creating an account allows you to manage your reports and to have part of the pre-filled report form."
   },
   "fr": {
     "email": "Email",
@@ -160,7 +161,8 @@ export default {
     "register_failure": "Erreur lors de l'inscription",
     "register_success": "Bienvenue ! Votre compte a été créé",
     "register": "Inscription",
-    "remember_me": "Se souvenir de moi"
+    "remember_me": "Se souvenir de moi",
+    "why_account": "La création d'un compte vous permet de gérer vos signalements et d'avoir une partie du formulaire de signalement pré-rempli."
   },
   "es": {
     "email": "Email",
@@ -171,7 +173,8 @@ export default {
     "register_failure": "Error durante el inscripción",
     "register_success": "Bienvenido. Tu cuenta fue creada",
     "register": "Registrarse",
-    "remember_me": "Recordarme"
+    "remember_me": "Recordarme",
+    "why_account": "Crear una cuenta le permite administrar sus informes y tener una parte del formulario de informe prellenado."
   }
 }
 </i18n>
