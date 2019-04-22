@@ -80,6 +80,7 @@
               </b-field>
             </div>
             <div class="step-content">
+              <p>{{ $t('why_account') }}</p>
               <b-field
                 :label="$t('name_pseudo')"
                 :type="errors.has('username') ? 'is-danger' : ''"
@@ -113,7 +114,9 @@
                   </a>
                 </b-upload>
                 <span class="file-name" v-if="file">{{ file.name }}</span>
-                <p>{{ $t('photo_multiple_tracer') }}</p>
+                <p class="file-multiple-tracer">
+                  {{ $t('photo_multiple_tracer') }}
+                </p>
               </b-field>
               <b-field
                 :label="$t('report_date')"
@@ -845,7 +848,7 @@ export default {
   position: absolute;
   right: 65px;
 }
-
+facile
 .add-tracer-input {
   margin-top: 20px;
 }
@@ -898,7 +901,7 @@ export default {
 }
 
 .upload {
-  margin-bottom: 0.5em;
+  margin-bottom: 0em;
 }
 </style>
 
@@ -930,7 +933,8 @@ export default {
     "submit_report_failure": "Fail to submit report",
     "photo": "Photo",
     "photo_multiple_tracer": "A photo can contain several tracers",
-    "load_tracers_failure": "Fail to load tracers"
+    "load_tracers_failure": "Fail to load tracers",
+    "why_account": "You can create an account to manage your reports and have your name pre-filled."
   },
   "fr": {
     "report_verb": "Signaler",
@@ -958,7 +962,8 @@ export default {
     "submit_report_failure": "Échec d'ajout d'un signalement",
     "photo": "Photo",
     "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
-    "load_tracers_failure": "Échec de chargement des tracers"
+    "load_tracers_failure": "Échec de chargement des tracers",
+    "why_account": "Vous pouvez créer un compte pour gérer vos signalements et avoir votre nom pré-rempli."
   },
   "es": {
     "report_verb": "Informe",
@@ -986,7 +991,8 @@ export default {
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
     "photo_multiple_tracer": "Una foto puede contener varios marcadores",
-    "load_tracers_failure": "Fallo al cargar los trazadores"
+    "load_tracers_failure": "Fallo al cargar los trazadores",
+    "why_account": "Puede crear una cuenta para administrar sus informes y completar su nombre."
   }
 }
 </i18n>

@@ -30,6 +30,7 @@ import {
   faUser,
   faFilter,
   faPlus,
+  faInfoCircle,
   faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -142,6 +143,7 @@ library.add(
   faThLarge,
   faTimes,
   faFilter,
+  faInfoCircle,
   faSignOutAlt,
   faMapMarkerAlt,
   faPlus,
