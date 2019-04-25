@@ -14,6 +14,9 @@ const mutations = {
 const actions = {
   toggleActiveComponent({ commit, state }, activeTool) {
     commit('setActiveTool', state.activeTool === activeTool ? '' : activeTool)
+  },
+  closeToolbar({ commit }) {
+    commit('setActiveTool', '')
   }
 }
 
