@@ -516,7 +516,7 @@ export default {
     align-self: flex-start;
 
     h5 {
-      display:inline-block;
+      display: inline-block;
       max-width: calc(100% - 20px);
     }
 
