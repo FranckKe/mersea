@@ -329,11 +329,7 @@
     </section>
     <a
       href="#"
-      @click="
-        e => {
-          isFormActive = true
-        }
-      "
+      @click="openAddReportForm"
       class="add-report-button button is-success"
       :class="{ hidden: isFormActive }"
     >
@@ -351,6 +347,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const addReportModule = createNamespacedHelpers('addReport')
 const tracersModule = createNamespacedHelpers('tracers')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 import bulmaSteps from 'bulma-steps'
 import moment from 'moment'
@@ -502,6 +499,7 @@ export default {
     ]),
     ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
+    ...toolBarModule.mapActions(['closeToolbar']),
     async submitReports() {
       this.addReportsErrors = []
       this.addReportsValidationErrors = []
@@ -592,6 +590,10 @@ export default {
       if (this.bulmaSteps.get_current_step_id() === 3) {
         this.goToFirstStep()
       }
+    },
+    openAddReportForm() {
+      this.isFormActive = true
+      this.closeToolbar()
     },
     goToFirstStep() {
       for (let i = 0; i < this.currentStep + 1; i++) {
