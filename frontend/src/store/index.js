@@ -11,7 +11,12 @@ import i18n from '../i18n'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+  plugins: [
+    createPersistedState({
+      // Do not persist the active state of the AddReport modal
+      filter: mutation => !['addReport/setIsFormActive'].includes(mutation.type)
+    })
+  ],
   modules: {
     addReport: addReport,
     pages: pages,
