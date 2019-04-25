@@ -118,7 +118,10 @@ export default {
         const res = await axios.get(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${
             e.lngLat.lat
-          }.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`
+          }.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
+          {
+            timeout: 5000
+          }
         )
         this.address =
           res.data.features.length > 0

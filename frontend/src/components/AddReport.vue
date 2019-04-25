@@ -568,7 +568,8 @@ export default {
           await this.$http({
             method: 'POST',
             url: `/reports`,
-            data: postDataJson
+            data: postDataJson,
+            timeout: 10000
           })
 
           resolve(true)
