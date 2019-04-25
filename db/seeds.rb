@@ -103,9 +103,12 @@ Page.create!(
   category: 'about',
   slug: 'mentions-legales',
   content: <<~LEGAL
-    <h1>Mentions légales</h1>
-    <p><span style="font-size: 14px;">L'association ANSEL est producteur de la base de donnée issue des observations. Les données que vous communiquez seront exploitées exclusivement dans le cadre des objectif de ce projet. Les photos communiquées sont sous la responsabilité du producteur et sont temporairement stockées pour la validation des relevés. En communiquant la photographie pour la réalisation de ce projet, le producteur cède les droits d'utilisation au profit de la plateforme.</span></p>
-    <p><span style="font-size: 14px;">Conformément à la loi "informatique et libertés" du 6 janvier 1978 modifiée, vous bénéficiez d'un droit d'accès et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser à l'association ANSEL.</span></p>
+    <h1>Mentions l&eacute;gales</h1>
+    <p><span style="font-size: 14px;">L&#39;association ANSEL est producteur de la base de donn&eacute;e issue des observations. Les donn&eacute;es que vous communiquez seront exploit&eacute;es exclusivement dans le cadre des objectif de ce projet. Les photos communiqu&eacute;es sont sous la responsabilit&eacute; du producteur et sont temporairement stock&eacute;es pour la validation des relev&eacute;s. En communiquant la photographie pour la r&eacute;alisation de ce projet, le producteur c&egrave;de les droits d&#39;utilisation au profit de la plateforme.</span></p>
+    <p><span style="font-size: 14px;">Conform&eacute;ment &agrave; la loi &quot;informatique et libert&eacute;s&quot; du 6 janvier 1978 modifi&eacute;e, vous b&eacute;n&eacute;ficiez d&#39;un droit d&#39;acc&egrave;s et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser &agrave; l&#39;association ANSEL ou &agrave; contact @ dev.oceanplastictracker.com.</span></p>
+    <p><span style="font-size: 14px;">ANSEL, 15 RUE HENRI CEVAER, 29900 CONCARNEAU</span></p>
+    <p><span style="font-size: 14px;">Christelle Pinard, pr&eacute;sidente ANSEL</span></p>
+    <p><span style="font-size: 14px;">H&eacute;bergement web par OVH, 2 rue Kellermann, 59100 ROUBAIX, France</span></p>
   LEGAL
 )
 
@@ -298,8 +301,11 @@ Page.create!(
   slug: 'legal-notice',
   content: <<~LEGAL
     <h1>Legal notice</h1>
-    <p><span style="font-size: 14px;">L'association ANSEL est producteur de la base de donnée issue des observations. Les données que vous communiquez seront exploitées exclusivement dans le cadre des objectif de ce projet. Les photos communiquées sont sous la responsabilité du producteur et sont temporairement stockées pour la validation des relevés. En communiquant la photographie pour la réalisation de ce projet, le producteur cède les droits d'utilisation au profit de la plateforme.</span></p>
-    <p><span style="font-size: 14px;">Conformément à la loi "informatique et libertés" du 6 janvier 1978 modifiée, vous bénéficiez d'un droit d'accès et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser à l'association ANSEL.</span></p>
+    <p><span style="font-size: 14px;">L&#39;association ANSEL est producteur de la base de donn&eacute;e issue des observations. Les donn&eacute;es que vous communiquez seront exploit&eacute;es exclusivement dans le cadre des objectif de ce projet. Les photos communiqu&eacute;es sont sous la responsabilit&eacute; du producteur et sont temporairement stock&eacute;es pour la validation des relev&eacute;s. En communiquant la photographie pour la r&eacute;alisation de ce projet, le producteur c&egrave;de les droits d&#39;utilisation au profit de la plateforme.</span></p>
+    <p><span style="font-size: 14px;">Conform&eacute;ment &agrave; la loi &quot;informatique et libert&eacute;s&quot; du 6 janvier 1978 modifi&eacute;e, vous b&eacute;n&eacute;ficiez d&#39;un droit d&#39;acc&egrave;s et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser &agrave; l&#39;association ANSEL ou &agrave; contact @ dev.oceanplastictracker.com.</span></p>
+    <p><span style="font-size: 14px;">ANSEL, 15 RUE HENRI CEVAER, 29900 CONCARNEAU</span></p>
+    <p><span style="font-size: 14px;">Christelle Pinard, pr&eacute;sidente ANSEL</span></p>
+    <p><span style="font-size: 14px;">H&eacute;bergement web par OVH, 2 rue Kellermann, 59100 ROUBAIX, France</span></p>
   LEGAL
 )
 
@@ -484,8 +490,11 @@ Page.create!(
   slug: 'notas-legales',
   content: <<~LEGAL
     <h1>Notas legales</h1>
-    <p><span style="font-size: 14px;">L'association ANSEL est producteur de la base de donnée issue des observations. Les données que vous communiquez seront exploitées exclusivement dans le cadre des objectif de ce projet. Les photos communiquées sont sous la responsabilité du producteur et sont temporairement stockées pour la validation des relevés. En communiquant la photographie pour la réalisation de ce projet, le producteur cède les droits d'utilisation au profit de la plateforme.</span></p>
-    <p><span style="font-size: 14px;">Conformément à la loi "informatique et libertés" du 6 janvier 1978 modifiée, vous bénéficiez d'un droit d'accès et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser à l'association ANSEL.</span></p>
+    <p><span style="font-size: 14px;">L&#39;association ANSEL est producteur de la base de donn&eacute;e issue des observations. Les donn&eacute;es que vous communiquez seront exploit&eacute;es exclusivement dans le cadre des objectif de ce projet. Les photos communiqu&eacute;es sont sous la responsabilit&eacute; du producteur et sont temporairement stock&eacute;es pour la validation des relev&eacute;s. En communiquant la photographie pour la r&eacute;alisation de ce projet, le producteur c&egrave;de les droits d&#39;utilisation au profit de la plateforme.</span></p>
+    <p><span style="font-size: 14px;">Conform&eacute;ment &agrave; la loi &quot;informatique et libert&eacute;s&quot; du 6 janvier 1978 modifi&eacute;e, vous b&eacute;n&eacute;ficiez d&#39;un droit d&#39;acc&egrave;s et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser &agrave; l&#39;association ANSEL ou &agrave; contact @ dev.oceanplastictracker.com.</span></p>
+    <p><span style="font-size: 14px;">ANSEL, 15 RUE HENRI CEVAER, 29900 CONCARNEAU</span></p>
+    <p><span style="font-size: 14px;">Christelle Pinard, pr&eacute;sidente ANSEL</span></p>
+    <p><span style="font-size: 14px;">H&eacute;bergement web par OVH, 2 rue Kellermann, 59100 ROUBAIX, France</span></p>
   LEGAL
 )
 
