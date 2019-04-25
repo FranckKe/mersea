@@ -190,8 +190,11 @@
                       :name="`tracer-${index}`"
                       :data="
                         tracers.filter(
-                          (t, tIndex) =>
-                            tIndex === index || !tracerNames.includes(t.name)
+                          t =>
+                            t.name
+                              .toString()
+                              .toLowerCase()
+                              .indexOf(tracerNames[index].toLowerCase()) >= 0
                         )
                       "
                       field="name"
@@ -340,10 +343,8 @@
       <span class="icon is-small">
         <font-awesome-icon icon="plus" />
       </span>
-      <span class="add-report-button-text">
-        {{ $t('report_verb') }}
-      </span></a
-    >
+      <span class="add-report-button-text">{{ $t('report_verb') }}</span>
+    </a>
   </div>
 </template>
 
