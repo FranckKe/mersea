@@ -25,15 +25,17 @@
       </div>
     </div>
     <div id="flexibleMenu" class="navbar-menu">
-      <router-link to="/" class="navbar-item">{{ $t('home') }}</router-link>
+      <router-link to="/" class="navbar-item" exact-active-class="has-text-primary">{{ $t('home') }}</router-link>
       <router-link
         :to="`/${$t('tracers').toLowerCase()}`"
         class="navbar-item"
+        active-class="has-text-primary"
         >{{ $t('tracers') }}</router-link
       >
       <router-link
         :to="`/${$t('leaderboard').toLowerCase()}`"
         class="navbar-item"
+        active-class="has-text-primary"
         >{{ $t('leaderboard') }}</router-link
       >
 
@@ -51,6 +53,7 @@
             :to="
               `/pages/${slugify($t(category)).toLowerCase()}/${pageName.slug}`
             "
+            active-class="has-text-primary"
             >{{ pageName.raw }}</router-link
           >
         </div>
@@ -65,6 +68,7 @@
 
           <b-dropdown-item>
             <router-link
+              active-class="has-text-primary"
               :to="'/me'"
               class="has-text-dark is-size-6 nav-dropdown-link"
             >
@@ -76,6 +80,7 @@
             <router-link
               :to="'/me/reports'"
               class="has-text-dark is-size-6 nav-dropdown-link"
+              active-class="has-text-primary"
             >
               <font-awesome-icon icon="map-marker-alt" />
               <p>{{ $t('my_reports') }}</p>
@@ -93,13 +98,14 @@
             </a>
           </b-dropdown-item>
         </b-dropdown>
-        <router-link v-if="!$auth.check()" :to="'/login'" class="button">
+        <router-link v-if="!$auth.check()" :to="'/login'" class="button" active-class="has-text-primary">
           <p>{{ $t('login') }}</p>
         </router-link>
         <router-link
           v-if="!$auth.check()"
           :to="'/register'"
           class="button is-success"
+          active-class="has-text-primary"
           ><p>{{ $t('register') }}</p></router-link
         >
       </div>
