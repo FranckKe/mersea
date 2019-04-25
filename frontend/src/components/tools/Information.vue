@@ -78,7 +78,7 @@ export default {
     "welcome": "Ocean plastic tracker"
   },
   "fr": {
-    "welcome": "Bienvenu"
+    "welcome": "Bienvenue"
   },
   "es": {
     "welcome": "Comprobar todo"
