@@ -80,5 +80,9 @@ export default {
   h6 {
     font-size: 1rem;
   }
+
+  ul {
+    margin-bottom: 1rem;
+  }
 }
 </style>
