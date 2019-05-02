@@ -60,14 +60,23 @@
                 :type="errors.has('address') ? 'is-danger' : ''"
                 :message="errors.has('address') ? errors.first('address') : ''"
               >
-                <b-input
-                  v-model="address"
-                  type="text"
-                  name="address"
-                  :data-vv-as="$t('address') | lowercase"
-                  v-validate="'required'"
-                  disabled="true"
-                ></b-input>
+                <b-field grouped>
+                  <b-input
+                    v-model="address"
+                    type="text"
+                    name="address"
+                    :data-vv-as="$t('address') | lowercase"
+                    v-validate="'required'"
+                    disabled="true"
+                    expanded
+                  ></b-input>
+                  <p class="control">
+                    <b-button
+                      class="geolocation-button mapboxgl-ctrl-icon mapboxgl-ctrl-geolocate"
+                      @click="setCoordinatesToCurrentPosition()"
+                    ></b-button>
+                  </p>
+                </b-field>
               </b-field>
             </div>
             <div class="step-content">
@@ -352,6 +361,7 @@ const toolBarModule = createNamespacedHelpers('toolBar')
 
 import bulmaSteps from 'bulma-steps'
 import moment from 'moment'
+import axios from 'axios'
 
 export default {
   name: 'add-report',
@@ -501,6 +511,35 @@ export default {
     ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
     ...toolBarModule.mapActions(['closeToolbar']),
+    setCoordinatesToCurrentPosition() {
+      window.navigator.geolocation.getCurrentPosition(
+        async pos => {
+          this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
+          const res = await axios.get(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+              pos.coords.longitude
+            },${pos.coords.latitude}.json?access_token=${
+              process.env.VUE_APP_MAPBOX_TOKEN
+            }`,
+            {
+              timeout: 5000
+            }
+          )
+          this.address =
+            res.data.features.length > 0
+              ? res.data.features[0].place_name
+              : this.$t('no_address_found')
+        },
+        () => {
+          this.$toast.open({
+            message: this.$t('get_current_position_failure'),
+            duration: 5000,
+            type: 'is-danger'
+          })
+        },
+        { enableHighAccuracy: true }
+      )
+    },
     async submitReports() {
       this.addReportsErrors = []
       this.addReportsValidationErrors = []
@@ -849,6 +888,11 @@ export default {
 .upload {
   margin-bottom: 0.5em;
 }
+
+.geolocation-button {
+  width: 36px;
+  height: 36px;
+}
 </style>
 
 <i18n>
@@ -863,6 +907,7 @@ export default {
     "close": "Close",
     "description": "Description",
     "done": "Done",
+    "get_current_position_failure": "Failed to retrieve your current position. Make sure your GPS is enabled and that you authorize Ocean Plastic Tracker to access it.",
     "location": "Location",
     "name_pseudo": "Name or pseudo",
     "next": "Next",
@@ -890,6 +935,7 @@ export default {
     "close": "Fermer",
     "description": "Description",
     "done": "Fin",
+    "get_current_position_failure": "Échec de la localisation. Assurez-vous d'avoir activé le GPS et d'avoir autorisé Ocean Plastic Tracker à accéder à votre position.",
     "location": "Localisation",
     "name_pseudo": "Nom ou pseudo",
     "next": "Suivant",
@@ -917,6 +963,7 @@ export default {
     "close": "Cerrar",
     "description": "Descripción",
     "done": "Final",
+    "get_current_position_failure": "Falla de ubicación. Asegúrese de tener habilitado el GPS y de que esté autorizado Ocean Plastic Tracker para acceder a su ubicación.",
     "location": "Ubicación",
     "name_pseudo": "Nombre o seudo",
     "next": "Siguiente",
