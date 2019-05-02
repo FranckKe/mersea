@@ -1,12 +1,13 @@
 <template>
   <div class="home">
-    <b-loading
-      :is-full-page="false"
-      :active.sync="!this.isMapReady || this.getLoading()"
-      :can-cancel="false"
-    ></b-loading>
     <ToolBar></ToolBar>
-    <div id="map" class="map"></div>
+    <div id="map" class="map">
+      <b-loading
+        :is-full-page="false"
+        :active.sync="!this.isMapReady || this.getLoading()"
+        :can-cancel="false"
+      ></b-loading>
+    </div>
     <add-report></add-report>
   </div>
 </template>
@@ -153,20 +154,6 @@ export default {
       this.map.on('load', this.mapLoad)
     },
     mapLoad: async function() {
-      try {
-        await this.loadReports({
-          reported_at_min: this.$reported_at_min,
-          reported_at_max: this.$reported_at_max
-        })
-      } catch (e) {
-        this.isMapReady = true
-        this.$toast.open({
-          message: this.$t('map_init_failure'),
-          duration: 5000,
-          type: 'is-danger'
-        })
-      }
-
       if (this.getErrors().length > 0 || this.getReports() == null) {
         this.isMapReady = true
         this.$toast.open({

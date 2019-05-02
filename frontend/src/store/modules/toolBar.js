@@ -1,5 +1,5 @@
 const state = {
-  activeTool: ''
+  activeTool: 'Information'
 }
 const getters = {
   getActiveTool: state => {

@@ -7,7 +7,7 @@
     <b-loading
       :is-full-page="false"
       :active.sync="this.loading"
-      :can-cancel="true"
+      :can-cancel="false"
     ></b-loading>
     <div class="navbar-brand">
       <div class="navbar-start">
