@@ -175,6 +175,14 @@ let app = new Vue({
   router,
   i18n,
   store,
+  created() {
+    this.$store.dispatch('pages/loadPages')
+    this.$store.dispatch('tracers/loadTracers')
+    this.$store.dispatch('reports/loadReports', {
+      reported_at_min: this.$reported_at_min,
+      reported_at_max: this.$reported_at_max
+    })
+  },
   mounted() {
     if (process.env.VUE_APP_BUGSNAG_TOKEN != null) {
       const bugsnagClient = bugsnag({

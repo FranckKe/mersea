@@ -70,7 +70,6 @@ const actions = {
   async loadTracers({ commit }) {
     try {
       commit('setLoading', true)
-
       const tracersRes = await api.get(`/tracers`)
       const tracers = tracersRes.data
       commit('setTracers', { tracers })

@@ -137,7 +137,7 @@ export default {
     "search": "Search"
   },
   "fr": {
-    "tracer": "Tracer",
+    "tracer": "Traceur",
     "my_reports": "Mes signalements",
     "status": "Status",
     "address": "Adresse",

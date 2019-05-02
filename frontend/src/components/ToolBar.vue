@@ -110,7 +110,7 @@ p {
     "tracers": "Traceurs",
     "information": "Information",
     "filter_by": "Filtrer par",
-    "filter_reports_by_tracer_title": "Filtrer par tracers",
+    "filter_reports_by_tracer_title": "Filtrer par traceurs",
     "date": "Date",
     "filter_reports_by_date_title": "Filtrer par date"
   },

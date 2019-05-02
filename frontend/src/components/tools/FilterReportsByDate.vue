@@ -1,5 +1,10 @@
 <template>
   <div class="daterange">
+    <b-loading
+      :is-full-page="false"
+      :active.sync="this.getLoading()"
+      :can-cancel="false"
+    ></b-loading>
     <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
     <div class="buttons">
       <button class="button is-primary" @click="startOfRange('week')">
@@ -98,6 +103,7 @@ export default {
   },
   methods: {
     ...reportsModule.mapActions(['loadReports']),
+    ...reportsModule.mapGetters(['getLoading']),
     updateReports: async function() {
       try {
         await this.loadReports({
@@ -160,8 +166,12 @@ export default {
 }
 </script>
 
-<style>
-.daterange .title.is-5 {
+<style lang="scss" scoped>
+.daterange {
+  position: relative;
+}
+
+.title.is-5 {
   margin-bottom: 0.5em;
 }
 </style>

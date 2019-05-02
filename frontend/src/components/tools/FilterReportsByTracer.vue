@@ -17,6 +17,11 @@
       </button>
     </div>
     <div class="legend-tracers">
+      <b-loading
+        :is-full-page="false"
+        :active.sync="this.getLoading()"
+        :can-cancel="false"
+      ></b-loading>
       <div
         class="legend-tracer"
         :key="tracer.id"
@@ -40,6 +45,12 @@
           {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
         </b-checkbox>
       </div>
+      <p class="has-text-left is-italic">
+        {{ this.filteredTracersList.length }}
+        {{ $tc('tracers', this.filteredTracersList.length) }}
+        {{ $tc('displayed', this.filteredTracersList.length) }}
+        ({{ this.tracers.length }} {{ $t('total') }})
+      </p>
     </div>
   </div>
 </template>
@@ -84,7 +95,11 @@ export default {
   },
   methods: {
     ...reportsModule.mapGetters(['getReportCount']),
-    ...tracersModule.mapGetters(['getTracers', 'getFilteredTracers']),
+    ...tracersModule.mapGetters([
+      'getTracers',
+      'getFilteredTracers',
+      'getLoading'
+    ]),
     ...tracersModule.mapMutations(['setFilteredTracers']),
     checkAll: function() {
       this.setFilteredTracers(this.tracers.map(t => t.id))
@@ -175,18 +190,27 @@ export default {
 <i18n>
 {
   "en": {
+    "tracers": "tracer | tracers",
     "check_all": "Check all",
     "search": "Search",
+    "displayed": "displayed | displayed",
+    "total": "total",
     "uncheck_all": "Uncheck all"
   },
   "fr": {
+    "tracers": "traceur | traceurs",
     "check_all": "Tout cocher",
     "search": "Rechercher",
+    "displayed": "affiché | affichés",
+    "total": "en tout",
     "uncheck_all": "Tout décocher"
   },
   "es": {
+    "tracers": "trazador | trazadores",
     "check_all": "Comprobar todo",
     "search": "Buscar",
+    "displayed": "desplegado | desplegado",
+    "total": "total",
     "uncheck_all": "Desmarcar todo"
   }
 }
