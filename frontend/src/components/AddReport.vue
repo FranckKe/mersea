@@ -60,14 +60,23 @@
                 :type="errors.has('address') ? 'is-danger' : ''"
                 :message="errors.has('address') ? errors.first('address') : ''"
               >
-                <b-input
-                  v-model="address"
-                  type="text"
-                  name="address"
-                  :data-vv-as="$t('address') | lowercase"
-                  v-validate="'required'"
-                  disabled="true"
-                ></b-input>
+                <b-field grouped>
+                  <b-input
+                    v-model="address"
+                    type="text"
+                    name="address"
+                    :data-vv-as="$t('address') | lowercase"
+                    v-validate="'required'"
+                    disabled="true"
+                    expanded
+                  ></b-input>
+                  <p class="control">
+                    <b-button
+                      class="geolocation-button mapboxgl-ctrl-icon mapboxgl-ctrl-geolocate"
+                      @click="setCoordinatesToCurrentPosition()"
+                    ></b-button>
+                  </p>
+                </b-field>
               </b-field>
             </div>
             <div class="step-content">
@@ -352,9 +361,13 @@ const toolBarModule = createNamespacedHelpers('toolBar')
 
 import bulmaSteps from 'bulma-steps'
 import moment from 'moment'
+import axios from 'axios'
 
 export default {
   name: 'add-report',
+  props: {
+    mapGeolocationControl: undefined
+  },
   created() {
     // The limit of tracers for bulk reporting
     this.tracerInputsLimit = 8
@@ -501,6 +514,39 @@ export default {
     ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
     ...toolBarModule.mapActions(['closeToolbar']),
+    setCoordinatesToCurrentPosition() {
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition(
+          async pos => {
+            this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
+            const res = await axios.get(
+              `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+                pos.coords.longitude
+              },${pos.coords.latitude}.json?access_token=${
+                process.env.VUE_APP_MAPBOX_TOKEN
+              }`,
+              {
+                timeout: 5000
+              }
+            )
+            this.address =
+              res.data.features.length > 0
+                ? res.data.features[0].place_name
+                : this.$t('no_address_found')
+          },
+          () => {
+            this.$toast.open({
+              message: this.$t('get_current_position_failure'),
+              duration: 5000,
+              type: 'is-danger'
+            })
+          },
+          { enableHighAccuracy: true }
+        )
+
+        this.mapGeolocationControl && this.mapGeolocationControl.trigger()
+      }
+    },
     async submitReports() {
       this.addReportsErrors = []
       this.addReportsValidationErrors = []
@@ -728,122 +774,127 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .add-report {
   background-color: white;
-  display: flex;
-  height: calc(100vh - 145px);
-  width: 95%;
-  max-width: 500px;
-  position: absolute;
-  z-index: 5;
   border-radius: 3px;
-  top: 115px;
-  left: 135px;
-  padding: 15px;
+  display: flex;
   flex-direction: column;
+  height: calc(100vh - 145px);
+  left: 135px;
+  margin-top: 0;
+  max-width: 500px;
+  min-height: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: auto;
-  margin-top: 0;
+  padding: 15px;
+  position: absolute;
+  top: 115px;
+  width: 95%;
+  z-index: 5;
+
+  .field.file {
+    flex-wrap: wrap;
+
+    .help {
+      flex-basis: 100%;
+    }
+  }
+
+  .steps {
+    flex-grow: 1;
+  }
 }
 
 @media only screen and (max-device-width: 1024px) {
   .add-report {
     height: auto;
-    min-height: calc(60vh - 115px);
-    width: calc(100% - 124px); /* toolbar width + margin */
-    max-width: 100%;
     left: 125px; /* toolbar width */
+    min-height: calc(60vh - 115px);
     margin-top: 40vh;
+    max-width: 100%;
     padding: 30px;
+    width: calc(100% - 124px); /* toolbar width + margin */
   }
 }
 
 @media only screen and (max-device-width: 1024px) {
   .add-report {
     padding: 30px 10px 10px 10px;
-    width: 100%;
     left: 0;
+    width: 100%;
   }
 }
 
-.title-wrapper {
+.add-report-form {
   display: flex;
-  margin-bottom: 25px;
-  justify-content: space-between;
-  align-items: center;
+  flex-basis: 100%;
+  flex-direction: column;
+
+  & >>> .remove-tracer-input-label {
+    color: white;
+  }
+
+  & >>> .tracer-input {
+    padding-right: 2.25em;
+  }
 }
 
-.title-wrapper .title {
-  margin-bottom: 0;
-}
-
-.title-wrapper .close-button {
-  width: 35px;
-  align-self: flex-start;
-}
-
-.add-report-form >>> .remove-tracer-input-label {
-  color: white;
+.add-report-layer .add-report-button {
+  bottom: 33px;
+  position: absolute;
+  right: 65px;
 }
 
 .add-tracer-input {
   margin-top: 20px;
 }
 
-.add-report-form >>> .tracer-input {
-  padding-right: 2.25em;
-}
-
-.report-submission-status {
-  width: 36px;
-  display: flex;
-  justify-content: center;
-}
-
-.report-submission-status--clickable {
-  cursor: pointer;
-}
-
-.report-submission-status > .icon {
-  height: 36px;
-}
-
 .close-icon {
   align-self: flex-end;
 }
 
-.add-report-form {
-  flex-basis: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.add-report .field.file .help {
-  flex-basis: 100%;
-}
-
-.add-report .field.file {
-  flex-wrap: wrap;
-}
-
-.add-report-layer .add-report-button {
-  position: absolute;
-  bottom: 33px;
-  right: 65px;
+.geolocation-button {
+  height: 36px;
+  width: 36px;
 }
 
 .hidden {
   display: none !important;
 }
 
-.add-report .steps {
-  flex-grow: 1;
+.report-submission-status {
+  display: flex;
+  justify-content: center;
+  width: 36px;
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  & > .icon {
+    height: 36px;
+  }
 }
 
 .submit-form-error ul li {
   margin-left: 15px;
+}
+
+.title-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+
+  & .title {
+    margin-bottom: 0;
+  }
+
+  & .close-button {
+    align-self: flex-start;
+    width: 35px;
+  }
 }
 
 .upload {
@@ -863,6 +914,7 @@ export default {
     "close": "Close",
     "description": "Description",
     "done": "Done",
+    "get_current_position_failure": "Failed to retrieve your current position. Make sure your GPS is enabled and that you authorize Ocean Plastic Tracker to access it.",
     "location": "Location",
     "name_pseudo": "Name or pseudo",
     "next": "Next",
@@ -890,6 +942,7 @@ export default {
     "close": "Fermer",
     "description": "Description",
     "done": "Fin",
+    "get_current_position_failure": "Échec de la localisation. Assurez-vous d'avoir activé le GPS et d'avoir autorisé Ocean Plastic Tracker à accéder à votre position.",
     "location": "Localisation",
     "name_pseudo": "Nom ou pseudo",
     "next": "Suivant",
@@ -917,6 +970,7 @@ export default {
     "close": "Cerrar",
     "description": "Descripción",
     "done": "Final",
+    "get_current_position_failure": "Falla de ubicación. Asegúrese de tener habilitado el GPS y de que esté autorizado Ocean Plastic Tracker para acceder a su ubicación.",
     "location": "Ubicación",
     "name_pseudo": "Nombre o seudo",
     "next": "Siguiente",
