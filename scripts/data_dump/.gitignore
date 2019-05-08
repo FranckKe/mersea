@@ -1,0 +1,5 @@
+*.csv
+*.json
+.env
+venv
+.ipynb*
