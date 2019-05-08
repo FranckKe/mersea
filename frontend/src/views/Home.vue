@@ -7,7 +7,7 @@
     ></b-loading>
     <ToolBar></ToolBar>
     <div id="map" class="map"></div>
-    <add-report></add-report>
+    <add-report :mapGeolocationControl="mapGeolocationControl"></add-report>
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
     return {
       apiUrl: this.$apiUrl,
       map: {},
+      mapGeolocationControl: undefined,
       newMarker: '',
       popup: '',
       isMapReady: false
@@ -135,6 +136,8 @@ export default {
         },
         trackUserLocation: true
       })
+      this.mapGeolocationControl = geolocator
+
       let geocoder = new MapboxGeocoder(
         {
           accessToken: mapboxgl.accessToken,

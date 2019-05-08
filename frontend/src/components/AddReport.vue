@@ -365,6 +365,9 @@ import axios from 'axios'
 
 export default {
   name: 'add-report',
+  props: {
+    mapGeolocationControl: undefined
+  },
   created() {
     // The limit of tracers for bulk reporting
     this.tracerInputsLimit = 8
@@ -512,7 +515,7 @@ export default {
     ...tracersModule.mapActions(['loadTracers']),
     ...toolBarModule.mapActions(['closeToolbar']),
     setCoordinatesToCurrentPosition() {
-      window.navigator.geolocation &&
+      if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
           async pos => {
             this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
@@ -540,6 +543,9 @@ export default {
           },
           { enableHighAccuracy: true }
         )
+
+        this.mapGeolocationControl && this.mapGeolocationControl.trigger()
+      }
     },
     async submitReports() {
       this.addReportsErrors = []
