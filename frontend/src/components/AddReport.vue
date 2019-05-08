@@ -512,33 +512,34 @@ export default {
     ...tracersModule.mapActions(['loadTracers']),
     ...toolBarModule.mapActions(['closeToolbar']),
     setCoordinatesToCurrentPosition() {
-      window.navigator.geolocation.getCurrentPosition(
-        async pos => {
-          this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
-          const res = await axios.get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-              pos.coords.longitude
-            },${pos.coords.latitude}.json?access_token=${
-              process.env.VUE_APP_MAPBOX_TOKEN
-            }`,
-            {
-              timeout: 5000
-            }
-          )
-          this.address =
-            res.data.features.length > 0
-              ? res.data.features[0].place_name
-              : this.$t('no_address_found')
-        },
-        () => {
-          this.$toast.open({
-            message: this.$t('get_current_position_failure'),
-            duration: 5000,
-            type: 'is-danger'
-          })
-        },
-        { enableHighAccuracy: true }
-      )
+      window.navigator.geolocation &&
+        window.navigator.geolocation.getCurrentPosition(
+          async pos => {
+            this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
+            const res = await axios.get(
+              `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+                pos.coords.longitude
+              },${pos.coords.latitude}.json?access_token=${
+                process.env.VUE_APP_MAPBOX_TOKEN
+              }`,
+              {
+                timeout: 5000
+              }
+            )
+            this.address =
+              res.data.features.length > 0
+                ? res.data.features[0].place_name
+                : this.$t('no_address_found')
+          },
+          () => {
+            this.$toast.open({
+              message: this.$t('get_current_position_failure'),
+              duration: 5000,
+              type: 'is-danger'
+            })
+          },
+          { enableHighAccuracy: true }
+        )
     },
     async submitReports() {
       this.addReportsErrors = []
@@ -767,131 +768,131 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .add-report {
   background-color: white;
-  display: flex;
-  height: calc(100vh - 145px);
-  width: 95%;
-  max-width: 500px;
-  position: absolute;
-  z-index: 5;
   border-radius: 3px;
-  top: 115px;
-  left: 135px;
-  padding: 15px;
+  display: flex;
   flex-direction: column;
+  height: calc(100vh - 145px);
+  left: 135px;
+  margin-top: 0;
+  max-width: 500px;
+  min-height: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  min-height: auto;
-  margin-top: 0;
+  padding: 15px;
+  position: absolute;
+  top: 115px;
+  width: 95%;
+  z-index: 5;
+
+  .field.file {
+    flex-wrap: wrap;
+
+    .help {
+      flex-basis: 100%;
+    }
+  }
+
+  .steps {
+    flex-grow: 1;
+  }
 }
 
 @media only screen and (max-device-width: 1024px) {
   .add-report {
     height: auto;
-    min-height: calc(60vh - 115px);
-    width: calc(100% - 124px); /* toolbar width + margin */
-    max-width: 100%;
     left: 125px; /* toolbar width */
+    min-height: calc(60vh - 115px);
     margin-top: 40vh;
+    max-width: 100%;
     padding: 30px;
+    width: calc(100% - 124px); /* toolbar width + margin */
   }
 }
 
 @media only screen and (max-device-width: 1024px) {
   .add-report {
     padding: 30px 10px 10px 10px;
-    width: 100%;
     left: 0;
+    width: 100%;
   }
 }
 
-.title-wrapper {
+.add-report-form {
   display: flex;
-  margin-bottom: 25px;
-  justify-content: space-between;
-  align-items: center;
+  flex-basis: 100%;
+  flex-direction: column;
+
+  & >>> .remove-tracer-input-label {
+    color: white;
+  }
+
+  & >>> .tracer-input {
+    padding-right: 2.25em;
+  }
 }
 
-.title-wrapper .title {
-  margin-bottom: 0;
-}
-
-.title-wrapper .close-button {
-  width: 35px;
-  align-self: flex-start;
-}
-
-.add-report-form >>> .remove-tracer-input-label {
-  color: white;
+.add-report-layer .add-report-button {
+  bottom: 33px;
+  position: absolute;
+  right: 65px;
 }
 
 .add-tracer-input {
   margin-top: 20px;
 }
 
-.add-report-form >>> .tracer-input {
-  padding-right: 2.25em;
-}
-
-.report-submission-status {
-  width: 36px;
-  display: flex;
-  justify-content: center;
-}
-
-.report-submission-status--clickable {
-  cursor: pointer;
-}
-
-.report-submission-status > .icon {
-  height: 36px;
-}
-
 .close-icon {
   align-self: flex-end;
 }
 
-.add-report-form {
-  flex-basis: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.add-report .field.file .help {
-  flex-basis: 100%;
-}
-
-.add-report .field.file {
-  flex-wrap: wrap;
-}
-
-.add-report-layer .add-report-button {
-  position: absolute;
-  bottom: 33px;
-  right: 65px;
+.geolocation-button {
+  height: 36px;
+  width: 36px;
 }
 
 .hidden {
   display: none !important;
 }
 
-.add-report .steps {
-  flex-grow: 1;
+.report-submission-status {
+  display: flex;
+  justify-content: center;
+  width: 36px;
+
+  &--clickable {
+    cursor: pointer;
+  }
+
+  & > .icon {
+    height: 36px;
+  }
 }
 
 .submit-form-error ul li {
   margin-left: 15px;
 }
 
-.upload {
-  margin-bottom: 0.5em;
+.title-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+
+  & .title {
+    margin-bottom: 0;
+  }
+
+  & .close-button {
+    align-self: flex-start;
+    width: 35px;
+  }
 }
 
-.geolocation-button {
-  width: 36px;
-  height: 36px;
+.upload {
+  margin-bottom: 0.5em;
 }
 </style>
 
