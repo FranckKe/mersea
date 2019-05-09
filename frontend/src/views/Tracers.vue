@@ -25,7 +25,7 @@
             {{ getFilteredTracers().length }}
             {{ $tc('tracers', getFilteredTracers().length) }}
             {{ $tc('displayed', getFilteredTracers().length) }} ({{
-              this.tracers.length
+              this.getTracers().length
             }}
             {{ $t('total') }})
           </p>
@@ -53,16 +53,23 @@
           </button>
         </div>
       </div>
-      <transition name="fade" mode="out-in">
-        <tracers-grid
-          v-if="this.displayFormat === 'grid'"
-          :tracers="getFilteredTracers()"
-        ></tracers-grid>
-        <tracers-list
-          v-if="this.displayFormat === 'list'"
-          :tracers="getFilteredTracers()"
-        ></tracers-list>
-      </transition>
+      <div class="tracers-body">
+        <b-loading
+          :is-full-page="false"
+          :active.sync="this.getLoading()"
+          :can-cancel="false"
+        ></b-loading>
+        <transition name="fade" mode="out-in">
+          <tracers-grid
+            v-if="this.displayFormat === 'grid'"
+            :tracers="getFilteredTracers()"
+          ></tracers-grid>
+          <tracers-list
+            v-if="this.displayFormat === 'list'"
+            :tracers="getFilteredTracers()"
+          ></tracers-list>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -86,34 +93,22 @@ export default {
   },
   data() {
     return {
-      tracers: [],
       searchKeywords: ''
     }
   },
-  async created() {
-    try {
-      await this.loadTracers()
-    } catch (e) {
-      this.$toast.open({
-        message: this.$t('load_tracers_failure'),
-        duration: 5000,
-        type: 'is-danger'
-      })
-    }
-    this.tracers = this.getTracers()
-  },
+  async created() {},
   methods: {
     getFilteredTracers() {
       if (this.searchKeywords.trim() !== '') {
         let keywords = this.searchKeywords.toLowerCase()
-        return this.tracers.filter(
+        return this.getTracers().filter(
           tracer => tracer.name.toLowerCase().indexOf(keywords) !== -1
         )
       } else {
-        return this.tracers
+        return this.getTracers()
       }
     },
-    ...mapGetters(['getTracers']),
+    ...mapGetters(['getTracers', 'getLoading']),
     ...mapMutations(['setDisplayFormat']),
     ...mapActions(['loadTracers'])
   },
@@ -125,7 +120,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .tracer-description p {
   margin-bottom: 1rem;
 }
@@ -146,6 +141,13 @@ export default {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.tracers-body {
+  position: relative;
+  display: flex;
+  min-height: 100px;
+  width: 100%;
 }
 </style>
 

@@ -83,6 +83,9 @@ const mutations = {
   setPages: (state, { pages }) => {
     state.pages = pages
   },
+  setLoading: (state, loading) => {
+    state.loading = loading
+  },
   setSuccess: state => {
     state.success = true
     state.loading = false
@@ -96,6 +99,7 @@ const mutations = {
 const actions = {
   async loadPages({ commit }) {
     try {
+      commit('setLoading', true)
       const pagesData = await api.get(`/pages`)
       const pages = pagesData.data
       commit('setPages', { pages })

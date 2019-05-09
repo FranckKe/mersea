@@ -1,5 +1,20 @@
 <template>
-  <div class="tool-information" v-html="this.toolContent"></div>
+  <div class="welcome">
+    <b-loading
+      :is-full-page="false"
+      :active.sync="this.getLoading()"
+      :can-cancel="false"
+    ></b-loading>
+
+    <div
+      class="tool-information"
+      v-html="
+        this.getPageContent({
+          pageName: `ocean-plastic-tracker-${this.$i18n.locale}`
+        })
+      "
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -14,26 +29,19 @@ export default {
       toolContent: ''
     }
   },
-  created() {
-    this.getContent()
-  },
-  computed: { ...mapGetters(['getPageContent']) },
   methods: {
-    getContent: function() {
-      this.toolContent = this.getPageContent({
-        pageName: `ocean-plastic-tracker-${this.$i18n.locale}`
-      })
-    }
+    ...mapGetters(['getLoading'])
   },
-  watch: {
-    '$i18n.locale': function() {
-      this.getContent()
-    }
-  }
+  computed: { ...mapGetters(['getPageContent']) }
 }
 </script>
 
 <style lang="scss">
+.welcome {
+  position: relative;
+  height: 100%;
+}
+
 .tool-information {
   p {
     margin-bottom: 1rem;

@@ -395,16 +395,7 @@ export default {
     }
   },
   async mounted() {
-    try {
-      await this.loadTracers()
-      if (this.$auth.check()) this.username = this.$auth.user().name
-    } catch (e) {
-      this.$toast.open({
-        message: this.$t('load_tracers_failure'),
-        duration: 5000,
-        type: 'is-danger'
-      })
-    }
+    if (this.$auth.check()) this.username = this.$auth.user().name
 
     this.tracers = this.getTracers()
     this.bulmaSteps = new bulmaSteps(
@@ -943,7 +934,7 @@ export default {
   },
   "fr": {
     "report_verb": "Signaler",
-    "add_report": "Signaler un déchêt",
+    "add_report": "Signaler un déchet",
     "address": "Adresse",
     "cancel_report": "Fermer l'ajout de signalement",
     "click_select": "Cliquez pour sélectionner",
