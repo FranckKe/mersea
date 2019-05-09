@@ -798,6 +798,7 @@ export default {
 
   .field.file {
     flex-wrap: wrap;
+    align-items: center;
 
     .help {
       flex-basis: 100%;
@@ -806,6 +807,10 @@ export default {
 
   .steps {
     flex-grow: 1;
+  }
+
+  .file-multiple-tracer {
+    margin-left: 0.25em;
   }
 }
 
@@ -848,7 +853,7 @@ export default {
   position: absolute;
   right: 65px;
 }
-facile
+
 .add-tracer-input {
   margin-top: 20px;
 }
