@@ -237,6 +237,15 @@ export default {
     height: 2px;
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .navbar {
+    width: 100%;
+  }
+  .navbar-menu {
+    width: 100%;
+  }
+}
 @media (--below-large) {
   .navbar-menu.is-active {
     height: 100vh;
