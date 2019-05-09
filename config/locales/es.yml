@@ -59,8 +59,9 @@ es:
       last_activity: Última actividad
     categories:
       other: Otro
-      about: À propos
+      about: A proposito
       information: Información
+      welcome: Bienvenida
   reports:
     create:
       thanks: Gracias por tu informe

@@ -36,7 +36,10 @@ const getters = {
       ...new Set(
         state.pages
           .map(page => page.category)
-          .filter(page => page.category !== 'other')
+          .filter(
+            pageCategory =>
+              pageCategory !== 'other' && pageCategory !== 'welcome'
+          )
       )
     ]
   },
@@ -45,7 +48,10 @@ const getters = {
       ...new Set(
         state.pages
           .map(page => page.category)
-          .filter(page => page.category !== 'other')
+          .filter(
+            pageCategory =>
+              pageCategory !== 'other' && pageCategory !== 'welcome'
+          )
       )
     ]
     return categories.map(function(category) {

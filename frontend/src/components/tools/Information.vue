@@ -1,9 +1,5 @@
 <template>
-  <div class="section">
-    <div class="container">
-      <div class="page" v-html="this.pageContent"></div>
-    </div>
-  </div>
+  <div class="tool-information" v-html="this.toolContent"></div>
 </template>
 
 <script>
@@ -11,41 +7,34 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pages')
 
 export default {
-  name: 'page',
-  props: ['category', 'page', 'pageId'],
+  name: 'Information',
   data() {
     return {
-      pageContent: ''
+      isActive: true,
+      toolContent: ''
     }
   },
   created() {
     this.getContent()
   },
-  watch: {
-    $route() {
-      this.getContent()
-    }
-  },
+  computed: { ...mapGetters(['getPageContent']) },
   methods: {
     getContent: function() {
-      this.pageContent = this.getPageContent({
-        pageName: this.$props.page
+      this.toolContent = this.getPageContent({
+        pageName: `ocean-plastic-tracker-${this.$i18n.locale}`
       })
     }
   },
-  computed: { ...mapGetters(['getPageContent']) }
+  watch: {
+    '$i18n.locale': function() {
+      this.getContent()
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-.page {
-  margin: auto;
-  max-width: 650px;
-  line-height: 1.6;
-  font-size: 18px;
-  color: #444;
-  padding: 0 10px;
-
+.tool-information {
   p {
     margin-bottom: 1rem;
   }
@@ -80,9 +69,19 @@ export default {
   h6 {
     font-size: 1rem;
   }
-
-  ul {
-    margin-bottom: 1rem;
-  }
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "welcome": "Ocean plastic tracker"
+  },
+  "fr": {
+    "welcome": "Bienvenue"
+  },
+  "es": {
+    "welcome": "Comprobar todo"
+  }
+}
+</i18n>
