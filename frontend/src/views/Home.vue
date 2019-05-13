@@ -95,9 +95,9 @@ export default {
       this.map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/satellite-streets-v9',
-        minZoom: 4,
-        zoom: 0,
-        maxZoom: 15,
+        minZoom: 3,
+        zoom: 5,
+        maxZoom: 17,
         center: [0, 46.2276],
         refreshExpiredTiles: false
       })
@@ -311,7 +311,7 @@ export default {
                       ${reportProperties.quantity}${' '}
                       ${this.$i18n.tc('object', reportProperties.quantity)}
                     </p>
-                    <p>${moment(reportProperties.reportedAt).format('LL')}</p>
+                    <p>${moment(reportProperties.reported_at).format('LL')}</p>
                   </div>
                 </div>
                 <div class="media-right">

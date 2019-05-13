@@ -54,7 +54,7 @@
             v-bind:label="$t('last_activity')"
             sortable
             centered
-            >{{ props.row.last_activity }}</b-table-column
+            >{{ formattedDate(props.row.last_activity) }}</b-table-column
           >
         </template>
       </b-table>
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -89,6 +91,9 @@ export default {
           type: 'is-danger'
         })
       }
+    },
+    formattedDate: function(date) {
+      return moment(date).format('Do MMMM YYYY')
     }
   },
   computed: {
@@ -100,6 +105,11 @@ export default {
           v.last_activity.includes(this.filter.toLowerCase())
         )
       })
+    }
+  },
+  watch: {
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
     }
   }
 }

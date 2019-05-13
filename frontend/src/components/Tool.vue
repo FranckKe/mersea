@@ -76,7 +76,7 @@ export default {
 }
 
 .tool-view {
-  width: 362px;
+  width: 380px;
   height: calc(100vh - 55px);
   position: fixed;
   top: var(--header-height); /* Menu heigth */

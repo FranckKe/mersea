@@ -10,31 +10,14 @@
       <button class="button is-primary" @click="startOfRange('week')">
         <span>{{ $t('this_week') }}</span>
       </button>
-      <button class="button is-primary" @click="dateRange(1, 'weeks')">
-        <span>{{ $t('last_7_days') }}</span>
-      </button>
-      <button class="button is-primary" @click="dateRange(30, 'days')">
-        <span>{{ $t('last_30_days') }}</span>
-      </button>
-    </div>
-    <div class="buttons">
       <button class="button is-primary" @click="startOfRange('month')">
         <span>{{ $t('this_month') }}</span>
       </button>
-      <button class="button is-primary" @click="dateRange(6, 'months')">
-        <span>{{ $t('last_6_months') }}</span>
-      </button>
-      <button class="button is-primary" @click="dateRange(12, 'months')">
-        <span>{{ $t('last_12_months') }}</span>
-      </button>
-    </div>
-    <div class="buttons">
       <button class="button is-primary" @click="startOfRange('year')">
         <span>{{ $t('this_year') }}</span>
       </button>
-      <button class="button is-primary" @click="dateRange(2, 'years')">
-        <span>{{ $t('last_2_years') }}</span>
-      </button>
+    </div>
+    <div class="buttons">
       <button
         v-for="years in [3, 2, 1]"
         :key="years"
@@ -61,6 +44,9 @@
         icon="calendar"
         :min-date="new Date('2016-01-01')"
         :max-date="new Date()"
+        :month-names="monthNames"
+        :day-names="dayNames"
+        :first-day-of-week="firstDayOfTheWeek"
         v-validate="fieldFromRules"
       >
       </b-datepicker>
@@ -72,6 +58,9 @@
         icon="calendar"
         :min-date="new Date('2016-01-01')"
         :max-date="new Date()"
+        :month-names="monthNames"
+        :day-names="dayNames"
+        :first-day-of-week="firstDayOfTheWeek"
         v-validate="'required'"
       >
         <button class="button is-primary" @click="date = new Date()">
@@ -80,9 +69,6 @@
         </button>
       </b-datepicker>
     </b-field>
-    <button class="button is-primary" @click="startOfRange('year')">
-      <span>{{ $t('reset') }}</span>
-    </button>
   </div>
 </template>
 
@@ -98,7 +84,11 @@ export default {
       isActive: false,
       apiUrl: this.$apiUrl,
       reported_at_min: new Date(this.$reported_at_min),
-      reported_at_max: new Date(this.$reported_at_max)
+      reported_at_max: new Date(this.$reported_at_max),
+      monthNames: moment.months(),
+      dayNames: moment.weekdaysShort(),
+      firstDayOfTheWeek: this.$i18n.locale === 'en' ? 0 : 1,
+      maxDate: new Date()
     }
   },
   methods: {
@@ -117,12 +107,6 @@ export default {
           type: 'is-danger'
         })
       }
-    },
-    dateRange: function(numberToSubstract, typeOf) {
-      this.reported_at_min = moment()
-        .subtract(numberToSubstract, typeOf)
-        .toDate()
-      this.reported_at_max = new Date()
     },
     startOfRange: function(typeOf) {
       this.reported_at_min = moment()
@@ -161,6 +145,12 @@ export default {
     },
     reported_at_max: function() {
       this.updateReports()
+    },
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
+      this.monthNames = moment.months()
+      this.dayNames = moment.weekdaysShort()
+      this.firstDayOfTheWeek = this.$i18n.locale === 'en' ? 0 : 1
     }
   }
 }
@@ -176,6 +166,24 @@ export default {
 }
 </style>
 
+<style>
+.daterange
+  .dropdown
+  .datepicker-header
+  .pagination-list
+  .field
+  .control
+  .select
+  select {
+  text-transform: capitalize;
+}
+
+.daterange .dropdown .datepicker-cell {
+  text-transform: capitalize;
+  padding: 0.5rem;
+}
+</style>
+
 <i18n>
 {
   "en": {
@@ -183,34 +191,22 @@ export default {
     "until": "Until",
     "quick_selection": "Quick selection",
     "this_week": "Week to date",
-    "last_7_days": "Last 7 days",
-    "last_30_days": "Last 30 days",
     "this_month": "Month to date",
-    "last_6_months": "Last 6 months",
-    "last_12_months": "Last 12 months",
     "this_year": "Year to date",
-    "last_2_years": "Last 2 years",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",
-    "reset": "Reset date filter",
     "load_reports_failure": "Fail to load reports",
     "by_date": "By date"
   },
   "fr": {
-    "from": "De",
-    "until": "Jusqu'à",
+    "from": "Du",
+    "until": "Jusqu'au",
     "quick_selection": "Sélection rapide",
     "this_week": "Cette semaine",
-    "last_7_days": "7 derniers jours",
-    "last_30_days": "30 derniers jours",
     "this_month": "Ce mois",
-    "last_6_months": "6 derniers mois",
-    "last_12_months": "12 derniers mois",
     "this_year": "Cette année",
-    "last_2_years": "2 dernières années",
     "from_beginning": "Depuis le début",
     "custom_range": "Période personnalisée",
-    "reset": "Réinitialiser le filtre de date",
     "load_reports_failure": "Échec de chargement des rapports",
     "by_date": "Rechercher"
   },
@@ -219,16 +215,10 @@ export default {
     "until": "Hasta",
     "quick_selection": "Selección rápida",
     "this_week": "Esta semana",
-    "last_7_days": "Últimos 7 días",
-    "last_30_days": "Últimos 30 días",
     "this_month": "Este mes",
-    "last_6_months": "Últimos 7 meses",
-    "last_12_months": "Últimos 12 meses",
     "this_year": "Este año",
-    "last_2_years": "últimos 2 años",
     "from_beginning": "Desde el principio",
     "custom_range": "Rango personalizado",
-    "reset": "Restablecer filtro de fecha",
     "load_reports_failure": "Fallo al cargar informes",
     "by_date": "Por fecha"
   }

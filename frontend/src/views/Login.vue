@@ -39,12 +39,12 @@
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
         <div class="buttons">
+          <router-link to="/users/send_reset_password/" class="forgot-password">
+            {{ $t('reset_password') }}
+          </router-link>
           <button type="submit" class="button is-success">
             {{ $t('login') }}
           </button>
-          <router-link to="/users/send_reset_password/">
-            {{ $t('reset_password') }}
-          </router-link>
         </div>
       </form>
     </div>
@@ -108,9 +108,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .form-login {
   margin-bottom: 25px;
+
+  .buttons {
+    justify-content: flex-end;
+    align-items: center;
+
+    .button {
+      margin-bottom: 0;
+    }
+
+    .forgot-password {
+      margin-right: 0.5em;
+    }
+  }
 }
 </style>
 

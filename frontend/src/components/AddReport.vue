@@ -130,6 +130,10 @@
                   name="reportDate"
                   placeholder="$t('click_select')"
                   inline
+                  :month-names="monthNames"
+                  :day-names="dayNames"
+                  :first-day-of-week="firstDayOfTheWeek"
+                  :max-date="new Date()"
                   :data-vv-as="$t('report_date') | lowercase"
                   v-validate="'required'"
                 ></b-datepicker>
@@ -196,10 +200,13 @@
                         ? errors.first(`tracer-${index}`)
                         : ''
                     "
+                    expanded
                   >
                     <b-autocomplete
                       v-model="tracerNames[index]"
+                      class="tracers-autocomplete"
                       :name="`tracer-${index}`"
+                      :open-on-focus="true"
                       :data="
                         tracers.filter(
                           t =>
@@ -210,7 +217,6 @@
                         )
                       "
                       field="name"
-                      :open-on-focus="true"
                       @select="option => (selectedTracers[index] = option)"
                       :data-vv-as="$tc('tracers', 1) | lowercase"
                       v-validate="'required'"
@@ -226,9 +232,10 @@
                             />
                           </div>
                           <div class="media-content">
-                            {{ props.option.name }}
-                            <br />
-                            <small>{{ props.option.type }}</small>
+                            <p class="autocomplete-tracer-name">
+                              {{ props.option.name }}
+                            </p>
+                            <small>{{ props.option.kind }}</small>
                           </div>
                         </div>
                       </template>
@@ -236,12 +243,12 @@
                     </b-autocomplete>
                   </b-field>
                   <b-field
+                    class="quantity-field"
                     :label="index === 0 ? $t('quantity') : ''"
                     :type="errors.has('quantity') ? 'is-danger' : ''"
                     :message="
                       errors.has('quantity') ? errors.first('quantity') : ''
                     "
-                    expanded
                   >
                     <b-input
                       v-model="quantities[index]"
@@ -282,7 +289,7 @@
                   </b-field>
                 </b-field>
               </div>
-              <b-field style="text-align: center;">
+              <b-field class="add-tracer-field">
                 <a
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
@@ -391,10 +398,14 @@ export default {
       reportDate: new Date(),
       addReportsErrors: [],
       addReportsValidationErrors: [],
-      bulmaSteps: {}
+      bulmaSteps: {},
+      monthNames: moment.months(),
+      dayNames: moment.weekdaysShort(),
+      firstDayOfTheWeek: this.$i18n.locale === 'en' ? 0 : 1
     }
   },
   async mounted() {
+    moment.locale(this.$i18n.locale)
     if (this.$auth.check()) this.username = this.$auth.user().name
 
     this.tracers = this.getTracers()
@@ -761,6 +772,12 @@ export default {
     }
   },
   watch: {
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
+      this.monthNames = moment.months()
+      this.dayNames = moment.weekdaysShort()
+      this.firstDayOfTheWeek = this.$i18n.locale === 'en' ? 0 : 1
+    },
     isSaved: function() {
       if (!this.anySubmitFailed) this.bulmaSteps.next_step()
     }
@@ -845,6 +862,10 @@ export default {
   right: 65px;
 }
 
+.add-tracer-field {
+  text-align: center;
+}
+
 .add-tracer-input {
   margin-top: 20px;
 }
@@ -898,6 +919,46 @@ export default {
 
 .upload {
   margin-bottom: 0em;
+}
+
+.quantity-field {
+  width: 75px;
+}
+</style>
+
+<style>
+/* Datepicker */
+.add-report .dropdown .dropdown-menu {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.add-report
+  .dropdown
+  .datepicker-header
+  .pagination-list
+  .field
+  .control
+  .select
+  select {
+  text-transform: capitalize;
+}
+
+.add-report .dropdown .datepicker-cell {
+  text-transform: capitalize;
+}
+
+/* Autocomplete */
+.autocomplete .dropdown-item {
+  padding-right: 1rem;
+}
+
+.add-report .autocomplete-tracer-name {
+  max-width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
 
