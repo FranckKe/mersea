@@ -99,10 +99,9 @@ export default {
   async created() {},
   methods: {
     getFilteredTracers() {
-      if (this.searchKeywords.trim() !== '') {
-        let keywords = this.searchKeywords.toLowerCase()
+      if (this.normalizedSearch !== '') {
         return this.getTracers().filter(
-          tracer => tracer.name.toLowerCase().indexOf(keywords) !== -1
+          tracer => tracer.name.toLowerCase().indexOf(searchKeywords) !== -1
         )
       } else {
         return this.getTracers()
@@ -116,7 +115,8 @@ export default {
     ...mapState({
       displayFormat: state => state.displayFormat,
       perPage: state => state.perPage
-    })
+    }),
+    normalizedSearch: function() { return this.searchKeywords.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")},
   }
 }
 </script>

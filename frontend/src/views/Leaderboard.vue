@@ -97,12 +97,13 @@ export default {
     }
   },
   computed: {
+    normalizedFilter: function() { return this.filter().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")},
     filtered: function() {
       return this.leaderboard.filter(v => {
         return (
-          v.name.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.reports_count.toString().includes(this.filter.toLowerCase()) ||
-          v.last_activity.includes(this.filter.toLowerCase())
+          v.name.toLowerCase().includes(this.normalizedFilter) ||
+          v.reports_count.toString().includes(this.normalizedFilter) ||
+          v.last_activity.includes(this.normalizedFilter)
         )
       })
     }

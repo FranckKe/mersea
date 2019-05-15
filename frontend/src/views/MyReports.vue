@@ -107,14 +107,15 @@ export default {
     }
   },
   computed: {
+    normalizedFilter: function() { return this.filter.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")},
     filtered: function() {
       return this.myReports.filter(v => {
         return (
-          v.tracer.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.address.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.status.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.quantity.toString().includes(this.filter.toLowerCase()) ||
-          v.reported_at.includes(this.filter.toLowerCase())
+          v.tracer.toLowerCase().includes(this.normalizedFilter) ||
+          v.address.toLowerCase().includes(this.normalizedFilter) ||
+          v.status.toLowerCase().includes(this.normalizedFilter) ||
+          v.quantity.toString().includes(this.normalizedFilter) ||
+          v.reported_at.includes(this.normalizedFilter)
         )
       })
     }
