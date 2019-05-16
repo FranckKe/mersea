@@ -54,7 +54,7 @@
             v-bind:label="$t('last_activity')"
             sortable
             centered
-            >{{ formattedDate(props.row.last_activity) }}</b-table-column
+            >{{ props.row.last_activity | formatDate }}</b-table-column
           >
         </template>
       </b-table>
@@ -97,13 +97,13 @@ export default {
     }
   },
   computed: {
-    normalizedFilter: function() { return this.filter().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")},
     filtered: function() {
       return this.leaderboard.filter(v => {
+        let normalizedFiltered = this.$normalizeStr(this.filter)
         return (
-          v.name.toLowerCase().includes(this.normalizedFilter) ||
-          v.reports_count.toString().includes(this.normalizedFilter) ||
-          v.last_activity.includes(this.normalizedFilter)
+          this.$normalizeStr(v.name).includes(normalizedFiltered) ||
+          this.$normalizeStr(v.reports_count.toString()).includes(normalizedFiltered) ||
+          this.$normalizeStr(this.$options.filters.formatDate(v.last_activity)).includes(normalizedFiltered)
         )
       })
     }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tracers-list">
     <b-field grouped group-multiline>
       <b-select v-model="perPage">
         <option value="5">5 {{ $t('per_page') }}</option>
@@ -114,10 +114,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .tracer-description {
   max-width: 700px;
 }
+
+.tracers-list {
+  width: 100%;
+}
+
 .detail .image {
   width: 128px;
 }

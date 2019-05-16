@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-multiline is-mobile">
+  <div class="tracers-grid columns is-multiline is-mobile">
     <div
       class="column is-full-mobile is-half-tablet is-one-third-desktop"
       :key="idx"
@@ -27,7 +27,7 @@
             <p>
               <strong>{{ $t('created_at') }}:</strong>
               <time datetime="tracer.created_at | formatDate">
-                {{ tracer.created_at | formatDate }}
+              {{ tracer.created_at | formatDate }}
               </time>
             </p>
             <p>
@@ -59,7 +59,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .img-wrapper {
   height: 254px;
   padding-top: 5px;
@@ -69,6 +69,10 @@ export default {
 
 .card-content .content p {
   margin-bottom: 0.25em;
+}
+
+.tracers-grid {
+  width: 100%;
 }
 </style>
 

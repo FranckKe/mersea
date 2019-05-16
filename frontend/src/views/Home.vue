@@ -311,7 +311,7 @@ export default {
                       ${reportProperties.quantity}${' '}
                       ${this.$i18n.tc('object', reportProperties.quantity)}
                     </p>
-                    <p>${moment(reportProperties.reported_at).format('LL')}</p>
+                    <p>${this.$options.filters.formatDate(reportProperties.reported_at)}</p>
                   </div>
                 </div>
                 <div class="media-right">

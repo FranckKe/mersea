@@ -72,7 +72,6 @@ export default {
     }
   },
   computed: {
-    normalizedSearch: function() { return this.search.filter().trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "")},
     ...tracersModule.mapState({
       tracers: state => state.tracers,
       filteredTracers: state => state.filteredTracers
@@ -88,7 +87,7 @@ export default {
     filteredTracersList: function() {
       return this.tracers.filter(t => {
         return (
-          t.name.toLowerCase().includes(this.normalizedSearch) &&
+          this.$normalizeStr(t.name).includes(this.$normalizeStr(this.search)) &&
           this.getReportCount()(t.id) > 0
         )
       })

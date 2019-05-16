@@ -153,7 +153,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.prototype.$filters = Vue.options.filters
 
-Vue.filter('formatDate', value => moment(String(value)).format('MM/DD/YYYY'))
+Vue.filter('formatDate', value => moment(String(value)).format('Do MMMM YYYY'))
 
 Vue.filter('capitalize', function(value) {
   if (!value) return ''
@@ -169,6 +169,15 @@ Vue.filter('lowercase', function(value) {
 Vue.filter('slugify', function(value) {
   return slugify(value)
 })
+
+Vue.prototype.$normalizeStr = function(string) {
+  if (string == null) return ''
+  return string
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
 
 let app = new Vue({
   render: h => h(App),
