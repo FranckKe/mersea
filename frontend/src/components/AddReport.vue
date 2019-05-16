@@ -146,6 +146,7 @@
                 "
               >
                 <b-input
+                  class="description"
                   v-model="description"
                   name="description"
                   maxlength="300"
@@ -819,6 +820,10 @@ export default {
 
   .file-multiple-tracer {
     margin-left: 0.25em;
+  }
+
+  .description {
+    white-space: pre-wrap;
   }
 }
 

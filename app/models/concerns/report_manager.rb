@@ -28,17 +28,33 @@ module Concerns
 
       rails_admin do
         list do
-          sort_by :reported_at
-          field :status, :state
-          field :tracer
-          field :name
-          field :quantity
-          field :address
-          field :description
-          field :reported_at do
-            sort_reverse true
+          sort_by :created_at
+          field :status, :state do
+            column_width 99
           end
           field :photo, :active_storage
+          field :tracer do
+            column_width 99
+          end
+          field :name do
+            column_width 99
+          end
+          field :quantity do
+            column_width 75
+          end
+          field :description do
+            column_width 99
+          end
+          field :reported_at do
+            column_width 99
+          end
+          field :address do
+            column_width 99
+          end
+          field :created_at do
+            column_width 99
+            sort_reverse true
+          end
         end
 
         show do
