@@ -20,7 +20,9 @@
           <font-awesome-icon icon="times" />
         </a>
       </div>
-      <component :is="toolComponent"></component>
+      <keep-alive>
+        <component :is="toolComponent"></component>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -86,7 +88,9 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
+  max-width: 550px;
+  margin: auto;
 }
 
 .title-wrapper {

@@ -100,9 +100,10 @@ export default {
   methods: {
     getFilteredTracers() {
       if (this.$normalizeStr(this.searchKeywords) !== '') {
-        return this.getTracers().filter(
-          tracer =>
-            this.$normalizeStr(tracer.name).includes(this.$normalizeStr(this.searchKeywords))
+        return this.getTracers().filter(tracer =>
+          this.$normalizeStr(tracer.name).includes(
+            this.$normalizeStr(this.searchKeywords)
+          )
         )
       } else {
         return this.getTracers()
@@ -116,7 +117,7 @@ export default {
     ...mapState({
       displayFormat: state => state.displayFormat,
       perPage: state => state.perPage
-    }),
+    })
   }
 }
 </script>

@@ -7,13 +7,25 @@
     ></b-loading>
     <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
     <div class="buttons">
-      <button class="button is-primary" @click="startOfRange('week')">
+      <button
+        class="button is-primary"
+        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('week')) }"
+        @click="setReportedAt(startOfRange('week'))"
+      >
         <span>{{ $t('this_week') }}</span>
       </button>
-      <button class="button is-primary" @click="startOfRange('month')">
+      <button
+        class="button is-primary"
+        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('month')) }"
+        @click="setReportedAt(startOfRange('month'))"
+      >
         <span>{{ $t('this_month') }}</span>
       </button>
-      <button class="button is-primary" @click="startOfRange('year')">
+      <button
+        class="button is-primary"
+        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('year')) }"
+        @click="setReportedAt(startOfRange('year'))"
+      >
         <span>{{ $t('this_year') }}</span>
       </button>
     </div>
@@ -22,16 +34,20 @@
         v-for="years in [3, 2, 1]"
         :key="years"
         class="button is-primary"
-        @click="previousYearRange(years)"
+        :class="{ 'is-active': isReportedAtEqualTo(previousYearRange(years)) }"
+        @click="setReportedAt(previousYearRange(years))"
       >
         <span>{{ previousYearLabel(years) }}</span>
       </button>
       <button
         class="button is-primary"
-        @click="
-          reported_at_min = new Date('2016-01-01')
-          reported_at_max = new Date()
-        "
+        :class="{
+          'is-active': isReportedAtEqualTo({
+            min: new Date('2016-01-01'),
+            max: new Date()
+          })
+        }"
+        @click="setReportedAt({ min: new Date('2016-01-01'), max: new Date() })"
       >
         <span>{{ $t('from_beginning') }}</span>
       </button>
@@ -108,21 +124,46 @@ export default {
         })
       }
     },
+    setReportedAt: function(range) {
+      this.reported_at_min = range.min
+      this.reported_at_max = range.max
+    },
+    getReportedAt: function() {
+      return {
+        min: this.reported_at_min,
+        max: this.reported_at_max
+      }
+    },
+    isReportedAtEqualTo: function(range) {
+      function roundToDay(date) {
+        return moment(date)
+          .startOf('day')
+          .valueOf()
+      }
+      return (
+        roundToDay(range.min) === roundToDay(this.reported_at_min) &&
+        roundToDay(range.max) === roundToDay(this.reported_at_max)
+      )
+    },
     startOfRange: function(typeOf) {
-      this.reported_at_min = moment()
-        .startOf(typeOf)
-        .toDate()
-      this.reported_at_max = new Date()
+      return {
+        min: moment()
+          .startOf(typeOf)
+          .toDate(),
+        max: new Date()
+      }
     },
     previousYearRange(yearsToGoBack) {
       const previousYear = moment().subtract(yearsToGoBack, 'years')
-      this.reported_at_min = previousYear.startOf('year').toDate()
-      this.reported_at_max = previousYear.endOf('year').toDate()
+      return {
+        min: previousYear.startOf('year').toDate(),
+        max: previousYear.endOf('year').toDate()
+      }
     },
     previousYearLabel(yearsToGoBack) {
-      const previousYear = moment().subtract(yearsToGoBack, 'years')
-
-      return previousYear.format('YYYY')
+      return moment()
+        .subtract(yearsToGoBack, 'years')
+        .format('YYYY')
     }
   },
   computed: {

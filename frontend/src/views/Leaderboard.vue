@@ -102,8 +102,12 @@ export default {
         let normalizedFiltered = this.$normalizeStr(this.filter)
         return (
           this.$normalizeStr(v.name).includes(normalizedFiltered) ||
-          this.$normalizeStr(v.reports_count.toString()).includes(normalizedFiltered) ||
-          this.$normalizeStr(this.$options.filters.formatDate(v.last_activity)).includes(normalizedFiltered)
+          this.$normalizeStr(v.reports_count.toString()).includes(
+            normalizedFiltered
+          ) ||
+          this.$normalizeStr(
+            this.$options.filters.formatDate(v.last_activity)
+          ).includes(normalizedFiltered)
         )
       })
     }

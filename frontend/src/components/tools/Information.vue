@@ -5,7 +5,6 @@
       :active.sync="this.getLoading()"
       :can-cancel="false"
     ></b-loading>
-
     <div
       class="tool-information"
       v-html="
@@ -76,6 +75,12 @@ export default {
   }
   h6 {
     font-size: 1rem;
+  }
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .tool-information {
+    padding: 1.25rem;
   }
 }
 </style>

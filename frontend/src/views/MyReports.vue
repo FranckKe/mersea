@@ -93,31 +93,34 @@ export default {
     }
   },
   async mounted() {
-      try {
-        let myReportsRes = await this.$http.get(
-          `/reports?user_id=${this.$auth.user().id}`
-        )
-        this.myReports = myReportsRes.data
-      } catch (e) {
-        throw e
-      }
+    try {
+      let myReportsRes = await this.$http.get(
+        `/reports?user_id=${this.$auth.user().id}`
+      )
+      this.myReports = myReportsRes.data
+    } catch (e) {
+      throw e
+    }
   },
   computed: {
     filtered: function() {
-      let $vm = this
       return this.myReports.filter(v => {
         let normalizedFilter = this.$normalizeStr(this.filter)
         return (
           this.$normalizeStr(v.tracer).includes(normalizedFilter) ||
           this.$normalizeStr(v.address).includes(normalizedFilter) ||
           this.$normalizeStr(v.status).includes(normalizedFilter) ||
-          this.$normalizeStr(v.quantity.toString()).includes(normalizedFilter) ||
-          this.$normalizeStr(this.$options.filters.formatDate(v.reported_at)).includes(normalizedFilter)
+          this.$normalizeStr(v.quantity.toString()).includes(
+            normalizedFilter
+          ) ||
+          this.$normalizeStr(
+            this.$options.filters.formatDate(v.reported_at)
+          ).includes(normalizedFilter)
         )
       })
     }
   },
-    watch: {
+  watch: {
     '$i18n.locale': function() {
       moment.locale(this.$i18n.locale)
     }
