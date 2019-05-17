@@ -93,6 +93,7 @@ export default {
     }
   },
   async mounted() {
+    moment.locale(this.$i18n.locale)
     try {
       let myReportsRes = await this.$http.get(
         `/reports?user_id=${this.$auth.user().id}`

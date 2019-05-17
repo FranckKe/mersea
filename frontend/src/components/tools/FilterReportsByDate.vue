@@ -107,6 +107,9 @@ export default {
       maxDate: new Date()
     }
   },
+  async mounted() {
+    moment.locale(this.$i18n.locale)
+  },
   methods: {
     ...reportsModule.mapActions(['loadReports']),
     ...reportsModule.mapGetters(['getLoading']),

@@ -77,6 +77,7 @@ export default {
     }
   },
   mounted() {
+    moment.locale(this.$i18n.locale)
     this.loadLeaderboard()
   },
   methods: {
