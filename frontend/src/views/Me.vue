@@ -92,9 +92,11 @@
               password-reveal
             ></b-input>
           </b-field>
-          <button type="submit" class="button is-success">
-            {{ $t('update') }}
-          </button>
+          <div class="buttons">
+            <button type="submit" class="button is-success">
+              {{ $t('update') }}
+            </button>
+          </div>
         </form>
       </div>
       <div class="container">
@@ -180,9 +182,11 @@
               password-reveal
             ></b-input>
           </b-field>
-          <button type="submit" class="button is-success">
-            {{ $t('update') }}
-          </button>
+          <div class="buttons">
+            <button type="submit" class="button is-success">
+              {{ $t('update') }}
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -290,9 +294,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.form-user-info {
+<style lang="scss" scoped>
+.form-user-info,
+.form-user-password {
   margin-bottom: 25px;
+
+  .buttons {
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 </style>
 

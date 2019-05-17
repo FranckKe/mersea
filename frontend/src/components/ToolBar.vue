@@ -1,30 +1,36 @@
 <template>
   <div class="tool-bar">
-    <Tool
-      toolComponent="Information"
-      :toolTitle="$t('information')"
-      toolViewTitle="Ocean Plastic Tracker"
-      toolIcon="info-circle"
-      :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
-    ></Tool>
+    <keep-alive>
+      <Tool
+        toolComponent="Information"
+        :toolTitle="$t('information')"
+        toolViewTitle="Ocean Plastic Tracker"
+        toolIcon="info-circle"
+        :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
+      ></Tool>
+    </keep-alive>
     <p class="filter-by">
       <span class="icon"> <font-awesome-icon icon="filter" /> </span
       >{{ $t('filter_by') }}
     </p>
-    <Tool
-      toolComponent="FilterReportsByTracer"
-      :toolTitle="$t('tracers')"
-      :toolViewTitle="$t('filter_reports_by_tracer_title')"
-      toolIcon="filter"
-      :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
-    ></Tool>
-    <Tool
-      toolComponent="FilterReportsByDate"
-      :toolTitle="$t('date')"
-      :toolViewTitle="$t('filter_reports_by_date_title')"
-      toolIcon="filter"
-      :class="{ active: getActiveTool === 'FilterReportsByDate' }"
-    ></Tool>
+    <keep-alive>
+      <Tool
+        toolComponent="FilterReportsByTracer"
+        :toolTitle="$t('tracers')"
+        :toolViewTitle="$t('filter_reports_by_tracer_title')"
+        toolIcon="filter"
+        :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
+      ></Tool>
+    </keep-alive>
+    <keep-alive>
+      <Tool
+        toolComponent="FilterReportsByDate"
+        :toolTitle="$t('date')"
+        :toolViewTitle="$t('filter_reports_by_date_title')"
+        toolIcon="filter"
+        :class="{ active: getActiveTool === 'FilterReportsByDate' }"
+      ></Tool>
+    </keep-alive>
   </div>
 </template>
 

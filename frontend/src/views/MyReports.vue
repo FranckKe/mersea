@@ -28,7 +28,7 @@
         :current-page.sync="currentPage"
         :pagination-simple="false"
         :default-sort-direction="defaultSortDirection"
-        :default-sort="reported_at"
+        default-sort="reported_at"
         striped
       >
         <template slot-scope="props">
@@ -55,7 +55,7 @@
             sortable
             centered
             width="125"
-            >{{ props.row.reported_at }}</b-table-column
+            >{{ props.row.reported_at | formatDate }}</b-table-column
           >
 
           <b-table-column
@@ -80,43 +80,50 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
       filter: '',
-      defaultSortDirection: 'asc',
+      defaultSortDirection: 'desc',
       currentPage: 1,
       perPage: 10,
-      reported_at: '',
       myReports: []
     }
   },
-  mounted() {
-    this.load()
-  },
-  methods: {
-    load: async function() {
-      try {
-        let myReports = await this.$http.get(
-          `/reports?user_id=${this.$auth.user().id}`
-        )
-        this.myReports = myReports.data
-      } catch (e) {
-        throw e
-      }
+  async mounted() {
+    moment.locale(this.$i18n.locale)
+    try {
+      let myReportsRes = await this.$http.get(
+        `/reports?user_id=${this.$auth.user().id}`
+      )
+      this.myReports = myReportsRes.data
+    } catch (e) {
+      throw e
     }
   },
   computed: {
     filtered: function() {
       return this.myReports.filter(v => {
+        let normalizedFilter = this.$normalizeStr(this.filter)
         return (
-          v.tracer.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.address.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.status.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.quantity.toString().includes(this.filter.toLowerCase()) ||
-          v.reported_at.includes(this.filter.toLowerCase())
+          this.$normalizeStr(v.tracer).includes(normalizedFilter) ||
+          this.$normalizeStr(v.address).includes(normalizedFilter) ||
+          this.$normalizeStr(v.status).includes(normalizedFilter) ||
+          this.$normalizeStr(v.quantity.toString()).includes(
+            normalizedFilter
+          ) ||
+          this.$normalizeStr(
+            this.$options.filters.formatDate(v.reported_at)
+          ).includes(normalizedFilter)
         )
       })
+    }
+  },
+  watch: {
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
     }
   }
 }

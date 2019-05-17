@@ -99,10 +99,11 @@ export default {
   async created() {},
   methods: {
     getFilteredTracers() {
-      if (this.searchKeywords.trim() !== '') {
-        let keywords = this.searchKeywords.toLowerCase()
-        return this.getTracers().filter(
-          tracer => tracer.name.toLowerCase().indexOf(keywords) !== -1
+      if (this.$normalizeStr(this.searchKeywords) !== '') {
+        return this.getTracers().filter(tracer =>
+          this.$normalizeStr(tracer.name).includes(
+            this.$normalizeStr(this.searchKeywords)
+          )
         )
       } else {
         return this.getTracers()

@@ -75,9 +75,11 @@
         <div class="field">
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
-        <button type="submit" class="button is-success">
-          {{ $t('register') }}
-        </button>
+        <div class="buttons">
+          <button type="submit" class="button is-success">
+            {{ $t('register') }}
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -132,9 +134,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .form-register {
   margin-bottom: 25px;
+
+  .buttons {
+    justify-content: flex-end;
+    align-items: center;
+  }
 }
 </style>
 

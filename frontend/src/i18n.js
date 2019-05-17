@@ -23,7 +23,7 @@ function loadLocaleMessages() {
 // Detect browser language and strip the "region" language
 // en-GB => en
 let browserI18n = navigator.language
-if (navigator.language.indexOf('-'))
+if (navigator.language.indexOf('-') >= 0)
   browserI18n = navigator.language.substring(0, navigator.language.indexOf('-'))
 
 // Default to english if browser language is not supported

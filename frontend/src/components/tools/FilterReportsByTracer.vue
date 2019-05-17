@@ -87,8 +87,9 @@ export default {
     filteredTracersList: function() {
       return this.tracers.filter(t => {
         return (
-          t.name.toLowerCase().includes(this.search.toLowerCase()) &&
-          this.getReportCount()(t.id) > 0
+          this.$normalizeStr(t.name).includes(
+            this.$normalizeStr(this.search)
+          ) && this.getReportCount()(t.id) > 0
         )
       })
     }

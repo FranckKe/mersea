@@ -54,7 +54,7 @@
             v-bind:label="$t('last_activity')"
             sortable
             centered
-            >{{ props.row.last_activity }}</b-table-column
+            >{{ props.row.last_activity | formatDate }}</b-table-column
           >
         </template>
       </b-table>
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -75,6 +77,7 @@ export default {
     }
   },
   mounted() {
+    moment.locale(this.$i18n.locale)
     this.loadLeaderboard()
   },
   methods: {
@@ -89,17 +92,30 @@ export default {
           type: 'is-danger'
         })
       }
+    },
+    formattedDate: function(date) {
+      return moment(date).format('Do MMMM YYYY')
     }
   },
   computed: {
     filtered: function() {
       return this.leaderboard.filter(v => {
+        let normalizedFiltered = this.$normalizeStr(this.filter)
         return (
-          v.name.toLowerCase().includes(this.filter.toLowerCase()) ||
-          v.reports_count.toString().includes(this.filter.toLowerCase()) ||
-          v.last_activity.includes(this.filter.toLowerCase())
+          this.$normalizeStr(v.name).includes(normalizedFiltered) ||
+          this.$normalizeStr(v.reports_count.toString()).includes(
+            normalizedFiltered
+          ) ||
+          this.$normalizeStr(
+            this.$options.filters.formatDate(v.last_activity)
+          ).includes(normalizedFiltered)
         )
       })
+    }
+  },
+  watch: {
+    '$i18n.locale': function() {
+      moment.locale(this.$i18n.locale)
     }
   }
 }
