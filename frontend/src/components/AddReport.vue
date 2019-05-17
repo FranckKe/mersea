@@ -681,11 +681,6 @@ export default {
       this.tracerNames.push('')
       this.areSubmitting.push(false)
       this.areSubmitted.push(false)
-      this.$nextTick(() =>
-        this.$refs['tracer-input'][
-          this.$refs['tracer-input'].length - 1
-        ].focus()
-      )
     },
     getSubmissionStatusIcon(index) {
       switch (this.getSubmissionStatus(index)) {
