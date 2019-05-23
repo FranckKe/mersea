@@ -57,24 +57,29 @@ const mutations = {
 }
 const actions = {
   async loadReports({ commit }, { reported_at_min, reported_at_max }) {
-    try {
-      commit('setLoading', true)
-      const reports = await api.get(
-        `/reports?r_min_reported_at=${reported_at_min}&r_max_reported_at=${reported_at_max}`,
-        {
-          headers: {
-            Accept: 'application/geo+json',
-            'Content-Type': 'application/geo+json'
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('setLoading', true)
+        const reports = await api.get(
+          `/reports?r_min_reported_at=${reported_at_min}&r_max_reported_at=${reported_at_max}`,
+          {
+            headers: {
+              Accept: 'application/geo+json',
+              'Content-Type': 'application/geo+json'
+            }
           }
-        }
-      )
-      let reportsData = reports.data
-      commit('setData', { reports: reportsData })
-      commit('setSuccess')
-    } catch (e) {
-      let errors = [e.message]
-      commit('setError', { errors })
-    }
+        )
+        let reportsData = reports.data
+        commit('setData', { reports: reportsData })
+        commit('setSuccess')
+        resolve('ok')
+      } catch (e) {
+        console.error(e)
+        let errors = [e.message]
+        commit('setError', { errors })
+        reject(errors)
+      }
+    })
   }
 }
 

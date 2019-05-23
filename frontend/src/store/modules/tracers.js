@@ -68,17 +68,22 @@ const mutations = {
 
 const actions = {
   async loadTracers({ commit }) {
-    try {
-      commit('setLoading', true)
-      const tracersRes = await api.get(`/tracers`)
-      const tracers = tracersRes.data
-      commit('setTracers', { tracers })
-      commit('setFilteredTracers', tracers.map(t => t.id))
-      commit('setSuccess')
-    } catch (e) {
-      let errors = [e.message]
-      commit('setError', { errors })
-    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('setLoading', true)
+        const tracersRes = await api.get(`/tracers`)
+        const tracers = tracersRes.data
+        commit('setTracers', { tracers })
+        commit('setFilteredTracers', tracers.map(t => t.id))
+        commit('setSuccess')
+        resolve('ok')
+      } catch (e) {
+        console.error(e)
+        let errors = [e.message]
+        commit('setError', { errors })
+        reject(errors)
+      }
+    })
   }
 }
 
