@@ -149,6 +149,10 @@ export default {
   display: flex;
   min-height: 100px;
   width: 100%;
+
+  & > div {
+    width: 100%;
+  }
 }
 </style>
 
