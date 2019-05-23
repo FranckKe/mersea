@@ -43,6 +43,7 @@
           sortable
           width="100"
           centered
+          :custom-sort="sortByReportedQuantity"
           >{{ getReportCount()(props.row.id) }}
         </b-table-column>
       </template>
@@ -95,7 +96,13 @@ export default {
   methods: {
     ...mapMutations(['setPerPage']),
     ...mapGetters(['getPerPage']),
-    ...reportsModule.mapGetters(['getReportCount'])
+    ...reportsModule.mapGetters(['getReportCount']),
+    sortByReportedQuantity: function(tracerA, tracerB, isAsc) {
+      const reportCountA = this.getReportCount()(tracerA.id)
+      const reportCountB = this.getReportCount()(tracerB.id)
+
+      return isAsc ? reportCountA - reportCountB : reportCountB - reportCountA
+    }
   },
   computed: {
     ...mapState({
