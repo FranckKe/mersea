@@ -98,16 +98,21 @@ const mutations = {
 }
 const actions = {
   async loadPages({ commit }) {
-    try {
-      commit('setLoading', true)
-      const pagesData = await api.get(`/pages`)
-      const pages = pagesData.data
-      commit('setPages', { pages })
-      commit('setSuccess')
-    } catch (e) {
-      let errors = [e.message]
-      commit('setError', { errors })
-    }
+    return new Promise(async (resolve, reject) => {
+      try {
+        commit('setLoading', true)
+        const pagesData = await api.get(`/pages`)
+        const pages = pagesData.data
+        commit('setPages', { pages })
+        commit('setSuccess')
+        resolve('ok')
+      } catch (e) {
+        console.error(e)
+        let errors = [e.message]
+        commit('setError', { errors })
+        reject(errors)
+      }
+    })
   }
 }
 

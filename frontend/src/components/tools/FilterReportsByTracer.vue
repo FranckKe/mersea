@@ -19,7 +19,7 @@
     <div class="legend-tracers">
       <b-loading
         :is-full-page="false"
-        :active.sync="this.getLoading()"
+        :active.sync="this.getLoading() || this.getReportsLoading()"
         :can-cancel="false"
       ></b-loading>
       <div
@@ -95,7 +95,10 @@ export default {
     }
   },
   methods: {
-    ...reportsModule.mapGetters(['getReportCount']),
+    ...reportsModule.mapGetters({
+      getReportCount: 'getReportCount',
+      getReportsLoading: 'getLoading'
+    }),
     ...tracersModule.mapGetters([
       'getTracers',
       'getFilteredTracers',
