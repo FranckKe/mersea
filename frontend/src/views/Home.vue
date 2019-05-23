@@ -187,7 +187,7 @@ export default {
           duration: 5000,
           type: 'is-danger'
         })
-        console.error(error)
+        console.error(this.getErrors())
         return false
       }
 

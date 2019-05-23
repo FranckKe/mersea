@@ -27,14 +27,14 @@ const getters = {
   },
   getFilteredReports: state => tracerIds => {
     return {
-      features: state.reports.features.filter(report =>
+      features: (state.reports.features || []).filter(report =>
         tracerIds.includes(report.properties.tracer_id)
       ),
       type: 'FeatureCollection'
     }
   },
   getReportCount: state => tracerId =>
-    state.reports.features.filter(
+    (state.reports.features || []).filter(
       report => tracerId === report.properties.tracer_id
     ).length
 }
