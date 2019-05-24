@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_serializers', '0.10'
-gem 'devise', '~> 4'
+gem 'devise', '>= 4.6.0'
 gem 'devise-i18n', '~> 1'
 gem 'devise-jwt', '~> 0.5.6'
 gem 'http_accept_language', '~> 2'

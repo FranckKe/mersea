@@ -111,7 +111,7 @@ export default {
         mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
         this.map = new mapboxgl.Map({
           container: 'map',
-          style: 'mapbox://styles/mapbox/satellite-streets-v9',
+          style: 'mapbox://styles/mapbox/satellite-streets-v10?optimize=true',
           minZoom: 3,
           zoom: 5,
           maxZoom: 17,
@@ -162,7 +162,9 @@ export default {
           {
             accessToken: mapboxgl.accessToken,
             language: this.$i18n.locale,
-            placeholder: this.$i18n.t('search_location')
+            placeholder: this.$i18n.t('search_location'),
+            mapboxgl: mapboxgl,
+            marker: false
           },
           'top'
         )
@@ -204,6 +206,8 @@ export default {
         type: 'circle',
         source: 'reports',
         filter: ['has', 'point_count'],
+        minzoom: 3,
+        maxzoom: 17,
         paint: {
           'circle-stroke-width': 2,
           'circle-stroke-opacity': 0.93,
@@ -250,6 +254,8 @@ export default {
         type: 'symbol',
         source: 'reports',
         filter: ['has', 'point_count'],
+        minzoom: 3,
+        maxzoom: 17,
         layout: {
           'text-field': '{point_count_abbreviated}',
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
@@ -267,6 +273,8 @@ export default {
         type: 'circle',
         source: 'reports',
         filter: ['!', ['has', 'point_count']],
+        minzoom: 3,
+        maxzoom: 17,
         paint: {
           'circle-color': ['get', 'color'],
           'circle-radius': 10,
@@ -315,7 +323,9 @@ export default {
           coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
         }
 
-        this.popup = new mapboxgl.Popup()
+        this.popup = new mapboxgl.Popup({
+          maxWidth: 'none'
+        })
           .setLngLat(coordinates)
           .setHTML(
             `<article class="media">

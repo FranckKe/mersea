@@ -61,7 +61,7 @@ ENV VUE_APP_FATHOM_SITE_ID=IIYJS
 WORKDIR /usr/src/app/frontend
 
 RUN yarn install --production=false --frozen-lockfile && yarn cache clean
-RUN yarn run build
+RUN yarn run build --mode production
 
 WORKDIR /usr/src/app
 RUN mv frontend/dist/* public/
