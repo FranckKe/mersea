@@ -532,7 +532,7 @@ export default {
                 process.env.VUE_APP_MAPBOX_TOKEN
               }`,
               {
-                timeout: 5000
+                timeout: 15000
               }
             )
             this.address =
@@ -620,7 +620,7 @@ export default {
             method: 'POST',
             url: `/reports`,
             data: postDataJson,
-            timeout: 10000
+            timeout: 15000
           })
 
           resolve(true)

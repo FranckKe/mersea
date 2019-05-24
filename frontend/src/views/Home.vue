@@ -141,7 +141,7 @@ export default {
               process.env.VUE_APP_MAPBOX_TOKEN
             }`,
             {
-              timeout: 5000
+              timeout: 15000
             }
           )
           this.address =
