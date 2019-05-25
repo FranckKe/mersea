@@ -49,8 +49,6 @@
     "babel-jest": "^24.8.0",
     "glob-all": "^3.1.0",
     "node-sass": "^4.11.0",
-    "path": "^0.12.7",
-    "purgecss-webpack-plugin": "^1.5.0",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.5.16"
