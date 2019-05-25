@@ -2,7 +2,6 @@
   <section class="section">
     <div class="container">
       <h1 class="title is-1">{{ $t('my_account') }}</h1>
-
       <div class="container">
         <h2 class="title is-2">{{ $t('my_info') }}</h2>
         <b-message
@@ -189,6 +188,44 @@
           </div>
         </form>
       </div>
+      <div class="container">
+        <h2 class="title is-2">{{ $t('delete_account') }}</h2>
+        <b-message
+          v-show="userDelete.formErrors.length"
+          :title="$tc('errors', userDelete.formErrors.length)"
+          type="is-danger"
+        >
+          <ul>
+            <li v-for="error in userDelete.formErrors" v-bind:key="error">
+              {{ error }}
+            </li>
+          </ul>
+        </b-message>
+        <div class="buttons is-right">
+          <button class="button is-danger" @click="isUserDeleteModal = true">
+            {{ $t('delete_account') }}
+          </button>
+        </div>
+        <b-modal :active.sync="isUserDeleteModal" :width="720" scroll="keep">
+          <div class="container user-deletion-modal">
+            <h2 class="title is-2">{{ $t('are_you_sure') }}</h2>
+            <p>{{ $t('deletion_information') }}</p>
+            <p>{{ $t('thank_you_reports') }}</p>
+            <div class="buttons is-right">
+              <button class="button" @click="isUserDeleteModal = false">
+                {{ $t('cancel_delete_account') }}
+              </button>
+              <button
+                type="submit"
+                class="button is-danger"
+                @click="deleteUser()"
+              >
+                {{ $t('delete_account') }}
+              </button>
+            </div>
+          </div>
+        </b-modal>
+      </div>
     </div>
   </section>
 </template>
@@ -199,6 +236,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      isUserDeleteModal: false,
       userInfo: {
         name: this.$auth.user().name,
         email: this.$auth.user().email,
@@ -210,6 +248,9 @@ export default {
         current_password: '',
         password: '',
         password_confirmation: '',
+        formErrors: []
+      },
+      userDelete: {
         formErrors: []
       }
     }
@@ -250,7 +291,6 @@ export default {
         )
       }
     },
-
     async updateUserPassword() {
       this.userPassword.formErrors = []
       let validateForm = await this.$validator.validateAll(
@@ -289,6 +329,29 @@ export default {
           '.'
         )
       }
+    },
+    async deleteUser() {
+      try {
+        await this.$http({
+          method: 'DELETE',
+          url: `/users/me`
+        })
+        this.$router.push({ name: 'home' })
+        this.$toast.open({
+          message: this.$t('delete_user_success'),
+          duration: 5000,
+          type: 'is-success'
+        })
+      } catch (e) {
+        this.$toast.open({
+          message: this.$t('delete_user_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
+        this.userDelete.formErrors = e.response.data.errors[0].metadata.reason.split(
+          '.'
+        )
+      }
     }
   }
 }
@@ -302,6 +365,16 @@ export default {
   .buttons {
     justify-content: flex-end;
     align-items: center;
+  }
+}
+
+.user-deletion-modal {
+  width: auto;
+  background-color: white;
+  padding: 2rem;
+
+  p {
+    margin-bottom: 1rem;
   }
 }
 </style>
@@ -328,7 +401,14 @@ export default {
     "update_user_info_success": "Information updated",
     "update_user_password_failure": "Error during password update",
     "update_user_password_success": "Password updated",
-    "update": "Update"
+    "update": "Update",
+    "delete_account": "Delete my account",
+    "are_you_sure": "Please confirm the account deletion",
+    "thank_you_reports": "Thank you for caring about the environment and for your reports!",
+    "cancel_delete_account": "Do not delete my account",
+    "delete_user_failure": "Error during account deletion",
+    "delete_user_success": "Account deleted",
+    "deletion_information": "The account will be deleted, it is not recoverable. Your reports will not be deleted but your name will not be associated with them any longer."
   },
   "fr": {
     "current_password_present": "Mot de passe actuel requis",
@@ -350,7 +430,14 @@ export default {
     "update_user_info_success": "Informations mises à jour",
     "update_user_password_failure": "Erreur lors de la mise à jour du mot de passe",
     "update_user_password_success": "Mot de passe mis à jour",
-    "update": "Mettre à jour"
+    "update": "Mettre à jour",
+    "delete_account": "Supprimer mon compte",
+    "are_you_sure": "Veuillez confirmer la suppression de votre compte",
+    "thank_you_reports": "Merci de prendre du temps pour nettoyer l'environnement et pour vos signalements !",
+    "cancel_delete_account": "Ne pas supprimer mon compte",
+    "delete_user_failure": "Erreur lors de la suppression du compte",
+    "delete_user_success": "Compte supprimé",
+    "deletion_information": "Le compte va être supprimmé il ne sera pas possible de le récupérer. Vos signalements ne seront pas supprimés mais votre nom ne figurera plus sur ces signalements."
   },
   "es": {
     "current_password_present": "Contraseña actual requerida",
@@ -363,8 +450,8 @@ export default {
     "fr": "Français",
     "language": "Idioma",
     "my_account": "Mi cuenta",
-    "my_info": "My information",
-    "my_password": "Mi informacion",
+    "my_info": "Mi informacion",
+    "my_password": "Mi contraseña",
     "name": "Nombre",
     "new_password_confirmation": "Nueva confirmación de contraseña",
     "new_password": "Nueva contraseña",
@@ -372,7 +459,14 @@ export default {
     "update_user_info_success": "Informacion actualizada",
     "update_user_password_failure": "Error durante la actualización de la contraseña",
     "update_user_password_success": "Contraseña actualiza",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "delete_account": "Borré mi cuenta",
+    "are_you_sure": "Por favor confirme la eliminación de su cuenta.",
+    "thank_you_reports": "Gracias por tomarse el tiempo de limpiar el medio ambiente y por sus informes!",
+    "cancel_delete_account": "No borrar mi cuenta",
+    "delete_user_failure": "Error al eliminar la cuenta",
+    "delete_user_success": "Account deleted",
+    "deletion_information": "La cuenta será eliminada y no será posible recuperarla. Sus informes no se eliminarán, pero su nombre ya no aparecerá en estos informes."
   }
 }
 </i18n>
