@@ -14,44 +14,18 @@
         }})
       </button>
     </div>
-    <div class="tracers-grid columns is-multiline is-mobile">
-      <div
-        class="column is-full-mobile is-half-tablet is-one-third-desktop"
-        :key="idx"
-        v-for="(tracer, idx) in sortedTracers"
-      >
-        <article class="card">
-          <div class="card-image">
-            <div
-              class="img-wrapper image"
-              :style="`background-image: url('${apiUrl}${tracer.photo}') `"
-            ></div>
-          </div>
-          <div class="card-content">
-            <div class="content">
-              <p class="title is-4">{{ tracer.name }}</p>
-              <p>{{ tracer.description }}</p>
-              <p>
-                <strong>{{ $t('origin') }}:</strong>
-                {{ tracer.origin }}
-              </p>
-              <p>
-                <strong>{{ $t('kind') }}:</strong>
-                {{ tracer.kind }}
-              </p>
-              <p>
-                <strong>{{ $t('created_at') }}:</strong>
-                <time datetime="tracer.created_at | formatDate">
-                  {{ tracer.created_at | formatDate }}
-                </time>
-              </p>
-              <p>
-                <strong>{{ $t('quantity') }}:</strong>
-                {{ getReportCount()(tracer.id) }}
-              </p>
-            </div>
-          </div>
-        </article>
+    <div v-for="(category, idt) in getCategories()" :key="idt">
+      <h2 class="category-title title is-2">{{ $t(category) }}</h2>
+      <div class="tracers-grid columns is-multiline is-mobile">
+        <div
+          class="column is-full-mobile is-half-tablet is-one-third-desktop"
+          :key="idx"
+          v-for="(tracer, idx) in sortedTracers.filter(
+            t => category === t.category
+          )"
+        >
+          <TracerCard :tracer="tracer" />
+        </div>
       </div>
     </div>
   </div>
@@ -59,11 +33,15 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-const reportsModule = createNamespacedHelpers('reports')
+const { mapGetters } = createNamespacedHelpers('tracers')
+import TracerCard from '@/components/TracerCard'
 
 export default {
   name: 'tracers-grid',
   props: ['tracers'],
+  components: {
+    TracerCard
+  },
   data() {
     return {
       apiUrl: this.$apiUrl,
@@ -112,7 +90,7 @@ export default {
     }
   },
   methods: {
-    ...reportsModule.mapGetters(['getReportCount']),
+    ...mapGetters(['getTracers', 'getCategories']),
     sortTracersBy: function(field, order) {
       if (order == null) {
         order = this.sortFields[field].order
@@ -162,56 +140,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img-wrapper {
-  height: 254px;
-  padding-top: 5px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.card {
-  height: 100%;
-}
-
-.card-content .content p {
-  margin-bottom: 0.25em;
-}
-
 .tracers-grid {
   width: 100%;
+  margin-bottom: 1rem;
+}
+
+.category-title {
+  text-transform: capitalize;
 }
 </style>
 
 <i18n>
 {
   "en": {
+    "sort_by": "Sort by",
+    "newest": "Newest",
+    "oldest": "Oldest",
     "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
     "name": "Name",
-    "sort_by": "Sort by",
-    "newest": "Newest",
-    "oldest": "Oldest",
+    "research": "Research",
+    "drift": "Drift",
+    "container": "Container",
+    "archive": "Archive",
     "kind": "Type"
   },
   "fr": {
+    "sort_by": "Trier par",
+    "newest": "Récent",
+    "oldest": "Ancient",
     "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
     "name": "Nom",
-    "sort_by": "Trier par",
-    "newest": "Récent",
-    "oldest": "Ancient",
+    "research": "Recherche",
+    "drift": "Dérive",
+    "container": "Conteneur",
+    "archive": "Archive",
     "kind": "Type"
   },
   "es": {
+    "sort_by": "Ordenar por",
+    "newest": "Reciente",
+    "oldest": "Antiguo",
     "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
     "name": "Apellido",
-    "sort_by": "Ordenar por",
-    "newest": "Reciente",
-    "oldest": "Antiguo",
+    "research": "Búsqueda",
+    "drift": "Dériva",
+    "container": "Envase",
+    "archive": "Archivo",
     "kind": "Tipo"
   }
 }

@@ -22,6 +22,7 @@ RUN apk add --update --no-cache \
     bash \
     build-base \
     postgresql-dev \
+    icu-dev \
     libxml2-dev \
     libxslt-dev \
     tzdata \

@@ -75,6 +75,12 @@ es:
       delete_my_report: Borrar mi informe
       please_confirm: Por favor confirma la eliminación
       location: Localización
+  tracers:
+    categories:
+      container: Envase
+      research: Investigacion
+      drift: Deriva
+      archive: Archivo
   users:
     me:
       my_info: Mi informacion

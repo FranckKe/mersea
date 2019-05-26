@@ -15,6 +15,7 @@ module Concerns
           field :photo, :active_storage
           field :origin
           field :kind
+          field :category
           field :longitude
           field :latitude
           field :created_at
@@ -28,6 +29,7 @@ module Concerns
           field :photo, :active_storage
           field :origin
           field :kind
+          field :category
           field :longitude
           field :latitude
           field :color, :color
@@ -41,6 +43,13 @@ module Concerns
           field :photo, :active_storage
           field :origin
           field :kind
+          field :category, :enum do
+            enum do
+              Tracer::CATEGORIES.map do |category|
+                [I18n.t(category, scope: 'tracers.categories', translation: I18n.locale), category]
+              end
+            end
+          end
           field :longitude
           field :latitude
           field :color do

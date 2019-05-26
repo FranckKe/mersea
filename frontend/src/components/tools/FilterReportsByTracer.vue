@@ -23,27 +23,34 @@
         :can-cancel="false"
       ></b-loading>
       <div
-        class="legend-tracer"
-        :key="tracer.id"
-        v-for="tracer in filteredTracersList"
+        class="legend-category-tracer"
+        :key="tracersByCategory.category"
+        v-for="tracersByCategory in allFilteredTracersList"
       >
-        <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
-          <svg
-            class="legend-circle"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="10"
-              cy="10"
-              r="7"
-              stroke="white"
-              stroke-width="2.5"
-              :fill="tracer.color"
-            ></circle>
-          </svg>
-          {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
-        </b-checkbox>
+        <h3>{{ $t(tracersByCategory.category) }}</h3>
+        <div
+          class="legend-tracer"
+          :key="tracer.id"
+          v-for="tracer in tracersByCategory.tracers"
+        >
+          <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
+            <svg
+              class="legend-circle"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="10"
+                cy="10"
+                r="7"
+                stroke="white"
+                stroke-width="2.5"
+                :fill="tracer.color"
+              ></circle>
+            </svg>
+            {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
+          </b-checkbox>
+        </div>
       </div>
       <p class="has-text-left is-italic">
         {{ this.filteredTracersList.length }}
@@ -92,6 +99,26 @@ export default {
           ) && this.getReportCount()(t.id) > 0
         )
       })
+    },
+    allFilteredTracersList: function() {
+      let allFilteredTracersByCategory = []
+      let categories = [
+        ...new Set(this.filteredTracersList.map(tracer => tracer.category))
+      ].sort()
+      // Put archived in last position
+      if (categories[0] === 'archive') categories.shift()
+      categories.push('archive')
+
+      categories.map(category => {
+        allFilteredTracersByCategory.push({
+          category: category,
+          tracers: this.filteredTracersList.filter(
+            tracer => category === tracer.category
+          )
+        })
+      })
+
+      return allFilteredTracersByCategory
     }
   },
   methods: {
@@ -102,6 +129,7 @@ export default {
     ...tracersModule.mapGetters([
       'getTracers',
       'getFilteredTracers',
+      'getAllFilteredTracersByCategory',
       'getLoading'
     ]),
     ...tracersModule.mapMutations(['setFilteredTracers']),
@@ -199,6 +227,10 @@ export default {
     "search": "Search",
     "displayed": "displayed | displayed",
     "total": "total",
+    "research": "Research",
+    "drift": "Drift",
+    "container": "Container",
+    "archive": "Archive",
     "uncheck_all": "Uncheck all"
   },
   "fr": {
@@ -207,6 +239,10 @@ export default {
     "search": "Rechercher",
     "displayed": "affiché | affichés",
     "total": "en tout",
+    "research": "Recherche",
+    "drift": "Dérive",
+    "container": "Conteneur",
+    "archive": "Archive",
     "uncheck_all": "Tout décocher"
   },
   "es": {
@@ -215,6 +251,10 @@ export default {
     "search": "Buscar",
     "displayed": "desplegado | desplegado",
     "total": "total",
+    "research": "Búsqueda",
+    "drift": "Dériva",
+    "container": "Envase",
+    "archive": "Archivo",
     "uncheck_all": "Desmarcar todo"
   }
 }

@@ -6,6 +6,7 @@ describe Tracer do
   it { expect(subject).to have_db_column(:description) }
   it { expect(subject).to have_db_column(:origin) }
   it { expect(subject).to have_db_column(:kind) }
+  it { expect(subject).to have_db_column(:category) }
   it { expect(subject).to have_db_column(:longitude) }
   it { expect(subject).to have_db_column(:latitude) }
   it { expect(subject).to have_db_column(:color) }

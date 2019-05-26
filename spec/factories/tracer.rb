@@ -4,6 +4,7 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     origin { Faker::Lorem.sentence }
     kind { Faker::Lorem.word }
+    category { Faker::Lorem.word }
     color { Faker::Color.hex_color }
 
     after(:build) do |instance|

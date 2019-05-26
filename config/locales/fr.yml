@@ -62,6 +62,12 @@ fr:
       about: À propos
       information: Information
       welcome: Bienvenue
+  tracers:
+    categories:
+      container: Conteneur
+      research: Recherche
+      drift: Dérive
+      archive: Archive
   reports:
     create:
       thanks: Merci pour votre signalement
