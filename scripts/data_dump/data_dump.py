@@ -113,7 +113,7 @@ from json import JSONDecodeError
 from requests.adapters import HTTPAdapter
 from pathlib import Path
 
-dotenv_path = join(dirname(realpath('__file__')), '.env.sample')
+dotenv_path = join(dirname(realpath('__file__')), '.env')
 load_dotenv(dotenv_path)
 
 URL_API = os.getenv('URL_API')
@@ -132,7 +132,7 @@ headers_json = {"Content-Type": "application/json"}
 headers_geojson = {"Content-Type": "application/json",
                   "Accept": "application/geo+json",
                   "Cache-Control": "no-cache"}
-HEADERS = {
+headers = {
    'X-API-KEY': API_KEY,
    "Content-Type": "application/json"
 }
@@ -152,9 +152,6 @@ resources["reports.csv"] = os.getenv('CSV_REPORTS_RESOURCE')
 resources["tracers.csv"] = os.getenv('CSV_TRACERS_RESOURCE') 
 resources["tracers.json"] = os.getenv('JSON_TRACERS_RESOURCE')
 
-headers = {
-    'X-API-KEY': "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiNTdmY2ZkYTg4OGVlMzg1ZTAyNWZmNDkwIiwidGltZSI6MTU1NTYwMDU3Mi4wNjU4ODF9.7dNaLM2ldkfinJFSsUOoLUIgLLDQFIiU88EZDQkvzRY"
-}
 for key, value in resources.items():
     url = DATA_GOUV_URL_API + '/datasets/{}/resources/{}/upload/'.format(DATASET, value)
     response = requests.request("POST", url, files={'file': open(Path(DATA_DIR,key), 'rb')},
