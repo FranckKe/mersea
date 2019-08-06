@@ -24,6 +24,16 @@ class UsersController < ApiController
     end
   end
 
+  def destroy
+    if current_user.reports.update_all(name: '∅')
+      current_user.destroy
+      render nothing: true, status: :no_content
+    else
+      @error = Mersea::Errors.format(current_user.errors)
+      render json: @error, status: @error.status
+    end
+  end
+
   protected
 
   private

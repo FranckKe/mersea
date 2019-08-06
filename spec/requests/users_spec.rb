@@ -145,4 +145,50 @@ describe 'UsersController', type: :request do
       end
     end
   end
+
+  describe '#destroy' do
+    let(:request) do
+      -> { delete me_users_path, headers: headers_with_auth }
+    end
+
+    it 'succeeds' do
+      request.call
+      expect(response.status).to eq 204
+    end
+
+    it 'deletes the given user' do
+      expect { request.call }.to change(User, :count).by(-1)
+    end
+
+    context 'when user owns reports' do
+      before do
+        FactoryBot.create(:report, user: subject)
+        FactoryBot.create(:report, user: subject, status: :pending)
+        FactoryBot.create(:report, user: subject, status: :pending)
+        FactoryBot.create(:report, user: subject, status: :rejected)
+      end
+
+      it 'does not remove its reports' do
+        expect { request.call }.to_not change(Report, :count)
+      end
+
+      it 'renames the reports with the same name' do
+        report_ids = subject.reports.pluck(:id)
+
+        request.call
+        expect(Report.where(id: report_ids).pluck(:name).uniq.count).to eq(1)
+      end
+    end
+
+    context 'when the user is not logged in' do
+      let(:request) do
+        -> { delete me_users_path, headers: headers }
+      end
+
+      it 'fails' do
+        request.call
+        expect(response.status).to eq 401
+      end
+    end
+  end
 end

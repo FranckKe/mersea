@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get 'me'
       patch 'me', to: 'users#update'
       patch 'update_password', to: 'users#update_password'
+      delete 'me', to: 'users#destroy'
     end
   end
   match '/leaderboard', to: 'pages#leaderboard', via: :get
