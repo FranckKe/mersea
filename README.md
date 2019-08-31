@@ -100,8 +100,7 @@ MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) f
 
 ## About
 
-- An application created for [ANSEL](https://www.assoansel.com/) at the [Ocean Hackathon](http://www.seatechevent.eu/Temps-forts-Ocean-Hackathon-_7-au-9-octobre-2016_-696-17-0-0.html)
-- TV News Story on Tébéo, [video@8:30](http://www.tebeo.bzh/replay/23-jt/9478685)
+- [For more information about the project checkout the about and information section on oceanplastictracker.com](https://oceanplastictracker.com)
 
 ## Contributing
 
@@ -111,3 +110,16 @@ MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) f
 4. Ensure specs and Rubocop pass
 5. Push to the branch (git push origin my-new-feature)
 6. Create new Pull Request
+
+## Special thanks
+
+We would like to thanks the following companies for their open source plans and support
+
+|                                                    |                                                                                                                                                |
+| :------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+|      ![Bugsnag](thanks_logos/bugsnagx128.png)      | Thanks to **Bugsnag** we can monitor and investigate errors on our application                                                                 |
+|       ![Mapbox](thanks_logos/mapboxx128.png)       | Thank you to **Mapbox** for their mapping services and tools                                                                                   |
+| ![BrowserStack](thanks_logos/browserstackx128.png) | Thank you to **BrowserStack** for their testing platform. It allows us to seamlessly test our web application on different devices and browser |
+|    ![Circle-ci](thanks_logos/circlecix128.png)     | Thanks to **Circleci** we can build efficient ci/cd pipelines                                                                                  |
+
+Thanks to all the open source tools we are using to make our application ([gemfile](Gemfile), [package.json](front/package.json))

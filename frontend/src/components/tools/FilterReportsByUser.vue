@@ -87,7 +87,7 @@ export default {
   },
   watch: {
     chosenUsers: function() {
-      getFilteredReports
+      this.getFilteredReports()
       this.setFilteredTracers(this.getFilteredTracers.filter(t => t.user))
     }
   }

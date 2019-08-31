@@ -97,22 +97,20 @@ const mutations = {
   }
 }
 const actions = {
-  async loadPages({ commit }) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        commit('setLoading', true)
-        const pagesData = await api.get(`/pages`)
+  loadPages({ commit }) {
+    commit('setLoading', true)
+    return api
+      .get(`/pages`)
+      .then(pagesData => {
         const pages = pagesData.data
         commit('setPages', { pages })
         commit('setSuccess')
-        resolve('ok')
-      } catch (e) {
+      })
+      .catch(e => {
         console.error(e)
         let errors = [e.message]
         commit('setError', { errors })
-        reject(errors)
-      }
-    })
+      })
   }
 }
 
