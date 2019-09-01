@@ -31,6 +31,9 @@
         <b-table-column field="kind" v-bind:label="$t('type')" sortable>
           {{ props.row.kind }}
         </b-table-column>
+        <b-table-column field="category" v-bind:label="$t('category')" sortable>
+          {{ $t(props.row.category) }}
+        </b-table-column>
         <b-table-column
           field="created_at"
           v-bind:label="$t('created_at')"
@@ -138,30 +141,45 @@ export default {
 <i18n>
 {
   "en": {
+    "category": "Category",
     "created_at": "Created at",
     "name": "Name",
     "nothing": "No data",
     "origin": "Origin",
     "per_page": "per page",
     "reported_quantity": "Reported quantity",
+    "research": "Research",
+    "drift": "Drift",
+    "container": "Container",
+    "archive": "Archive",
     "type": "Type"
   },
   "fr": {
+    "category": "Categorie",
     "created_at": "Créé le",
     "name": "Nom",
     "nothing": "Pas de données",
     "origin": "Origine",
     "per_page": "par page",
     "reported_quantity": "Quantité signalée",
+    "research": "Recherche",
+    "drift": "Dérive",
+    "container": "Conteneur",
+    "archive": "Archive",
     "type": "Type"
   },
   "es": {
+    "category": "Categoría",
     "created_at": "Creado en",
     "name": "Apellido",
     "nothing": "Sin datos",
     "origin": "Origen",
     "per_page": "por página",
     "reported_quantity": "Cantidad testificada",
+    "research": "Búsqueda",
+    "drift": "Dériva",
+    "container": "Envase",
+    "archive": "Archivo",
     "type": "Tipo"
   }
 }

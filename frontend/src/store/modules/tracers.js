@@ -35,6 +35,18 @@ const getters = {
   getPerPage: state => {
     return state.perPage
   },
+  getCategories: state => {
+    let categories = [
+      ...new Set(
+        JSON.parse(JSON.stringify(state.tracers)).map(tracer => tracer.category)
+      )
+    ].sort()
+
+    if (categories[0] === 'archive') categories.shift()
+    categories.push('archive')
+
+    return categories
+  },
   getTracerById: state => tracerId =>
     state.tracers.filter(tracer => tracerId === tracer.id)[0]
 }

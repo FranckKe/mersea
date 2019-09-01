@@ -75,6 +75,12 @@ en:
       delete_my_report: Delete my report
       please_confirm: Please confirm the deletion
       location: Location
+  tracers:
+    categories:
+      container: Container
+      research: Research
+      drift: Drift
+      archive: Archive
   users:
     me:
       my_info: My informations

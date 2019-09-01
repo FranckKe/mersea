@@ -1,5 +1,5 @@
 class TracerSerializer < ActiveModel::Serializer
-  attributes :id, :name, :color, :photo, :description, :origin, :kind, :created_at
+  attributes :id, :name, :color, :photo, :description, :origin, :kind, :category, :created_at
 
   def photo
     variant = object.photo.variant(resize: '256x256>').processed

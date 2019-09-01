@@ -216,7 +216,8 @@
                             t.name
                               .toString()
                               .toLowerCase()
-                              .indexOf(tracerNames[index].toLowerCase()) >= 0
+                              .indexOf(tracerNames[index].toLowerCase()) >= 0 &&
+                            t.category !== 'archive'
                         )
                       "
                       field="name"
