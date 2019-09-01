@@ -115,11 +115,11 @@ MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) f
 
 We would like to thanks the following companies for their open source plans and support
 
-|                                                    |                                                                                                                                                |
-| :------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-|      ![Bugsnag](thanks_logos/bugsnagx128.png)      | Thanks to **Bugsnag** we can monitor and investigate errors on our application                                                                 |
-|       ![Mapbox](thanks_logos/mapboxx128.png)       | Thank you to **Mapbox** for their mapping services and tools                                                                                   |
-| ![BrowserStack](thanks_logos/browserstackx128.png) | Thank you to **BrowserStack** for their testing platform. It allows us to seamlessly test our web application on different devices and browser |
-|    ![Circle-ci](thanks_logos/circlecix128.png)     | Thanks to **Circleci** we can build efficient ci/cd pipelines                                                                                  |
+|                                                                                |                                                                                                                                                |
+| :----------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+|        [![Bugsnag](thanks_logos/bugsnagx128.png)](https://bugsnag.com)         | Thanks to **Bugsnag** we can monitor and investigate errors on our application                                                                 |
+|          [![Mapbox](thanks_logos/mapboxx128.png)](https://mapbox.com)          | Thank you to **Mapbox** for their mapping services and tools                                                                                   |
+| [![BrowserStack](thanks_logos/browserstackx128.png)](https://browserstack.com) | Thank you to **BrowserStack** for their testing platform. It allows us to seamlessly test our web application on different devices and browser |
+|      [![Circle-ci](thanks_logos/circlecix128.png)](https://circleci.com)       | Thanks to **Circleci** we can build efficient ci/cd pipelines                                                                                  |
 
 Thanks to all the open source tools we are using to make our application ([gemfile](Gemfile), [package.json](front/package.json))
