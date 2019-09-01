@@ -70,7 +70,7 @@
                     disabled="true"
                     expanded
                   ></b-input>
-                  <p class="control">
+                  <p class="mapboxgl-ctrl mapboxgl-ctrl-group">
                     <b-button
                       class="geolocation-button mapboxgl-ctrl-icon mapboxgl-ctrl-geolocate"
                       @click="setCoordinatesToCurrentPosition()"
@@ -140,6 +140,7 @@
               </b-field>
               <b-field
                 :label="`${$t('description')} (${$t('optional')})`"
+                class="description-field"
                 :type="errors.has('description') ? 'is-danger' : ''"
                 :message="
                   errors.has('description') ? errors.first('description') : ''
@@ -179,6 +180,7 @@
                 <b-field grouped>
                   <b-field
                     :label="index === 0 ? '-' : ''"
+                    :class="{ 'is-label-hidden': index === 0 }"
                     custom-class="remove-tracer-input-label"
                   >
                     <a
@@ -263,6 +265,7 @@
                   </b-field>
                   <b-field
                     :label="index === 0 ? '-' : ''"
+                    :class="{ 'is-label-hidden': index === 0 }"
                     customClass="remove-tracer-input-label"
                   >
                     <span
@@ -405,7 +408,7 @@ export default {
       firstDayOfTheWeek: this.$i18n.locale === 'en' ? 0 : 1
     }
   },
-  async mounted() {
+  mounted() {
     moment.locale(this.$i18n.locale)
     if (this.$auth.check()) this.username = this.$auth.user().name
 
@@ -414,20 +417,23 @@ export default {
       document.getElementById('addReportSteps'),
       {
         beforeNext: step => {
-          return new Promise(async (resolve, reject) => {
+          return new Promise((resolve, reject) => {
             if (step === 0) {
               this.username = this.$auth.check() ? this.$auth.user().name : ''
-              let validation = await Promise.all([
+              Promise.all([
                 this.$validator.validate('coordinates'),
                 this.$validator.validate('address')
               ])
-              let validateResult = validation.every(v => v)
-              validateResult ? resolve(validateResult) : reject(validateResult)
+                .then(validation => {
+                  let validateResult = validation.every(v => v)
+                  validateResult
+                    ? resolve(validateResult)
+                    : reject(validateResult)
+                })
+                .catch(error => console.error(error))
             }
             if (step === 1) {
-              let validatefile = new Promise(resolve => {
-                resolve(true)
-              })
+              let validatefile = new Promise(resolve => resolve(true))
 
               // The 'file' field does not always exist depending if the user is senior or not
               // vee-validate complains when it does not
@@ -438,39 +444,41 @@ export default {
                 validatefile = this.$validator.validate('file')
               }
 
-              let validation = await Promise.all([
+              return Promise.all([
                 this.$validator.validate('username'),
                 this.$validator.validate('reportDate'),
                 this.$validator.validate('description'),
                 validatefile
               ])
-              resolve(validation.every(v => v))
-              document.querySelector('.add-report').scrollTop = 0
+                .then(validation => {
+                  validation.some(v => v) &&
+                    (document.querySelector('.add-report').scrollTop = 0)
+                  resolve(validation.every(v => v))
+                })
+                .catch(error => console.error(error))
             }
 
             if (step === 2) {
-              let validateForm = await this.$validator.validateAll()
-              if (this.areAllReportsSubmitted) {
-                resolve(true)
-              } else if (validateForm) {
-                try {
-                  await this.submitReports()
-                  resolve(false)
-                } catch (e) {
-                  console.warn(e)
-                  reject(false)
-                }
-              } else {
-                console.warn(this.$validator.errors)
-                console.warn(this.$validator.fields)
-                reject(false)
-              }
+              return this.$validator
+                .validateAll()
+                .then(validateForm => {
+                  if (this.areAllReportsSubmitted) {
+                    resolve(true)
+                  } else if (validateForm) {
+                    return this.submitReports()
+                  } else {
+                    console.warn(this.$validator.errors)
+                    console.warn(this.$validator.fields)
+                    reject(false)
+                  }
+                })
+                .catch(error => console.error(error))
             }
             resolve(true)
           })
         },
         onShow: step => {
-          return new Promise(async resolve => {
+          return new Promise(resolve => {
             const oldStep = this.currentStep
 
             this.currentStep = step
@@ -523,22 +531,21 @@ export default {
     setCoordinatesToCurrentPosition() {
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(
-          async pos => {
+          pos => {
             this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
-            const res = await axios.get(
-              `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-                pos.coords.longitude
-              },${pos.coords.latitude}.json?access_token=${
-                process.env.VUE_APP_MAPBOX_TOKEN
-              }`,
-              {
-                timeout: 15000
-              }
-            )
-            this.address =
-              res.data.features.length > 0
-                ? res.data.features[0].place_name
-                : this.$t('no_address_found')
+            axios
+              .get(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${pos.coords.longitude},${pos.coords.latitude}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
+                {
+                  timeout: 15000
+                }
+              )
+              .then(res => {
+                this.address =
+                  res.data.features.length > 0
+                    ? res.data.features[0].place_name
+                    : this.$t('no_address_found')
+              })
           },
           () => {
             this.$toast.open({
@@ -565,7 +572,6 @@ export default {
 
       try {
         await Promise.all(promises)
-
         return true
       } catch (e) {
         console.warn(e)
@@ -598,36 +604,33 @@ export default {
       this.areSubmitting.splice(index, 1, false)
       this.areSubmitted.splice(index, 1, true)
     },
-    submitReportPromise(index) {
-      return new Promise(async (resolve, reject) => {
+    async submitReportPromise(index) {
+      let file64 = null
+
+      if (this.file != null) {
         try {
-          let file64 =
-            this.file != null ? await this.getBase64(this.file) : null
-
-          const postDataJson = {
-            name: this.$auth.check() ? this.$auth.user().name : this.username,
-            address: this.address,
-            latitude: parseFloat(this.coordinates.split(',')[0]).toFixed(4),
-            longitude: parseFloat(this.coordinates.split(',')[1]).toFixed(4),
-            reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
-            tracer_id: (this.selectedTracers[index] || {}).id,
-            quantity: this.quantities[index],
-            description: this.description
-          }
-          if (file64 != null) postDataJson.photo = file64
-
-          await this.$http({
-            method: 'POST',
-            url: `/reports`,
-            data: postDataJson,
-            timeout: 15000
-          })
-
-          resolve(true)
+          file64 = await this.getBase64(this.file)
         } catch (e) {
           console.warn(e)
-          reject(e)
         }
+      }
+      const postDataJson = {
+        name: this.$auth.check() ? this.$auth.user().name : this.username,
+        address: this.address,
+        latitude: parseFloat(this.coordinates.split(',')[0]).toFixed(4),
+        longitude: parseFloat(this.coordinates.split(',')[1]).toFixed(4),
+        reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
+        tracer_id: (this.selectedTracers[index] || {}).id,
+        quantity: this.quantities[index],
+        description: this.description
+      }
+      if (file64 != null) postDataJson.photo = file64
+
+      return this.$http({
+        method: 'POST',
+        url: `/reports`,
+        data: postDataJson,
+        timeout: 15000
       })
     },
     getBase64(file) {
@@ -817,7 +820,12 @@ export default {
     margin-left: 0.25em;
   }
 
-  .description {
+  .description-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .description text-area {
     white-space: pre-wrap;
   }
 }
@@ -959,6 +967,10 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.is-label-hidden label.label {
+  visibility: hidden;
 }
 </style>
 

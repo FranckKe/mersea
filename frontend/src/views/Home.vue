@@ -8,7 +8,9 @@
         :can-cancel="false"
       ></b-loading>
     </div>
-    <add-report></add-report>
+    <add-report
+      :mapGeolocationControl="this.mapGeolocationControl"
+    ></add-report>
   </div>
 </template>
 
@@ -90,10 +92,26 @@ export default {
     )
   },
   watch: {
-    '$i18n.locale': function() {
+    '$i18n.locale': async function() {
       moment.locale(this.$i18n.locale)
       this.map.destroy
-      this.createMap()
+      try {
+        await Promise.all([
+          this.loadReports({
+            reported_at_min: this.$reported_at_min,
+            reported_at_max: this.$reported_at_max
+          }),
+          this.createMap()
+        ])
+        this.mapLoad()
+      } catch (error) {
+        this.$toast.open({
+          message: this.$t('map_init_failure'),
+          duration: 5000,
+          type: 'is-danger'
+        })
+        console.error(error)
+      }
     },
     isFormActive: function(newValue) {
       if (newValue && this.coordinates !== '') {
@@ -135,11 +153,7 @@ export default {
 
           this.coordinates = `${e.lngLat.lat}, ${e.lngLat.lng}`
           const res = await axios.get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-              e.lngLat.lng
-            },${e.lngLat.lat}.json?access_token=${
-              process.env.VUE_APP_MAPBOX_TOKEN
-            }`,
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
             {
               timeout: 15000
             }
@@ -154,8 +168,10 @@ export default {
           positionOptions: {
             enableHighAccuracy: true
           },
-          trackUserLocation: true
+          trackUserLocation: true,
+          showUserLocation: true
         })
+
         this.mapGeolocationControl = geolocator
 
         let geocoder = new MapboxGeocoder(
