@@ -95,6 +95,7 @@ RUN apk add --update --no-cache \
     postgresql-dev \
     libxml2-dev \
     libxslt-dev \
+    icu-libs \
     tzdata \
     file \
     imagemagick
