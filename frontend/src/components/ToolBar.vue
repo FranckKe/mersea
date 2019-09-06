@@ -85,15 +85,19 @@ p {
 }
 
 @media only screen and (max-device-width: 1024px) {
+
   .tool-bar {
-    width: calc(100% - var(--header-height));
-    min-width: calc(100% - var(--header-height));
-    max-width: calc(100% - var(--header-height));
-    height: var(--header-height);
-    margin-left: var(--header-height);
+    /* 56px = Header height. Not using css variables for old Safari support  */
+    width: calc(100% - 56px);
+    min-width: calc(100% - 56px);
+    max-width: calc(100% - 56px);
+    height: 56px;
+    margin-left: 56px;
     align-items: flex-start;
     flex-direction: row;
-    overflow: scroll;
+    overflow: visible;
+    /* More than hamburger menu */
+    z-index: 31;
   }
 
   .filter-by {

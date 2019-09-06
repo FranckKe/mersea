@@ -588,8 +588,8 @@ export default {
 
   .map {
     width: 100vw;
-    height: calc(100vh - var(--header-height));
-    top: var(--header-height);
+    height: calc(100vh - 56px);
+    top: 56px;
   }
 
   .mapboxgl-popup-content {

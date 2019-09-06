@@ -81,7 +81,7 @@ export default {
   width: 380px;
   height: calc(100vh - 55px);
   position: fixed;
-  top: var(--header-height); /* Menu heigth */
+  top: 56px; /* Menu heigth */
   left: 124px; /* Tool bar width */
   background-color: white;
   z-index: 11;
@@ -127,7 +127,7 @@ export default {
   }
 
   .tool-view {
-    height: calc(100vh - var(--header-height) - 2em);
+    height: calc(100vh - 56px - 2em);
     border-radius: 6px;
     width: 90%;
     top: calc(50% + 20px);

@@ -27,7 +27,7 @@
         :key="tracersByCategory.category"
         v-for="tracersByCategory in allFilteredTracersList"
       >
-        <h3>{{ $t(tracersByCategory.category) }}</h3>
+        <h3 class="title is-6">{{ $t(tracersByCategory.category) }}</h3>
         <div
           class="legend-tracer"
           :key="tracer.id"
@@ -178,6 +178,14 @@ export default {
     align-items: center;
     flex-direction: row;
     text-transform: capitalize;
+  }
+}
+
+.legend-category-tracer {
+  margin-top: .25rem;
+
+  .title {
+    margin-bottom: .25rem;
   }
 }
 
