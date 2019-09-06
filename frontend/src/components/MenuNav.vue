@@ -179,8 +179,8 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  width: var(--header-height);
-  height: var(--header-height);
+  width: 56px;
+  height: 56px;
 }
 
 .navbar-menu {
@@ -230,8 +230,8 @@ export default {
 
 .navbar-burger {
   color: var(--primary);
-  width: var(--header-height);
-  height: var(--header-height);
+  width: 56px;
+  height: 56px;
   span {
     height: 2px;
   }

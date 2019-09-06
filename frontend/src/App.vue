@@ -134,12 +134,12 @@ body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  padding-top: var(--header-height);
+  padding-top: 56px;
   height: 100%;
   width: 100%;
 
   & > .section {
-    padding-top: var(--header-height);
+    padding-top: 56px;
   }
 }
 
