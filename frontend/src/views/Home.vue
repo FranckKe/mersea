@@ -8,7 +8,9 @@
         :can-cancel="false"
       ></b-loading>
     </div>
-    <add-report :mapGeolocationControl="this.mapGeolocationControl"></add-report>
+    <add-report
+      :mapGeolocationControl="this.mapGeolocationControl"
+    ></add-report>
   </div>
 </template>
 
@@ -38,13 +40,12 @@ export default {
       mapGeolocationControl: undefined,
       newMarker: '',
       popup: '',
+      popupCluster: '',
       maxZoom: 17,
       isMapReady: false,
       spiderifyAfterZoom: 12, // Spiderify after zoom N, zoom otherwise,
       maxLeavesToSpiderify: 255, // Max leave to display when spiderify to prevent filling the map with leaves,
-      circleToSpiralSwitchover: 15, // When below number, will display leave as a circle. Over, as a spiral
-      spiderLegsLayerName: `spider-legs`,
-      spiderLeavesLayerName: `spider-leaves`,
+      circleToSpiralSwitchover: 5, // When below number, will display leave as a circle. Over, as a spiral
       spiderifiedCluster: {}
     }
   },
@@ -78,6 +79,7 @@ export default {
         if (this.map.getSource('reports') == null) return false
         if (this.map.getLayer('unclustered-reports') == null) return false
         if (this.popup) this.popup.remove()
+        if (this.popupCluster) this.popupCluster.remove()
         // Reset map source data with filtered geojson
         this.map
           .getSource('reports')
@@ -91,6 +93,7 @@ export default {
         if (this.map.getSource('reports') == null) return false
         if (this.map.getLayer('unclustered-reports') == null) return false
         if (this.popup) this.popup.remove()
+        if (this.popupCluster) this.popupCluster.remove()
         // Reset map source data with filtered geojson
         this.map.getSource('reports').setData(this.getReports())
       }
@@ -129,6 +132,58 @@ export default {
     }
   },
   methods: {
+    addReportPopup: function(e, cluster = false) {
+      let coordinates = e.features[0].geometry.coordinates.slice()
+      let reportProperties = e.features[0].properties
+      let tracerId = e.features[0].properties.tracer_id
+      let tracer = this.getTracerById()(tracerId)
+      let userProperties = JSON.parse(e.features[0].properties.user)
+      let popupOption = {
+        maxWidth: 'none'
+      }
+      let currentPopup = {}
+      // Ensure that if the map is zoomed out such that multiple
+      // copies of the feature are visible, the popup appears
+      // over the copy being pointed to.
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+      }
+
+      if (cluster) {
+        this.popupCluster = new mapboxgl.Popup(popupOption)
+        currentPopup = this.popupCluster
+      } else {
+        this.popup = new mapboxgl.Popup(popupOption)
+        currentPopup = this.popup
+      }
+      currentPopup
+        .setLngLat(coordinates)
+        .setHTML(
+          `<article class="media">
+                <div class="media-left">
+                  <figure class="image">
+                    <img src="${this.apiUrl}${tracer.photo}" alt="Image">
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="content">
+                    <h5 class="title is-5"><b>${tracer.name}</b></h5>
+                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
+                    <p>
+                      ${reportProperties.quantity}${' '}
+                      ${this.$i18n.tc('object', reportProperties.quantity)}
+                    </p>
+                    <p>${this.$options.filters.formatDate(
+                      reportProperties.reported_at
+                    )}</p>
+                  </div>
+                </div>
+                <div class="media-right">
+                </div>
+              </article>`
+        )
+        .addTo(this.map)
+    },
     createMap() {
       return new Promise(resolve => {
         mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
@@ -149,7 +204,14 @@ export default {
             .addTo(this.map)
 
         this.map.on('click', async e => {
-          this.clearSpiderifiedCluster(this.map)
+          if (
+            this.map
+              .queryRenderedFeatures(e.point)
+              .filter(feature => feature.source === 'spider-leaves').length ===
+            0
+          )
+            this.clearSpiderifiedCluster(this.map) // Clear spiderified cluster on base map click only
+
           if (!this.isFormActive || this.currentStep !== 0) return false
           if (this.newMarker !== '') this.newMarker.remove()
 
@@ -195,12 +257,13 @@ export default {
         let language = new MapboxLanguage({
           defaultLanguage: this.$i18n.locale
         })
-        this.map.addControl(language)
-        this.map.addControl(scaler)
-        this.map.addControl(geocoder, 'top-left')
-        this.map.addControl(geolocator)
-        this.map.addControl(navigater, 'bottom-right')
-        this.map.on('load', () => resolve('done'))
+        this.map
+          .addControl(language)
+          .addControl(scaler)
+          .addControl(geocoder, 'top-left')
+          .addControl(geolocator)
+          .addControl(navigater, 'bottom-right')
+          .on('load', () => resolve('done'))
       })
     },
     mapLoad: async function() {
@@ -330,51 +393,13 @@ export default {
               clusterToSpiderify: this.spiderifiedCluster
             })
           }
-          // Add popup on report circle click
         })
+        // Add popup on report circle click
         .on('click', 'unclustered-reports', e => {
-          let coordinates = e.features[0].geometry.coordinates.slice()
-          let reportProperties = e.features[0].properties
-          let tracerId = e.features[0].properties.tracer_id
-          let tracer = this.getTracerById()(tracerId)
-          let userProperties = JSON.parse(e.features[0].properties.user)
-
-          // Ensure that if the map is zoomed out such that multiple
-          // copies of the feature are visible, the popup appears
-          // over the copy being pointed to.
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-          }
-
-          this.popup = new mapboxgl.Popup({
-            maxWidth: 'none'
-          })
-            .setLngLat(coordinates)
-            .setHTML(
-              `<article class="media">
-                <div class="media-left">
-                  <figure class="image">
-                    <img src="${this.apiUrl}${tracer.photo}" alt="Image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <h5 class="title is-5"><b>${tracer.name}</b></h5>
-                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
-                    <p>
-                      ${reportProperties.quantity}${' '}
-                      ${this.$i18n.tc('object', reportProperties.quantity)}
-                    </p>
-                    <p>${this.$options.filters.formatDate(
-                      reportProperties.reported_at
-                    )}</p>
-                  </div>
-                </div>
-                <div class="media-right">
-                </div>
-              </article>`
-            )
-            .addTo(this.map)
+          this.addReportPopup(e)
+        })
+        .on('click', 'spider-leaves', e => {
+          this.addReportPopup(e, true)
         })
         .on('mouseenter', 'unclustered-reports', () => {
           this.map.getCanvas().style.cursor = 'pointer'
@@ -388,7 +413,6 @@ export default {
 
       this.isMapReady = true
     },
-    destroyMap() {},
     ...reportsModule.mapGetters([
       'getReports',
       'getFilteredReports',
@@ -400,10 +424,11 @@ export default {
       if (map.getSource(id) != null) map.removeSource(id)
     },
     clearSpiderifiedCluster: function(map) {
+      if (this.popupCluster) this.popupCluster.remove()
       this.spiderifiedCluster = {}
       this.spiderLeavesCollection = []
-      this.removeSourceAndLayer(map, this.spiderLegsLayerName)
-      this.removeSourceAndLayer(map, this.spiderLeavesLayerName)
+      this.removeSourceAndLayer(map, 'spider-legs')
+      this.removeSourceAndLayer(map, 'spider-leaves')
     },
     generateEquidistantPointsInCircle: function({
       totalPoints = 1,
@@ -430,7 +455,7 @@ export default {
         lengthModifier: 1000 // Spiral length modifier
       }
     }) {
-      let points = [{ x: 0, y: 0 }]
+      let points = []
       // Higher modifier = closer spiral lines
       const rotations = totalPoints * options.rotationsModifier
       const distanceBetweenPoints = options.distanceBetweenPoints
@@ -518,7 +543,7 @@ export default {
 
             // Draw spiderlegs and leaves coordinates
             map.addLayer({
-              id: this.spiderLegsLayerName,
+              id: 'spider-legs',
               type: 'line',
               source: {
                 type: 'geojson',
@@ -534,7 +559,7 @@ export default {
             })
 
             map.addLayer({
-              id: this.spiderLeavesLayerName,
+              id: 'spider-leaves',
               type: 'circle',
               source: {
                 type: 'geojson',
