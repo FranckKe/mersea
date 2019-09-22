@@ -85,7 +85,6 @@ p {
 }
 
 @media only screen and (max-device-width: 1024px) {
-
   .tool-bar {
     /* 56px = Header height. Not using css variables for old Safari support  */
     width: calc(100% - 56px);

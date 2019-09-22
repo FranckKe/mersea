@@ -8,9 +8,7 @@
         :can-cancel="false"
       ></b-loading>
     </div>
-    <add-report
-      :mapGeolocationControl="this.mapGeolocationControl"
-    ></add-report>
+    <add-report :mapGeolocationControl="this.mapGeolocationControl"></add-report>
   </div>
 </template>
 
@@ -40,7 +38,14 @@ export default {
       mapGeolocationControl: undefined,
       newMarker: '',
       popup: '',
-      isMapReady: false
+      maxZoom: 17,
+      isMapReady: false,
+      spiderifyAfterZoom: 12, // Spiderify after zoom N, zoom otherwise,
+      maxLeavesToSpiderify: 255, // Max leave to display when spiderify to prevent filling the map with leaves,
+      circleToSpiralSwitchover: 15, // When below number, will display leave as a circle. Over, as a spiral
+      spiderLegsLayerName: `spider-legs`,
+      spiderLeavesLayerName: `spider-leaves`,
+      spiderifiedCluster: {}
     }
   },
   components: {
@@ -132,7 +137,7 @@ export default {
           style: 'mapbox://styles/mapbox/satellite-streets-v10?optimize=true',
           minZoom: 3,
           zoom: 5,
-          maxZoom: 17,
+          maxZoom: this.maxZoom - 1,
           center: [0, 46.2276],
           refreshExpiredTiles: false
         })
@@ -144,6 +149,7 @@ export default {
             .addTo(this.map)
 
         this.map.on('click', async e => {
+          this.clearSpiderifiedCluster(this.map)
           if (!this.isFormActive || this.currentStep !== 0) return false
           if (this.newMarker !== '') this.newMarker.remove()
 
@@ -209,142 +215,143 @@ export default {
         return false
       }
 
-      this.map.addSource('reports', {
-        type: 'geojson',
-        data: this.getReports(),
-        cluster: true,
-        clusterMaxZoom: 11, // Disable clustering after zoom N
-        clusterRadius: 15 // Radius to cluster points
-      })
-
-      this.map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'reports',
-        filter: ['has', 'point_count'],
-        minzoom: 3,
-        maxzoom: 17,
-        paint: {
-          'circle-stroke-width': 2,
-          'circle-stroke-opacity': 0.93,
-          'circle-stroke-color': [
-            'step',
-            ['get', 'point_count'],
-            '#4dd0e1',
-            100,
-            '#FFDC00',
-            350,
-            '#FF851B',
-            500,
-            '#FF4136'
-          ],
-          'circle-opacity': 0.75,
-          'circle-blur': 0.1,
-          'circle-color': [
-            'step',
-            ['get', 'point_count'],
-            '#4dd0e1',
-            100,
-            '#FFDC00',
-            350,
-            '#FF851B',
-            500,
-            '#FF4136'
-          ],
-          'circle-radius': [
-            'step',
-            ['get', 'point_count'],
-            15,
-            100,
-            20,
-            350,
-            25,
-            500,
-            30
-          ]
-        }
-      })
-
-      this.map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'reports',
-        filter: ['has', 'point_count'],
-        minzoom: 3,
-        maxzoom: 17,
-        layout: {
-          'text-field': '{point_count_abbreviated}',
-          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 16
-        },
-        paint: {
-          'text-color': '#fff',
-          'text-halo-color': '#000',
-          'text-halo-width': 1
-        }
-      })
-
-      this.map.addLayer({
-        id: 'unclustered-reports',
-        type: 'circle',
-        source: 'reports',
-        filter: ['!', ['has', 'point_count']],
-        minzoom: 3,
-        maxzoom: 17,
-        paint: {
-          'circle-color': ['get', 'color'],
-          'circle-radius': 10,
-          'circle-stroke-width': 2,
-          'circle-stroke-color': '#fff'
-        }
-      })
-
-      // Zoom on cluster click
-      this.map.on('click', 'clusters', e => {
-        let features = this.map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
+      this.map
+        .addSource('reports', {
+          type: 'geojson',
+          data: this.getReports(),
+          cluster: true,
+          clusterMaxZoom: this.maxZoom, // Disable clustering after zoom N
+          clusterRadius: 15 // Radius to cluster points
         })
-        let clusterId = features[0].properties.cluster_id
-        this.map
-          .getSource('reports')
-          .getClusterExpansionZoom(clusterId, (err, zoom) => {
-            if (err) return
-
-            this.map.easeTo({
-              center: features[0].geometry.coordinates,
-              zoom: zoom
-            })
+        .addLayer({
+          id: 'clusters',
+          type: 'circle',
+          source: 'reports',
+          filter: ['has', 'point_count'],
+          minzoom: 3,
+          maxzoom: this.maxZoom,
+          paint: {
+            'circle-stroke-width': 2,
+            'circle-stroke-opacity': 0.93,
+            'circle-stroke-color': [
+              'step',
+              ['get', 'point_count'],
+              '#4dd0e1',
+              100,
+              '#FFDC00',
+              350,
+              '#FF851B',
+              500,
+              '#FF4136'
+            ],
+            'circle-opacity': 0.75,
+            'circle-blur': 0.1,
+            'circle-color': [
+              'step',
+              ['get', 'point_count'],
+              '#4dd0e1',
+              100,
+              '#FFDC00',
+              350,
+              '#FF851B',
+              500,
+              '#FF4136'
+            ],
+            'circle-radius': [
+              'step',
+              ['get', 'point_count'],
+              15,
+              100,
+              20,
+              350,
+              25,
+              500,
+              30
+            ]
+          }
+        })
+        .addLayer({
+          id: 'cluster-count',
+          type: 'symbol',
+          source: 'reports',
+          filter: ['has', 'point_count'],
+          minzoom: 3,
+          maxzoom: this.maxZoom,
+          layout: {
+            'text-field': '{point_count_abbreviated}',
+            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+            'text-size': 16
+          },
+          paint: {
+            'text-color': '#fff',
+            'text-halo-color': '#000',
+            'text-halo-width': 1
+          }
+        })
+        .addLayer({
+          id: 'unclustered-reports',
+          type: 'circle',
+          source: 'reports',
+          filter: ['!', ['has', 'point_count']],
+          minzoom: 3,
+          maxzoom: this.maxZoom,
+          paint: {
+            'circle-color': ['get', 'color'],
+            'circle-radius': 10,
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#fff'
+          }
+        })
+        .on('click', 'clusters', e => {
+          let features = this.map.queryRenderedFeatures(e.point, {
+            layers: ['clusters']
           })
-      })
+          let clusterId = features[0].properties.cluster_id
 
-      this.map.on('mouseenter', 'clusters', () => {
-        this.map.getCanvas().style.cursor = 'pointer'
-      })
-      this.map.on('mouseleave', 'clusters', () => {
-        this.map.getCanvas().style.cursor = ''
-      })
-
-      // Add popup on report circle click
-      this.map.on('click', 'unclustered-reports', e => {
-        let coordinates = e.features[0].geometry.coordinates.slice()
-        let reportProperties = e.features[0].properties
-        let tracerId = e.features[0].properties.tracer_id
-        let tracer = this.getTracerById()(tracerId)
-        let userProperties = JSON.parse(e.features[0].properties.user)
-
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
-        }
-
-        this.popup = new mapboxgl.Popup({
-          maxWidth: 'none'
+          // Zoom on cluster or spiderify it
+          if (this.map.getZoom() < this.spiderifyAfterZoom) {
+            this.map
+              .getSource('reports')
+              .getClusterExpansionZoom(clusterId, (err, zoom) => {
+                if (err) return
+                this.map.easeTo({
+                  center: features[0].geometry.coordinates,
+                  zoom: zoom
+                })
+              })
+          } else {
+            this.spiderifiedCluster = {
+              id: clusterId,
+              coordinates: features[0].geometry.coordinates
+            }
+            this.spiderifyCluster({
+              map: this.map,
+              source: 'reports',
+              clusterToSpiderify: this.spiderifiedCluster
+            })
+          }
+          // Add popup on report circle click
         })
-          .setLngLat(coordinates)
-          .setHTML(
-            `<article class="media">
+        .on('click', 'unclustered-reports', e => {
+          let coordinates = e.features[0].geometry.coordinates.slice()
+          let reportProperties = e.features[0].properties
+          let tracerId = e.features[0].properties.tracer_id
+          let tracer = this.getTracerById()(tracerId)
+          let userProperties = JSON.parse(e.features[0].properties.user)
+
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360
+          }
+
+          this.popup = new mapboxgl.Popup({
+            maxWidth: 'none'
+          })
+            .setLngLat(coordinates)
+            .setHTML(
+              `<article class="media">
                 <div class="media-left">
                   <figure class="image">
                     <img src="${this.apiUrl}${tracer.photo}" alt="Image">
@@ -366,17 +373,19 @@ export default {
                 <div class="media-right">
                 </div>
               </article>`
-          )
-          .addTo(this.map)
-      })
+            )
+            .addTo(this.map)
+        })
+        .on('mouseenter', 'unclustered-reports', () => {
+          this.map.getCanvas().style.cursor = 'pointer'
+        })
+        .on('mouseleave', 'unclustered-reports', () => {
+          this.map.getCanvas().style.cursor = ''
+        })
+        .on('zoomstart', () => {
+          this.clearSpiderifiedCluster(this.map)
+        })
 
-      this.map.on('mouseenter', 'unclustered-reports', () => {
-        this.map.getCanvas().style.cursor = 'pointer'
-      })
-
-      this.map.on('mouseleave', 'unclustered-reports', () => {
-        this.map.getCanvas().style.cursor = ''
-      })
       this.isMapReady = true
     },
     destroyMap() {},
@@ -386,6 +395,164 @@ export default {
       'getLoading',
       'getErrors'
     ]),
+    removeSourceAndLayer: function(map, id) {
+      if (map.getLayer(id) != null) map.removeLayer(id)
+      if (map.getSource(id) != null) map.removeSource(id)
+    },
+    clearSpiderifiedCluster: function(map) {
+      this.spiderifiedCluster = {}
+      this.spiderLeavesCollection = []
+      this.removeSourceAndLayer(map, this.spiderLegsLayerName)
+      this.removeSourceAndLayer(map, this.spiderLeavesLayerName)
+    },
+    generateEquidistantPointsInCircle: function({
+      totalPoints = 1,
+      options = { distanceBetweenPoints: 50 }
+    }) {
+      let points = []
+      let theta = (Math.PI * 2) / totalPoints
+      let angle = theta
+      for (let i = 0; i < totalPoints; i++) {
+        angle = theta * i
+        points.push({
+          x: options.distanceBetweenPoints * Math.cos(angle),
+          y: options.distanceBetweenPoints * Math.sin(angle)
+        })
+      }
+      return points
+    },
+    generateEquidistantPointsInSpiral: function({
+      totalPoints = 10,
+      options = {
+        rotationsModifier: 1250, // Higher modifier: closer spiral lines
+        distanceBetweenPoints: 32, // Distance between points in spiral
+        radiusModifier: 50000, // Spiral radius
+        lengthModifier: 1000 // Spiral length modifier
+      }
+    }) {
+      let points = [{ x: 0, y: 0 }]
+      // Higher modifier = closer spiral lines
+      const rotations = totalPoints * options.rotationsModifier
+      const distanceBetweenPoints = options.distanceBetweenPoints
+      const radius = totalPoints * options.radiusModifier
+      // Value of theta corresponding to end of last coil
+      const thetaMax = rotations * 2 * Math.PI
+      // How far to step away from center for each side.
+      const awayStep = radius / thetaMax
+      for (
+        let theta = distanceBetweenPoints / awayStep;
+        points.length <= totalPoints + options.lengthModifier;
+
+      ) {
+        points.push({
+          x: Math.cos(theta) * (awayStep * theta),
+          y: Math.sin(theta) * (awayStep * theta)
+        })
+        theta += distanceBetweenPoints / (awayStep * theta)
+      }
+      return points.slice(0, totalPoints)
+    },
+    generateLeavesCoordinates: function({ nbOfLeaves }) {
+      let points = []
+      // Position cluster's leaves in circle if below threshold, spiral otherwise
+      if (nbOfLeaves < this.circleToSpiralSwitchover) {
+        points = this.generateEquidistantPointsInCircle({
+          totalPoints: nbOfLeaves
+        })
+      } else {
+        points = this.generateEquidistantPointsInSpiral({
+          totalPoints: nbOfLeaves
+        })
+      }
+      return points
+    },
+    spiderifyCluster: function({ map, source, clusterToSpiderify }) {
+      this.spiderLegsCollection = []
+      this.spiderLeavesCollection = []
+
+      this.map
+        .getSource(source)
+        .getClusterLeaves(
+          clusterToSpiderify.id,
+          this.maxLeavesToSpiderify,
+          0,
+          (error, features) => {
+            if (error) {
+              console.warning('Cluster does not exists on this zoom')
+              return
+            }
+
+            let leavesCoordinates = this.generateLeavesCoordinates({
+              nbOfLeaves: features.length
+            })
+
+            let clusterXY = map.project(clusterToSpiderify.coordinates)
+
+            // Generate spiderlegs and leaves coordinates
+            features.forEach((element, index) => {
+              let spiderLeafLatLng = map.unproject([
+                clusterXY.x + leavesCoordinates[index].x,
+                clusterXY.y + leavesCoordinates[index].y
+              ])
+
+              this.spiderLeavesCollection.push({
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [spiderLeafLatLng.lng, spiderLeafLatLng.lat]
+                },
+                properties: element.properties
+              })
+
+              this.spiderLegsCollection.push({
+                type: 'Feature',
+                geometry: {
+                  type: 'LineString',
+                  coordinates: [
+                    clusterToSpiderify.coordinates,
+                    [spiderLeafLatLng.lng, spiderLeafLatLng.lat]
+                  ]
+                }
+              })
+            })
+
+            // Draw spiderlegs and leaves coordinates
+            map.addLayer({
+              id: this.spiderLegsLayerName,
+              type: 'line',
+              source: {
+                type: 'geojson',
+                data: {
+                  type: 'FeatureCollection',
+                  features: this.spiderLegsCollection
+                }
+              },
+              paint: {
+                'line-width': 3,
+                'line-color': 'rgba(128, 128, 128, 0.5)'
+              }
+            })
+
+            map.addLayer({
+              id: this.spiderLeavesLayerName,
+              type: 'circle',
+              source: {
+                type: 'geojson',
+                data: {
+                  type: 'FeatureCollection',
+                  features: this.spiderLeavesCollection
+                }
+              },
+              paint: {
+                'circle-color': ['get', 'color'],
+                'circle-radius': 10,
+                'circle-stroke-width': 2,
+                'circle-stroke-color': '#fff'
+              }
+            })
+          }
+        )
+    },
     ...tracersModule.mapGetters(['getTracerById', 'getFilteredTracers']),
     ...addReportModule.mapGetters([
       'getCurrentStep',
