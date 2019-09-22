@@ -35,6 +35,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('tracers')
 import TracerCard from '@/components/TracerCard'
+const reportsModule = createNamespacedHelpers('reports')
 
 export default {
   name: 'tracers-grid',
@@ -91,6 +92,7 @@ export default {
   },
   methods: {
     ...mapGetters(['getTracers', 'getCategories']),
+    ...reportsModule.mapGetters(['getReportCount']),
     sortTracersBy: function(field, order) {
       if (order == null) {
         order = this.sortFields[field].order
