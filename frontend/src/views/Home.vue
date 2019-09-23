@@ -284,7 +284,7 @@ export default {
           data: this.getReports(),
           cluster: true,
           clusterMaxZoom: this.maxZoom, // Disable clustering after zoom N
-          clusterRadius: 15 // Radius to cluster points
+          clusterRadius: 42
         })
         .addLayer({
           id: 'clusters',
