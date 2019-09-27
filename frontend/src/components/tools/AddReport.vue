@@ -779,6 +779,7 @@ export default {
   display: flex;
   flex-basis: 100%;
   flex-direction: column;
+  padding-right: 1rem;
 
   & >>> .remove-tracer-input-label {
     color: white;
