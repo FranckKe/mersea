@@ -42,7 +42,7 @@ export default {
   margin: auto;
   max-width: 650px;
   line-height: 1.6;
-  font-size: 18px;
+  font-size: 1rem;
   color: #444;
   padding: 0 10px;
 

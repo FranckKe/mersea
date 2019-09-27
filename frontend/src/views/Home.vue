@@ -8,9 +8,6 @@
         :can-cancel="false"
       ></b-loading>
     </div>
-    <add-report
-      :mapGeolocationControl="this.mapGeolocationControl"
-    ></add-report>
   </div>
 </template>
 
@@ -19,8 +16,8 @@ import { createNamespacedHelpers } from 'vuex'
 const reportsModule = createNamespacedHelpers('reports')
 const addReportModule = createNamespacedHelpers('addReport')
 const tracersModule = createNamespacedHelpers('tracers')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
-import AddReport from '@/components/AddReport'
 import ToolBar from '@/components/ToolBar'
 
 import mapboxgl from 'mapbox-gl'
@@ -38,7 +35,7 @@ export default {
       apiUrl: this.$apiUrl,
       map: {},
       mapGeolocationControl: undefined,
-      newMarker: '',
+      addReportMarker: '',
       popup: '',
       popupCluster: '',
       maxZoom: 17,
@@ -50,7 +47,6 @@ export default {
     }
   },
   components: {
-    AddReport,
     ToolBar
   },
   async mounted() {
@@ -98,6 +94,19 @@ export default {
         this.map.getSource('reports').setData(this.getReports())
       }
     )
+    this.$store.watch(
+      (state, getters) => getters['toolBar/getActiveTool'],
+      activeTool => {
+        this.initAddReportMarker(activeTool)
+      }
+    )
+    this.$store.watch(
+      (state, getters) => getters['addReport/getCurrentStep'],
+      currentStep => {
+        if (this.addReportMarker)
+          this.addReportMarker.setDraggable(currentStep === 0)
+      }
+    )
   },
   watch: {
     '$i18n.locale': async function() {
@@ -120,18 +129,33 @@ export default {
         })
         console.error(error)
       }
-    },
-    isFormActive: function(newValue) {
-      if (newValue && this.coordinates !== '') {
-        this.newMarker = new mapboxgl.Marker()
-          .setLngLat(this.coordinates.split(',').reverse())
-          .addTo(this.map)
-      } else {
-        if (this.newMarker !== '') this.newMarker.remove()
-      }
     }
   },
   methods: {
+    initAddReportMarker: function(activeTool) {
+      if (activeTool === 'AddReport') {
+        if (this.coordinates === '') {
+          // Offset coordinates to be visible when the tool view is over it
+          let offsetCenter = this.map.project(this.map.getCenter())
+          offsetCenter = this.map.unproject([
+            offsetCenter.x,
+            offsetCenter.y - 75
+          ])
+          this.coordinates = `${offsetCenter.lat}, ${offsetCenter.lng}`
+        }
+        this.addReportMarker = new mapboxgl.Marker({
+          draggable: true
+        })
+          .setLngLat([
+            parseFloat(this.coordinates.split(',')[1]),
+            parseFloat(this.coordinates.split(',')[0])
+          ])
+          .addTo(this.map)
+          .on('dragend', () => this.queryAddress())
+      } else {
+        if (this.addReportMarker) this.addReportMarker.remove()
+      }
+    },
     addReportPopup: function(e, cluster = false) {
       let coordinates = e.features[0].geometry.coordinates.slice()
       let reportProperties = e.features[0].properties
@@ -184,6 +208,20 @@ export default {
         )
         .addTo(this.map)
     },
+    queryAddress: async function() {
+      let markerlngLat = this.addReportMarker.getLngLat()
+      this.coordinates = `${markerlngLat.lat}, ${markerlngLat.lng}`
+      const res = await axios.get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${markerlngLat.lng},${markerlngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
+        {
+          timeout: 15000
+        }
+      )
+      this.address =
+        res.data.features.length > 0
+          ? res.data.features[0].place_name
+          : this.$t('no_address_found')
+    },
     createMap() {
       return new Promise(resolve => {
         mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_TOKEN
@@ -197,46 +235,48 @@ export default {
           refreshExpiredTiles: false
         })
 
-        // Restore marker if the page loads on a unfinished reporting
-        if (this.isFormActive && this.coordinates !== '')
-          this.newMarker = new mapboxgl.Marker()
-            .setLngLat(this.coordinates.split(',').reverse())
-            .addTo(this.map)
-
         this.map.on('click', async e => {
+          let features = this.map
+            .queryRenderedFeatures(e.point)
+            .map(feature => feature.source)
           if (
-            this.map
-              .queryRenderedFeatures(e.point)
-              .filter(feature => feature.source === 'spider-leaves').length ===
-            0
-          )
+            features.filter(feature => feature === 'spider-leaves').length === 0
+          ) {
             this.clearSpiderifiedCluster(this.map) // Clear spiderified cluster on base map click only
+          }
+          // Do not create a marker if
+          // add report form (at step 0) is active
+          // or if clicked position is overlapping with other layers
+          if (
+            this.getCurrentStep() !== 0 ||
+            [
+              'reports',
+              'unclustered-reports',
+              'clusters',
+              'cluster-count',
+              'spider-leaves',
+              'spider-legs'
+            ].some(layerId => features.includes(layerId))
+          )
+            return false
 
-          if (!this.isFormActive || this.currentStep !== 0) return false
-          if (this.newMarker !== '') this.newMarker.remove()
+          if (this.addReportMarker !== '') this.addReportMarker.remove()
 
-          this.newMarker = new mapboxgl.Marker()
+          this.addReportMarker = new mapboxgl.Marker({
+            draggable: true
+          })
             .setLngLat(e.lngLat)
             .addTo(e.target)
+            .on('dragend', () => this.queryAddress())
 
-          this.coordinates = `${e.lngLat.lat}, ${e.lngLat.lng}`
-          const res = await axios.get(
-            `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
-            {
-              timeout: 15000
-            }
-          )
-          this.address =
-            res.data.features.length > 0
-              ? res.data.features[0].place_name
-              : this.$t('no_address_found')
+          this.queryAddress()
         })
 
         let geolocator = new mapboxgl.GeolocateControl({
           positionOptions: {
             enableHighAccuracy: true
           },
-          trackUserLocation: true,
+          trackUserLocation: false, // Do not re-center map on geolocation update
           showUserLocation: true
         })
 
@@ -411,8 +451,11 @@ export default {
           this.clearSpiderifiedCluster(this.map)
         })
 
+      this.initAddReportMarker(this.getActiveTool())
+
       this.isMapReady = true
     },
+    ...toolBarModule.mapGetters(['getActiveTool']),
     ...reportsModule.mapGetters([
       'getReports',
       'getFilteredReports',
@@ -579,32 +622,15 @@ export default {
         )
     },
     ...tracersModule.mapGetters(['getTracerById', 'getFilteredTracers']),
+    ...reportsModule.mapActions(['loadReports']),
+    ...addReportModule.mapMutations(['setCoordinates', 'setAddress']),
     ...addReportModule.mapGetters([
-      'getCurrentStep',
+      'getCoordinates',
       'getAddress',
-      'getIsFormActive',
-      'getCoordinates'
-    ]),
-    ...addReportModule.mapMutations([
-      'setCurrentStep',
-      'setAddress',
-      'setIsFormActive',
-      'setCoordinates'
-    ]),
-    ...reportsModule.mapActions(['loadReports'])
+      'getCurrentStep'
+    ])
   },
   computed: {
-    ...addReportModule.mapState({
-      currentStep: state => state.currentStep
-    }),
-    currentStep: {
-      set(value) {
-        this.setCurrentStep(value)
-      },
-      get() {
-        return this.getCurrentStep()
-      }
-    },
     ...addReportModule.mapState({
       address: state => state.address
     }),
@@ -626,17 +652,6 @@ export default {
       get() {
         return this.getCoordinates()
       }
-    },
-    ...addReportModule.mapState({
-      isFormActive: state => state.isFormActive
-    }),
-    isFormActive: {
-      set(value) {
-        this.setIsFormActive(value)
-      },
-      get() {
-        return this.getIsFormActive()
-      }
     }
   }
 }
@@ -651,7 +666,7 @@ export default {
 }
 
 .map {
-  width: calc(100% - 125px); /* toolbar width */
+  width: calc(100% - 100px); /* toolbar width */
   position: fixed;
   right: 0;
   height: calc(100vh - 55px); /* header height + margin */

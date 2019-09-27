@@ -3,7 +3,6 @@ const state = {
   loading: true,
   success: false,
   errors: [],
-  isFormActive: false,
   coordinates: '',
   address: '',
   currentStep: ''
@@ -17,9 +16,6 @@ const getters = {
   },
   getSuccess: state => {
     return state.success
-  },
-  getIsFormActive: state => {
-    return state.isFormActive
   },
   getCoordinates: state => {
     return state.coordinates
@@ -40,9 +36,6 @@ const mutations = {
   setError: (state, { errors }) => {
     state.errors = errors
     state.loading = false
-  },
-  setIsFormActive: (state, isFormActive) => {
-    state.isFormActive = isFormActive
   },
   setCoordinates: (state, coordinates) => {
     state.coordinates = coordinates

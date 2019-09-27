@@ -2,23 +2,31 @@
   <div class="tool-bar">
     <keep-alive>
       <Tool
+        toolComponent="AddReport"
+        :toolTitle="$t('add_report')"
+        :toolViewTitle="$t('add_report')"
+        toolIcon="plus"
+        toolButtonColorMod="is-success"
+        :class="{ active: getActiveTool === 'AddReport' }"
+      ></Tool>
+    </keep-alive>
+    <keep-alive>
+      <Tool
         toolComponent="Information"
         :toolTitle="$t('information')"
         toolViewTitle="Ocean Plastic Tracker"
         toolIcon="info-circle"
+        toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
       ></Tool>
     </keep-alive>
-    <p class="filter-by">
-      <span class="icon"> <font-awesome-icon icon="filter" /> </span
-      >{{ $t('filter_by') }}
-    </p>
     <keep-alive>
       <Tool
         toolComponent="FilterReportsByTracer"
         :toolTitle="$t('tracers')"
         :toolViewTitle="$t('filter_reports_by_tracer_title')"
         toolIcon="filter"
+        toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
       ></Tool>
     </keep-alive>
@@ -28,6 +36,7 @@
         :toolTitle="$t('date')"
         :toolViewTitle="$t('filter_reports_by_date_title')"
         toolIcon="filter"
+        toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByDate' }"
       ></Tool>
     </keep-alive>
@@ -37,6 +46,8 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Tool from '@/components/Tool'
+import Bowser from 'bowser'
+
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
@@ -53,6 +64,17 @@ export default {
     ...toolBarModule.mapGetters(['getActiveTool']),
     ...toolBarModule.mapMutations(['setActiveTool']),
     ...toolBarModule.mapActions(['toggleActiveComponent'])
+  },
+  mounted() {
+    const browser = Bowser.getParser(window.navigator.userAgent)
+    const isBrokenBrowser = browser.satisfies({
+      safari: '>1'
+    })
+    // Tool display with overflow does not work on Safari
+    // Todo refactor tools
+    if (isBrokenBrowser) {
+      document.querySelector('.tool-bar').style.overflow = 'visible'
+    }
   }
 }
 </script>
@@ -63,9 +85,9 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 125px;
-  max-width: 125px;
-  min-width: 125px;
+  width: 100px;
+  max-width: 100px;
+  min-width: 100px;
   background-color: white;
   z-index: 10;
   position: fixed;
@@ -94,13 +116,9 @@ p {
     margin-left: 56px;
     align-items: flex-start;
     flex-direction: row;
-    overflow: visible;
+    overflow: scroll;
     /* More than hamburger menu */
     z-index: 31;
-  }
-
-  .filter-by {
-    display: none;
   }
 }
 </style>
@@ -108,24 +126,27 @@ p {
 <i18n>
 {
   "en": {
+    "add_report": "Report",
     "tracers": "Tracers",
-    "information": "Information",
+    "information": "Info",
     "filter_by": "Filter by",
     "filter_reports_by_tracer_title": "Filter by tracers",
     "date": "Date",
     "filter_reports_by_date_title": "Filter by date"
   },
   "fr": {
+    "add_report": "Signaler",
     "tracers": "Traceurs",
-    "information": "Information",
+    "information": "Info",
     "filter_by": "Filtrer par",
     "filter_reports_by_tracer_title": "Filtrer par traceurs",
     "date": "Date",
     "filter_reports_by_date_title": "Filtrer par date"
   },
   "es": {
+    "add_report": "Reportar",
     "tracers": "Trazadores",
-    "information": "Información",
+    "information": "Info",
     "filter_by": "Filtrado por",
     "filter_reports_by_tracer_title": "Filtrar por trazadores",
     "date": "Fecha",

@@ -44,6 +44,10 @@ export default {
 .tool-information {
   p {
     margin-bottom: 1rem;
+
+    span {
+      font-size: 1rem !important; // override back office editor font-size
+    }
   }
 
   h1,
