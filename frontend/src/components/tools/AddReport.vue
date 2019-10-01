@@ -1,28 +1,17 @@
 <template>
   <div class="add-report-layer-tool">
+    <b-message type="is-info" v-if="!this.$auth.check()">{{ $t('why_account') }}</b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
-        <div class="step-details">
-          <p class="step-title">{{ $t('location') }}</p>
-        </div>
-      </div>
-      <div class="step-item is-active">
-        <div class="step-marker">2</div>
         <div class="step-details">
           <p class="step-title">{{ $t('report') }}</p>
         </div>
       </div>
       <div class="step-item">
-        <div class="step-marker">3</div>
+        <div class="step-marker">2</div>
         <div class="step-details">
           <p class="step-title">{{ $tc('tracers', '1') }}</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-marker">4</div>
-        <div class="step-details">
-          <p class="step-title">{{ $t('done') }}</p>
         </div>
       </div>
       <form class="add-report-form">
@@ -36,16 +25,11 @@
                 errors.has('coordinates') ? errors.first('coordinates') : ''
               "
             >
-              <b-input
-                v-model="coordinates"
-                type="text"
-                name="coordinates"
-                v-validate="'required'"
-              ></b-input>
+              <b-input v-model="coordinates" type="text" name="coordinates" v-validate="'required'"></b-input>
             </b-field>
-            <p>{{ $t('click_to_report') }}</p>
             <b-field
               :label="$t('address')"
+              class="hidden"
               :type="errors.has('address') ? 'is-danger' : ''"
               :message="errors.has('address') ? errors.first('address') : ''"
             >
@@ -59,18 +43,10 @@
                   disabled="true"
                   expanded
                 ></b-input>
-                <p class="mapboxgl-ctrl mapboxgl-ctrl-group">
-                  <b-button
-                    class="geolocation-button mapboxgl-ctrl-icon mapboxgl-ctrl-geolocate"
-                    @click="setCoordinatesToCurrentPosition()"
-                  ></b-button>
-                </p>
               </b-field>
             </b-field>
-          </div>
-          <div class="step-content">
-            <p>{{ $t('why_account') }}</p>
             <b-field
+              v-show="!this.$auth.check()"
               :label="$t('name_pseudo')"
               :type="errors.has('username') ? 'is-danger' : ''"
               :message="errors.has('username') ? errors.first('username') : ''"
@@ -80,11 +56,11 @@
                 name="username"
                 :data-vv-as="$t('name_pseudo') | lowercase"
                 v-validate="'required'"
-                :disabled="this.$auth.check()"
               ></b-input>
             </b-field>
             <b-field
               class="file"
+              :label="$t('photo')"
               :type="errors.has('file') ? 'is-danger' : ''"
               :message="errors.has('file') ? errors.first('file') : ''"
               v-if="this.$auth.user() && !this.$auth.user().senior"
@@ -97,14 +73,12 @@
               >
                 <a class="button is-primary">
                   <b-icon icon="upload"></b-icon>
-                  <span>{{ $t('photo') }}</span>
+                  <span>{{ $t('upload') }}</span>
                 </a>
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
-              <p class="file-multiple-tracer">
-                {{ $t('photo_multiple_tracer') }}
-              </p>
             </b-field>
+            <b-message type="is-info" class="file-multiple-tracer">{{ $t('photo_multiple_tracer') }}</b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -116,7 +90,6 @@
                 v-model="reportDate"
                 name="reportDate"
                 placeholder="$t('click_select')"
-                inline
                 :month-names="monthNames"
                 :day-names="dayNames"
                 :first-day-of-week="firstDayOfTheWeek"
@@ -158,9 +131,7 @@
                   v-for="(addReportValidationError,
                   index) in addReportsValidationErrors[index]"
                   :key="index"
-                >
-                  - {{ addReportValidationError.metadata.reason }}
-                </li>
+                >- {{ addReportValidationError.metadata.reason }}</li>
               </ul>
             </b-message>
             <div v-for="(tracer, index) in selectedTracers" :key="index">
@@ -217,15 +188,10 @@
                     <template slot-scope="props">
                       <div class="media">
                         <div class="media-left">
-                          <img
-                            class="image is-64x64"
-                            :src="`${apiUrl}${props.option.photo}`"
-                          />
+                          <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`" />
                         </div>
                         <div class="media-content">
-                          <p class="autocomplete-tracer-name">
-                            {{ props.option.name }}
-                          </p>
+                          <p class="autocomplete-tracer-name">{{ props.option.name }}</p>
                           <small>{{ props.option.kind }}</small>
                         </div>
                       </div>
@@ -295,9 +261,11 @@
                 <b-icon icon="plus"></b-icon>
               </a>
             </b-field>
-          </div>
-          <div class="step-content">
-            <p>{{ $t('report_review') }}</p>
+            <b-message
+              v-if="areAllReportsSubmitted"
+              type="is-success"
+              aria-close-label="Close message"
+            >{{ $t('report_review') }}</b-message>
           </div>
         </div>
       </form>
@@ -308,8 +276,7 @@
             id="prevAction"
             data-nav="previous"
             class="button is-light"
-            >{{ $t('previous') }}</a
-          >
+          >{{ $t('previous') }}</a>
         </div>
         <div class="steps-action">
           <button
@@ -318,25 +285,24 @@
             data-nav="next"
             class="button"
             :class="{
-              'is-success': currentStep === 2,
-              hidden: currentStep === 3,
-              'is-loading': currentStep === 2 && this.areSomeReportsSubmitting
+              'is-success': currentStep === 1,
+              'hidden': currentStep === 1  && this.areAllReportsSubmitted,
+              'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
             }"
-            :disabled="this.anySubmitFailed === true ? 'disabled' : ''"
+            disabled="false"
           >
             {{
-              currentStep === 2 && !this.areAllReportsSubmitted
-                ? $t('submit')
-                : $t('next')
+            currentStep === 1
+            ? $t('submit')
+            : $t('next')
             }}
           </button>
           <a
             href="#"
             class="button is-danger close-button-step"
-            :class="{ hidden: currentStep !== 3 }"
+            :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
             @click="closeAddReportForm"
-            >{{ $t('close') }}</a
-          >
+          >{{ $t('close') }}</a>
         </div>
       </div>
     </div>
@@ -381,7 +347,7 @@ export default {
       bulmaSteps: {},
       monthNames: moment.months(),
       dayNames: moment.weekdaysShort(),
-      firstDayOfTheWeek: this.$i18n.locale === 'en' ? 0 : 1
+      firstDayOfTheWeek: moment().isoWeekday() === 1 ? 0 : 1
     }
   },
   mounted() {
@@ -395,24 +361,10 @@ export default {
         beforeNext: step => {
           return new Promise((resolve, reject) => {
             if (step === 0) {
-              this.username = this.$auth.check() ? this.$auth.user().name : ''
-              return Promise.all([
-                this.$validator.validate('coordinates'),
-                this.$validator.validate('address')
-              ])
-                .then(validation => {
-                  let validateResult = validation.every(v => v)
-                  validateResult
-                    ? resolve(validateResult)
-                    : reject(validateResult)
-                })
-                .catch(error => console.error(error))
-            }
-            if (step === 1) {
               let validatefile = new Promise(resolve => resolve(true))
 
               // The 'file' field does not always exist depending if the user is senior or not
-              // vee-validate complains when it does not
+              // vee-validate complains when it does not exist
               if (
                 !this.$auth.check() ||
                 (this.$auth.user() && !this.$auth.user().senior)
@@ -421,6 +373,8 @@ export default {
               }
 
               return Promise.all([
+                this.$validator.validate('coordinates'),
+                this.$validator.validate('address'),
                 this.$validator.validate('username'),
                 this.$validator.validate('reportDate'),
                 this.$validator.validate('description'),
@@ -428,15 +382,13 @@ export default {
               ])
                 .then(validation => {
                   validation.some(v => v) &&
-                    (document.querySelector(
-                      '.add-report-layer-tool'
-                    ).scrollTop = 0)
+                    (document.querySelector('.tool-view').scrollTop = 0)
                   resolve(validation.every(v => v))
                 })
                 .catch(error => console.error(error))
             }
 
-            if (step === 2) {
+            if (step === 1) {
               return this.$validator
                 .validateAll()
                 .then(validateForm => {
@@ -452,39 +404,13 @@ export default {
                 })
                 .catch(error => console.error(error))
             }
+
             resolve(true)
           })
         },
         onShow: step => {
           return new Promise(resolve => {
-            const oldStep = this.currentStep
-
             this.currentStep = step
-
-            if (oldStep === 3 && step === 2) {
-              this.goToFirstStep()
-            }
-
-            if (step === 3) {
-              this.address = ''
-              this.coordinates = ''
-              this.description = ''
-              this.file = null
-              this.areSubmitting = [false]
-              this.areSubmitted = [false]
-              this.addReportsErrors = []
-              this.addReportsValidationErrors = []
-              this.isSaved = [false]
-              this.photo = ''
-              this.quantities = [1]
-              this.reportDate = new Date()
-              this.selectedTracers = [{}]
-              this.tracerNames = ['']
-              this.username = this.$auth.check() ? this.$auth.user().name : ''
-              this.$validator.reset()
-            }
-
-            resolve()
           })
         }
       }
@@ -504,38 +430,6 @@ export default {
     ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
     ...toolBarModule.mapActions(['closeToolbar']),
-    setCoordinatesToCurrentPosition() {
-      if (window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(
-          pos => {
-            this.coordinates = `${pos.coords.latitude}, ${pos.coords.longitude}`
-            axios
-              .get(
-                `https://api.mapbox.com/geocoding/v5/mapbox.places/${pos.coords.longitude},${pos.coords.latitude}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
-                {
-                  timeout: 15000
-                }
-              )
-              .then(res => {
-                this.address =
-                  res.data.features.length > 0
-                    ? res.data.features[0].place_name
-                    : this.$t('no_address_found')
-              })
-          },
-          () => {
-            this.$toast.open({
-              message: this.$t('get_current_position_failure'),
-              duration: 5000,
-              type: 'is-danger'
-            })
-          },
-          { enableHighAccuracy: true }
-        )
-
-        this.mapGeolocationControl && this.mapGeolocationControl.trigger()
-      }
-    },
     async submitReports() {
       this.addReportsErrors = []
       this.addReportsValidationErrors = []
@@ -618,14 +512,31 @@ export default {
       })
     },
     closeAddReportForm() {
-      if (this.bulmaSteps.get_current_step_id() === 3) {
-        this.goToFirstStep()
+      if (
+        this.bulmaSteps.get_current_step_id() === 1 &&
+        this.areAllReportsSubmitted
+      ) {
+        this.resetForm()
       }
     },
-    openAddReportForm() {
+    resetForm() {
       this.closeToolbar()
-    },
-    goToFirstStep() {
+      this.address = ''
+      this.coordinates = ''
+      this.description = ''
+      this.file = null
+      this.areSubmitting = [false]
+      this.areSubmitted = [false]
+      this.addReportsErrors = []
+      this.addReportsValidationErrors = []
+      this.isSaved = [false]
+      this.photo = ''
+      this.quantities = [1]
+      this.reportDate = new Date()
+      this.selectedTracers = [{}]
+      this.tracerNames = ['']
+      this.username = this.$auth.check() ? this.$auth.user().name : ''
+      this.$validator.reset()
       for (let i = 0; i < this.currentStep + 1; i++) {
         this.bulmaSteps.previous_step()
       }
@@ -749,20 +660,26 @@ export default {
 <style lang="scss" scoped>
 .add-report-layer-tool {
   .field.file {
+    margin-top: 0;
     flex-wrap: wrap;
-    align-items: center;
+    margin-bottom: 0;
 
     .help {
       flex-basis: 100%;
+    }
+
+    label.label {
+      width: 100%;
+    }
+
+    .file-name {
+      border-width: 1px 1px 1px 1px;
+      margin-bottom: 1rem;
     }
   }
 
   .steps {
     flex-grow: 1;
-  }
-
-  .file-multiple-tracer {
-    margin-left: 0.5em;
   }
 
   .description-field {
@@ -796,8 +713,9 @@ export default {
   right: 65px;
 }
 
-.add-tracer-field {
+.add-report-layer-tool .step-content > .field.add-tracer-field {
   text-align: center;
+  margin-top: 0;
 }
 
 .add-tracer-input {
@@ -851,8 +769,8 @@ export default {
   }
 }
 
-.upload {
-  margin-bottom: 0em;
+.upload .button {
+  margin-bottom: 0.5rem;
 }
 
 .quantity-field {
@@ -861,6 +779,14 @@ export default {
 </style>
 
 <style>
+.steps .add-report-form .steps-content {
+  margin-top: 1rem;
+}
+
+.add-report-layer-tool {
+  margin-top: 1rem;
+}
+
 .add-report-form .datepicker.control {
   text-align: center;
 }
@@ -895,6 +821,18 @@ export default {
 .is-label-hidden label.label {
   visibility: hidden;
 }
+
+.add-report-layer-tool .message {
+  margin-bottom: 0;
+}
+
+.add-report-layer-tool .step-content > .field {
+  margin-top: 1.1rem;
+}
+
+.add-report-layer-tool .field.file label {
+  width: 100%;
+}
 </style>
 
 <i18n>
@@ -905,7 +843,6 @@ export default {
     "address": "Address",
     "cancel_report": "Close reporting",
     "click_select": "Click to select",
-    "click_to_report": "Drag the marker or click on the map to geolocate your report",
     "close": "Close",
     "description": "Description",
     "done": "Done",
@@ -924,7 +861,8 @@ export default {
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Fail to submit report",
     "photo": "Photo",
-    "photo_multiple_tracer": "A photo can contain several tracers",
+    "upload": "Click to upload",
+    "photo_multiple_tracer": "A photo can contain multiple tracers",
     "load_tracers_failure": "Fail to load tracers",
     "why_account": "You can create an account to manage your reports and have your name pre-filled."
   },
@@ -934,7 +872,6 @@ export default {
     "address": "Adresse",
     "cancel_report": "Fermer l'ajout de signalement",
     "click_select": "Cliquez pour sélectionner",
-    "click_to_report": "Glisser la punaise ou cliquer sur la carte pour localiser le signalement",
     "close": "Fermer",
     "description": "Description",
     "done": "Fin",
@@ -953,6 +890,7 @@ export default {
     "tracers": "Traceur | Traceurs",
     "submit_report_failure": "Échec d'ajout d'un signalement",
     "photo": "Photo",
+    "upload": "Upload",
     "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
     "load_tracers_failure": "Échec de chargement des tracers",
     "why_account": "Vous pouvez créer un compte pour gérer vos signalements et avoir votre nom pré-rempli."
@@ -963,7 +901,6 @@ export default {
     "address": "Dirección",
     "cancel_report": "Cerrar agrega testimonio",
     "click_select": "Clic para seleccionar",
-    "click_to_report": "Arrastre el marcador o haga clic en el mapa para ubicar el testimonio",
     "close": "Cerrar",
     "description": "Descripción",
     "done": "Final",
@@ -982,6 +919,7 @@ export default {
     "tracers": "Trazador | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
+    "upload": "Upload",
     "photo_multiple_tracer": "Una foto puede contener varios marcadores",
     "load_tracers_failure": "Fallo al cargar los trazadores",
     "why_account": "Puede crear una cuenta para administrar sus informes y completar su nombre."

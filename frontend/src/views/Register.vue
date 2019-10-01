@@ -2,7 +2,7 @@
   <div class="section">
     <div class="container">
       <h1 class="title is-1">{{ $t('register') }}</h1>
-      <p>{{ $t('why_account') }}</p>
+      <b-message type="is-info">{{ $t('why_account') }}</b-message>
       <b-message
         v-show="formErrors.length"
         :title="$tc('errors', formErrors.length)"
@@ -76,9 +76,7 @@
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
         <div class="buttons">
-          <button type="submit" class="button is-success">
-            {{ $t('register') }}
-          </button>
+          <button type="submit" class="button is-success">{{ $t('register') }}</button>
         </div>
       </form>
     </div>
