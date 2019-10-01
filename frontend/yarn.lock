@@ -2653,7 +2653,7 @@ builtin-status-codes@^3.0.0:
 
 "bulma-steps@https://git@github.com/FranckKe/bulma-steps.git":
   version "2.2.1"
-  resolved "https://git@github.com/FranckKe/bulma-steps.git#1aed704846d214b74a180c60601fd69e377c93e1"
+  resolved "https://git@github.com/FranckKe/bulma-steps.git#1ec9d5f645b584afd0e214bad25765904cf5e84b"
 
 bulma@0.7.4:
   version "0.7.4"

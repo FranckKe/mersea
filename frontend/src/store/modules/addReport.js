@@ -5,7 +5,7 @@ const state = {
   errors: [],
   coordinates: '',
   address: '',
-  currentStep: ''
+  currentStep: 0
 }
 const getters = {
   getLoading: state => {

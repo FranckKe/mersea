@@ -4,7 +4,7 @@
       <Tool
         toolComponent="AddReport"
         :toolTitle="$t('add_report')"
-        :toolViewTitle="$t('add_report')"
+        :toolViewTitle="$t('add_report_title')"
         toolIcon="plus"
         toolButtonColorMod="is-success"
         :class="{ active: getActiveTool === 'AddReport' }"
@@ -127,6 +127,7 @@ p {
 {
   "en": {
     "add_report": "Report",
+    "add_report_title": "Report a waste",
     "tracers": "Tracers",
     "information": "Info",
     "filter_by": "Filter by",
@@ -136,6 +137,7 @@ p {
   },
   "fr": {
     "add_report": "Signaler",
+    "add_report_title": "Signaler un déchet",
     "tracers": "Traceurs",
     "information": "Info",
     "filter_by": "Filtrer par",
@@ -145,6 +147,7 @@ p {
   },
   "es": {
     "add_report": "Reportar",
+    "add_report_title": "Reportar un desperdicio",
     "tracers": "Trazadores",
     "information": "Info",
     "filter_by": "Filtrado por",

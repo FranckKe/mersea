@@ -143,6 +143,7 @@ export default {
           ])
           this.coordinates = `${offsetCenter.lat}, ${offsetCenter.lng}`
         }
+
         this.addReportMarker = new mapboxgl.Marker({
           draggable: true
         })
@@ -152,6 +153,8 @@ export default {
           ])
           .addTo(this.map)
           .on('dragend', () => this.queryAddress())
+
+        this.queryAddress()
       } else {
         if (this.addReportMarker) this.addReportMarker.remove()
       }
@@ -248,15 +251,9 @@ export default {
           // add report form (at step 0) is active
           // or if clicked position is overlapping with other layers
           if (
-            this.getCurrentStep() !== 0 ||
-            [
-              'reports',
-              'unclustered-reports',
-              'clusters',
-              'cluster-count',
-              'spider-leaves',
-              'spider-legs'
-            ].some(layerId => features.includes(layerId))
+            this.getActiveTool() !== 'AddReport' ||
+            (this.getActiveTool() === 'AddReport' &&
+              this.getCurrentStep() !== 0)
           )
             return false
 
@@ -266,7 +263,7 @@ export default {
             draggable: true
           })
             .setLngLat(e.lngLat)
-            .addTo(e.target)
+            .addTo(this.map)
             .on('dragend', () => this.queryAddress())
 
           this.queryAddress()
