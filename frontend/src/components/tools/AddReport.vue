@@ -1,6 +1,8 @@
 <template>
   <div class="add-report-layer-tool">
-    <b-message type="is-info" v-if="!this.$auth.check()">{{ $t('why_account') }}</b-message>
+    <b-message type="is-info" v-if="!this.$auth.check()">
+      {{ $t('why_account') }}
+    </b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
@@ -25,7 +27,12 @@
                 errors.has('coordinates') ? errors.first('coordinates') : ''
               "
             >
-              <b-input v-model="coordinates" type="text" name="coordinates" v-validate="'required'"></b-input>
+              <b-input
+                v-model="coordinates"
+                type="text"
+                name="coordinates"
+                v-validate="'required'"
+              ></b-input>
             </b-field>
             <b-field
               :label="$t('address')"
@@ -78,7 +85,9 @@
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
             </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">{{ $t('photo_multiple_tracer') }}</b-message>
+            <b-message type="is-info" class="file-multiple-tracer">
+              {{ $t('photo_multiple_tracer') }}
+            </b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -131,7 +140,9 @@
                   v-for="(addReportValidationError,
                   index) in addReportsValidationErrors[index]"
                   :key="index"
-                >- {{ addReportValidationError.metadata.reason }}</li>
+                >
+                  - {{ addReportValidationError.metadata.reason }}
+                </li>
               </ul>
             </b-message>
             <div v-for="(tracer, index) in selectedTracers" :key="index">
@@ -188,10 +199,15 @@
                     <template slot-scope="props">
                       <div class="media">
                         <div class="media-left">
-                          <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`" />
+                          <img
+                            class="image is-64x64"
+                            :src="`${apiUrl}${props.option.photo}`"
+                          />
                         </div>
                         <div class="media-content">
-                          <p class="autocomplete-tracer-name">{{ props.option.name }}</p>
+                          <p class="autocomplete-tracer-name">
+                            {{ props.option.name }}
+                          </p>
                           <small>{{ props.option.kind }}</small>
                         </div>
                       </div>
@@ -265,7 +281,8 @@
               v-if="areAllReportsSubmitted"
               type="is-success"
               aria-close-label="Close message"
-            >{{ $t('report_review') }}</b-message>
+              >{{ $t('report_review') }}</b-message
+            >
           </div>
         </div>
       </form>
@@ -276,7 +293,8 @@
             id="prevAction"
             data-nav="previous"
             class="button is-light"
-          >{{ $t('previous') }}</a>
+            >{{ $t('previous') }}</a
+          >
         </div>
         <div class="steps-action">
           <button
@@ -286,23 +304,20 @@
             class="button"
             :class="{
               'is-success': currentStep === 1,
-              'hidden': currentStep === 1  && this.areAllReportsSubmitted,
+              hidden: currentStep === 1 && this.areAllReportsSubmitted,
               'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
             }"
             disabled="false"
           >
-            {{
-            currentStep === 1
-            ? $t('submit')
-            : $t('next')
-            }}
+            {{ currentStep === 1 ? $t('submit') : $t('next') }}
           </button>
           <a
             href="#"
             class="button is-danger close-button-step"
             :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
             @click="closeAddReportForm"
-          >{{ $t('close') }}</a>
+            >{{ $t('close') }}</a
+          >
         </div>
       </div>
     </div>
@@ -317,7 +332,6 @@ const toolBarModule = createNamespacedHelpers('toolBar')
 
 import bulmaSteps from 'bulma-steps'
 import moment from 'moment'
-import axios from 'axios'
 
 export default {
   name: 'addReport',
@@ -411,6 +425,7 @@ export default {
         onShow: step => {
           return new Promise(resolve => {
             this.currentStep = step
+            resolve(true)
           })
         }
       }

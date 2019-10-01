@@ -215,11 +215,7 @@ export default {
       let markerlngLat = this.addReportMarker.getLngLat()
       this.coordinates = `${markerlngLat.lat}, ${markerlngLat.lng}`
       const res = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-          markerlngLat.lng
-        },${markerlngLat.lat}.json?access_token=${
-          process.env.VUE_APP_MAPBOX_TOKEN
-        }`,
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${markerlngLat.lng},${markerlngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
         {
           timeout: 15000
         }

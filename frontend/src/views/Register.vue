@@ -76,7 +76,9 @@
           <b-checkbox v-model="rememberMe">{{ $t('remember_me') }}</b-checkbox>
         </div>
         <div class="buttons">
-          <button type="submit" class="button is-success">{{ $t('register') }}</button>
+          <button type="submit" class="button is-success">
+            {{ $t('register') }}
+          </button>
         </div>
       </form>
     </div>

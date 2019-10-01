@@ -13,7 +13,10 @@
     <div class="tool-view" v-if="isActive">
       <div class="title-wrapper">
         <h4 class="title is-4">{{ toolViewTitle }}</h4>
-        <a @click="toggleActiveComponent(toolComponent)" class="button is-danger close-tool-button">
+        <a
+          @click="toggleActiveComponent(toolComponent)"
+          class="button is-danger close-tool-button"
+        >
           <font-awesome-icon icon="times" />
         </a>
       </div>
