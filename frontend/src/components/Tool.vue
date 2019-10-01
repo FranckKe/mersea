@@ -93,10 +93,11 @@ export default {
 
 .tool-view {
   width: 500px;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 145px);
+  border-radius: 4px;
   position: fixed;
-  top: 56px; /* Menu heigth */
-  left: 100px; /* Tool bar width */
+  top: 112px; /* Menu heigth + search bar height + margin */
+  left: 110px; /* Tool bar width + margin */
   background-color: white;
   z-index: 11;
   padding: 10px;
