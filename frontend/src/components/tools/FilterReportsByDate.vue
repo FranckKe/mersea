@@ -6,7 +6,7 @@
       :can-cancel="false"
     ></b-loading>
     <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
-    <div class="buttons">
+    <div class="buttons first-row">
       <button
         class="button is-primary"
         :class="{ 'is-active': isReportedAtEqualTo(startOfRange('week')) }"
@@ -64,8 +64,7 @@
         :day-names="dayNames"
         :first-day-of-week="firstDayOfTheWeek"
         v-validate="fieldFromRules"
-      >
-      </b-datepicker>
+      ></b-datepicker>
     </b-field>
     <b-field :label="$t('until')">
       <b-datepicker
@@ -207,6 +206,10 @@ export default {
 
 .title.is-5 {
   margin-bottom: 0.5em;
+}
+
+.buttons.first-row {
+  margin-bottom: 0;
 }
 </style>
 

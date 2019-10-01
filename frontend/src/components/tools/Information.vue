@@ -42,6 +42,7 @@ export default {
 }
 
 .tool-information {
+  padding: 1.25rem;
   p {
     margin-bottom: 1rem;
 
@@ -79,12 +80,6 @@ export default {
   }
   h6 {
     font-size: 1rem;
-  }
-}
-
-@media only screen and (max-device-width: 1024px) {
-  .tool-information {
-    padding: 1.25rem;
   }
 }
 </style>
