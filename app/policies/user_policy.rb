@@ -1,5 +1,5 @@
 class UserPolicy < ApplicationPolicy
-  include Recaptcha::Verify
+  include Recaptcha::Adapters::ControllerMethods
 
   def me?
     owner?
