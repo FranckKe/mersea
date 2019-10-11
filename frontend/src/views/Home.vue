@@ -38,7 +38,8 @@ export default {
       addReportMarker: '',
       popup: '',
       popupCluster: '',
-      maxZoom: 17,
+      maxZoom: 18,
+      minZoom: 2,
       isMapReady: false,
       spiderifyAfterZoom: 12, // Spiderify after zoom N, zoom otherwise,
       maxLeavesToSpiderify: 255, // Max leave to display when spiderify to prevent filling the map with leaves,
@@ -195,11 +196,11 @@ export default {
                 <div class="media-content">
                   <div class="content">
                     <h5 class="title is-5"><b>${tracer.name}</b></h5>
-                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
                     <p>
                       ${reportProperties.quantity}${' '}
                       ${this.$i18n.tc('object', reportProperties.quantity)}
                     </p>
+                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
                       reportProperties.reported_at
                     )}</p>
@@ -231,7 +232,7 @@ export default {
         this.map = new mapboxgl.Map({
           container: 'map',
           style: 'mapbox://styles/mapbox/satellite-streets-v10?optimize=true',
-          minZoom: 3,
+          minZoom: this.minZoom,
           zoom: 5,
           maxZoom: this.maxZoom - 1,
           center: [0, 46.2276],
@@ -242,18 +243,25 @@ export default {
           let features = this.map
             .queryRenderedFeatures(e.point)
             .map(feature => feature.source)
+
           if (
             features.filter(feature => feature === 'spider-leaves').length === 0
-          ) {
+          )
             this.clearSpiderifiedCluster(this.map) // Clear spiderified cluster on base map click only
-          }
+
           // Do not create a marker if
           // add report form (at step 0) is active
           // or if clicked position is overlapping with other layers
           if (
             this.getActiveTool() !== 'AddReport' ||
             (this.getActiveTool() === 'AddReport' &&
-              this.getCurrentStep() !== 0)
+              this.getCurrentStep() !== 0) ||
+            features.filter(
+              feature =>
+                feature === 'spider-leaves' ||
+                feature === 'spider-legs' ||
+                feature === 'reports'
+            ).length !== 0
           )
             return false
 
@@ -328,7 +336,7 @@ export default {
           type: 'circle',
           source: 'reports',
           filter: ['has', 'point_count'],
-          minzoom: 3,
+          minzoom: this.minZoom,
           maxzoom: this.maxZoom,
           paint: {
             'circle-stroke-width': 2,
@@ -375,7 +383,7 @@ export default {
           type: 'symbol',
           source: 'reports',
           filter: ['has', 'point_count'],
-          minzoom: 3,
+          minzoom: this.minZoom,
           maxzoom: this.maxZoom,
           layout: {
             'text-field': '{point_count_abbreviated}',
@@ -393,7 +401,7 @@ export default {
           type: 'circle',
           source: 'reports',
           filter: ['!', ['has', 'point_count']],
-          minzoom: 3,
+          minzoom: this.minZoom,
           maxzoom: this.maxZoom,
           paint: {
             'circle-color': ['get', 'color'],
@@ -593,7 +601,7 @@ export default {
                 }
               },
               paint: {
-                'line-width': 3,
+                'line-width': this.minZoom,
                 'line-color': 'rgba(128, 128, 128, 0.5)'
               }
             })
