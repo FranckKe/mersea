@@ -1,5 +1,5 @@
 class ReportPolicy < ApplicationPolicy
-  include Recaptcha::Verify
+  include Recaptcha::Adapters::ControllerMethods
 
   def create?
     user.logged_in? || verify_recaptcha(model: record)

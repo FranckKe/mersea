@@ -1,5 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  include Recaptcha::Verify
+  include Recaptcha::Adapters::ControllerMethods
 
   respond_to :json
   before_action :configure_sign_up_params, only: [:create]
