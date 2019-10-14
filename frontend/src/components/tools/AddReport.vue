@@ -1,8 +1,8 @@
 <template>
   <div class="add-report-layer-tool">
-    <b-message type="is-info" v-if="!this.$auth.check()">{{
-      $t('why_account')
-    }}</b-message>
+    <b-message type="is-info" v-if="!this.$auth.check()">
+      {{ $t('why_account') }}
+    </b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
@@ -85,9 +85,9 @@
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
             </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">{{
-              $t('photo_multiple_tracer')
-            }}</b-message>
+            <b-message type="is-info" class="file-multiple-tracer">
+              {{ $t('photo_multiple_tracer') }}
+            </b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -278,7 +278,7 @@
               </a>
             </b-field>
             <b-message
-              v-if="areAllReportsSubmitted"
+              v-if="!anySubmitFailed"
               type="is-success"
               aria-close-label="Close message"
               >{{ $t('report_review') }}</b-message
