@@ -1,8 +1,8 @@
 <template>
   <div class="add-report-layer-tool">
-    <b-message type="is-info" v-if="!this.$auth.check()">{{
-      $t('why_account')
-    }}</b-message>
+    <b-message type="is-info" v-if="!this.$auth.check()">
+      {{ $t('why_account') }}
+    </b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
@@ -85,9 +85,9 @@
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
             </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">{{
-              $t('photo_multiple_tracer')
-            }}</b-message>
+            <b-message type="is-info" class="file-multiple-tracer">
+              {{ $t('photo_multiple_tracer') }}
+            </b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -278,7 +278,7 @@
               </a>
             </b-field>
             <b-message
-              v-if="areAllReportsSubmitted"
+              v-if="!anySubmitFailed"
               type="is-success"
               aria-close-label="Close message"
               >{{ $t('report_review') }}</b-message
@@ -361,7 +361,7 @@ export default {
       bulmaSteps: {},
       monthNames: moment.months(),
       dayNames: moment.weekdaysShort(),
-      firstDayOfTheWeek: moment().isoWeekday() === 1 ? 0 : 1
+      firstDayOfTheWeek: moment().weekday() === 1 ? 0 : 1
     }
   },
   mounted() {
@@ -663,7 +663,7 @@ export default {
       moment.locale(this.$i18n.locale)
       this.monthNames = moment.months()
       this.dayNames = moment.weekdaysShort()
-      this.firstDayOfTheWeek = this.$i18n.locale === 'en' ? 0 : 1
+      this.firstDayOfTheWeek = moment().weekday() === 1 ? 0 : 1
     },
     isSaved: function() {
       if (!this.anySubmitFailed) this.bulmaSteps.next_step()
