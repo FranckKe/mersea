@@ -361,7 +361,7 @@ export default {
       bulmaSteps: {},
       monthNames: moment.months(),
       dayNames: moment.weekdaysShort(),
-      firstDayOfTheWeek: moment().isoWeekday() === 1 ? 0 : 1
+      firstDayOfTheWeek: moment().weekday() === 1 ? 0 : 1
     }
   },
   mounted() {
@@ -663,7 +663,7 @@ export default {
       moment.locale(this.$i18n.locale)
       this.monthNames = moment.months()
       this.dayNames = moment.weekdaysShort()
-      this.firstDayOfTheWeek = this.$i18n.locale === 'en' ? 0 : 1
+      this.firstDayOfTheWeek = moment().weekday() === 1 ? 0 : 1
     },
     isSaved: function() {
       if (!this.anySubmitFailed) this.bulmaSteps.next_step()
