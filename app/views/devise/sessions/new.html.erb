@@ -18,7 +18,7 @@
 
     <% if devise_mapping.rememberable? -%>
       <div class="field">
-        <%= f.check_box :remember_me %>
+        <%= f.check_box :remember_me, { checked: true } %>
         <%= f.label t('activerecord.attributes.user.remember_me') %>
       </div>
     <% end -%>
