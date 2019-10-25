@@ -34,9 +34,11 @@ const getters = {
     }
   },
   getReportCount: state => tracerId =>
-    (state.reports.features || []).filter(
-      report => tracerId === report.properties.tracer_id
-    ).length
+    (state.reports.features || []).reduce((total, report) => {
+      return tracerId === report.properties.tracer_id
+        ? (total += report.properties.quantity)
+        : total
+    }, 0)
 }
 const mutations = {
   setLoading: (state, loading) => {

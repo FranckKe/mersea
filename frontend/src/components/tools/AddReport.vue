@@ -1,8 +1,8 @@
 <template>
   <div class="add-report-layer-tool">
-    <b-message type="is-info" v-if="!this.$auth.check()">
-      {{ $t('why_account') }}
-    </b-message>
+    <b-message type="is-info" v-if="!this.$auth.check()">{{
+      $t('why_account')
+    }}</b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
@@ -36,7 +36,6 @@
             </b-field>
             <b-field
               :label="$t('address')"
-              class="hidden"
               :type="errors.has('address') ? 'is-danger' : ''"
               :message="errors.has('address') ? errors.first('address') : ''"
             >
@@ -85,9 +84,9 @@
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
             </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">
-              {{ $t('photo_multiple_tracer') }}
-            </b-message>
+            <b-message type="is-info" class="file-multiple-tracer">{{
+              $t('photo_multiple_tracer')
+            }}</b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -293,6 +292,7 @@
             id="prevAction"
             data-nav="previous"
             class="button is-light"
+            :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
             >{{ $t('previous') }}</a
           >
         </div>
@@ -515,7 +515,7 @@ export default {
         method: 'POST',
         url: `/reports`,
         data: postDataJson,
-        timeout: 15000
+        timeout: 60000
       })
     },
     getBase64(file) {
@@ -679,17 +679,13 @@ export default {
     flex-wrap: wrap;
     margin-bottom: 0;
 
-    .help {
-      flex-basis: 100%;
-    }
-
     label.label {
       width: 100%;
     }
 
     .file-name {
       border-width: 1px 1px 1px 1px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
   }
 
@@ -732,10 +728,6 @@ export default {
 .add-report-layer-tool .step-content > .field.add-tracer-field {
   text-align: center;
   margin-top: 0;
-}
-
-.add-tracer-input {
-  margin-top: 20px;
 }
 
 .close-icon {
@@ -786,7 +778,7 @@ export default {
 }
 
 .upload .button {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .quantity-field {
@@ -843,11 +835,19 @@ export default {
 }
 
 .add-report-layer-tool .step-content > .field {
-  margin-top: 1.1rem;
+  margin-top: 1rem;
 }
 
 .add-report-layer-tool .field.file label {
   width: 100%;
+}
+
+.field.file p.help.is-danger {
+  flex-basis: 100%;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  margin-left: 0;
+  padding-top: 0;
 }
 </style>
 
