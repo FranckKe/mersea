@@ -202,6 +202,7 @@ export default {
 <style lang="scss" scoped>
 .daterange {
   position: relative;
+  margin-bottom: 1rem;
 }
 
 .title.is-5 {

@@ -100,8 +100,9 @@
           v-if="!$auth.check()"
           :to="'/register'"
           class="button is-success"
-          ><p>{{ $t('register') }}</p></router-link
         >
+          <p>{{ $t('register') }}</p>
+        </router-link>
       </div>
     </div>
   </nav>
@@ -111,17 +112,8 @@
 import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
 const pagesModule = createNamespacedHelpers('pages')
+const toolBarModule = createNamespacedHelpers('toolBar')
 import LangSwitcher from '@/components/LangSwitcher'
-
-const initResponsiveMenu = () => {
-  const navbarBurger = document.querySelector('.navbar-burger')
-  const $target = document.querySelector(`#${navbarBurger.dataset.target}`)
-
-  navbarBurger.addEventListener('click', () => {
-    navbarBurger.classList.toggle('is-active')
-    $target.classList.toggle('is-active')
-  })
-}
 
 export default {
   name: 'MenuNav',
@@ -135,7 +127,15 @@ export default {
     }
   },
   mounted() {
-    initResponsiveMenu()
+    const navbarBurger = document.querySelector('.navbar-burger')
+    const $target = document.querySelector(`#${navbarBurger.dataset.target}`)
+
+    navbarBurger.addEventListener('click', () => {
+      navbarBurger.classList.toggle('is-active')
+      $target.classList.toggle('is-active')
+
+      if (this.getActiveTool() !== '') this.closeToolbar()
+    })
   },
   computed: {
     ...pagesModule.mapState({
@@ -152,6 +152,8 @@ export default {
   },
   methods: {
     ...pagesModule.mapActions(['loadPages']),
+    ...toolBarModule.mapActions(['closeToolbar']),
+    ...toolBarModule.mapGetters(['getActiveTool']),
     slugify: slugify,
     logout: function() {
       this.$auth.logout({

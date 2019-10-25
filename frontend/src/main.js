@@ -20,6 +20,7 @@ import es from 'vee-validate/dist/locale/es'
 import fr from 'vee-validate/dist/locale/fr'
 import VeeValidate, { Validator } from 'vee-validate'
 import unorm from 'unorm'
+import '@babel/polyfill'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
