@@ -141,7 +141,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
+  config.remember_for = 3.months
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -165,7 +165,7 @@ Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
-  config.timeout_in = 1.week
+  config.timeout_in = 3.months
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
@@ -264,7 +264,7 @@ Devise.setup do |config|
 
   config.jwt do |jwt|
     jwt.secret = Rails.application.secrets.jwt_secret
-    jwt.expiration_time = 1.week
+    jwt.expiration_time = 3.months
   end
 
   # ==> Mountable engine configurations
