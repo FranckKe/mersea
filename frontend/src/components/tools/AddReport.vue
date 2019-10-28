@@ -1,8 +1,5 @@
 <template>
   <div class="add-report-layer-tool">
-    <b-message type="is-info" v-if="!this.$auth.check()">{{
-      $t('why_account')
-    }}</b-message>
     <div class="steps" id="addReportSteps">
       <div class="step-item is-active is-success">
         <div class="step-marker">1</div>
@@ -27,30 +24,25 @@
                 errors.has('coordinates') ? errors.first('coordinates') : ''
               "
             >
-              <b-input
-                v-model="coordinates"
-                type="text"
-                name="coordinates"
-                v-validate="'required'"
-              ></b-input>
+              <b-input v-model="coordinates" type="text" name="coordinates" v-validate="'required'"></b-input>
             </b-field>
             <b-field
               :label="$t('address')"
               :type="errors.has('address') ? 'is-danger' : ''"
               :message="errors.has('address') ? errors.first('address') : ''"
             >
-              <b-field grouped>
-                <b-input
-                  v-model="address"
-                  type="text"
-                  name="address"
-                  :data-vv-as="$t('address') | lowercase"
-                  v-validate="'required'"
-                  disabled="true"
-                  expanded
-                ></b-input>
-              </b-field>
+              <b-input
+                custom-class="address"
+                v-model="address"
+                type="text"
+                name="address"
+                :data-vv-as="$t('address') | lowercase"
+                v-validate="'required'"
+                disabled="true"
+                expanded
+              ></b-input>
             </b-field>
+            <b-message type="is-info">{{ $t('click_map') }}</b-message>
             <b-field
               v-show="!this.$auth.check()"
               :label="$t('name_pseudo')"
@@ -84,9 +76,11 @@
               </b-upload>
               <span class="file-name" v-if="file">{{ file.name }}</span>
             </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">{{
+            <b-message type="is-info" class="file-multiple-tracer">
+              {{
               $t('photo_multiple_tracer')
-            }}</b-message>
+              }}
+            </b-message>
             <b-field
               :label="$t('report_date')"
               :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -124,6 +118,11 @@
                 v-validate="'max:300'"
               ></b-input>
             </b-field>
+            <b-message type="is-info" v-if="!this.$auth.check()">
+              {{
+              $t('why_account')
+              }}
+            </b-message>
           </div>
           <div class="step-content">
             <b-message
@@ -139,9 +138,7 @@
                   v-for="(addReportValidationError,
                   index) in addReportsValidationErrors[index]"
                   :key="index"
-                >
-                  - {{ addReportValidationError.metadata.reason }}
-                </li>
+                >- {{ addReportValidationError.metadata.reason }}</li>
               </ul>
             </b-message>
             <div v-for="(tracer, index) in selectedTracers" :key="index">
@@ -190,6 +187,7 @@
                     "
                     field="name"
                     @select="option => (selectedTracers[index] = option)"
+                    :placeholder="$t('search_tracers')"
                     :data-vv-as="$tc('tracers', 1) | lowercase"
                     v-validate="'required'"
                     customClass="tracer-input"
@@ -198,15 +196,10 @@
                     <template slot-scope="props">
                       <div class="media">
                         <div class="media-left">
-                          <img
-                            class="image is-64x64"
-                            :src="`${apiUrl}${props.option.photo}`"
-                          />
+                          <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`" />
                         </div>
                         <div class="media-content">
-                          <p class="autocomplete-tracer-name">
-                            {{ props.option.name }}
-                          </p>
+                          <p class="autocomplete-tracer-name">{{ props.option.name }}</p>
                           <small>{{ props.option.kind }}</small>
                         </div>
                       </div>
@@ -280,8 +273,7 @@
               v-if="!anySubmitFailed"
               type="is-success"
               aria-close-label="Close message"
-              >{{ $t('report_review') }}</b-message
-            >
+            >{{ $t('report_review') }}</b-message>
           </div>
         </div>
       </form>
@@ -293,8 +285,7 @@
             data-nav="previous"
             class="button is-light"
             :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
-            >{{ $t('previous') }}</a
-          >
+          >{{ $t('previous') }}</a>
         </div>
         <div class="steps-action">
           <button
@@ -303,21 +294,18 @@
             data-nav="next"
             class="button"
             :class="{
-              'is-success': currentStep === 1,
+              'is-success': currentStep === 0 || currentStep === 1,
               hidden: currentStep === 1 && this.areAllReportsSubmitted,
               'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
             }"
             disabled="false"
-          >
-            {{ currentStep === 1 ? $t('submit') : $t('next') }}
-          </button>
+          >{{ currentStep === 1 ? $t('submit') : $t('next') }}</button>
           <a
             href="#"
             class="button is-danger close-button-step"
             :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
             @click="closeAddReportForm"
-            >{{ $t('close') }}</a
-          >
+          >{{ $t('close') }}</a>
         </div>
       </div>
     </div>
@@ -842,6 +830,10 @@ export default {
   width: 100%;
 }
 
+.add-report-layer-tool .field .input.address {
+  color: #292929;
+}
+
 .field.file p.help.is-danger {
   flex-basis: 100%;
   margin-top: 0;
@@ -874,6 +866,8 @@ export default {
     "report_review": "Thank you for your report. It will soon be reviewed by an administrator",
     "report": "Report",
     "submit": "Submit",
+    "search_tracers": "Search for a tracer. Ex: Bouchon, cartouche, ...",
+    "click_map": "Click or drag the marker to geolocate your report.",
     "tracers": "Tracer | Tracers",
     "submit_report_failure": "Fail to submit report",
     "photo": "Photo",
@@ -900,13 +894,15 @@ export default {
     "previous": "Précédent",
     "quantity": "Quantité",
     "report_date": "Date de signalement",
-    "report_review": "Merci pour votre signalement. Un administrateur va bientôt le passer en revu.",
+    "report_review": "Merci pour votre signalement. Une validation va bientôt être effectuée.",
     "report": "Signalement",
     "submit": "Soumettre",
+    "search_tracers": "Rechercher un tracer. Ex: Bouchon, cartouche, ...",
+    "click_map": "Cliquez ou glissez le marqueur pour géolocaliser votre témoignage.",
     "tracers": "Traceur | Traceurs",
     "submit_report_failure": "Échec d'ajout d'un signalement",
     "photo": "Photo",
-    "upload": "Upload",
+    "upload": "Télécharger",
     "photo_multiple_tracer": "Une photo peut contenir plusieurs tracers",
     "load_tracers_failure": "Échec de chargement des tracers",
     "why_account": "Vous pouvez créer un compte pour gérer vos signalements et avoir votre nom pré-rempli."
@@ -932,6 +928,8 @@ export default {
     "report_review": "Gracias por su testimonio. Uno administrador revisado soon",
     "report": "Testimonio",
     "submit": "Enviar",
+    "search_tracers": "Busca un rastreador. Ex: Bouchon, cartouche, ...",
+    "click_map": "Haga clic o arrastre el marcador para geoetiquetar su testimonio.",
     "tracers": "Trazador | Trazadores",
     "submit_report_failure": "Error al enviar el informe",
     "photo": "Foto",
