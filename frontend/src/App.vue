@@ -77,7 +77,7 @@ $colors: (
 $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
-$navbar-breakpoint: 1024px;
+$navbar-breakpoint: 1025px;
 
 .app .button.is-primary:active,
 .app .button.is-primary.is-active {

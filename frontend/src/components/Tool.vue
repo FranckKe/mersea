@@ -112,6 +112,7 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.5em;
+  height: 36px;
 }
 
 .tool-view h4.title {
@@ -147,7 +148,7 @@ export default {
     top: 50vh;
     height: 50vh;
     max-width: 100%;
-    padding: 15px;
+    padding: 15px 15px 100px 15px;
   }
 
   .close-tool-button {
