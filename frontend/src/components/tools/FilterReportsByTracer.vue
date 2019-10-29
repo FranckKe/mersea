@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="title-wrapper">
+      <h4 class="title is-4">{{ $t('filter_reports_by_tracer_title') }}</h4>
+      <a @click="closeToolbar" class="button is-danger close-tool-button">
+        <font-awesome-icon icon="times" />
+      </a>
+    </div>
     <div class="control is-flex">
       <input
         class="input filter-report-search"
@@ -9,12 +15,8 @@
       />
     </div>
     <div class="check-buttons">
-      <button type="submit" class="button is-primary" @click="checkAll">
-        {{ $t('check_all') }}
-      </button>
-      <button type="submit" class="button is-primary" @click="unCheckAll">
-        {{ $t('uncheck_all') }}
-      </button>
+      <button type="submit" class="button is-primary" @click="checkAll">{{ $t('check_all') }}</button>
+      <button type="submit" class="button is-primary" @click="unCheckAll">{{ $t('uncheck_all') }}</button>
     </div>
     <div class="legend-tracers">
       <b-loading
@@ -28,25 +30,10 @@
         v-for="tracersByCategory in allFilteredTracersList"
       >
         <h3 class="title is-6">{{ $t(tracersByCategory.category) }}</h3>
-        <div
-          class="legend-tracer"
-          :key="tracer.id"
-          v-for="tracer in tracersByCategory.tracers"
-        >
+        <div class="legend-tracer" :key="tracer.id" v-for="tracer in tracersByCategory.tracers">
           <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
-            <svg
-              class="legend-circle"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="10"
-                cy="10"
-                r="7"
-                stroke="white"
-                stroke-width="2.5"
-                :fill="tracer.color"
-              ></circle>
+            <svg class="legend-circle" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2.5" :fill="tracer.color" />
             </svg>
             {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
           </b-checkbox>
@@ -66,6 +53,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const tracersModule = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'filterReportsByTracer',
@@ -122,6 +110,8 @@ export default {
     }
   },
   methods: {
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar']),
     ...reportsModule.mapGetters({
       getReportCount: 'getReportCount',
       getReportsLoading: 'getLoading'
@@ -230,6 +220,7 @@ export default {
 <i18n>
 {
   "en": {
+        "filter_reports_by_tracer_title": "Filter by tracers",
     "tracers": "tracer | tracers",
     "check_all": "Check all",
     "search": "Search",
@@ -242,6 +233,7 @@ export default {
     "uncheck_all": "Uncheck all"
   },
   "fr": {
+    "filter_reports_by_tracer_title": "Filtrer par traceurs",
     "tracers": "traceur | traceurs",
     "check_all": "Tout cocher",
     "search": "Rechercher",
@@ -254,6 +246,7 @@ export default {
     "uncheck_all": "Tout décocher"
   },
   "es": {
+    "filter_reports_by_tracer_title": "Filtrar por trazadores",
     "tracers": "trazador | trazadores",
     "check_all": "Comprobar todo",
     "search": "Buscar",

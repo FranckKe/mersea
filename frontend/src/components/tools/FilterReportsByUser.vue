@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="title-wrapper">
+      <h4 class="title is-4">{{ toolViewTitle }}</h4>
+      <a @click="closeToolbar" class="button is-danger close-tool-button">
+        <font-awesome-icon icon="times" />
+      </a>
+    </div>
     <b-field label="Enter some tags">
       <b-taginput
         v-model="chosenUsers"
@@ -11,8 +17,7 @@
         icon="label"
         placeholder="Chose a user"
         @typing="getFilteredUsers"
-      >
-      </b-taginput>
+      ></b-taginput>
     </b-field>
     <button class="button is-primary" @click="chosenUsers = []">
       <span>{{ $t('remove_all') }}</span>
@@ -25,6 +30,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const tracersModule = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'filterReportsByUser',
@@ -55,6 +61,8 @@ export default {
     }
   },
   methods: {
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar']),
     ...reportsModule.mapGetters([
       'getReports',
       'getFilteredReports',

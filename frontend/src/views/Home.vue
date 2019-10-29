@@ -8,6 +8,7 @@
         :can-cancel="false"
       ></b-loading>
     </div>
+    <ToolView></ToolView>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ const tracersModule = createNamespacedHelpers('tracers')
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 import ToolBar from '@/components/ToolBar'
+import ToolView from '@/components/ToolView'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -48,7 +50,8 @@ export default {
     }
   },
   components: {
-    ToolBar
+    ToolBar,
+    ToolView
   },
   async mounted() {
     moment.locale(this.$i18n.locale)
@@ -216,7 +219,11 @@ export default {
       let markerlngLat = this.addReportMarker.getLngLat()
       this.coordinates = `${markerlngLat.lat}, ${markerlngLat.lng}`
       const res = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${markerlngLat.lng},${markerlngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${
+          markerlngLat.lng
+        },${markerlngLat.lat}.json?access_token=${
+          process.env.VUE_APP_MAPBOX_TOKEN
+        }`,
         {
           timeout: 15000
         }
@@ -800,8 +807,10 @@ export default {
 
   .map {
     width: 100vw;
-    height: calc(100vh - 56px);
+    height: 80vh;
     top: 56px;
+    margin-bottom: 56px;
+    position: relative;
   }
 
   .mapboxgl-popup-content {
