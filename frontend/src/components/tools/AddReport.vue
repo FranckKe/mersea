@@ -807,6 +807,13 @@ export default {
 <style>
 .steps .add-report-form .steps-content {
   margin-top: 1rem;
+  flex-basis: 0;
+}
+
+.steps .add-report-form .steps-actions {
+  display: flex;
+  align-items: baseline;
+  flex-basis: 0;
 }
 
 .add-report-layer-tool {
