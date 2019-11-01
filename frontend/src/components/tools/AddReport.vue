@@ -93,9 +93,9 @@
                 </b-upload>
                 <span class="file-name" v-if="file">{{ file.name }}</span>
               </b-field>
-              <b-message type="is-info" class="file-multiple-tracer">
-                {{ $t('photo_multiple_tracer') }}
-              </b-message>
+              <b-message type="is-info" class="file-multiple-tracer">{{
+                $t('photo_multiple_tracer')
+              }}</b-message>
               <b-field
                 :label="$t('report_date')"
                 :type="errors.has('reportDate') ? 'is-danger' : ''"
@@ -133,9 +133,9 @@
                   v-validate="'max:300'"
                 ></b-input>
               </b-field>
-              <b-message type="is-info" v-if="!this.$auth.check()">
-                {{ $t('why_account') }}
-              </b-message>
+              <b-message type="is-info" v-if="!this.$auth.check()">{{
+                $t('why_account')
+              }}</b-message>
             </div>
             <div class="step-content">
               <b-message
@@ -297,42 +297,45 @@
               >
             </div>
           </div>
+          <div class="steps-actions">
+            <div class="steps-action">
+              <a
+                href="#"
+                id="prevAction"
+                data-nav="previous"
+                class="button is-light"
+                :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
+                >{{ $t('previous') }}</a
+              >
+            </div>
+            <div class="steps-action">
+              <button
+                href="#"
+                id="nextAction"
+                data-nav="next"
+                class="button"
+                :class="{
+                  'is-success': currentStep === 0 || currentStep === 1,
+                  hidden: currentStep === 1 && this.areAllReportsSubmitted,
+                  'is-loading':
+                    currentStep === 1 && this.areSomeReportsSubmitting
+                }"
+                disabled="false"
+              >
+                {{ currentStep === 1 ? $t('submit') : $t('next') }}
+              </button>
+              <a
+                href="#"
+                class="button is-danger close-button-step"
+                :class="{
+                  hidden: currentStep !== 1 || !areAllReportsSubmitted
+                }"
+                @click="closeAddReportForm"
+                >{{ $t('close') }}</a
+              >
+            </div>
+          </div>
         </form>
-        <div class="steps-actions">
-          <div class="steps-action">
-            <a
-              href="#"
-              id="prevAction"
-              data-nav="previous"
-              class="button is-light"
-              :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
-              >{{ $t('previous') }}</a
-            >
-          </div>
-          <div class="steps-action">
-            <button
-              href="#"
-              id="nextAction"
-              data-nav="next"
-              class="button"
-              :class="{
-                'is-success': currentStep === 0 || currentStep === 1,
-                hidden: currentStep === 1 && this.areAllReportsSubmitted,
-                'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
-              }"
-              disabled="false"
-            >
-              {{ currentStep === 1 ? $t('submit') : $t('next') }}
-            </button>
-            <a
-              href="#"
-              class="button is-danger close-button-step"
-              :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
-              @click="closeAddReportForm"
-              >{{ $t('close') }}</a
-            >
-          </div>
-        </div>
       </div>
     </div>
   </div>
