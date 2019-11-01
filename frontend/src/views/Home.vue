@@ -8,6 +8,7 @@
         :can-cancel="false"
       ></b-loading>
     </div>
+    <ToolView></ToolView>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ const tracersModule = createNamespacedHelpers('tracers')
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 import ToolBar from '@/components/ToolBar'
+import ToolView from '@/components/ToolView'
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
@@ -48,7 +50,8 @@ export default {
     }
   },
   components: {
-    ToolBar
+    ToolBar,
+    ToolView
   },
   async mounted() {
     moment.locale(this.$i18n.locale)
@@ -99,6 +102,7 @@ export default {
       (state, getters) => getters['toolBar/getActiveTool'],
       activeTool => {
         this.initAddReportMarker(activeTool)
+        this.map.resize()
       }
     )
     this.$store.watch(
@@ -800,8 +804,10 @@ export default {
 
   .map {
     width: 100vw;
-    height: calc(100vh - 56px);
+    height: 100vh;
     top: 56px;
+    margin-bottom: 56px;
+    position: relative;
   }
 
   .mapboxgl-popup-content {

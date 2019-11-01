@@ -1,5 +1,11 @@
 <template>
   <div class="welcome">
+    <div class="title-wrapper">
+      <h4 class="title is-4">Ocean Plastic Tracker</h4>
+      <a @click="closeToolbar" class="button is-danger close-tool-button">
+        <font-awesome-icon icon="times" />
+      </a>
+    </div>
     <b-loading
       :is-full-page="false"
       :active.sync="this.getLoading()"
@@ -19,6 +25,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('pages')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'Information',
@@ -29,7 +36,9 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(['getLoading'])
+    ...mapGetters(['getLoading']),
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar'])
   },
   computed: { ...mapGetters(['getPageContent']) }
 }

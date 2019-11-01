@@ -1,95 +1,108 @@
 <template>
-  <div class="daterange">
-    <b-loading
-      :is-full-page="false"
-      :active.sync="this.getLoading()"
-      :can-cancel="false"
-    ></b-loading>
-    <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
-    <div class="buttons first-row">
-      <button
-        class="button is-primary"
-        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('week')) }"
-        @click="setReportedAt(startOfRange('week'))"
-      >
-        <span>{{ $t('this_week') }}</span>
-      </button>
-      <button
-        class="button is-primary"
-        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('month')) }"
-        @click="setReportedAt(startOfRange('month'))"
-      >
-        <span>{{ $t('this_month') }}</span>
-      </button>
-      <button
-        class="button is-primary"
-        :class="{ 'is-active': isReportedAtEqualTo(startOfRange('year')) }"
-        @click="setReportedAt(startOfRange('year'))"
-      >
-        <span>{{ $t('this_year') }}</span>
-      </button>
+  <div>
+    <div class="title-wrapper">
+      <h4 class="title is-4">{{ $t('filter_reports_by_date_title') }}</h4>
+      <a @click="closeToolbar" class="button is-danger close-tool-button">
+        <font-awesome-icon icon="times" />
+      </a>
     </div>
-    <div class="buttons">
-      <button
-        v-for="years in [3, 2, 1]"
-        :key="years"
-        class="button is-primary"
-        :class="{ 'is-active': isReportedAtEqualTo(previousYearRange(years)) }"
-        @click="setReportedAt(previousYearRange(years))"
-      >
-        <span>{{ previousYearLabel(years) }}</span>
-      </button>
-      <button
-        class="button is-primary"
-        :class="{
-          'is-active': isReportedAtEqualTo({
-            min: new Date('2016-01-01'),
-            max: new Date()
-          })
-        }"
-        @click="setReportedAt({ min: new Date('2016-01-01'), max: new Date() })"
-      >
-        <span>{{ $t('from_beginning') }}</span>
-      </button>
-    </div>
-    <h5 class="title is-5">{{ $t('custom_range') }}</h5>
-    <b-field :label="$t('from')">
-      <b-datepicker
-        v-model="reported_at_min"
-        name="datepicker_from"
-        icon="calendar"
-        :min-date="new Date('2016-01-01')"
-        :max-date="new Date()"
-        :month-names="monthNames"
-        :day-names="dayNames"
-        :first-day-of-week="firstDayOfTheWeek"
-        v-validate="fieldFromRules"
-      ></b-datepicker>
-    </b-field>
-    <b-field :label="$t('until')">
-      <b-datepicker
-        v-model="reported_at_max"
-        name="datepicker_until"
-        icon="calendar"
-        :min-date="new Date('2016-01-01')"
-        :max-date="new Date()"
-        :month-names="monthNames"
-        :day-names="dayNames"
-        :first-day-of-week="firstDayOfTheWeek"
-        v-validate="'required'"
-      >
-        <button class="button is-primary" @click="date = new Date()">
-          <b-icon icon="calendar"></b-icon>
-          <span>Today</span>
+    <div class="daterange">
+      <b-loading
+        :is-full-page="false"
+        :active.sync="this.getLoading()"
+        :can-cancel="false"
+      ></b-loading>
+      <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
+      <div class="buttons first-row">
+        <button
+          class="button is-primary"
+          :class="{ 'is-active': isReportedAtEqualTo(startOfRange('week')) }"
+          @click="setReportedAt(startOfRange('week'))"
+        >
+          <span>{{ $t('this_week') }}</span>
         </button>
-      </b-datepicker>
-    </b-field>
+        <button
+          class="button is-primary"
+          :class="{ 'is-active': isReportedAtEqualTo(startOfRange('month')) }"
+          @click="setReportedAt(startOfRange('month'))"
+        >
+          <span>{{ $t('this_month') }}</span>
+        </button>
+        <button
+          class="button is-primary"
+          :class="{ 'is-active': isReportedAtEqualTo(startOfRange('year')) }"
+          @click="setReportedAt(startOfRange('year'))"
+        >
+          <span>{{ $t('this_year') }}</span>
+        </button>
+      </div>
+      <div class="buttons">
+        <button
+          v-for="years in [3, 2, 1]"
+          :key="years"
+          class="button is-primary"
+          :class="{
+            'is-active': isReportedAtEqualTo(previousYearRange(years))
+          }"
+          @click="setReportedAt(previousYearRange(years))"
+        >
+          <span>{{ previousYearLabel(years) }}</span>
+        </button>
+        <button
+          class="button is-primary"
+          :class="{
+            'is-active': isReportedAtEqualTo({
+              min: new Date('2016-01-01'),
+              max: new Date()
+            })
+          }"
+          @click="
+            setReportedAt({ min: new Date('2016-01-01'), max: new Date() })
+          "
+        >
+          <span>{{ $t('from_beginning') }}</span>
+        </button>
+      </div>
+      <h5 class="title is-5">{{ $t('custom_range') }}</h5>
+      <b-field :label="$t('from')">
+        <b-datepicker
+          v-model="reported_at_min"
+          name="datepicker_from"
+          icon="calendar"
+          :min-date="new Date('2016-01-01')"
+          :max-date="new Date()"
+          :month-names="monthNames"
+          :day-names="dayNames"
+          :first-day-of-week="firstDayOfTheWeek"
+          v-validate="fieldFromRules"
+        ></b-datepicker>
+      </b-field>
+      <b-field :label="$t('until')">
+        <b-datepicker
+          v-model="reported_at_max"
+          name="datepicker_until"
+          icon="calendar"
+          :min-date="new Date('2016-01-01')"
+          :max-date="new Date()"
+          :month-names="monthNames"
+          :day-names="dayNames"
+          :first-day-of-week="firstDayOfTheWeek"
+          v-validate="'required'"
+        >
+          <button class="button is-primary" @click="date = new Date()">
+            <b-icon icon="calendar"></b-icon>
+            <span>Today</span>
+          </button>
+        </b-datepicker>
+      </b-field>
+    </div>
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const reportsModule = createNamespacedHelpers('reports')
+const toolBarModule = createNamespacedHelpers('toolBar')
 import moment from 'moment'
 
 export default {
@@ -112,6 +125,8 @@ export default {
   methods: {
     ...reportsModule.mapActions(['loadReports']),
     ...reportsModule.mapGetters(['getLoading']),
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar']),
     updateReports: async function() {
       try {
         await this.loadReports({
@@ -235,6 +250,7 @@ export default {
 <i18n>
 {
   "en": {
+    "filter_reports_by_date_title": "Filter by date",
     "from": "From",
     "until": "Until",
     "quick_selection": "Quick selection",
@@ -247,6 +263,7 @@ export default {
     "by_date": "By date"
   },
   "fr": {
+    "filter_reports_by_date_title": "Filtrer par date",
     "from": "Du",
     "until": "Jusqu'au",
     "quick_selection": "Sélection rapide",
@@ -259,6 +276,7 @@ export default {
     "by_date": "Rechercher"
   },
   "es": {
+    "filter_reports_by_date_title": "Filtrar por fecha",
     "from": "Desde",
     "until": "Hasta",
     "quick_selection": "Selección rápida",

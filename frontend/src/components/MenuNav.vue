@@ -112,7 +112,6 @@
 import slugify from 'slugify'
 import { createNamespacedHelpers } from 'vuex'
 const pagesModule = createNamespacedHelpers('pages')
-const toolBarModule = createNamespacedHelpers('toolBar')
 import LangSwitcher from '@/components/LangSwitcher'
 
 export default {
@@ -133,8 +132,6 @@ export default {
     navbarBurger.addEventListener('click', () => {
       navbarBurger.classList.toggle('is-active')
       $target.classList.toggle('is-active')
-
-      if (this.getActiveTool() !== '') this.closeToolbar()
     })
   },
   computed: {
@@ -152,8 +149,6 @@ export default {
   },
   methods: {
     ...pagesModule.mapActions(['loadPages']),
-    ...toolBarModule.mapActions(['closeToolbar']),
-    ...toolBarModule.mapGetters(['getActiveTool']),
     slugify: slugify,
     logout: function() {
       this.$auth.logout({

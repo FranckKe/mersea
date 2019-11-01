@@ -1,59 +1,54 @@
 <template>
   <div class="tool-bar">
     <keep-alive>
-      <Tool
+      <ToolSelector
         toolComponent="AddReport"
         :toolTitle="$t('add_report')"
-        :toolViewTitle="$t('add_report_title')"
         toolIcon="plus"
         toolButtonColorMod="is-success"
         :class="{ active: getActiveTool === 'AddReport' }"
-      ></Tool>
+      ></ToolSelector>
     </keep-alive>
     <keep-alive>
-      <Tool
+      <ToolSelector
         toolComponent="Information"
         :toolTitle="$t('information')"
-        toolViewTitle="Ocean Plastic Tracker"
         toolIcon="info-circle"
         toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
-      ></Tool>
+      ></ToolSelector>
     </keep-alive>
     <keep-alive>
-      <Tool
+      <ToolSelector
         toolComponent="FilterReportsByTracer"
         :toolTitle="$t('tracers')"
-        :toolViewTitle="$t('filter_reports_by_tracer_title')"
         toolIcon="filter"
         toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByTracer' }"
-      ></Tool>
+      ></ToolSelector>
     </keep-alive>
     <keep-alive>
-      <Tool
+      <ToolSelector
         toolComponent="FilterReportsByDate"
         :toolTitle="$t('date')"
-        :toolViewTitle="$t('filter_reports_by_date_title')"
         toolIcon="filter"
         toolButtonColorMod="is-primary"
         :class="{ active: getActiveTool === 'FilterReportsByDate' }"
-      ></Tool>
+      ></ToolSelector>
     </keep-alive>
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
-import Tool from '@/components/Tool'
-import Bowser from 'bowser'
+import ToolSelector from '@/components/ToolSelector'
 
 const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'ToolBar',
   components: {
-    Tool
+    ToolSelector
   },
   data() {
     return {
@@ -64,17 +59,6 @@ export default {
     ...toolBarModule.mapGetters(['getActiveTool']),
     ...toolBarModule.mapMutations(['setActiveTool']),
     ...toolBarModule.mapActions(['toggleActiveComponent'])
-  },
-  mounted() {
-    const browser = Bowser.getParser(window.navigator.userAgent)
-    const isBrokenBrowser = browser.satisfies({
-      safari: '>1'
-    })
-    // Tool display with overflow does not work on Safari
-    // Todo refactor tools
-    if (isBrokenBrowser) {
-      document.querySelector('.tool-bar').style.overflow = 'visible'
-    }
   }
 }
 </script>
@@ -127,33 +111,24 @@ p {
 {
   "en": {
     "add_report": "Report",
-    "add_report_title": "Report a waste",
     "tracers": "Tracers",
     "information": "Info",
     "filter_by": "Filter by",
-    "filter_reports_by_tracer_title": "Filter by tracers",
-    "date": "Date",
-    "filter_reports_by_date_title": "Filter by date"
+    "date": "Date"
   },
   "fr": {
     "add_report": "Signaler",
-    "add_report_title": "Signaler un déchet",
     "tracers": "Traceurs",
     "information": "Info",
     "filter_by": "Filtrer par",
-    "filter_reports_by_tracer_title": "Filtrer par traceurs",
-    "date": "Date",
-    "filter_reports_by_date_title": "Filtrer par date"
+    "date": "Date"
   },
   "es": {
     "add_report": "Reportar",
-    "add_report_title": "Reportar un desperdicio",
     "tracers": "Trazadores",
     "information": "Info",
     "filter_by": "Filtrado por",
-    "filter_reports_by_tracer_title": "Filtrar por trazadores",
-    "date": "Fecha",
-    "filter_reports_by_date_title": "Filtrar por fecha"
+    "date": "Fecha"
   }
 }
 </i18n>

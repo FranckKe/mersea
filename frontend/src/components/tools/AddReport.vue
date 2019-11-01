@@ -1,311 +1,337 @@
 <template>
-  <div class="add-report-layer-tool">
-    <div class="steps" id="addReportSteps">
-      <div class="step-item is-active is-success">
-        <div class="step-marker">1</div>
-        <div class="step-details">
-          <p class="step-title">{{ $t('report') }}</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-marker">2</div>
-        <div class="step-details">
-          <p class="step-title">{{ $tc('tracers', '1') }}</p>
-        </div>
-      </div>
-      <form class="add-report-form">
-        <div class="steps-content">
-          <div class="step-content">
-            <b-field
-              label="coordinates"
-              class="hidden"
-              :type="errors.has('coordinates') ? 'is-danger' : ''"
-              :message="
-                errors.has('coordinates') ? errors.first('coordinates') : ''
-              "
-            >
-              <b-input v-model="coordinates" type="text" name="coordinates" v-validate="'required'"></b-input>
-            </b-field>
-            <b-field
-              :label="$t('address')"
-              :type="errors.has('address') ? 'is-danger' : ''"
-              :message="errors.has('address') ? errors.first('address') : ''"
-            >
-              <b-input
-                custom-class="address"
-                v-model="address"
-                type="text"
-                name="address"
-                :data-vv-as="$t('address') | lowercase"
-                v-validate="'required'"
-                disabled="true"
-                expanded
-              ></b-input>
-            </b-field>
-            <b-message type="is-info">{{ $t('click_map') }}</b-message>
-            <b-field
-              v-show="!this.$auth.check()"
-              :label="$t('name_pseudo')"
-              :type="errors.has('username') ? 'is-danger' : ''"
-              :message="errors.has('username') ? errors.first('username') : ''"
-            >
-              <b-input
-                v-model="username"
-                name="username"
-                :data-vv-as="$t('name_pseudo') | lowercase"
-                v-validate="'required'"
-              ></b-input>
-            </b-field>
-            <b-field
-              class="file"
-              :label="$t('photo')"
-              :type="errors.has('file') ? 'is-danger' : ''"
-              :message="errors.has('file') ? errors.first('file') : ''"
-              v-if="this.$auth.user() && !this.$auth.user().senior"
-            >
-              <b-upload
-                v-model="file"
-                name="file"
-                :data-vv-as="$t('photo') | lowercase"
-                v-validate="'required|size:4000'"
-              >
-                <a class="button is-primary">
-                  <b-icon icon="upload"></b-icon>
-                  <span>{{ $t('upload') }}</span>
-                </a>
-              </b-upload>
-              <span class="file-name" v-if="file">{{ file.name }}</span>
-            </b-field>
-            <b-message type="is-info" class="file-multiple-tracer">
-              {{
-              $t('photo_multiple_tracer')
-              }}
-            </b-message>
-            <b-field
-              :label="$t('report_date')"
-              :type="errors.has('reportDate') ? 'is-danger' : ''"
-              :message="
-                errors.has('reportDate') ? errors.first('reportDate') : ''
-              "
-            >
-              <b-datepicker
-                v-model="reportDate"
-                name="reportDate"
-                placeholder="$t('click_select')"
-                :month-names="monthNames"
-                :day-names="dayNames"
-                :first-day-of-week="firstDayOfTheWeek"
-                :max-date="new Date()"
-                :data-vv-as="$t('report_date') | lowercase"
-                v-validate="'required'"
-              ></b-datepicker>
-            </b-field>
-            <b-field
-              :label="`${$t('description')} (${$t('optional')})`"
-              class="description-field"
-              :type="errors.has('description') ? 'is-danger' : ''"
-              :message="
-                errors.has('description') ? errors.first('description') : ''
-              "
-            >
-              <b-input
-                class="description"
-                v-model="description"
-                name="description"
-                maxlength="300"
-                type="textarea"
-                :data-vv-as="$t('description') | lowercase"
-                v-validate="'max:300'"
-              ></b-input>
-            </b-field>
-            <b-message type="is-info" v-if="!this.$auth.check()">
-              {{
-              $t('why_account')
-              }}
-            </b-message>
+  <div>
+    <div class="title-wrapper">
+      <h4 class="title is-4">{{ $t('add_report') }}</h4>
+      <a
+        @click="toggleActiveComponent(getActiveTool)"
+        class="button is-danger close-tool-button"
+      >
+        <font-awesome-icon icon="times" />
+      </a>
+    </div>
+    <div class="add-report-layer-tool">
+      <div class="steps" id="addReportSteps">
+        <div class="step-item is-active is-success">
+          <div class="step-marker">1</div>
+          <div class="step-details">
+            <p class="step-title">{{ $t('report') }}</p>
           </div>
-          <div class="step-content">
-            <b-message
-              v-for="(addReportError, index) in addReportsErrors"
-              class="submit-form-error"
-              :key="'reportError' + index"
-              v-show="addReportError !== ''"
-              type="is-danger"
-            >
-              {{ addReportError }}
-              <ul>
-                <li
-                  v-for="(addReportValidationError,
-                  index) in addReportsValidationErrors[index]"
-                  :key="index"
-                >- {{ addReportValidationError.metadata.reason }}</li>
-              </ul>
-            </b-message>
-            <div v-for="(tracer, index) in selectedTracers" :key="index">
-              <b-field grouped>
-                <b-field
-                  :label="index === 0 ? '-' : ''"
-                  :class="{ 'is-label-hidden': index === 0 }"
-                  custom-class="remove-tracer-input-label"
-                >
-                  <a
-                    @click="removeTracerInput(index)"
-                    class="button is-danger is-outlined"
-                    :disabled="
-                      selectedTracers.length === 1 ||
-                        areSubmitting[index] ||
-                        areSomeReportsSubmitted
-                    "
-                  >
-                    <b-icon icon="times" />
-                  </a>
-                </b-field>
-                <b-field
-                  :label="index === 0 ? $tc('tracers', 1) : ''"
-                  :type="errors.has(`tracer-${index}`) ? 'is-danger' : ''"
-                  :message="
-                    errors.has(`tracer-${index}`)
-                      ? errors.first(`tracer-${index}`)
-                      : ''
-                  "
-                  expanded
-                >
-                  <b-autocomplete
-                    v-model="tracerNames[index]"
-                    class="tracers-autocomplete"
-                    :name="`tracer-${index}`"
-                    :open-on-focus="true"
-                    :data="
-                      tracers.filter(
-                        t =>
-                          t.name
-                            .toString()
-                            .toLowerCase()
-                            .indexOf(tracerNames[index].toLowerCase()) >= 0 &&
-                          t.category !== 'archive'
-                      )
-                    "
-                    field="name"
-                    @select="option => (selectedTracers[index] = option)"
-                    :placeholder="$t('search_tracers')"
-                    :data-vv-as="$tc('tracers', 1) | lowercase"
-                    v-validate="'required'"
-                    customClass="tracer-input"
-                    ref="tracer-input"
-                  >
-                    <template slot-scope="props">
-                      <div class="media">
-                        <div class="media-left">
-                          <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`" />
-                        </div>
-                        <div class="media-content">
-                          <p class="autocomplete-tracer-name">{{ props.option.name }}</p>
-                          <small>{{ props.option.kind }}</small>
-                        </div>
-                      </div>
-                    </template>
-                    <template slot="empty">{{ $t('no_results') }}</template>
-                  </b-autocomplete>
-                </b-field>
-                <b-field
-                  class="quantity-field"
-                  :label="index === 0 ? $t('quantity') : ''"
-                  :type="errors.has('quantity') ? 'is-danger' : ''"
-                  :message="
-                    errors.has('quantity') ? errors.first('quantity') : ''
-                  "
-                >
-                  <b-input
-                    v-model="quantities[index]"
-                    name="quantity"
-                    type="number"
-                    step="1"
-                    min="0"
-                    :data-vv-as="$t('quantity') | lowercase"
-                    v-validate="'required|min_value:0'"
-                  ></b-input>
-                </b-field>
-                <b-field
-                  :label="index === 0 ? '-' : ''"
-                  :class="{ 'is-label-hidden': index === 0 }"
-                  customClass="remove-tracer-input-label"
-                >
-                  <span
-                    @click="retrySubmitReport(index)"
-                    :class="{
-                      'report-submission-status': true,
-                      'report-submission-status--clickable':
-                        getSubmissionStatus(index) === 'failed',
-                      'has-text-success':
-                        getSubmissionStatus(index) === 'saved',
-                      'button is-primary is-outlined':
-                        getSubmissionStatus(index) === 'failed'
-                    }"
-                    :disabled="!(getSubmissionStatus(index) === 'failed')"
-                  >
-                    <b-icon
-                      :icon="getSubmissionStatusIcon(index)"
-                      :custom-class="
-                        getSubmissionStatus(index) === 'submitting'
-                          ? 'fa-spin'
-                          : ''
-                      "
-                    />
-                  </span>
-                </b-field>
-              </b-field>
-            </div>
-            <b-field class="add-tracer-field">
-              <a
-                class="button is-primary add-tracer-input"
-                @click="addTracerInput"
-                :disabled="
-                  selectedTracers.length >= this.tracerInputsLimit ||
-                    !selectedTracers[selectedTracers.length - 1] ||
-                    !selectedTracers[selectedTracers.length - 1].id ||
-                    areSomeReportsSubmitted
+        </div>
+        <div class="step-item">
+          <div class="step-marker">2</div>
+          <div class="step-details">
+            <p class="step-title">{{ $tc('tracers', '1') }}</p>
+          </div>
+        </div>
+        <form class="add-report-form">
+          <div class="steps-content">
+            <div class="step-content">
+              <b-field
+                label="coordinates"
+                class="hidden"
+                :type="errors.has('coordinates') ? 'is-danger' : ''"
+                :message="
+                  errors.has('coordinates') ? errors.first('coordinates') : ''
                 "
               >
-                <b-icon icon="plus"></b-icon>
-              </a>
-            </b-field>
-            <b-message
-              v-if="!anySubmitFailed"
-              type="is-success"
-              aria-close-label="Close message"
-            >{{ $t('report_review') }}</b-message>
+                <b-input
+                  v-model="coordinates"
+                  type="text"
+                  name="coordinates"
+                  v-validate="'required'"
+                ></b-input>
+              </b-field>
+              <b-field
+                :label="$t('address')"
+                :type="errors.has('address') ? 'is-danger' : ''"
+                :message="errors.has('address') ? errors.first('address') : ''"
+              >
+                <b-input
+                  custom-class="address"
+                  v-model="address"
+                  type="text"
+                  name="address"
+                  :data-vv-as="$t('address') | lowercase"
+                  v-validate="'required'"
+                  disabled="true"
+                  expanded
+                ></b-input>
+              </b-field>
+              <b-message type="is-info">{{ $t('click_map') }}</b-message>
+              <b-field
+                v-show="!this.$auth.check()"
+                :label="$t('name_pseudo')"
+                :type="errors.has('username') ? 'is-danger' : ''"
+                :message="
+                  errors.has('username') ? errors.first('username') : ''
+                "
+              >
+                <b-input
+                  v-model="username"
+                  name="username"
+                  :data-vv-as="$t('name_pseudo') | lowercase"
+                  v-validate="'required'"
+                ></b-input>
+              </b-field>
+              <b-field
+                class="file"
+                :label="$t('photo')"
+                :type="errors.has('file') ? 'is-danger' : ''"
+                :message="errors.has('file') ? errors.first('file') : ''"
+                v-if="this.$auth.user() && !this.$auth.user().senior"
+              >
+                <b-upload
+                  v-model="file"
+                  name="file"
+                  :data-vv-as="$t('photo') | lowercase"
+                  v-validate="'required|size:4000'"
+                >
+                  <a class="button is-primary">
+                    <b-icon icon="upload"></b-icon>
+                    <span>{{ $t('upload') }}</span>
+                  </a>
+                </b-upload>
+                <span class="file-name" v-if="file">{{ file.name }}</span>
+              </b-field>
+              <b-message type="is-info" class="file-multiple-tracer">
+                {{ $t('photo_multiple_tracer') }}
+              </b-message>
+              <b-field
+                :label="$t('report_date')"
+                :type="errors.has('reportDate') ? 'is-danger' : ''"
+                :message="
+                  errors.has('reportDate') ? errors.first('reportDate') : ''
+                "
+              >
+                <b-datepicker
+                  v-model="reportDate"
+                  name="reportDate"
+                  placeholder="$t('click_select')"
+                  :month-names="monthNames"
+                  :day-names="dayNames"
+                  :first-day-of-week="firstDayOfTheWeek"
+                  :max-date="new Date()"
+                  :data-vv-as="$t('report_date') | lowercase"
+                  v-validate="'required'"
+                ></b-datepicker>
+              </b-field>
+              <b-field
+                :label="`${$t('description')} (${$t('optional')})`"
+                class="description-field"
+                :type="errors.has('description') ? 'is-danger' : ''"
+                :message="
+                  errors.has('description') ? errors.first('description') : ''
+                "
+              >
+                <b-input
+                  class="description"
+                  v-model="description"
+                  name="description"
+                  maxlength="300"
+                  type="textarea"
+                  :data-vv-as="$t('description') | lowercase"
+                  v-validate="'max:300'"
+                ></b-input>
+              </b-field>
+              <b-message type="is-info" v-if="!this.$auth.check()">
+                {{ $t('why_account') }}
+              </b-message>
+            </div>
+            <div class="step-content">
+              <b-message
+                v-for="(addReportError, index) in addReportsErrors"
+                class="submit-form-error"
+                :key="'reportError' + index"
+                v-show="addReportError !== ''"
+                type="is-danger"
+              >
+                {{ addReportError }}
+                <ul>
+                  <li
+                    v-for="(addReportValidationError,
+                    index) in addReportsValidationErrors[index]"
+                    :key="index"
+                  >
+                    - {{ addReportValidationError.metadata.reason }}
+                  </li>
+                </ul>
+              </b-message>
+              <div v-for="(tracer, index) in selectedTracers" :key="index">
+                <b-field grouped>
+                  <b-field
+                    :label="index === 0 ? '-' : ''"
+                    :class="{ 'is-label-hidden': index === 0 }"
+                    custom-class="remove-tracer-input-label"
+                  >
+                    <a
+                      @click="removeTracerInput(index)"
+                      class="button is-danger is-outlined"
+                      :disabled="
+                        selectedTracers.length === 1 ||
+                          areSubmitting[index] ||
+                          areSomeReportsSubmitted
+                      "
+                    >
+                      <b-icon icon="times" />
+                    </a>
+                  </b-field>
+                  <b-field
+                    :label="index === 0 ? $tc('tracers', 1) : ''"
+                    :type="errors.has(`tracer-${index}`) ? 'is-danger' : ''"
+                    :message="
+                      errors.has(`tracer-${index}`)
+                        ? errors.first(`tracer-${index}`)
+                        : ''
+                    "
+                    expanded
+                  >
+                    <b-autocomplete
+                      v-model="tracerNames[index]"
+                      class="tracers-autocomplete"
+                      :name="`tracer-${index}`"
+                      :open-on-focus="true"
+                      :data="
+                        tracers.filter(
+                          t =>
+                            t.name
+                              .toString()
+                              .toLowerCase()
+                              .indexOf(tracerNames[index].toLowerCase()) >= 0 &&
+                            t.category !== 'archive'
+                        )
+                      "
+                      field="name"
+                      @select="option => (selectedTracers[index] = option)"
+                      :placeholder="$t('search_tracers')"
+                      :data-vv-as="$tc('tracers', 1) | lowercase"
+                      v-validate="'required'"
+                      customClass="tracer-input"
+                      ref="tracer-input"
+                    >
+                      <template slot-scope="props">
+                        <div class="media">
+                          <div class="media-left">
+                            <img
+                              class="image is-64x64"
+                              :src="`${apiUrl}${props.option.photo}`"
+                            />
+                          </div>
+                          <div class="media-content">
+                            <p class="autocomplete-tracer-name">
+                              {{ props.option.name }}
+                            </p>
+                            <small>{{ props.option.kind }}</small>
+                          </div>
+                        </div>
+                      </template>
+                      <template slot="empty">{{ $t('no_results') }}</template>
+                    </b-autocomplete>
+                  </b-field>
+                  <b-field
+                    class="quantity-field"
+                    :label="index === 0 ? $t('quantity') : ''"
+                    :type="errors.has('quantity') ? 'is-danger' : ''"
+                    :message="
+                      errors.has('quantity') ? errors.first('quantity') : ''
+                    "
+                  >
+                    <b-input
+                      v-model="quantities[index]"
+                      name="quantity"
+                      type="number"
+                      step="1"
+                      min="0"
+                      :data-vv-as="$t('quantity') | lowercase"
+                      v-validate="'required|min_value:0'"
+                    ></b-input>
+                  </b-field>
+                  <b-field
+                    :label="index === 0 ? '-' : ''"
+                    :class="{ 'is-label-hidden': index === 0 }"
+                    customClass="remove-tracer-input-label"
+                  >
+                    <span
+                      @click="retrySubmitReport(index)"
+                      :class="{
+                        'report-submission-status': true,
+                        'report-submission-status--clickable':
+                          getSubmissionStatus(index) === 'failed',
+                        'has-text-success':
+                          getSubmissionStatus(index) === 'saved',
+                        'button is-primary is-outlined':
+                          getSubmissionStatus(index) === 'failed'
+                      }"
+                      :disabled="!(getSubmissionStatus(index) === 'failed')"
+                    >
+                      <b-icon
+                        :icon="getSubmissionStatusIcon(index)"
+                        :custom-class="
+                          getSubmissionStatus(index) === 'submitting'
+                            ? 'fa-spin'
+                            : ''
+                        "
+                      />
+                    </span>
+                  </b-field>
+                </b-field>
+              </div>
+              <b-field class="add-tracer-field">
+                <a
+                  class="button is-primary add-tracer-input"
+                  @click="addTracerInput"
+                  :disabled="
+                    selectedTracers.length >= this.tracerInputsLimit ||
+                      !selectedTracers[selectedTracers.length - 1] ||
+                      !selectedTracers[selectedTracers.length - 1].id ||
+                      areSomeReportsSubmitted
+                  "
+                >
+                  <b-icon icon="plus"></b-icon>
+                </a>
+              </b-field>
+              <b-message
+                v-if="!anySubmitFailed"
+                type="is-success"
+                aria-close-label="Close message"
+                >{{ $t('report_review') }}</b-message
+              >
+            </div>
           </div>
-        </div>
-      </form>
-      <div class="steps-actions">
-        <div class="steps-action">
-          <a
-            href="#"
-            id="prevAction"
-            data-nav="previous"
-            class="button is-light"
-            :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
-          >{{ $t('previous') }}</a>
-        </div>
-        <div class="steps-action">
-          <button
-            href="#"
-            id="nextAction"
-            data-nav="next"
-            class="button"
-            :class="{
-              'is-success': currentStep === 0 || currentStep === 1,
-              hidden: currentStep === 1 && this.areAllReportsSubmitted,
-              'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
-            }"
-            disabled="false"
-          >{{ currentStep === 1 ? $t('submit') : $t('next') }}</button>
-          <a
-            href="#"
-            class="button is-danger close-button-step"
-            :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
-            @click="closeAddReportForm"
-          >{{ $t('close') }}</a>
+        </form>
+        <div class="steps-actions">
+          <div class="steps-action">
+            <a
+              href="#"
+              id="prevAction"
+              data-nav="previous"
+              class="button is-light"
+              :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
+              >{{ $t('previous') }}</a
+            >
+          </div>
+          <div class="steps-action">
+            <button
+              href="#"
+              id="nextAction"
+              data-nav="next"
+              class="button"
+              :class="{
+                'is-success': currentStep === 0 || currentStep === 1,
+                hidden: currentStep === 1 && this.areAllReportsSubmitted,
+                'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
+              }"
+              disabled="false"
+            >
+              {{ currentStep === 1 ? $t('submit') : $t('next') }}
+            </button>
+            <a
+              href="#"
+              class="button is-danger close-button-step"
+              :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
+              @click="closeAddReportForm"
+              >{{ $t('close') }}</a
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -432,7 +458,8 @@ export default {
     ]),
     ...tracersModule.mapGetters(['getTracers']),
     ...tracersModule.mapActions(['loadTracers']),
-    ...toolBarModule.mapActions(['closeToolbar']),
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar']),
     async submitReports() {
       this.addReportsErrors = []
       this.addReportsValidationErrors = []

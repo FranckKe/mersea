@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div class="title-wrapper">
+      <h4 class="title is-4">{{ $t('filter_reports_by_tracer_title') }}</h4>
+      <a @click="closeToolbar" class="button is-danger close-tool-button">
+        <font-awesome-icon icon="times" />
+      </a>
+    </div>
     <div class="control is-flex">
       <input
         class="input filter-report-search"
@@ -46,7 +52,7 @@
                 stroke="white"
                 stroke-width="2.5"
                 :fill="tracer.color"
-              ></circle>
+              />
             </svg>
             {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
           </b-checkbox>
@@ -66,6 +72,7 @@
 import { createNamespacedHelpers } from 'vuex'
 const tracersModule = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
+const toolBarModule = createNamespacedHelpers('toolBar')
 
 export default {
   name: 'filterReportsByTracer',
@@ -122,6 +129,8 @@ export default {
     }
   },
   methods: {
+    ...toolBarModule.mapGetters(['getActiveTool']),
+    ...toolBarModule.mapActions(['toggleActiveComponent', 'closeToolbar']),
     ...reportsModule.mapGetters({
       getReportCount: 'getReportCount',
       getReportsLoading: 'getLoading'
@@ -230,6 +239,7 @@ export default {
 <i18n>
 {
   "en": {
+    "filter_reports_by_tracer_title": "Filter by tracers",
     "tracers": "tracer | tracers",
     "check_all": "Check all",
     "search": "Search",
@@ -242,6 +252,7 @@ export default {
     "uncheck_all": "Uncheck all"
   },
   "fr": {
+    "filter_reports_by_tracer_title": "Filtrer par traceurs",
     "tracers": "traceur | traceurs",
     "check_all": "Tout cocher",
     "search": "Rechercher",
@@ -254,6 +265,7 @@ export default {
     "uncheck_all": "Tout décocher"
   },
   "es": {
+    "filter_reports_by_tracer_title": "Filtrar por trazadores",
     "tracers": "trazador | trazadores",
     "check_all": "Comprobar todo",
     "search": "Buscar",
