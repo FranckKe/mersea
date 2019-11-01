@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const toolBarModule = createNamespacedHelpers('toolBar')
@@ -86,4 +85,3 @@ export default {
   }
 }
 </style>
-

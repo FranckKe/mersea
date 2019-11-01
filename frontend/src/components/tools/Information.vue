@@ -6,7 +6,11 @@
         <font-awesome-icon icon="times" />
       </a>
     </div>
-    <b-loading :is-full-page="false" :active.sync="this.getLoading()" :can-cancel="false"></b-loading>
+    <b-loading
+      :is-full-page="false"
+      :active.sync="this.getLoading()"
+      :can-cancel="false"
+    ></b-loading>
     <div
       class="tool-information"
       v-html="

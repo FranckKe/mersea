@@ -102,6 +102,7 @@ export default {
       (state, getters) => getters['toolBar/getActiveTool'],
       activeTool => {
         this.initAddReportMarker(activeTool)
+        this.map.resize()
       }
     )
     this.$store.watch(
@@ -219,11 +220,7 @@ export default {
       let markerlngLat = this.addReportMarker.getLngLat()
       this.coordinates = `${markerlngLat.lat}, ${markerlngLat.lng}`
       const res = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${
-          markerlngLat.lng
-        },${markerlngLat.lat}.json?access_token=${
-          process.env.VUE_APP_MAPBOX_TOKEN
-        }`,
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${markerlngLat.lng},${markerlngLat.lat}.json?access_token=${process.env.VUE_APP_MAPBOX_TOKEN}`,
         {
           timeout: 15000
         }
@@ -807,7 +804,7 @@ export default {
 
   .map {
     width: 100vw;
-    height: 80vh;
+    height: 100vh;
     top: 56px;
     margin-bottom: 56px;
     position: relative;

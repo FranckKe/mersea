@@ -15,8 +15,12 @@
       />
     </div>
     <div class="check-buttons">
-      <button type="submit" class="button is-primary" @click="checkAll">{{ $t('check_all') }}</button>
-      <button type="submit" class="button is-primary" @click="unCheckAll">{{ $t('uncheck_all') }}</button>
+      <button type="submit" class="button is-primary" @click="checkAll">
+        {{ $t('check_all') }}
+      </button>
+      <button type="submit" class="button is-primary" @click="unCheckAll">
+        {{ $t('uncheck_all') }}
+      </button>
     </div>
     <div class="legend-tracers">
       <b-loading
@@ -30,10 +34,25 @@
         v-for="tracersByCategory in allFilteredTracersList"
       >
         <h3 class="title is-6">{{ $t(tracersByCategory.category) }}</h3>
-        <div class="legend-tracer" :key="tracer.id" v-for="tracer in tracersByCategory.tracers">
+        <div
+          class="legend-tracer"
+          :key="tracer.id"
+          v-for="tracer in tracersByCategory.tracers"
+        >
           <b-checkbox v-model="filteredTracers" :native-value="tracer.id">
-            <svg class="legend-circle" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2.5" :fill="tracer.color" />
+            <svg
+              class="legend-circle"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="10"
+                cy="10"
+                r="7"
+                stroke="white"
+                stroke-width="2.5"
+                :fill="tracer.color"
+              />
             </svg>
             {{ tracer.name }} ({{ getReportCount()(tracer.id) }})
           </b-checkbox>

@@ -2,7 +2,10 @@
   <div>
     <div class="title-wrapper">
       <h4 class="title is-4">{{ $t('add_report') }}</h4>
-      <a @click="toggleActiveComponent(getActiveTool)" class="button is-danger close-tool-button">
+      <a
+        @click="toggleActiveComponent(getActiveTool)"
+        class="button is-danger close-tool-button"
+      >
         <font-awesome-icon icon="times" />
       </a>
     </div>
@@ -28,8 +31,8 @@
                 class="hidden"
                 :type="errors.has('coordinates') ? 'is-danger' : ''"
                 :message="
-                errors.has('coordinates') ? errors.first('coordinates') : ''
-              "
+                  errors.has('coordinates') ? errors.first('coordinates') : ''
+                "
               >
                 <b-input
                   v-model="coordinates"
@@ -59,7 +62,9 @@
                 v-show="!this.$auth.check()"
                 :label="$t('name_pseudo')"
                 :type="errors.has('username') ? 'is-danger' : ''"
-                :message="errors.has('username') ? errors.first('username') : ''"
+                :message="
+                  errors.has('username') ? errors.first('username') : ''
+                "
               >
                 <b-input
                   v-model="username"
@@ -89,16 +94,14 @@
                 <span class="file-name" v-if="file">{{ file.name }}</span>
               </b-field>
               <b-message type="is-info" class="file-multiple-tracer">
-                {{
-                $t('photo_multiple_tracer')
-                }}
+                {{ $t('photo_multiple_tracer') }}
               </b-message>
               <b-field
                 :label="$t('report_date')"
                 :type="errors.has('reportDate') ? 'is-danger' : ''"
                 :message="
-                errors.has('reportDate') ? errors.first('reportDate') : ''
-              "
+                  errors.has('reportDate') ? errors.first('reportDate') : ''
+                "
               >
                 <b-datepicker
                   v-model="reportDate"
@@ -117,8 +120,8 @@
                 class="description-field"
                 :type="errors.has('description') ? 'is-danger' : ''"
                 :message="
-                errors.has('description') ? errors.first('description') : ''
-              "
+                  errors.has('description') ? errors.first('description') : ''
+                "
               >
                 <b-input
                   class="description"
@@ -131,9 +134,7 @@
                 ></b-input>
               </b-field>
               <b-message type="is-info" v-if="!this.$auth.check()">
-                {{
-                $t('why_account')
-                }}
+                {{ $t('why_account') }}
               </b-message>
             </div>
             <div class="step-content">
@@ -148,9 +149,11 @@
                 <ul>
                   <li
                     v-for="(addReportValidationError,
-                  index) in addReportsValidationErrors[index]"
+                    index) in addReportsValidationErrors[index]"
                     :key="index"
-                  >- {{ addReportValidationError.metadata.reason }}</li>
+                  >
+                    - {{ addReportValidationError.metadata.reason }}
+                  </li>
                 </ul>
               </b-message>
               <div v-for="(tracer, index) in selectedTracers" :key="index">
@@ -164,10 +167,10 @@
                       @click="removeTracerInput(index)"
                       class="button is-danger is-outlined"
                       :disabled="
-                      selectedTracers.length === 1 ||
-                        areSubmitting[index] ||
-                        areSomeReportsSubmitted
-                    "
+                        selectedTracers.length === 1 ||
+                          areSubmitting[index] ||
+                          areSomeReportsSubmitted
+                      "
                     >
                       <b-icon icon="times" />
                     </a>
@@ -176,10 +179,10 @@
                     :label="index === 0 ? $tc('tracers', 1) : ''"
                     :type="errors.has(`tracer-${index}`) ? 'is-danger' : ''"
                     :message="
-                    errors.has(`tracer-${index}`)
-                      ? errors.first(`tracer-${index}`)
-                      : ''
-                  "
+                      errors.has(`tracer-${index}`)
+                        ? errors.first(`tracer-${index}`)
+                        : ''
+                    "
                     expanded
                   >
                     <b-autocomplete
@@ -188,15 +191,15 @@
                       :name="`tracer-${index}`"
                       :open-on-focus="true"
                       :data="
-                      tracers.filter(
-                        t =>
-                          t.name
-                            .toString()
-                            .toLowerCase()
-                            .indexOf(tracerNames[index].toLowerCase()) >= 0 &&
-                          t.category !== 'archive'
-                      )
-                    "
+                        tracers.filter(
+                          t =>
+                            t.name
+                              .toString()
+                              .toLowerCase()
+                              .indexOf(tracerNames[index].toLowerCase()) >= 0 &&
+                            t.category !== 'archive'
+                        )
+                      "
                       field="name"
                       @select="option => (selectedTracers[index] = option)"
                       :placeholder="$t('search_tracers')"
@@ -208,10 +211,15 @@
                       <template slot-scope="props">
                         <div class="media">
                           <div class="media-left">
-                            <img class="image is-64x64" :src="`${apiUrl}${props.option.photo}`" />
+                            <img
+                              class="image is-64x64"
+                              :src="`${apiUrl}${props.option.photo}`"
+                            />
                           </div>
                           <div class="media-content">
-                            <p class="autocomplete-tracer-name">{{ props.option.name }}</p>
+                            <p class="autocomplete-tracer-name">
+                              {{ props.option.name }}
+                            </p>
                             <small>{{ props.option.kind }}</small>
                           </div>
                         </div>
@@ -224,8 +232,8 @@
                     :label="index === 0 ? $t('quantity') : ''"
                     :type="errors.has('quantity') ? 'is-danger' : ''"
                     :message="
-                    errors.has('quantity') ? errors.first('quantity') : ''
-                  "
+                      errors.has('quantity') ? errors.first('quantity') : ''
+                    "
                   >
                     <b-input
                       v-model="quantities[index]"
@@ -245,23 +253,23 @@
                     <span
                       @click="retrySubmitReport(index)"
                       :class="{
-                      'report-submission-status': true,
-                      'report-submission-status--clickable':
-                        getSubmissionStatus(index) === 'failed',
-                      'has-text-success':
-                        getSubmissionStatus(index) === 'saved',
-                      'button is-primary is-outlined':
-                        getSubmissionStatus(index) === 'failed'
-                    }"
+                        'report-submission-status': true,
+                        'report-submission-status--clickable':
+                          getSubmissionStatus(index) === 'failed',
+                        'has-text-success':
+                          getSubmissionStatus(index) === 'saved',
+                        'button is-primary is-outlined':
+                          getSubmissionStatus(index) === 'failed'
+                      }"
                       :disabled="!(getSubmissionStatus(index) === 'failed')"
                     >
                       <b-icon
                         :icon="getSubmissionStatusIcon(index)"
                         :custom-class="
-                        getSubmissionStatus(index) === 'submitting'
-                          ? 'fa-spin'
-                          : ''
-                      "
+                          getSubmissionStatus(index) === 'submitting'
+                            ? 'fa-spin'
+                            : ''
+                        "
                       />
                     </span>
                   </b-field>
@@ -272,11 +280,11 @@
                   class="button is-primary add-tracer-input"
                   @click="addTracerInput"
                   :disabled="
-                  selectedTracers.length >= this.tracerInputsLimit ||
-                    !selectedTracers[selectedTracers.length - 1] ||
-                    !selectedTracers[selectedTracers.length - 1].id ||
-                    areSomeReportsSubmitted
-                "
+                    selectedTracers.length >= this.tracerInputsLimit ||
+                      !selectedTracers[selectedTracers.length - 1] ||
+                      !selectedTracers[selectedTracers.length - 1].id ||
+                      areSomeReportsSubmitted
+                  "
                 >
                   <b-icon icon="plus"></b-icon>
                 </a>
@@ -285,7 +293,8 @@
                 v-if="!anySubmitFailed"
                 type="is-success"
                 aria-close-label="Close message"
-              >{{ $t('report_review') }}</b-message>
+                >{{ $t('report_review') }}</b-message
+              >
             </div>
           </div>
         </form>
@@ -297,7 +306,8 @@
               data-nav="previous"
               class="button is-light"
               :disabled="areSomeReportsSubmitting || areSomeReportsSubmitted"
-            >{{ $t('previous') }}</a>
+              >{{ $t('previous') }}</a
+            >
           </div>
           <div class="steps-action">
             <button
@@ -306,18 +316,21 @@
               data-nav="next"
               class="button"
               :class="{
-              'is-success': currentStep === 0 || currentStep === 1,
-              hidden: currentStep === 1 && this.areAllReportsSubmitted,
-              'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
-            }"
+                'is-success': currentStep === 0 || currentStep === 1,
+                hidden: currentStep === 1 && this.areAllReportsSubmitted,
+                'is-loading': currentStep === 1 && this.areSomeReportsSubmitting
+              }"
               disabled="false"
-            >{{ currentStep === 1 ? $t('submit') : $t('next') }}</button>
+            >
+              {{ currentStep === 1 ? $t('submit') : $t('next') }}
+            </button>
             <a
               href="#"
               class="button is-danger close-button-step"
               :class="{ hidden: currentStep !== 1 || !areAllReportsSubmitted }"
               @click="closeAddReportForm"
-            >{{ $t('close') }}</a>
+              >{{ $t('close') }}</a
+            >
           </div>
         </div>
       </div>

@@ -7,7 +7,11 @@
       </a>
     </div>
     <div class="daterange">
-      <b-loading :is-full-page="false" :active.sync="this.getLoading()" :can-cancel="false"></b-loading>
+      <b-loading
+        :is-full-page="false"
+        :active.sync="this.getLoading()"
+        :can-cancel="false"
+      ></b-loading>
       <h5 class="title is-5">{{ $t('quick_selection') }}</h5>
       <div class="buttons first-row">
         <button
@@ -37,7 +41,9 @@
           v-for="years in [3, 2, 1]"
           :key="years"
           class="button is-primary"
-          :class="{ 'is-active': isReportedAtEqualTo(previousYearRange(years)) }"
+          :class="{
+            'is-active': isReportedAtEqualTo(previousYearRange(years))
+          }"
           @click="setReportedAt(previousYearRange(years))"
         >
           <span>{{ previousYearLabel(years) }}</span>
@@ -45,12 +51,14 @@
         <button
           class="button is-primary"
           :class="{
-          'is-active': isReportedAtEqualTo({
-            min: new Date('2016-01-01'),
-            max: new Date()
-          })
-        }"
-          @click="setReportedAt({ min: new Date('2016-01-01'), max: new Date() })"
+            'is-active': isReportedAtEqualTo({
+              min: new Date('2016-01-01'),
+              max: new Date()
+            })
+          }"
+          @click="
+            setReportedAt({ min: new Date('2016-01-01'), max: new Date() })
+          "
         >
           <span>{{ $t('from_beginning') }}</span>
         </button>
