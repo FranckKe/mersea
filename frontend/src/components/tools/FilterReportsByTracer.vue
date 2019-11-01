@@ -239,7 +239,7 @@ export default {
 <i18n>
 {
   "en": {
-        "filter_reports_by_tracer_title": "Filter by tracers",
+    "filter_reports_by_tracer_title": "Filter by tracers",
     "tracers": "tracer | tracers",
     "check_all": "Check all",
     "search": "Search",
