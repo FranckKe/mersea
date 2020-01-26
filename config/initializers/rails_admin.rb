@@ -7,7 +7,7 @@ RailsAdmin.config do |config|
 
   ## == ActiveStorage ==
   # https://github.com/sferik/rails_admin/issues/3014
-  config.excluded_models = ['ActiveStorage::Blob', 'ActiveStorage::Attachment']
+  config.excluded_models = ['ActiveStorage::Blob', 'ActiveStorage::Attachment', 'AccessToken']
 
   ## == Devise ==
   config.authenticate_with do
@@ -35,9 +35,13 @@ RailsAdmin.config do |config|
     config.logging = true
   end
 
+config.model 'Admin' do
+  visible false
+end
+
   config.actions do
-    dashboard                     # mandatory
-    index                         # mandatory
+    dashboard # mandatory
+    index   # mandatory
     new
     export
     bulk_delete

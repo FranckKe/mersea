@@ -202,9 +202,14 @@ export default {
                     <h5 class="title is-5"><b>${tracer.name}</b></h5>
                     <p>
                       ${reportProperties.quantity}${' '}
-                      ${this.$i18n.tc('object', reportProperties.quantity)}
+                      ${this.$i18n.tc(
+                        'tracers',
+                        reportProperties.quantity
+                      )} ${this.$i18n.t('on')} ${
+            reportProperties.shore_length
+          } km
                     </p>
-                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
+                    <p>${this.$i18n.t('per')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
                       reportProperties.reported_at
                     )}</p>
@@ -312,7 +317,12 @@ export default {
           .addControl(geocoder, 'top-left')
           .addControl(geolocator)
           .addControl(navigater, 'bottom-right')
-          .on('load', () => resolve('done'))
+          .on('load', () => {
+            document
+              .querySelector('.mapboxgl-ctrl-geocoder--input')
+              .addEventListener('focus', this.closeToolbar, false)
+            resolve('done')
+          })
       })
     },
     mapLoad: async function() {
@@ -471,6 +481,7 @@ export default {
       'getLoading',
       'getErrors'
     ]),
+    ...toolBarModule.mapActions(['closeToolbar']),
     removeSourceAndLayer: function(map, id) {
       if (map.getLayer(id) != null) map.removeLayer(id)
       if (map.getSource(id) != null) map.removeSource(id)
@@ -842,24 +853,27 @@ export default {
 <i18n>
 {
   "en": {
-    "object": "item | items",
+    "tracers": "tracer | tracers",
     "search_location": "Find a place",
     "no_address_found": "No address found",
-    "by": "By",
+    "per": "per",
+    "on": "on",
     "map_init_failure": "Error initializing map"
   },
   "fr": {
-    "object": "exemplaire | exemplaires",
+    "tracers": "traceur | traceurs",
     "search_location": "Rechercher un endroit",
     "no_address_found": "Pas d'adresse trouvée",
-    "by": "Par",
+    "per": "par",
+    "on": "sur",
     "map_init_failure": "Échec d'initialisation de la carte"
   },
   "es": {
-    "object": "objeto | objetos",
+    "tracers": "trazador | trazadores",
     "search_location": "Encontrar un lugar",
     "no_address_found": "No se encontró dirección",
-    "by": "pro",
+    "per": "pro",
+    "on": "más de",
     "map_init_failure": "Error al inicializar el mapa"
   }
 }

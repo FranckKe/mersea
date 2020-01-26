@@ -72,6 +72,11 @@ export default {
           type: 'num',
           order: 'asc'
         },
+        shore_length: {
+          active: false,
+          type: 'num',
+          order: 'asc'
+        },
         created_at: {
           active: false,
           type: 'date',
@@ -92,7 +97,7 @@ export default {
   },
   methods: {
     ...mapGetters(['getTracers', 'getCategories']),
-    ...reportsModule.mapGetters(['getReportCount']),
+    ...reportsModule.mapGetters(['getReportCount', 'getQuantitybyShoreLength']),
     sortTracersBy: function(field, order) {
       if (order == null) {
         order = this.sortFields[field].order
@@ -121,6 +126,25 @@ export default {
           }
         })
       }
+
+      if (field === 'shore_length') {
+        this.sortedTracers.sort((a, b) => {
+          if (
+            this.getQuantitybyShoreLength()(a.id) <
+            this.getQuantitybyShoreLength()(b.id)
+          ) {
+            return 0 - modifier
+          } else if (
+            this.getQuantitybyShoreLength()(a.id) >
+            this.getQuantitybyShoreLength()(b.id)
+          ) {
+            return modifier
+          } else {
+            return 0
+          }
+        })
+      }
+
       this.sortedTracers.sort((a, b) => {
         if (a[field] < b[field]) {
           return 0 - modifier
@@ -161,6 +185,7 @@ export default {
     "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
+    "shore_length": "Quantity by km",
     "name": "Name",
     "research": "Research",
     "drift": "Drift",
@@ -175,6 +200,7 @@ export default {
     "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
+    "shore_length": "Quantité par km",
     "name": "Nom",
     "research": "Recherche",
     "drift": "Dérive",
@@ -189,6 +215,7 @@ export default {
     "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
+    "shore_length": "Cantidad por km",
     "name": "Apellido",
     "research": "Búsqueda",
     "drift": "Dériva",

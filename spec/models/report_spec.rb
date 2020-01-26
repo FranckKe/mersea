@@ -4,6 +4,7 @@ describe Report do
   it { expect(subject).to have_db_column(:id) }
   it { expect(subject).to have_db_column(:name) }
   it { expect(subject).to have_db_column(:quantity) }
+  it { expect(subject).to have_db_column(:shore_length) }
   it { expect(subject).to have_db_column(:address) }
   it { expect(subject).to have_db_column(:longitude) }
   it { expect(subject).to have_db_column(:latitude) }

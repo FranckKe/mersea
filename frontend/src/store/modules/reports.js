@@ -38,6 +38,13 @@ const getters = {
       return tracerId === report.properties.tracer_id
         ? (total += report.properties.quantity)
         : total
+    }, 0),
+  getQuantitybyShoreLength: state => tracerId =>
+    (state.reports.features || []).reduce((total, report) => {
+      return tracerId === report.properties.tracer_id
+        ? (total +=
+            report.properties.quantity / (report.properties.shore_length || 1))
+        : total
     }, 0)
 }
 const mutations = {

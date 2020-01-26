@@ -28,17 +28,10 @@
         >
           <span>{{ $t('this_month') }}</span>
         </button>
-        <button
-          class="button is-primary"
-          :class="{ 'is-active': isReportedAtEqualTo(startOfRange('year')) }"
-          @click="setReportedAt(startOfRange('year'))"
-        >
-          <span>{{ $t('this_year') }}</span>
-        </button>
       </div>
       <div class="buttons">
         <button
-          v-for="years in [3, 2, 1]"
+          v-for="years in [0, 1, 2, 3]"
           :key="years"
           class="button is-primary"
           :class="{
@@ -48,6 +41,8 @@
         >
           <span>{{ previousYearLabel(years) }}</span>
         </button>
+      </div>
+      <div class="buttons last">
         <button
           class="button is-primary"
           :class="{
@@ -224,8 +219,12 @@ export default {
   margin-bottom: 0.5em;
 }
 
-.buttons.first-row {
+.buttons {
   margin-bottom: 0;
+}
+
+.buttons.last {
+  margin-bottom: 1rem;
 }
 </style>
 
@@ -256,7 +255,6 @@ export default {
     "quick_selection": "Quick selection",
     "this_week": "Week to date",
     "this_month": "Month to date",
-    "this_year": "Year to date",
     "from_beginning": "From the beginning",
     "custom_range": "Custom range",
     "load_reports_failure": "Fail to load reports",
@@ -269,7 +267,6 @@ export default {
     "quick_selection": "Sélection rapide",
     "this_week": "Cette semaine",
     "this_month": "Ce mois",
-    "this_year": "Cette année",
     "from_beginning": "Depuis le début",
     "custom_range": "Période personnalisée",
     "load_reports_failure": "Échec de chargement des rapports",
@@ -282,7 +279,6 @@ export default {
     "quick_selection": "Selección rápida",
     "this_week": "Esta semana",
     "this_month": "Este mes",
-    "this_year": "Este año",
     "from_beginning": "Desde el principio",
     "custom_range": "Rango personalizado",
     "load_reports_failure": "Fallo al cargar informes",

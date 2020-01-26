@@ -170,6 +170,7 @@ describe 'ReportsController', type: :request do
       {
         name: 'toto',
         quantity: 42,
+        shore_length: 7,
         address: 'somewhere',
         longitude: 42,
         latitude: 42.42,
@@ -268,6 +269,7 @@ describe 'ReportsController', type: :request do
       {
         name: 'toto',
         quantity: 42,
+        shore_length: 7,
         address: 'somewhere',
         longitude: 42,
         latitude: 42.42,
@@ -286,6 +288,7 @@ describe 'ReportsController', type: :request do
       model = Report.find(report.id)
       expect(model.name).to eq(parameters[:name])
       expect(model.quantity).to eq(parameters[:quantity])
+      expect(model.shore_length).to eq(parameters[:shore_length])
       expect(model.address).to eq(parameters[:address])
       expect(model.longitude).to eq(parameters[:longitude])
       expect(model.latitude).to eq(parameters[:latitude])

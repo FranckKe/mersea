@@ -59,12 +59,12 @@ class ReportsController < ApiController
   end
 
   def report_params
-    params.permit(:tracer_id, :name, :quantity, :address, :longitude, :latitude,
+    params.permit(:tracer_id, :name, :quantity, :shore_length, :address, :longitude, :latitude,
                   :description, :reported_at)
   end
 
   def report_params_update
-    params.permit(:name, :quantity, :address, :longitude, :latitude,
+    params.permit(:name, :quantity, :shore_length, :address, :longitude, :latitude,
                   :description, :reported_at)
   end
 
