@@ -82,6 +82,8 @@ const {
   mapGetters,
   mapActions
 } = createNamespacedHelpers('tracers')
+const reportsModule = createNamespacedHelpers('reports')
+
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
 
@@ -96,7 +98,12 @@ export default {
       searchKeywords: ''
     }
   },
-  async created() {},
+  async created() {
+    await this.loadReports({
+      reported_at_min: this.$reported_at_min,
+      reported_at_max: this.$reported_at_max
+    })
+  },
   methods: {
     getFilteredTracers() {
       if (this.$normalizeStr(this.searchKeywords) !== '') {
@@ -111,7 +118,8 @@ export default {
     },
     ...mapGetters(['getTracers', 'getLoading']),
     ...mapMutations(['setDisplayFormat']),
-    ...mapActions(['loadTracers'])
+    ...mapActions(['loadTracers']),
+    ...reportsModule.mapActions(['loadReports'])
   },
   computed: {
     ...mapState({

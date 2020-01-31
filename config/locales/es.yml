@@ -37,6 +37,7 @@ es:
         reported_at: Informado a
         tracer: Localizador
         quantity: Cantidad
+        shore_length: kilómetro costero
         date: Fecha del informe
         status: Status
       user:

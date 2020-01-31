@@ -8,25 +8,29 @@
     </div>
     <div class="card-content">
       <div class="content">
-        <p class="title is-4">{{ tracer.name }}</p>
-        <p>{{ tracer.description }}</p>
+        <p class="title is-4">{{ tracer.name | capitalize }}</p>
+        <p>{{ tracer.description | capitalize }}</p>
         <p>
           <strong>{{ $t('origin') }}:</strong>
-          {{ tracer.origin }}
+          {{ tracer.origin | capitalize }}
         </p>
         <p>
           <strong>{{ $t('kind') }}:</strong>
-          {{ tracer.kind }}
+          {{ tracer.kind | capitalize }}
         </p>
         <p>
           <strong>{{ $t('created_at') }}:</strong>
           <time datetime="tracer.created_at | formatDate">
-            {{ tracer.created_at | formatDate }}
-          </time>
+            {{ tracer.created_at | formatDate }}</time
+          >
         </p>
         <p>
           <strong>{{ $t('quantity') }}:</strong>
           {{ getReportCount()(tracer.id) }}
+        </p>
+        <p>
+          <strong>{{ $t('quantity_by_km') }}:</strong>
+          {{ $n(getQuantitybyShoreLength()(tracer.id)) }}/km
         </p>
       </div>
     </div>
@@ -47,7 +51,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...reportsModule.mapGetters(['getReportCount'])
+    ...reportsModule.mapGetters(['getReportCount', 'getQuantitybyShoreLength'])
   }
 }
 </script>
@@ -75,6 +79,7 @@ export default {
     "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
+    "quantity_by_km": "Quantity by km",
     "name": "Name",
     "kind": "Type"
   },
@@ -82,6 +87,7 @@ export default {
     "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
+    "quantity_by_km": "Quantité par km",
     "name": "Nom",
     "kind": "Type"
   },
@@ -89,6 +95,7 @@ export default {
     "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
+    "quantity_by_km": "Cantidad por km",
     "name": "Apellido",
     "kind": "Tipo"
   }

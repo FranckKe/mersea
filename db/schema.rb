@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_26_083946) do
+ActiveRecord::Schema.define(version: 2020_01_26_164840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_05_26_083946) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+    t.integer "shore_length"
     t.index ["address"], name: "index_reports_on_address"
     t.index ["latitude"], name: "index_reports_on_latitude"
     t.index ["longitude"], name: "index_reports_on_longitude"

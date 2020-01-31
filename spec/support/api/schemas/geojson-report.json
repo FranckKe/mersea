@@ -6,7 +6,14 @@
     "type": { "enum": ["Feature"] },
     "properties": {
       "type": "object",
-      "required": ["user", "reported_at", "tracer_id", "color", "quantity"],
+      "required": [
+        "user",
+        "reported_at",
+        "tracer_id",
+        "color",
+        "quantity",
+        "shore_length"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -27,7 +34,8 @@
           "type": "string",
           "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
         },
-        "quantity": { "type": "integer" }
+        "quantity": { "type": "integer" },
+        "shore_length": { "type": "integer", "minimum": 0, "maximum": 10 }
       }
     },
     "geometry": {

@@ -15,7 +15,8 @@ class GeojsonReportSerializer < ActiveModel::Serializer
       },
       tracer_id: object.tracer_id,
       color: object.tracer.color,
-      quantity: object.quantity
+      quantity: object.quantity,
+      shore_length: object.shore_length
     }
   end
 

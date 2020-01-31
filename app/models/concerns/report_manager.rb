@@ -30,9 +30,11 @@ module Concerns
         list do
           sort_by :created_at
           field :status, :state do
-            column_width 99
+            column_width 50
           end
-          field :photo, :active_storage
+          field :photo, :active_storage do
+            column_width 100
+          end
           field :tracer do
             column_width 99
           end
@@ -40,7 +42,10 @@ module Concerns
             column_width 99
           end
           field :quantity do
-            column_width 75
+            column_width 50
+          end
+          field :shore_length do
+            column_width 50
           end
           field :description do
             column_width 99
@@ -75,6 +80,7 @@ module Concerns
           field :tracer
           field :name
           field :quantity
+          field :shore_length
           field :longitude
           field :latitude
           field :address
@@ -85,7 +91,7 @@ module Concerns
 
         state(
           events: { reject: 'btn-danger', accept: 'btn-success' },
-          states: { rejected: 'label-important', accepted: 'label-success' },
+          states: { rejected: 'label-danger', accepted: 'label-success' },
           disable: []
         )
       end

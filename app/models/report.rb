@@ -2,19 +2,20 @@
 #
 # Table name: reports
 #
-#  id          :uuid             not null, primary key
-#  tracer_id   :uuid
-#  name        :string
-#  quantity    :integer
-#  address     :string
-#  longitude   :float
-#  latitude    :float
-#  description :text
-#  reported_at :date
-#  status      :string
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  user_id     :uuid
+#  id           :uuid             not null, primary key
+#  tracer_id    :uuid
+#  name         :string
+#  quantity     :integer
+#  address      :string
+#  longitude    :float
+#  latitude     :float
+#  description  :text
+#  reported_at  :date
+#  status       :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  user_id      :uuid
+#  shore_length :integer
 #
 # Indexes
 #
@@ -35,8 +36,10 @@ class Report < ApplicationRecord
   belongs_to :tracer
   belongs_to :user, optional: true
 
-  validates :tracer_id, :name, :latitude, :longitude, :reported_at, presence: true
+  validates :tracer_id, :name, :latitude, :longitude, :reported_at, :quantity, :shore_length, presence: true
   validates :photo, attached: true,
                     content_type: ['image/png', 'image/jpeg', 'image/tiff', 'image/webp'],
                     if: -> { !self.user&.senior && self.status != 'accepted' }
+  validates :shore_length, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 500 }
 end

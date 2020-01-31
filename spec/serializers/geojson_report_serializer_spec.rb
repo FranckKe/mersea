@@ -13,6 +13,7 @@ describe GeojsonReportSerializer do
   it { expect(subject.serializable_hash[:properties]).to have_key(:tracer_id) }
   it { expect(subject.serializable_hash[:properties]).to have_key(:color) }
   it { expect(subject.serializable_hash[:properties]).to have_key(:quantity) }
+  it { expect(subject.serializable_hash[:properties]).to have_key(:shore_length) }
   it { expect(subject.serializable_hash).to have_key(:geometry) }
   it { expect(subject.serializable_hash[:geometry]).to have_key(:type) }
   it { expect(subject.serializable_hash[:geometry]).to have_key(:coordinates) }

@@ -240,10 +240,43 @@
                       name="quantity"
                       type="number"
                       step="1"
-                      min="0"
-                      :data-vv-as="$t('quantity') | lowercase"
-                      v-validate="'required|min_value:0'"
+                      min="1"
+                      max="500"
+                      :data-vv-as="$t('quantity')"
+                      v-validate="'required|min_value:1|max_value:500'"
                     ></b-input>
+                  </b-field>
+                  <b-field
+                    :label="index === 0 ? ' ' : ''"
+                    class="shore-length-field"
+                    :type="errors.has('shoreLength') ? 'is-danger' : ''"
+                    :message="
+                      errors.has('shoreLength')
+                        ? errors.first('shoreLength')
+                        : ''
+                    "
+                  >
+                    <b-tooltip
+                      :label="$t('shore_length_tooltip')"
+                      position="is-left"
+                    >
+                      <div class="shore-length-unit-wrapper">
+                        <p class="shore-length-on">
+                          {{ $t('shore_length_on') }}
+                        </p>
+                        <b-input
+                          v-model="shoreLengths[index]"
+                          name="shoreLength"
+                          type="number"
+                          step="1"
+                          min="1"
+                          max="10"
+                          :data-vv-as="$t('shore_length')"
+                          v-validate="'required|min_value:1|max_value:10'"
+                        ></b-input>
+                        <p class="shore-length-unit">km</p>
+                      </div>
+                    </b-tooltip>
                   </b-field>
                   <b-field
                     :label="index === 0 ? '-' : ''"
@@ -286,7 +319,7 @@
                       areSomeReportsSubmitted
                   "
                 >
-                  <b-icon icon="plus"></b-icon>
+                  {{ $t('add') }}
                 </a>
               </b-field>
               <b-message
@@ -369,6 +402,7 @@ export default {
       file: null,
       isSaved: [false],
       quantities: [1],
+      shoreLengths: [1],
       tracerNames: [''],
       username: this.$auth.check() ? this.$auth.user().name : '',
       description: '',
@@ -525,6 +559,7 @@ export default {
         reported_at: String(moment(this.reportDate).format('YYYY-MM-DD')),
         tracer_id: (this.selectedTracers[index] || {}).id,
         quantity: this.quantities[index],
+        shore_length: this.shoreLengths[index],
         description: this.description
       }
       if (file64 != null) postDataJson.photo = file64
@@ -565,6 +600,7 @@ export default {
       this.isSaved = [false]
       this.photo = ''
       this.quantities = [1]
+      this.shoreLengths = [1]
       this.reportDate = new Date()
       this.selectedTracers = [{}]
       this.tracerNames = ['']
@@ -584,6 +620,7 @@ export default {
       this.areSubmitted.splice(index, 1)
       this.areSubmitting.splice(index, 1)
       this.quantities.splice(index, 1)
+      this.shoreLengths.splice(index, 1)
       this.selectedTracers.splice(index, 1)
       this.tracerNames.splice(index, 1)
     },
@@ -598,6 +635,7 @@ export default {
       }
       this.selectedTracers.push({})
       this.quantities.push(1)
+      this.shoreLengths.push(1)
       this.tracerNames.push('')
       this.areSubmitting.push(false)
       this.areSubmitted.push(false)
@@ -800,7 +838,34 @@ export default {
 }
 
 .quantity-field {
-  width: 75px;
+  width: 66px;
+}
+
+.shore-length-field {
+  width: 100px;
+
+  .label {
+    height: 1.5rem;
+  }
+
+  .control,
+  input {
+    width: 50px;
+  }
+
+  .shore-length-unit-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .shore-length-on {
+    margin-right: 10px;
+  }
+
+  .shore-length-unit {
+    margin-left: 5px;
+  }
 }
 </style>
 
@@ -839,7 +904,10 @@ export default {
   text-transform: capitalize;
 }
 
-/* Autocomplete */
+.autocomplete .dropdown-content {
+  width: 370px;
+}
+
 .autocomplete .dropdown-item {
   padding-right: 1rem;
 }
@@ -878,12 +946,25 @@ export default {
   margin-left: 0;
   padding-top: 0;
 }
+
+.shore-length-field label.label {
+  height: 1.5rem;
+}
+
+@media only screen and (max-device-width: 1024px) {
+.autocomplete .dropdown-content {
+  min-width: 240px;
+  width: auto;
+}
+
+}
 </style>
 
 <i18n>
 {
   "en": {
     "report_verb": "Report",
+    "add": "Add a tracer",
     "add_report": "Report a waste",
     "address": "Address",
     "cancel_report": "Close reporting",
@@ -899,6 +980,9 @@ export default {
     "optional": "optional",
     "previous": "Previous",
     "quantity": "Quantity",
+    "shore_length": "Shore kilometers",
+    "shore_length_on": "on",
+    "shore_length_tooltip": "Collection's kilometers of shore",
     "report_date": "Date of report",
     "report_review": "Thank you for your report. It will soon be reviewed by an administrator",
     "report": "Report",
@@ -915,6 +999,7 @@ export default {
   },
   "fr": {
     "report_verb": "Signaler",
+    "add": "Ajouter un traceur",
     "add_report": "Signaler un déchet",
     "address": "Adresse",
     "cancel_report": "Fermer l'ajout de signalement",
@@ -930,6 +1015,9 @@ export default {
     "optional": "optionnel",
     "previous": "Précédent",
     "quantity": "Quantité",
+    "shore_length": "Kilomètres de rivage",
+    "shore_length_on": "sur",
+    "shore_length_tooltip": "Kilomètre de rivage du ramassage",
     "report_date": "Date de signalement",
     "report_review": "Merci pour votre signalement. Une validation va bientôt être effectuée.",
     "report": "Signalement",
@@ -946,6 +1034,7 @@ export default {
   },
   "es": {
     "report_verb": "Informe",
+    "add": "Añadir un trazador",
     "add_report": "Reportar un desperdicio",
     "address": "Dirección",
     "cancel_report": "Cerrar agrega testimonio",
@@ -961,6 +1050,9 @@ export default {
     "optional": "opcional",
     "previous": "Anterior",
     "quantity": "Cantidad",
+    "shore_length": "Kilómetros de la costa",
+    "shore_length_on": "en",
+    "shore_length_tooltip": "Recogida en la costa kilómetro",
     "report_date": "Fecha de reporte",
     "report_review": "Gracias por su testimonio. Uno administrador revisado soon",
     "report": "Testimonio",
