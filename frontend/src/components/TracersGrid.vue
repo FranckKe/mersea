@@ -14,7 +14,7 @@
         }})
       </button>
     </div>
-    <div v-for="(category, idt) in getCategories()" :key="idt">
+    <div v-for="(category, idt) in getCategories()" :key="idt" class="tracers-grid-wrapper">
       <h2 class="category-title title is-2">{{ $t(category) }}</h2>
       <div class="tracers-grid columns is-multiline is-mobile">
         <div
@@ -169,6 +169,10 @@ export default {
 .tracers-grid {
   width: 100%;
   margin-bottom: 1rem;
+}
+
+.tracers-grid-wrapper {
+  margin-bottom: 1.75rem;
 }
 
 .category-title {

@@ -319,7 +319,7 @@
                       areSomeReportsSubmitted
                   "
                 >
-                  <b-icon icon="plus"></b-icon>
+                  {{ $t('add') }}
                 </a>
               </b-field>
               <b-message
@@ -964,6 +964,7 @@ export default {
 {
   "en": {
     "report_verb": "Report",
+    "add": "Add a tracer",
     "add_report": "Report a waste",
     "address": "Address",
     "cancel_report": "Close reporting",
@@ -998,6 +999,7 @@ export default {
   },
   "fr": {
     "report_verb": "Signaler",
+    "add": "Ajouter un traceur",
     "add_report": "Signaler un déchet",
     "address": "Adresse",
     "cancel_report": "Fermer l'ajout de signalement",
@@ -1032,6 +1034,7 @@ export default {
   },
   "es": {
     "report_verb": "Informe",
+    "add": "Añadir un trazador",
     "add_report": "Reportar un desperdicio",
     "address": "Dirección",
     "cancel_report": "Cerrar agrega testimonio",
