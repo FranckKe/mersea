@@ -13,7 +13,7 @@ yarn install
 
 # serve with hot reload at localhost:8080
 # Configure env variables (see .env)
-yarn run dev
+yarn run serve
 
 # build for production with minification
 yarn run build
