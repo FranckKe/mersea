@@ -720,9 +720,6 @@ export default {
       this.monthNames = moment.months()
       this.dayNames = moment.weekdaysShort()
       this.firstDayOfTheWeek = moment().weekday() === 1 ? 0 : 1
-    },
-    isSaved: function() {
-      if (!this.anySubmitFailed) this.bulmaSteps.next_step()
     }
   }
 }
@@ -952,11 +949,10 @@ export default {
 }
 
 @media only screen and (max-device-width: 1024px) {
-.autocomplete .dropdown-content {
-  min-width: 240px;
-  width: auto;
-}
-
+  .autocomplete .dropdown-content {
+    min-width: 240px;
+    width: auto;
+  }
 }
 </style>
 
