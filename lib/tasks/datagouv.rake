@@ -36,19 +36,19 @@ task datagouv: :environment do
   puts "#{@tracers.size} tracers found."
 
   tracers_csv = CSV.generate do |csv|
-    csv << @tracers.attribute_names
+    csv << tracer_attr
     @tracers.each do |tracer|
       csv << tracer.attributes.values
     end
   end
 
-  File.open('./tracers.csv', 'w+') do |f|
+  File.open('./datagouv/tracers.csv', 'w+') do |f|
     f.write(tracers_csv)
   end
 
   puts 'tracers.csv created.'
 
-  File.open('./tracers.json', 'w+') do |f|
+  File.open('./datagouv/tracers.json', 'w+') do |f|
     f.write(@tracers.to_json)
   end
 
@@ -73,25 +73,25 @@ task datagouv: :environment do
   puts "#{@reports.size} accepted reports found."
 
   reports_csv = CSV.generate do |csv|
-    csv << @reports.attribute_names
+    csv << report_attr
     @reports.each do |report|
       csv << report.attributes.values
     end
   end
 
-  File.open('./reports.csv', 'w+') do |f|
+  File.open('./datagouv/reports.csv', 'w+') do |f|
     f.write(reports_csv)
   end
 
   puts 'reports.csv created.'
 
-  File.open('./reports.json', 'w+') do |f|
+  File.open('./datagouv/reports.json', 'w+') do |f|
     f.write(@reports.to_json)
   end
 
   puts 'reports.json created.'
 
-  File.open('./reports.geojson', 'w+') do |f|
+  File.open('./datagouv/reports.geojson', 'w+') do |f|
     f.write(GeojsonReportsSerializer.new(@reports).to_json)
   end
 
@@ -99,14 +99,48 @@ task datagouv: :environment do
 
   datagouv_dataset_url = "#{ENV['DATAGOUV_HOST']}/datasets/#{ENV['DATAGOUV_DATASET_ID']}/resources"
 
-  tracer_csv_res = HTTP
+  tracers_csv_res = HTTP
                    .headers(accept: 'application/json')
-                   .headers('Content-Type': 'application/json')
                    .headers('x-api-key': ENV['DATAGOUV_API_KEY'])
                    .post("#{datagouv_dataset_url}/#{ENV['DATAGOUV_TRACERS_CSV_ID']}/upload/",
                          form: {
-                           file: HTTP::FormData::File.new('/home/franck/workspace/mersea/tracers.csv')
+                          file: HTTP::FormData::File.new('./tracers.csv')
                          })
+  puts tracers_csv_res
 
-  puts tracer_csv_res
+  tracers_json_res = HTTP
+                   .headers(accept: 'application/json')
+                   .headers('x-api-key': ENV['DATAGOUV_API_KEY'])
+                   .post("#{datagouv_dataset_url}/#{ENV['DATAGOUV_TRACERS_JSON_ID']}/upload/",
+                         form: {
+                          file: HTTP::FormData::File.new('./tracers.json')
+                         })
+  puts tracers_json_res
+
+  reports_json_res = HTTP
+                   .headers(accept: 'application/json')
+                   .headers('x-api-key': ENV['DATAGOUV_API_KEY'])
+                   .post("#{datagouv_dataset_url}/#{ENV['DATAGOUV_REPORTS_JSON_ID']}/upload/",
+                         form: {
+                          file: HTTP::FormData::File.new('./reports.json')
+                         })
+  puts reports_json_res
+
+  reports_geojson_res = HTTP
+                   .headers(accept: 'application/json')
+                   .headers('x-api-key': ENV['DATAGOUV_API_KEY'])
+                   .post("#{datagouv_dataset_url}/#{ENV['DATAGOUV_REPORTS_GEOJSON_ID']}/upload/",
+                         form: {
+                          file: HTTP::FormData::File.new('./reports.geojson')
+                         })
+  puts reports_geojson_res
+
+  reports_csv_res = HTTP
+                   .headers(accept: 'application/json')
+                   .headers('x-api-key': ENV['DATAGOUV_API_KEY'])
+                   .post("#{datagouv_dataset_url}/#{ENV['DATAGOUV_REPORTS_CSV_ID']}/upload/",
+                         form: {
+                          file: HTTP::FormData::File.new('./reports.csv')
+                         })
+  puts reports_csv_res
 end

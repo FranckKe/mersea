@@ -135,7 +135,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hirb (0.7.3)
-    http (4.3.0)
+    http (5.0.0.pre2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 2.2)
@@ -402,7 +402,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails (~> 4.8)
   faker (~> 1.8)
-  http
+  http (~> 5.0.0.pre2)
   http_accept_language (~> 2)
   i18n-js (~> 3)
   image_processing (~> 1.2)

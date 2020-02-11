@@ -39,7 +39,7 @@ group :development do
   gem 'spring-watcher-listen'
   gem 'seed_dump'
   gem 'dotenv-rails'
-  gem 'http'
+  gem 'http', '~> 5.0.0.pre2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
