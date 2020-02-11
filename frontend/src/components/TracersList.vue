@@ -53,13 +53,13 @@
           >{{ getReportCount()(props.row.id) }}</b-table-column
         >
         <b-table-column
-          field="quantity_by_km"
-          v-bind:label="$t('quantity_by_km')"
+          field="distance_between_tracers"
+          v-bind:label="$t('distance_between_tracers')"
           sortable
           width="100"
           centered
           :custom-sort="sortByQuantityPerKm"
-          >{{ $n(getQuantitybyShoreLength()(props.row.id)) }}</b-table-column
+          >{{ $n(getReportsEveryKilometers()(props.row.id)) }}</b-table-column
         >
       </template>
       <template slot="detail" slot-scope="props">
@@ -111,7 +111,7 @@ export default {
   methods: {
     ...mapMutations(['setPerPage']),
     ...mapGetters(['getPerPage']),
-    ...reportsModule.mapGetters(['getReportCount', 'getQuantitybyShoreLength']),
+    ...reportsModule.mapGetters(['getReportCount', 'getReportsEveryKilometers']),
     sortByReportedQuantity: function(tracerA, tracerB, isAsc) {
       const reportCountA = this.getReportCount()(tracerA.id)
       const reportCountB = this.getReportCount()(tracerB.id)
@@ -119,8 +119,8 @@ export default {
       return isAsc ? reportCountA - reportCountB : reportCountB - reportCountA
     },
     sortByQuantityPerKm: function(tracerA, tracerB, isAsc) {
-      const reportCountPerKmA = this.getQuantitybyShoreLength()(tracerA.id)
-      const reportCountPerKmB = this.getQuantitybyShoreLength()(tracerB.id)
+      const reportCountPerKmA = this.getReportsEveryKilometers()(tracerA.id)
+      const reportCountPerKmB = this.getReportsEveryKilometers()(tracerB.id)
 
       return isAsc
         ? reportCountPerKmA - reportCountPerKmB
@@ -168,7 +168,7 @@ export default {
     "origin": "Origin",
     "per_page": "per page",
     "reported_quantity": "Reported quantity",
-    "quantity_by_km": "Quantity by km",
+    "distance_between_tracers": "Distance between tracers",
     "research": "Research",
     "drift": "Drift",
     "container": "Container",
@@ -183,7 +183,7 @@ export default {
     "origin": "Origine",
     "per_page": "par page",
     "reported_quantity": "Quantité signalée",
-    "quantity_by_km": "Quantité par km",
+    "distance_between_tracers": "Distance entre traceurs",
     "research": "Recherche",
     "drift": "Dérive",
     "container": "Conteneur",
@@ -198,7 +198,7 @@ export default {
     "origin": "Origen",
     "per_page": "por página",
     "reported_quantity": "Cantidad testificada",
-    "quantity_by_km": "Cantidad por km",
+    "distance_between_tracers": "Distancia entre trazadores",
     "research": "Búsqueda",
     "drift": "Dériva",
     "container": "Envase",

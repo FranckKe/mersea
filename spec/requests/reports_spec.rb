@@ -170,7 +170,7 @@ describe 'ReportsController', type: :request do
       {
         name: 'toto',
         quantity: 42,
-        shore_length: 7,
+        shore_length: 4200,
         address: 'somewhere',
         longitude: 42,
         latitude: 42.42,
@@ -269,7 +269,7 @@ describe 'ReportsController', type: :request do
       {
         name: 'toto',
         quantity: 42,
-        shore_length: 7,
+        shore_length: 4200,
         address: 'somewhere',
         longitude: 42,
         latitude: 42.42,

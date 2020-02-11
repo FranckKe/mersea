@@ -134,7 +134,7 @@ export default {
     "address": "Address",
     "reported_at": "Reported at",
     "quantity": "Quantity",
-    "shore_length": "Shore kilometers",
+    "shore_length": "Shore meters",
     "per_page": "per page",
     "search": "Search"
   },
@@ -146,7 +146,7 @@ export default {
     "reported_at": "Témoigné le",
     "name": "Nom",
     "quantity": "Quantité",
-    "shore_length": "Kilomètre de rivage",
+    "shore_length": "Mètre de rivage",
     "per_page": "par page",
     "search": "Rechercher"
   },
@@ -158,7 +158,7 @@ export default {
     "reported_at": "Reportado en",
     "name": "Apellido",
     "quantity": "Cantidad",
-    "shore_length": "Costa kilómetro",
+    "shore_length": "Costa metro",
     "per_page": "por página",
     "search": "Buscar"
   }

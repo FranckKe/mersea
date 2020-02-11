@@ -28,7 +28,7 @@
       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "quantity": { "type": "integer" },
-    "shore_length": { "type": "integer", "minimum": 0, "maximum": 10 },
+    "shore_length": { "type": "integer", "minimum": 100, "maximum": 15000 },
     "address": { "type": "string" },
     "status": { "type": "string" }
   },
