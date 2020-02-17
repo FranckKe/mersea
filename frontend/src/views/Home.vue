@@ -188,6 +188,7 @@ export default {
         this.popup = new mapboxgl.Popup(popupOption)
         currentPopup = this.popup
       }
+
       currentPopup
         .setLngLat(coordinates)
         .setHTML(
@@ -205,9 +206,9 @@ export default {
                       ${this.$i18n.tc(
                         'tracers',
                         reportProperties.quantity
-                      )} ${this.$i18n.t('on')} ${
-            reportProperties.shore_length
-          } km
+                      )} ${this.$i18n.t(
+            'every'
+          )} ${this.getReportsEveryKilometers()(tracer.id)} km
                     </p>
                     <p>${this.$i18n.t('per')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
@@ -479,7 +480,8 @@ export default {
       'getReports',
       'getFilteredReports',
       'getLoading',
-      'getErrors'
+      'getErrors',
+      'getReportsEveryKilometers'
     ]),
     ...toolBarModule.mapActions(['closeToolbar']),
     removeSourceAndLayer: function(map, id) {
@@ -856,24 +858,24 @@ export default {
     "tracers": "tracer | tracers",
     "search_location": "Find a place",
     "no_address_found": "No address found",
-    "per": "per",
-    "on": "on",
+    "per": "Per",
+    "every": "every",
     "map_init_failure": "Error initializing map"
   },
   "fr": {
     "tracers": "traceur | traceurs",
     "search_location": "Rechercher un endroit",
     "no_address_found": "Pas d'adresse trouvée",
-    "per": "par",
-    "on": "sur",
+    "per": "Par",
+    "every": "tous les",
     "map_init_failure": "Échec d'initialisation de la carte"
   },
   "es": {
     "tracers": "trazador | trazadores",
     "search_location": "Encontrar un lugar",
     "no_address_found": "No se encontró dirección",
-    "per": "pro",
-    "on": "más de",
+    "per": "Pro",
+    "every": "todos los",
     "map_init_failure": "Error al inicializar el mapa"
   }
 }

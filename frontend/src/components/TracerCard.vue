@@ -20,9 +20,9 @@
         </p>
         <p>
           <strong>{{ $t('created_at') }}:</strong>
-          <time datetime="tracer.created_at | formatDate">
-            {{ tracer.created_at | formatDate }}</time
-          >
+          <time datetime="tracer.created_at | formatDate">{{
+            tracer.created_at | formatDate
+          }}</time>
         </p>
         <p>
           <strong>{{ $t('quantity') }}:</strong>
@@ -30,7 +30,7 @@
         </p>
         <p>
           <strong>{{ $t('distance_between_tracers') }}:</strong>
-          {{ $n(getReportsEveryKilometers()(tracer.id)) }}/km
+          {{ $n(getReportsEveryKilometers()(tracer.id)) }} km
         </p>
       </div>
     </div>

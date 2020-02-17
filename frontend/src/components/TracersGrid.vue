@@ -14,7 +14,11 @@
         }})
       </button>
     </div>
-    <div v-for="(category, idt) in getCategories()" :key="idt" class="tracers-grid-wrapper">
+    <div
+      v-for="(category, idt) in getCategories()"
+      :key="idt"
+      class="tracers-grid-wrapper"
+    >
       <h2 class="category-title title is-2">{{ $t(category) }}</h2>
       <div class="tracers-grid columns is-multiline is-mobile">
         <div
@@ -97,7 +101,10 @@ export default {
   },
   methods: {
     ...mapGetters(['getTracers', 'getCategories']),
-    ...reportsModule.mapGetters(['getReportCount', 'getReportsEveryKilometers']),
+    ...reportsModule.mapGetters([
+      'getReportCount',
+      'getReportsEveryKilometers'
+    ]),
     sortTracersBy: function(field, order) {
       if (order == null) {
         order = this.sortFields[field].order

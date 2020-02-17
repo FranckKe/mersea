@@ -41,19 +41,26 @@ const getters = {
     }, 0),
   getReportsEveryKilometers: state => tracerId => {
     let reportWithShoreLength = 0
-    const sumDistanceBetweenReports = (state.reports.features || []).reduce((sum, report) => {
-      if (tracerId === report.properties.tracer_id && report.properties.shore_length) {
-        reportWithShoreLength++
-        sum += (report.properties.shore_length / 1000) / report.properties.quantity
-      }
-      return sum
-    }, 0)
-    if (sumDistanceBetweenReports > 0 && reportWithShoreLength > 0){
+    const sumDistanceBetweenReports = (state.reports.features || []).reduce(
+      (sum, report) => {
+        if (
+          tracerId === report.properties.tracer_id &&
+          report.properties.shore_length
+        ) {
+          reportWithShoreLength++
+          sum +=
+            report.properties.shore_length / 1000 / report.properties.quantity
+        }
+        return sum
+      },
+      0
+    )
+    if (sumDistanceBetweenReports > 0 && reportWithShoreLength > 0) {
       return sumDistanceBetweenReports / reportWithShoreLength
     } else {
       return Infinity
     }
- }
+  }
 }
 const mutations = {
   setLoading: (state, loading) => {

@@ -59,7 +59,10 @@
           width="100"
           centered
           :custom-sort="sortByQuantityPerKm"
-          >{{ $n(getReportsEveryKilometers()(props.row.id)) }}</b-table-column
+          >{{
+            $n(getReportsEveryKilometers()(props.row.id))
+          }}
+          km</b-table-column
         >
       </template>
       <template slot="detail" slot-scope="props">
@@ -111,7 +114,10 @@ export default {
   methods: {
     ...mapMutations(['setPerPage']),
     ...mapGetters(['getPerPage']),
-    ...reportsModule.mapGetters(['getReportCount', 'getReportsEveryKilometers']),
+    ...reportsModule.mapGetters([
+      'getReportCount',
+      'getReportsEveryKilometers'
+    ]),
     sortByReportedQuantity: function(tracerA, tracerB, isAsc) {
       const reportCountA = this.getReportCount()(tracerA.id)
       const reportCountB = this.getReportCount()(tracerB.id)
