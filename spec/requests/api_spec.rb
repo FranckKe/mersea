@@ -76,7 +76,7 @@ describe 'ApiController', type: :request do
       {
         name: 'toto',
         quantity: 42,
-        shore_length: 7,
+        shore_length: 4200,
         missing: 'required params'
       }
     end
@@ -100,7 +100,7 @@ describe 'ApiController', type: :request do
       {
         name: 'toto',
         quantity: 42,
-        shore_length: 7,
+        shore_length: 4200,
         address: 'somewhere',
         longitude: 42,
         latitude: 42.42,

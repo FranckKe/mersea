@@ -37,7 +37,7 @@ en:
         reported_at: Reported at
         tracer: Tracer
         quantity: Quantity
-        shore_length: Shore kilometers
+        shore_length: Shore meters
         date: Date of report
         status: Status
       user:

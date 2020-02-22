@@ -12,7 +12,12 @@
         </b-select>
 
         <div class="control is-flex">
-          <input class="input" v-model="filter" type="search" v-bind:placeholder="$t('search')" />
+          <input
+            class="input"
+            v-model="filter"
+            type="search"
+            v-bind:placeholder="$t('search')"
+          />
         </div>
       </b-field>
 
@@ -32,7 +37,8 @@
             v-bind:label="$t('tracer')"
             width="40"
             sortable
-          >{{ props.row.tracer }}</b-table-column>
+            >{{ props.row.tracer }}</b-table-column
+          >
 
           <b-table-column
             field="quantity"
@@ -40,7 +46,8 @@
             sortable
             centered
             width="20"
-          >{{ props.row.quantity }}</b-table-column>
+            >{{ props.row.quantity }}</b-table-column
+          >
 
           <b-table-column
             field="shore_length"
@@ -48,7 +55,8 @@
             sortable
             centered
             width="20"
-          >{{ props.row.shore_length }}</b-table-column>
+            >{{ props.row.shore_length }}</b-table-column
+          >
 
           <b-table-column
             field="reported_at"
@@ -56,21 +64,24 @@
             sortable
             centered
             width="125"
-          >{{ props.row.reported_at | formatDate }}</b-table-column>
+            >{{ props.row.reported_at | formatDate }}</b-table-column
+          >
 
           <b-table-column
             field="address"
             v-bind:label="$t('address')"
             sortable
             centered
-          >{{ props.row.address }}</b-table-column>
+            >{{ props.row.address }}</b-table-column
+          >
 
           <b-table-column
             field="status"
             v-bind:label="$t('status')"
             sortable
             centered
-          >{{ props.row.status | capitalize }}</b-table-column>
+            >{{ props.row.status | capitalize }}</b-table-column
+          >
         </template>
       </b-table>
     </div>
@@ -134,7 +145,7 @@ export default {
     "address": "Address",
     "reported_at": "Reported at",
     "quantity": "Quantity",
-    "shore_length": "Shore kilometers",
+    "shore_length": "Shore meters",
     "per_page": "per page",
     "search": "Search"
   },
@@ -146,7 +157,7 @@ export default {
     "reported_at": "Témoigné le",
     "name": "Nom",
     "quantity": "Quantité",
-    "shore_length": "Kilomètre de rivage",
+    "shore_length": "Mètre de rivage",
     "per_page": "par page",
     "search": "Rechercher"
   },
@@ -158,7 +169,7 @@ export default {
     "reported_at": "Reportado en",
     "name": "Apellido",
     "quantity": "Cantidad",
-    "shore_length": "Costa kilómetro",
+    "shore_length": "Costa metro",
     "per_page": "por página",
     "search": "Buscar"
   }

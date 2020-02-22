@@ -5,7 +5,7 @@ FactoryBot.define do
 
     name { Faker::Name.name }
     quantity { Random.new.rand(42)+1 }
-    shore_length { Random.new.rand(9)+1 }
+    shore_length { Random.new.rand(42)+420 }
     longitude { Random.new.rand(42) }
     latitude { Random.new.rand(42) }
     description { Faker::Lorem.sentence }

@@ -20,17 +20,17 @@
         </p>
         <p>
           <strong>{{ $t('created_at') }}:</strong>
-          <time datetime="tracer.created_at | formatDate">
-            {{ tracer.created_at | formatDate }}</time
-          >
+          <time datetime="tracer.created_at | formatDate">{{
+            tracer.created_at | formatDate
+          }}</time>
         </p>
         <p>
           <strong>{{ $t('quantity') }}:</strong>
           {{ getReportCount()(tracer.id) }}
         </p>
         <p>
-          <strong>{{ $t('quantity_by_km') }}:</strong>
-          {{ $n(getQuantitybyShoreLength()(tracer.id)) }}/km
+          <strong>{{ $t('distance_between_tracers') }}:</strong>
+          {{ $n(getReportsEveryKilometers()(tracer.id)) }} km
         </p>
       </div>
     </div>
@@ -51,7 +51,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...reportsModule.mapGetters(['getReportCount', 'getQuantitybyShoreLength'])
+    ...reportsModule.mapGetters(['getReportCount', 'getReportsEveryKilometers'])
   }
 }
 </script>
@@ -79,7 +79,7 @@ export default {
     "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
-    "quantity_by_km": "Quantity by km",
+    "distance_between_tracers": "Distance between tracers",
     "name": "Name",
     "kind": "Type"
   },
@@ -87,7 +87,7 @@ export default {
     "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
-    "quantity_by_km": "Quantité par km",
+    "distance_between_tracers": "Distance entre traceurs",
     "name": "Nom",
     "kind": "Type"
   },
@@ -95,7 +95,7 @@ export default {
     "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
-    "quantity_by_km": "Cantidad por km",
+    "distance_between_tracers": "Distancia entre trazadores",
     "name": "Apellido",
     "kind": "Tipo"
   }

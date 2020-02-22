@@ -37,7 +37,7 @@ fr:
         reported_at: Signalé le
         tracer: Traceur
         quantity: Quantité
-        shore_length: Kilomètre de rivages
+        shore_length: Mètre de rivages
         date: Date du signalement
         status: Statut
       user:

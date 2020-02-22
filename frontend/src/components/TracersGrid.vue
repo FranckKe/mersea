@@ -14,7 +14,11 @@
         }})
       </button>
     </div>
-    <div v-for="(category, idt) in getCategories()" :key="idt" class="tracers-grid-wrapper">
+    <div
+      v-for="(category, idt) in getCategories()"
+      :key="idt"
+      class="tracers-grid-wrapper"
+    >
       <h2 class="category-title title is-2">{{ $t(category) }}</h2>
       <div class="tracers-grid columns is-multiline is-mobile">
         <div
@@ -72,7 +76,7 @@ export default {
           type: 'num',
           order: 'asc'
         },
-        shore_length: {
+        distance_between_tracers: {
           active: false,
           type: 'num',
           order: 'asc'
@@ -97,7 +101,10 @@ export default {
   },
   methods: {
     ...mapGetters(['getTracers', 'getCategories']),
-    ...reportsModule.mapGetters(['getReportCount', 'getQuantitybyShoreLength']),
+    ...reportsModule.mapGetters([
+      'getReportCount',
+      'getReportsEveryKilometers'
+    ]),
     sortTracersBy: function(field, order) {
       if (order == null) {
         order = this.sortFields[field].order
@@ -127,16 +134,16 @@ export default {
         })
       }
 
-      if (field === 'shore_length') {
+      if (field === 'distance_between_tracers') {
         this.sortedTracers.sort((a, b) => {
           if (
-            this.getQuantitybyShoreLength()(a.id) <
-            this.getQuantitybyShoreLength()(b.id)
+            this.getReportsEveryKilometers()(a.id) <
+            this.getReportsEveryKilometers()(b.id)
           ) {
             return 0 - modifier
           } else if (
-            this.getQuantitybyShoreLength()(a.id) >
-            this.getQuantitybyShoreLength()(b.id)
+            this.getReportsEveryKilometers()(a.id) >
+            this.getReportsEveryKilometers()(b.id)
           ) {
             return modifier
           } else {
@@ -189,7 +196,7 @@ export default {
     "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
-    "shore_length": "Quantity by km",
+    "distance_between_tracers": "Distance between tracers",
     "name": "Name",
     "research": "Research",
     "drift": "Drift",
@@ -204,7 +211,7 @@ export default {
     "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
-    "shore_length": "Quantité par km",
+    "distance_between_tracers": "Distance entre traceurs",
     "name": "Nom",
     "research": "Recherche",
     "drift": "Dérive",
@@ -219,7 +226,7 @@ export default {
     "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
-    "shore_length": "Cantidad por km",
+    "distance_between_tracers": "Distancia entre trazadores",
     "name": "Apellido",
     "research": "Búsqueda",
     "drift": "Dériva",
