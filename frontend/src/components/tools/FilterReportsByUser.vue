@@ -180,20 +180,20 @@ export default {
 {
   "en": {
     "check_all": "Check all",
-    "search": "Search",
     "remove_all": "Reset users",
+    "search": "Search",
     "uncheck_all": "Uncheck all"
   },
   "fr": {
     "check_all": "Tout cocher",
-    "search": "Rechercher",
     "remove_all": "Reset utilisateurs",
+    "search": "Rechercher",
     "uncheck_all": "Tout décocher"
   },
   "es": {
     "check_all": "Comprobar todo",
-    "search": "Buscar",
     "remove_all": "Restablecer usuarios",
+    "search": "Buscar",
     "uncheck_all": "Desmarcar todo"
   }
 }

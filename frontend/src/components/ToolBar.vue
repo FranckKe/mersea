@@ -111,24 +111,24 @@ p {
 {
   "en": {
     "add_report": "Report",
-    "tracers": "Tracers",
-    "information": "Info",
+    "date": "Date",
     "filter_by": "Filter by",
-    "date": "Date"
+    "information": "Info",
+    "tracers": "Tracers"
   },
   "fr": {
     "add_report": "Signaler",
-    "tracers": "Traceurs",
-    "information": "Info",
+    "date": "Date",
     "filter_by": "Filtrer par",
-    "date": "Date"
+    "information": "Info",
+    "tracers": "Traceurs"
   },
   "es": {
     "add_report": "Reportar",
-    "tracers": "Trazadores",
-    "information": "Info",
+    "date": "Fecha",
     "filter_by": "Filtrado por",
-    "date": "Fecha"
+    "information": "Info",
+    "tracers": "Trazadores"
   }
 }
 </i18n>
