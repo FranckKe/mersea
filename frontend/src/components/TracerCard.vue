@@ -77,19 +77,19 @@ export default {
 {
   "en": {
     "created_at": "Created at",
-    "origin": "Origin",
-    "quantity": "Reported quantity",
     "distance_between_tracers": "Distance between tracers",
+    "kind": "Type",
     "name": "Name",
-    "kind": "Type"
+    "origin": "Origin",
+    "quantity": "Reported quantity"
   },
   "fr": {
     "created_at": "Créé le",
-    "origin": "Origine",
-    "quantity": "Quantité signalée",
     "distance_between_tracers": "Distance entre traceurs",
+    "kind": "Type",
     "name": "Nom",
-    "kind": "Type"
+    "origin": "Origine",
+    "quantity": "Quantité signalée"
   },
   "es": {
     "created_at": "Creado en",

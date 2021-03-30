@@ -210,7 +210,7 @@ export default {
             'every'
           )} ${this.getReportsEveryKilometers()(tracer.id)} km
                     </p>
-                    <p>${this.$i18n.t('per')} ${userProperties.name}</p>
+                    <p>${this.$i18n.t('by')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
                       reportProperties.reported_at
                     )}</p>
@@ -855,28 +855,28 @@ export default {
 <i18n>
 {
   "en": {
-    "tracers": "tracer | tracers",
-    "search_location": "Find a place",
-    "no_address_found": "No address found",
-    "per": "Per",
+    "by": "By",
     "every": "every",
-    "map_init_failure": "Error initializing map"
+    "map_init_failure": "Error initializing map",
+    "no_address_found": "No address found",
+    "search_location": "Find a place",
+    "tracers": "tracer | tracers"
   },
   "fr": {
-    "tracers": "traceur | traceurs",
-    "search_location": "Rechercher un endroit",
-    "no_address_found": "Pas d'adresse trouvée",
-    "per": "Par",
+    "by": "Par",
     "every": "tous les",
-    "map_init_failure": "Échec d'initialisation de la carte"
+    "map_init_failure": "Échec d'initialisation de la carte",
+    "no_address_found": "Pas d'adresse trouvée",
+    "search_location": "Rechercher un endroit",
+    "tracers": "traceur | traceurs"
   },
   "es": {
-    "tracers": "trazador | trazadores",
-    "search_location": "Encontrar un lugar",
-    "no_address_found": "No se encontró dirección",
-    "per": "Pro",
+    "by": "Pro",
     "every": "todos los",
-    "map_init_failure": "Error al inicializar el mapa"
+    "map_init_failure": "Error al inicializar el mapa",
+    "no_address_found": "No se encontró dirección",
+    "search_location": "Encontrar un lugar",
+    "tracers": "trazador | trazadores"
   }
 }
 </i18n>

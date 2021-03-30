@@ -128,29 +128,29 @@ export default {
   "en": {
     "contributions": "Contributions",
     "last_activity": "Last activity",
+    "loading_failure": "Failed to load contributions",
     "name": "Name",
     "number_of_reports": "Number of reports",
     "per_page": "per page",
-    "search": "Search",
-    "loading_failure": "Failed to load contributions"
+    "search": "Search"
   },
   "fr": {
     "contributions": "Contributions",
     "last_activity": "Dernière activité",
+    "loading_failure": "Échec de chargement des contributions",
     "name": "Nom",
     "number_of_reports": "Nombre de signalements",
     "per_page": "par page",
-    "search": "Rechercher",
-    "loading_failure": "Échec de chargement des contributions"
+    "search": "Rechercher"
   },
   "es": {
     "contributions": "Contribución",
     "last_activity": "Última actividad",
+    "loading_failure": "Error al cargar las contribuciones",
     "name": "Apellido",
     "number_of_reports": "número de testimonios",
     "per_page": "por página",
-    "search": "Buscar",
-    "loading_failure": "Error al cargar las contribuciones"
+    "search": "Buscar"
   }
 }
 </i18n>

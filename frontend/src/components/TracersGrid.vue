@@ -190,49 +190,49 @@ export default {
 <i18n>
 {
   "en": {
-    "sort_by": "Sort by",
+    "archive": "Archive",
+    "container": "Container",
+    "created_at": "Created at",
+    "distance_between_tracers": "Distance between tracers",
+    "drift": "Drift",
+    "kind": "Type",
+    "name": "Name",
     "newest": "Newest",
     "oldest": "Oldest",
-    "created_at": "Created at",
     "origin": "Origin",
     "quantity": "Reported quantity",
-    "distance_between_tracers": "Distance between tracers",
-    "name": "Name",
     "research": "Research",
-    "drift": "Drift",
-    "container": "Container",
-    "archive": "Archive",
-    "kind": "Type"
+    "sort_by": "Sort by"
   },
   "fr": {
-    "sort_by": "Trier par",
+    "archive": "Archive",
+    "container": "Conteneur",
+    "created_at": "Créé le",
+    "distance_between_tracers": "Distance entre traceurs",
+    "drift": "Dérive",
+    "kind": "Type",
+    "name": "Nom",
     "newest": "Récent",
     "oldest": "Ancient",
-    "created_at": "Créé le",
     "origin": "Origine",
     "quantity": "Quantité signalée",
-    "distance_between_tracers": "Distance entre traceurs",
-    "name": "Nom",
     "research": "Recherche",
-    "drift": "Dérive",
-    "container": "Conteneur",
-    "archive": "Archive",
-    "kind": "Type"
+    "sort_by": "Trier par"
   },
   "es": {
-    "sort_by": "Ordenar por",
+    "archive": "Archivo",
+    "container": "Envase",
+    "created_at": "Creado en",
+    "distance_between_tracers": "Distancia entre trazadores",
+    "drift": "Dériva",
+    "kind": "Tipo",
+    "name": "Apellido",
     "newest": "Reciente",
     "oldest": "Antiguo",
-    "created_at": "Creado en",
     "origin": "Origen",
     "quantity": "Cantidad testificada",
-    "distance_between_tracers": "Distancia entre trazadores",
-    "name": "Apellido",
     "research": "Búsqueda",
-    "drift": "Dériva",
-    "container": "Envase",
-    "archive": "Archivo",
-    "kind": "Tipo"
+    "sort_by": "Ordenar por"
   }
 }
 </i18n>

@@ -125,11 +125,11 @@ export default {
     "errors": "Error | Errors",
     "login_already": "You are already signed in",
     "login": "Login",
-    "reset_failure": "Error during reset",
-    "reset_success": "Password reset",
     "password_confirmation": "Password confirmation",
     "password": "Password",
-    "reset_password": "Reset password"
+    "reset_failure": "Error during reset",
+    "reset_password": "Reset password",
+    "reset_success": "Password reset"
   },
   "fr": {
     "email": "Email",
@@ -147,11 +147,11 @@ export default {
     "errors": "Error | Errores",
     "login_already": "Ya has iniciado sesión",
     "login": "Iniciar sesión",
-    "reset_failure": "Error durante el reinicio",
-    "reset_success": "Restablecer contraseña",
     "password_confirmation": "Confirmación de contraseña",
     "password": "Contraseña",
-    "reset_password": "Restablecer la contraseña"
+    "reset_failure": "Error durante el reinicio",
+    "reset_password": "Restablecer la contraseña",
+    "reset_success": "Restablecer contraseña"
   }
 }
 </i18n>

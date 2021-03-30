@@ -139,39 +139,39 @@ export default {
 <i18n>
 {
   "en": {
-    "tracer": "Tracer",
-    "my_reports": "My reports",
-    "status": "Status",
     "address": "Address",
-    "reported_at": "Reported at",
-    "quantity": "Quantity",
-    "shore_length": "Shore meters",
+    "my_reports": "My reports",
     "per_page": "per page",
-    "search": "Search"
+    "quantity": "Quantity",
+    "reported_at": "Reported at",
+    "search": "Search",
+    "shore_length": "Shore meters",
+    "status": "Status",
+    "tracer": "Tracer"
   },
   "fr": {
-    "tracer": "Traceur",
-    "my_reports": "Mes signalements",
-    "status": "Status",
     "address": "Adresse",
-    "reported_at": "Témoigné le",
+    "my_reports": "Mes signalements",
     "name": "Nom",
-    "quantity": "Quantité",
-    "shore_length": "Mètre de rivage",
     "per_page": "par page",
-    "search": "Rechercher"
+    "quantity": "Quantité",
+    "reported_at": "Témoigné le",
+    "search": "Rechercher",
+    "shore_length": "Mètre de rivage",
+    "status": "Status",
+    "tracer": "Traceur"
   },
   "es": {
-    "tracer": "Trazador",
-    "my_reports": "Mi testimonios",
-    "status": "Estado",
     "address": "dirección",
-    "reported_at": "Reportado en",
+    "my_reports": "Mi testimonios",
     "name": "Apellido",
-    "quantity": "Cantidad",
-    "shore_length": "Costa metro",
     "per_page": "por página",
-    "search": "Buscar"
+    "quantity": "Cantidad",
+    "reported_at": "Reportado en",
+    "search": "Buscar",
+    "shore_length": "Costa metro",
+    "status": "Estado",
+    "tracer": "Trazador"
   }
 }
 </i18n>

@@ -41,6 +41,7 @@ const getters = {
     }, 0),
   getReportsEveryKilometers: state => tracerId => {
     let reportWithShoreLength = 0
+
     const sumDistanceBetweenReports = (state.reports.features || []).reduce(
       (sum, report) => {
         if (
@@ -55,8 +56,9 @@ const getters = {
       },
       0
     )
-    if (sumDistanceBetweenReports > 0 && reportWithShoreLength > 0) {
-      return sumDistanceBetweenReports / reportWithShoreLength
+
+    if (sumDistanceBetweenReports === 0 && reportWithShoreLength > 0) {
+      return (sumDistanceBetweenReports / reportWithShoreLength).toFixed(3)
     } else {
       return Infinity
     }

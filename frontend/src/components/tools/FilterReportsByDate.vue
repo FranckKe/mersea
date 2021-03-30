@@ -249,40 +249,42 @@ export default {
 <i18n>
 {
   "en": {
-    "filter_reports_by_date_title": "Filter by date",
-    "from": "From",
-    "until": "Until",
-    "quick_selection": "Quick selection",
-    "this_week": "Week to date",
-    "this_month": "Month to date",
-    "from_beginning": "From the beginning",
+    "by_date": "By date",
     "custom_range": "Custom range",
+    "filter_reports_by_date_title": "Filter by date",
+    "from_beginning": "From the beginning",
+    "from": "From",
     "load_reports_failure": "Fail to load reports",
-    "by_date": "By date"
-  },
+    "quick_selection": "Quick selection",
+    "this_month": "Month to date",
+    "this_week": "Week to date",
+    "until": "Until"
+  }
+  ,
   "fr": {
-    "filter_reports_by_date_title": "Filtrer par date",
-    "from": "Du",
-    "until": "Jusqu'au",
-    "quick_selection": "Sélection rapide",
-    "this_week": "Cette semaine",
-    "this_month": "Ce mois",
-    "from_beginning": "Depuis le début",
+    "by_date": "Rechercher",
     "custom_range": "Période personnalisée",
+    "filter_reports_by_date_title": "Filtrer par date",
+    "from_beginning": "Depuis le début",
+    "from": "Du",
     "load_reports_failure": "Échec de chargement des rapports",
-    "by_date": "Rechercher"
-  },
+    "quick_selection": "Sélection rapide",
+    "this_month": "Ce mois",
+    "this_week": "Cette semaine",
+    "until": "Jusqu'au"
+  }
+  ,
   "es": {
-    "filter_reports_by_date_title": "Filtrar por fecha",
-    "from": "Desde",
-    "until": "Hasta",
-    "quick_selection": "Selección rápida",
-    "this_week": "Esta semana",
-    "this_month": "Este mes",
-    "from_beginning": "Desde el principio",
+    "by_date": "Por fecha",
     "custom_range": "Rango personalizado",
+    "filter_reports_by_date_title": "Filtrar por fecha",
+    "from_beginning": "Desde el principio",
+    "from": "Desde",
     "load_reports_failure": "Fallo al cargar informes",
-    "by_date": "Por fecha"
+    "quick_selection": "Selección rápida",
+    "this_month": "Este mes",
+    "this_week": "Esta semana",
+    "until": "Hasta"
   }
 }
 </i18n>
