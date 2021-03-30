@@ -44,7 +44,7 @@ RUN bundle install --deployment --without development test
 RUN bundle exec rake assets:precompile
 
 # javascript build stage
-FROM node:dubnium-alpine as js-build-env
+FROM node:fermium-alpine as js-build-env
 MAINTAINER mdouchement franckke
 
 RUN apk upgrade
