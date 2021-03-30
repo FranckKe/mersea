@@ -6,6 +6,12 @@
         <font-awesome-icon icon="times" />
       </a>
     </div>
+    <div>
+      {{ $t('filter_reports_tracers_link_sentence') }}
+      <router-link to="/tracers">
+        {{ $t('filter_reports_tracers_link_label') }}</router-link
+      >
+    </div>
     <div class="control is-flex">
       <input
         class="input filter-report-search"
@@ -239,42 +245,48 @@ export default {
 <i18n>
 {
   "en": {
-    "filter_reports_by_tracer_title": "Filter by tracers",
-    "tracers": "tracer | tracers",
-    "check_all": "Check all",
-    "search": "Search",
-    "displayed": "displayed | displayed",
-    "total": "total",
-    "research": "Research",
-    "drift": "Drift",
-    "container": "Container",
     "archive": "Archive",
+    "check_all": "Check all",
+    "container": "Container",
+    "displayed": "displayed | displayed",
+    "drift": "Drift",
+    "filter_reports_by_tracer_title": "Filter by tracers",
+    "filter_reports_tracers_link_label": "the tracers' page",
+    "filter_reports_tracers_link_sentence": "Check out the complete list on",
+    "research": "Research",
+    "search": "Search",
+    "total": "total",
+    "tracers": "tracer | tracers",
     "uncheck_all": "Uncheck all"
   },
   "fr": {
-    "filter_reports_by_tracer_title": "Filtrer par traceurs",
-    "tracers": "traceur | traceurs",
-    "check_all": "Tout cocher",
-    "search": "Rechercher",
-    "displayed": "affiché | affichés",
-    "total": "en tout",
-    "research": "Recherche",
-    "drift": "Dérive",
-    "container": "Conteneur",
     "archive": "Archive",
+    "check_all": "Tout cocher",
+    "container": "Conteneur",
+    "displayed": "affiché | affichés",
+    "drift": "Dérive",
+    "filter_reports_by_tracer_title": "Filtrer par traceurs",
+    "filter_reports_tracers_link_label": "la page des traceurs",
+    "filter_reports_tracers_link_sentence": "Retrouver la liste détaillée sur",
+    "research": "Recherche",
+    "search": "Rechercher",
+    "total": "en tout",
+    "tracers": "traceur | traceurs",
     "uncheck_all": "Tout décocher"
   },
   "es": {
-    "filter_reports_by_tracer_title": "Filtrar por trazadores",
-    "tracers": "trazador | trazadores",
-    "check_all": "Comprobar todo",
-    "search": "Buscar",
-    "displayed": "desplegado | desplegado",
-    "total": "total",
-    "research": "Búsqueda",
-    "drift": "Dériva",
-    "container": "Envase",
     "archive": "Archivo",
+    "check_all": "Comprobar todo",
+    "container": "Envase",
+    "displayed": "desplegado | desplegado",
+    "drift": "Dériva",
+    "filter_reports_by_tracer_title": "Filtrar por trazadores",
+    "filter_reports_tracers_link_label": "la página de los trazadores",
+    "filter_reports_tracers_link_sentence": "Consulte la lista completa en",
+    "research": "Búsqueda",
+    "search": "Buscar",
+    "total": "total",
+    "tracers": "trazador | trazadores",
     "uncheck_all": "Desmarcar todo"
   }
 }
