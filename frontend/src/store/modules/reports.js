@@ -49,19 +49,21 @@ const getters = {
           report.properties.shore_length
         ) {
           reportWithShoreLength++
-          sum +=
-            report.properties.shore_length / 1000 / report.properties.quantity
+
+          sum += report.properties.shore_length / report.properties.quantity
         }
+
         return sum
       },
       0
     )
 
-    if (sumDistanceBetweenReports === 0 && reportWithShoreLength > 0) {
-      return (sumDistanceBetweenReports / reportWithShoreLength).toFixed(3)
-    } else {
-      return Infinity
-    }
+    const averageDistanceBetweenReportsInKms =
+      sumDistanceBetweenReports / reportWithShoreLength / 1000
+
+    return sumDistanceBetweenReports > 0 && reportWithShoreLength > 0
+      ? averageDistanceBetweenReportsInKms.toFixed(3)
+      : Infinity
   }
 }
 const mutations = {
