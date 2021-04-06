@@ -39,7 +39,7 @@ const getters = {
         ? (sum += report.properties.quantity)
         : sum
     }, 0),
-  getReportsEveryKilometers: state => tracerId => {
+  getReportsEveryMeters: state => tracerId => {
     let reportWithShoreLength = 0
 
     const sumDistanceBetweenReports = (state.reports.features || []).reduce(
@@ -58,12 +58,22 @@ const getters = {
       0
     )
 
-    const averageDistanceBetweenReportsInKms =
-      sumDistanceBetweenReports / reportWithShoreLength / 1000
+    const averageDistanceBetweenReportsInMeters =
+      sumDistanceBetweenReports / reportWithShoreLength
 
     return sumDistanceBetweenReports > 0 && reportWithShoreLength > 0
-      ? averageDistanceBetweenReportsInKms.toFixed(3)
+      ? averageDistanceBetweenReportsInMeters
       : Infinity
+  },
+  getReportsEveryKilometers: (_state, getters) => tracerId => {
+    return (getters.getReportsEveryMeters(tracerId) / 1000).toFixed(3)
+  },
+  getFormattedReportsEveryDistance: (_state, getters) => tracerId => {
+    const distanceInMeters = getters.getReportsEveryMeters(tracerId)
+
+    return distanceInMeters < 1000
+      ? `${distanceInMeters.toFixed(0)} m`
+      : `${(distanceInMeters / 1000).toFixed(3)} km`
   }
 }
 const mutations = {

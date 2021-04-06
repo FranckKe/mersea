@@ -30,7 +30,7 @@
         </p>
         <p>
           <strong>{{ $t('distance_between_tracers') }}:</strong>
-          {{ $n(getReportsEveryKilometers()(tracer.id)) }} km
+          {{ getFormattedReportsEveryDistance()(tracer.id) }}
         </p>
       </div>
     </div>
@@ -51,7 +51,10 @@ export default {
   },
   computed: {},
   methods: {
-    ...reportsModule.mapGetters(['getReportCount', 'getReportsEveryKilometers'])
+    ...reportsModule.mapGetters([
+      'getReportCount',
+      'getFormattedReportsEveryDistance'
+    ])
   }
 }
 </script>
