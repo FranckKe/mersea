@@ -208,7 +208,7 @@ export default {
                         reportProperties.quantity
                       )} ${this.$i18n.t(
             'every'
-          )} ${this.getReportsEveryKilometers()(tracer.id)} km
+          )} ${this.getFormattedReportsEveryDistance()(tracer.id)}
                     </p>
                     <p>${this.$i18n.t('by')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
@@ -481,7 +481,7 @@ export default {
       'getFilteredReports',
       'getLoading',
       'getErrors',
-      'getReportsEveryKilometers'
+      'getFormattedReportsEveryDistance'
     ]),
     ...toolBarModule.mapActions(['closeToolbar']),
     removeSourceAndLayer: function(map, id) {
