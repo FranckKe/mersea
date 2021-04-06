@@ -17,6 +17,11 @@ module Concerns
           report.save!
         end
 
+        after_transition any => :rejected do |report, _|
+          report.photo.purge
+          report.save!
+        end
+
         event :accept do
           transition accepted: same, pending: :accepted
         end
