@@ -12,6 +12,8 @@ FactoryBot.define do
         io: File.open("#{Rails.root}/spec/support/fixtures/image.png"),
         filename: 'image.png',
         content_type: 'image/png')
+
+      instance.save!
     end
   end
 end
