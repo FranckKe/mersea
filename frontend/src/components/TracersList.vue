@@ -115,7 +115,8 @@ export default {
     ...mapGetters(['getPerPage']),
     ...reportsModule.mapGetters([
       'getReportCount',
-      'getFormattedReportsEveryDistance'
+      'getFormattedReportsEveryDistance',
+      'getReportsEveryKilometers'
     ]),
     sortByReportedQuantity: function(tracerA, tracerB, isAsc) {
       const reportCountA = this.getReportCount()(tracerA.id)
