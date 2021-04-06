@@ -11,25 +11,25 @@
         <p class="title is-4">{{ tracer.name | capitalize }}</p>
         <p>{{ tracer.description | capitalize }}</p>
         <p>
-          <strong>{{ $t('origin') }}:</strong>
+          <strong>{{ $t('origin') }}: </strong>
           {{ tracer.origin | capitalize }}
         </p>
         <p>
-          <strong>{{ $t('kind') }}:</strong>
+          <strong>{{ $t('kind') }}: </strong>
           {{ tracer.kind | capitalize }}
         </p>
         <p>
-          <strong>{{ $t('created_at') }}:</strong>
+          <strong>{{ $t('created_at') }}: </strong>
           <time datetime="tracer.created_at | formatDate">{{
             tracer.created_at | formatDate
           }}</time>
         </p>
         <p>
-          <strong>{{ $t('quantity') }}:</strong>
+          <strong>{{ $t('quantity') }}: </strong>
           {{ getReportCount()(tracer.id) }}
         </p>
         <p>
-          <strong>{{ $t('distance_between_tracers') }}:</strong>
+          <strong>{{ $t('distance_between_tracers') }}: </strong>
           {{ getFormattedReportsEveryDistance()(tracer.id) }}
         </p>
       </div>

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import i18n from '../../i18n'
 
 const api = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -72,8 +73,8 @@ const getters = {
     const distanceInMeters = getters.getReportsEveryMeters(tracerId)
 
     return distanceInMeters < 1000
-      ? `${distanceInMeters.toFixed(0)} m`
-      : `${(distanceInMeters / 1000).toFixed(3)} km`
+      ? `${i18n.n(distanceInMeters.toFixed(0))} m`
+      : `${i18n.n((distanceInMeters / 1000).toFixed(3))} km`
   }
 }
 const mutations = {
