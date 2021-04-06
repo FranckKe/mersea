@@ -86,7 +86,10 @@ const actions = {
       .then(tracersRes => {
         const tracers = tracersRes.data
         commit('setTracers', { tracers })
-        commit('setFilteredTracers', tracers.map(t => t.id))
+        commit(
+          'setFilteredTracers',
+          tracers.map(t => t.id)
+        )
         commit('setSuccess')
       })
       .catch(e => {
