@@ -189,7 +189,8 @@ GEM
     postmark (1.21.3)
       json
     public_suffix (4.0.6)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     pundit-matchers (1.6.0)
@@ -392,7 +393,7 @@ DEPENDENCIES
   nokogiri (~> 1.11)
   pg (~> 1)
   postmark (~> 1)
-  puma (~> 3)
+  puma (~> 4)
   pundit (~> 1.1)
   pundit-matchers (~> 1.4)
   rack-cors (~> 1)
