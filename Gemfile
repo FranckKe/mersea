@@ -29,7 +29,7 @@ gem 'thread_safe', '~> 0.3'
 gem 'wysiwyg-rails', '~> 2'
 # https://github.com/sferik/rails_admin/wiki/Froala-WYSIWYG-HTML-Editor
 gem 'bugsnag', '~> 6.6'
-gem 'nokogiri', '~> 1.11'
+gem 'nokogiri', '~> 1.12'
 
 group :development do
   gem 'annotate'
