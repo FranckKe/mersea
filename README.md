@@ -6,9 +6,9 @@
 
 ## Requirements
 
-- Ruby MRI 2.5.x ([rbenv](https://github.com/rbenv/rbenv) recommended)
+- Ruby MRI 2.7.x ([rbenv](https://github.com/rbenv/rbenv) recommended)
 - Bundler
-- Rails 5.x
+- Rails 6.x
 - Postgres 9.5+ [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
 - [ImageMagick](https://www.imagemagick.org/script/index.php)(for thumbnails)
 
