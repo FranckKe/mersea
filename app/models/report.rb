@@ -41,5 +41,5 @@ class Report < ApplicationRecord
                     content_type: ['image/png', 'image/jpeg', 'image/tiff', 'image/webp'],
                     if: -> { !self.user&.senior && %w(accepted rejected).exclude?(self.status) }
   validates :quantity, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
-  validates :shore_length, numericality: { greater_than_or_equal_to: 100, less_than_or_equal_to: 15000, allow_nil: true }
+  validates :shore_length, numericality: { greater_than_or_equal_to: 100, less_than_or_equal_to: 15000 }, allow_nil: true
 end
