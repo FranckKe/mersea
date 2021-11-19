@@ -189,6 +189,18 @@ export default {
         currentPopup = this.popup
       }
 
+      const humanizedShoreLength = () => {
+        if (!reportProperties.shore_length) return ''
+
+        return reportProperties.shore_length < 1000
+          ? `${this.$i18n.t('on')} ${this.$i18n.n(
+              reportProperties.shore_length.toFixed(0)
+            )} m`
+          : `${this.$i18n.t('on')} ${this.$i18n.n(
+              (reportProperties.shore_length / 1000).toFixed(3)
+            )} km`
+      }
+
       currentPopup
         .setLngLat(coordinates)
         .setHTML(
@@ -206,9 +218,7 @@ export default {
                       ${this.$i18n.tc(
                         'tracers',
                         reportProperties.quantity
-                      )} ${this.$i18n.t(
-            'every'
-          )} ${this.getReportsEveryKilometers()(tracer.id)} km
+                      )} ${humanizedShoreLength()}
                     </p>
                     <p>${this.$i18n.t('by')} ${userProperties.name}</p>
                     <p>${this.$options.filters.formatDate(
@@ -481,7 +491,7 @@ export default {
       'getFilteredReports',
       'getLoading',
       'getErrors',
-      'getReportsEveryKilometers'
+      'getFormattedReportsEveryDistance'
     ]),
     ...toolBarModule.mapActions(['closeToolbar']),
     removeSourceAndLayer: function(map, id) {
@@ -856,7 +866,7 @@ export default {
 {
   "en": {
     "by": "By",
-    "every": "every",
+    "on": "on",
     "map_init_failure": "Error initializing map",
     "no_address_found": "No address found",
     "search_location": "Find a place",
@@ -864,15 +874,15 @@ export default {
   },
   "fr": {
     "by": "Par",
-    "every": "tous les",
+    "on": "sur",
     "map_init_failure": "Échec d'initialisation de la carte",
     "no_address_found": "Pas d'adresse trouvée",
     "search_location": "Rechercher un endroit",
     "tracers": "traceur | traceurs"
   },
   "es": {
-    "by": "Pro",
-    "every": "todos los",
+    "by": "Por",
+    "on": "por",
     "map_init_failure": "Error al inicializar el mapa",
     "no_address_found": "No se encontró dirección",
     "search_location": "Encontrar un lugar",
