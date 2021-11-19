@@ -190,7 +190,11 @@ export default {
       }
 
       const humanizedShoreLength = () => {
-        if (!reportProperties.shore_length) return ''
+        if (
+          !reportProperties.shore_length ||
+          reportProperties.shore_length === 'null'
+        )
+          return ''
 
         return reportProperties.shore_length < 1000
           ? `${this.$i18n.t('on')} ${this.$i18n.n(
