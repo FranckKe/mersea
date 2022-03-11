@@ -7,10 +7,6 @@ class ApiController < ActionController::API
 
   def status
     render json: {}, status: :ok
-  rescue ActionDispatch::Http::MimeNegotiation::InvalidType
-    # FIXME: find a better way to handle this case.
-    # `set_default_format' should avoid this case.
-    render json: {}, status: :ok
   end
 
   rescue_from StandardError do |e|
