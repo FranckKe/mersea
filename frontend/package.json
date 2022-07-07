@@ -24,7 +24,7 @@
     "bulma-steps": "https://git@github.com/FranckKe/bulma-steps.git",
     "lodash-es": "^4.17.15",
     "mapbox-gl": "^1.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "register-service-worker": "^1.0.0",
     "slugify": "^1.3.5",
     "unorm": "^1.6.0",
