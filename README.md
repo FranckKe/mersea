@@ -92,6 +92,13 @@ To set any environment variable in the container, use one or more `-e` flags:
 - `RECAPTCHA_SECRET_KEY` → Google reCaptcha secret
 - `BUGSNAG_API_KEY` → Bugsnag key (leave empty to disable error reporting)
 
+## Datagouv export
+
+```sh
+# Configure .env file with datagouv credentials
+bundle exec rake datagouv
+```
+
 ## License
 
 MIT. See the [LICENSE](https://github.com/FranckKe/mersea/blob/master/LICENSE) for more details.
