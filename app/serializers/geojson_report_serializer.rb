@@ -11,7 +11,7 @@ class GeojsonReportSerializer < ActiveModel::Serializer
       id: object.id,
       reported_at: object.reported_at,
       user: {
-        name:  (object.has_attribute? "user_id") && object.user&.name || object.name
+        name:  object.user&.name || object.name
       },
       tracer_id: object.tracer_id,
       color: object.tracer.color,
