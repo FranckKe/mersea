@@ -2,7 +2,7 @@ version: '2'
 
 services:
   nginx:
-    image: nginx:1.15-alpine
+    image: nginx:1.23-alpine
     ports:
       - 8042:80
     links:
@@ -32,7 +32,7 @@ services:
     restart: always
 
   postgres:
-    image: postgres:9.6-alpine
+    image: postgres:15-alpine
     ports:
       - 127.0.0.1:5433:5432
     environment:
