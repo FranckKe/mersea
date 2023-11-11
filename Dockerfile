@@ -1,5 +1,5 @@
 # ruby build stage
-FROM ruby:3.1-alpine as ruby-build-env
+FROM ruby:3.2-alpine as ruby-build-env
 MAINTAINER mdouchement
 
 # Set the locale
@@ -72,7 +72,7 @@ RUN rm -rf frontend .git
 
 
 # final stage
-FROM ruby:3.1-alpine
+FROM ruby:3.2-alpine
 MAINTAINER mdouchement
 
 # Set the locale
