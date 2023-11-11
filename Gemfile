@@ -31,6 +31,11 @@ gem 'wysiwyg-rails', '~> 2'
 gem 'bugsnag', '~> 6.6'
 gem 'nokogiri', '~> 1.13'
 
+# MRI 3.1 with Rails 6 fix
+gem "net-imap"
+gem "net-pop"
+gem "net-smtp"
+
 group :development do
   gem 'annotate'
   # gem 'debbie', git: 'https://github.com/mdouchement/debbie'
@@ -56,11 +61,11 @@ end
 
 group :test do
   # Rspec
-  gem 'rspec-rails', '~> 3.7'
-  gem 'factory_bot_rails', '~> 4.8'
-  gem 'faker', '~> 1.8'
+  gem 'rspec-rails', '~> 5'
+  gem 'factory_bot_rails', '~> 6'
+  gem 'faker', '~> 2'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'pundit-matchers', '~> 1.4'
   gem 'database_cleaner', '~> 1.7'
-  gem 'json-schema', '~> 2.8'
+  gem 'json-schema', '~> 3'
 end

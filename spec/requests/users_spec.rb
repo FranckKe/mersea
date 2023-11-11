@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'UsersController', type: :request do
-  let(:password) { Faker::Lorem.characters(6) }
+  let(:password) { Faker::Lorem.characters(number: 6) }
   subject! { FactoryBot.create(:user, password: password) }
 
   describe '#me' do
@@ -79,7 +79,7 @@ describe 'UsersController', type: :request do
 
   describe '#update_password' do
     subject! { FactoryBot.create(:user, password: current_password) }
-    let(:current_password) { Faker::Lorem.characters(6) }
+    let(:current_password) { Faker::Lorem.characters(number: 6) }
     let(:request) do
       -> { patch update_password_users_path, params: parameters.to_json, headers: headers_with_auth }
     end

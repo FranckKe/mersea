@@ -53,9 +53,9 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.2.3",
     "glob-all": "^3.1.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^8.0.0",
     "prettier": "^1.18.2",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^10.0.0",
     "vue-cli-plugin-i18n": "^0.6.0",
     "vue-template-compiler": "^2.5.16"
   },
