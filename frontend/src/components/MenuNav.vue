@@ -58,7 +58,7 @@
       <lang-switcher></lang-switcher>
       <div class="navbar-end buttons">
         <b-dropdown v-if="$auth.check()" position="is-bottom-left" paddingless>
-          <button class="button is-primary" slot="trigger">
+          <button class="button is-primary" v-slot:trigger>
             <span>{{ $auth.user().email }}</span>
             <b-icon pack="fas" icon="caret-down"></b-icon>
           </button>

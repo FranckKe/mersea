@@ -1,6 +1,6 @@
-![license](https://img.shields.io/dub/l/vibe-d.svg)
-
 # Mersea
+
+![license](https://img.shields.io/dub/l/vibe-d.svg)
 
 ## Requirements
 
@@ -58,13 +58,13 @@ To setup frontend, see readme in `./frontend`.
 
 ## Production with Docker
 
-**Configure your reCaptcha keys as environment variables**
+Configure your reCaptcha keys as environment variables
 
 - Start server via Docker Compose
 
 ```sh
-$ cd /path/to/mersea
-$ docker-compose up -d
+cd /path/to/mersea
+docker-compose up -d
 ```
 
 > Feel free to modifies the provided docker-compose.yml to your needs.

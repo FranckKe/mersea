@@ -14,8 +14,5 @@ module.exports = {
         singleQuote: true
       }
     ]
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
   }
 }

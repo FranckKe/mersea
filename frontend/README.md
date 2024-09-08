@@ -6,7 +6,8 @@
 
 ```bash
 # Install dependencies manager
-npm install -g yarn
+corepack enable
+yarn set version stable
 
 # install dependencies
 yarn install
