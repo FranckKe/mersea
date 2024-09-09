@@ -21,11 +21,6 @@ localVue.use(Buefy)
 localVue.use(Vuex)
 
 localVue.component('font-awesome-icon', FontAwesomeIcon)
-localVue.filter('capitalize', function(value) {
-  if (!value) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
-})
 
 describe('Tracers.vue', () => {
   let store

@@ -5,7 +5,6 @@ import pages from '../../src/store/modules/pages'
 import tracers from '../../src/store/modules/tracers'
 import Buefy from 'buefy'
 import VueRouter from 'vue-router'
-import moment from 'moment'
 import tracersData from './data/tracers'
 import i18n from '../../src/i18n'
 
@@ -16,10 +15,6 @@ const localVue = VueTestUtils.createLocalVue()
 localVue.use(Buefy)
 localVue.use(Vuex)
 localVue.use(VueRouter)
-
-localVue.filter('formatDate', value =>
-  moment(String(value)).format('MM/DD/YYYY')
-)
 
 const router = new VueRouter()
 
