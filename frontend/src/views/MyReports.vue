@@ -64,7 +64,7 @@
             sortable
             centered
             width="125"
-            >{{ props.row.reported_at | formatDate }}</b-table-column
+            >{{ formatDate(props.row.reported_at) }}</b-table-column
           >
 
           <b-table-column
@@ -80,7 +80,7 @@
             v-bind:label="$t('status')"
             sortable
             centered
-            >{{ props.row.status | capitalize }}</b-table-column
+            >{{ capitalize(props.row.status) }}</b-table-column
           >
         </template>
       </b-table>
@@ -90,6 +90,8 @@
 
 <script>
 import moment from 'moment'
+import { formatDate } from '@/utils/format';
+import { capitalize } from '@/utils/string';
 
 export default {
   data() {
@@ -108,6 +110,14 @@ export default {
     )
     this.myReports = myReportsRes.data
   },
+  methods: {
+    capitalize(value) {
+      return capitalize(value)
+    },
+    formatDate(value) {
+      return formatDate(value)
+    },
+  },
   computed: {
     filtered: function() {
       return this.myReports.filter(v => {
@@ -120,7 +130,7 @@ export default {
             normalizedFilter
           ) ||
           this.$normalizeStr(
-            this.$options.filters.formatDate(v.reported_at)
+            formatDate(v.reported_at)
           ).includes(normalizedFilter)
         )
       })

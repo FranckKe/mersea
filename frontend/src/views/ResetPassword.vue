@@ -24,7 +24,7 @@
             v-model="password"
             name="password"
             ref="password"
-            :data-vv-as="$t('password') | lowercase"
+            :data-vv-as="lowercase($t('password'))"
             v-validate="'required|min:6'"
             password-reveal
           ></b-input>
@@ -42,7 +42,7 @@
             type="password"
             v-model="passwordConfirmation"
             name="passwordConfirmation"
-            :data-vv-as="$t('password_confirmation') | lowercase"
+            :data-vv-as="lowercase($t('password_confirmation'))"
             v-validate="'required|confirmed:password'"
             password-reveal
           ></b-input>
@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { lowercase } from '@/utils/string';
+
 export default {
   data() {
     return {
@@ -107,6 +109,9 @@ export default {
         })
         this.formErrors = e.response.data.errors[0].metadata.reason.split('.')
       }
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   }
 }

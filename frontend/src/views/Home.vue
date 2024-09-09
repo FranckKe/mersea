@@ -30,6 +30,7 @@ import MapboxLanguage from '@mapbox/mapbox-gl-language'
 
 import moment from 'moment'
 import axios from 'axios'
+import { formatDate } from '@/utils/format'
 
 export default {
   data() {
@@ -225,7 +226,7 @@ export default {
                       )} ${humanizedShoreLength()}
                     </p>
                     <p>${this.$i18n.t('by')} ${userProperties.name}</p>
-                    <p>${this.$options.filters.formatDate(
+                    <p>${formatDate(
                       reportProperties.reported_at
                     )}</p>
                   </div>

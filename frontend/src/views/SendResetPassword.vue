@@ -28,7 +28,7 @@
             v-model="email"
             type="email"
             name="email"
-            :data-vv-as="$t('email') | lowercase"
+            :data-vv-as="lowercase($t('email'))"
             v-validate="'required|email'"
           ></b-input>
         </b-field>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { lowercase } from '@/utils/string';
+
 export default {
   data() {
     return {
@@ -89,6 +91,9 @@ export default {
         })
         this.formErrors = e.response.data.errors[0].metadata.reason.split('.')
       }
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div class="container">
-      <h1 class="title is-1">{{ $tc('tracers', 2) | capitalize }}</h1>
+      <h1 class="title is-1">{{ capitalize($tc('tracers', 2)) }}</h1>
       <div class="tracer-description">
         <p>{{ $t('tracer_description_part_1') }}</p>
         <p>{{ $t('tracer_description_part_2') }}</p>
@@ -84,6 +84,8 @@ const {
 } = createNamespacedHelpers('tracers')
 const reportsModule = createNamespacedHelpers('reports')
 
+import { capitalize } from '@/utils/string';
+
 import TracersGrid from '@/components/TracersGrid'
 import TracersList from '@/components/TracersList'
 
@@ -119,7 +121,10 @@ export default {
     ...mapGetters(['getTracers', 'getLoading']),
     ...mapMutations(['setDisplayFormat']),
     ...mapActions(['loadTracers']),
-    ...reportsModule.mapActions(['loadReports'])
+    ...reportsModule.mapActions(['loadReports']),
+    capitalize(value) {
+      return capitalize(value)
+    },
   },
   computed: {
     ...mapState({

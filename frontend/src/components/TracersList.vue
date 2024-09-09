@@ -41,7 +41,7 @@
           field="created_at"
           v-bind:label="$t('created_at')"
           sortable
-          >{{ props.row.created_at | formatDate }}</b-table-column
+          >{{ formatDate(props.row.created_at) }}</b-table-column
         >
         <b-table-column
           field="reported_quantity"
@@ -99,6 +99,8 @@ const { mapState, mapGetters, mapMutations } = createNamespacedHelpers(
 )
 const reportsModule = createNamespacedHelpers('reports')
 
+import { formatDate } from '@/utils/format';
+
 export default {
   name: 'tracers-list',
   props: ['tracers'],
@@ -131,7 +133,10 @@ export default {
       return isAsc
         ? reportCountPerKmA - reportCountPerKmB
         : reportCountPerKmB - reportCountPerKmA
-    }
+    },
+    formatDate(value) {
+      return formatDate(value)
+    },
   },
   computed: {
     ...mapState({

@@ -32,7 +32,7 @@
             <b-input
               v-model="userInfo.name"
               name="name"
-              :data-vv-as="$t('name') | lowercase"
+              :data-vv-as="lowercase($t('name'))"
               v-validate="'required'"
             ></b-input>
           </b-field>
@@ -49,7 +49,7 @@
               type="email"
               v-model="userInfo.email"
               name="email"
-              :data-vv-as="$t('email') | lowercase"
+              :data-vv-as="lowercase($t('email'))"
               v-validate="'required|email'"
             ></b-input>
           </b-field>
@@ -86,7 +86,7 @@
               type="password"
               v-model="userInfo.current_password"
               name="current_password"
-              :data-vv-as="$t('current_password') | lowercase"
+              :data-vv-as="lowercase($t('current_password'))"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
@@ -133,7 +133,7 @@
               type="password"
               v-model="userPassword.current_password"
               name="current_password"
-              :data-vv-as="$t('current_password') | lowercase"
+              :data-vv-as="lowercase($t('current_password'))"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
@@ -154,7 +154,7 @@
               v-model="userPassword.password"
               name="new_password"
               ref="new_password"
-              :data-vv-as="$t('new_password') | lowercase"
+              :data-vv-as="lowercase($t('new_password'))"
               v-validate="'required|min:6'"
               password-reveal
             ></b-input>
@@ -176,7 +176,7 @@
               type="password"
               v-model="userPassword.password_confirmation"
               name="new_password_confirmation"
-              :data-vv-as="$t('new_password_confirmation') | lowercase"
+              :data-vv-as="lowercase($t('new_password_confirmation'))"
               v-validate="'required|confirmed:new_password'"
               password-reveal
             ></b-input>
@@ -232,6 +232,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+
+import { lowercase } from '@/utils/string';
 
 export default {
   data() {
@@ -352,6 +354,9 @@ export default {
           '.'
         )
       }
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   }
 }

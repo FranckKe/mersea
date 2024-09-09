@@ -22,7 +22,7 @@
           <b-input
             v-model="user.name"
             name="username"
-            :data-vv-as="$t('name') | lowercase"
+            :data-vv-as="lowercase($t('name'))"
             v-validate="'required'"
           ></b-input>
         </b-field>
@@ -35,7 +35,7 @@
             type="email"
             v-model="user.email"
             name="email"
-            :data-vv-as="$t('email') | lowercase"
+            :data-vv-as="lowercase($t('email'))"
             v-validate="'required|email'"
           ></b-input>
         </b-field>
@@ -49,7 +49,7 @@
             v-model="user.password"
             name="password"
             ref="password"
-            :data-vv-as="$t('password') | lowercase"
+            :data-vv-as="lowercase($t('password'))"
             v-validate="'required|min:6'"
             password-reveal
           ></b-input>
@@ -67,7 +67,7 @@
             type="password"
             v-model="user.passwordConfirmation"
             name="passwordConfirmation"
-            :data-vv-as="$t('password_confirmation') | lowercase"
+            :data-vv-as="lowercase($t('password_confirmation'))"
             v-validate="'required|confirmed:password'"
             password-reveal
           ></b-input>
@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import { lowercase } from '@/utils/string';
+
 export default {
   data() {
     return {
@@ -129,6 +131,9 @@ export default {
           )
         }
       })
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   }
 }

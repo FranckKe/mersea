@@ -51,7 +51,7 @@
                   v-model="address"
                   type="text"
                   name="address"
-                  :data-vv-as="$t('address') | lowercase"
+                  :data-vv-as="lowercase($t('address'))"
                   v-validate="'required'"
                   disabled="true"
                   expanded
@@ -69,7 +69,7 @@
                 <b-input
                   v-model="username"
                   name="username"
-                  :data-vv-as="$t('name_pseudo') | lowercase"
+                  :data-vv-as="lowercase($t('name_pseudo'))"
                   v-validate="'required'"
                 ></b-input>
               </b-field>
@@ -83,7 +83,7 @@
                 <b-upload
                   v-model="file"
                   name="file"
-                  :data-vv-as="$t('photo') | lowercase"
+                  :data-vv-as="lowercase($t('photo'))"
                   v-validate="'required|size:4000'"
                 >
                   <a class="button is-primary">
@@ -111,7 +111,7 @@
                   :day-names="dayNames"
                   :first-day-of-week="firstDayOfTheWeek"
                   :max-date="new Date()"
-                  :data-vv-as="$t('report_date') | lowercase"
+                  :data-vv-as="lowercase($t('report_date'))"
                   v-validate="'required'"
                 ></b-datepicker>
               </b-field>
@@ -129,7 +129,7 @@
                   name="description"
                   maxlength="300"
                   type="textarea"
-                  :data-vv-as="$t('description') | lowercase"
+                  :data-vv-as="lowercase($t('description'))"
                   v-validate="'max:300'"
                 ></b-input>
               </b-field>
@@ -203,7 +203,7 @@
                       field="name"
                       @select="option => (selectedTracers[index] = option)"
                       :placeholder="$t('search_tracers')"
-                      :data-vv-as="$tc('tracers', 1) | lowercase"
+                      :data-vv-as="lowercase($tc('tracers', 1))"
                       v-validate="'required'"
                       customClass="tracer-input"
                       ref="tracer-input"
@@ -382,6 +382,8 @@ const toolBarModule = createNamespacedHelpers('toolBar')
 
 import bulmaSteps from 'bulma-steps'
 import moment from 'moment'
+
+import { lowercase } from '@/utils/string';
 
 export default {
   name: 'addReport',
@@ -670,6 +672,9 @@ export default {
       } catch (e) {
         console.warn(e)
       }
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   },
   computed: {

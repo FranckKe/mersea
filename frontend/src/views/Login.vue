@@ -17,7 +17,7 @@
             v-model="email"
             type="email"
             name="email"
-            :data-vv-as="$t('email') | lowercase"
+            :data-vv-as="lowercase($t('email'))"
             v-validate="'required|email'"
           ></b-input>
         </b-field>
@@ -30,7 +30,7 @@
             v-model="password"
             type="password"
             name="password"
-            :data-vv-as="$t('password') | lowercase"
+            :data-vv-as="lowercase($t('password'))"
             v-validate="'required'"
             password-reveal
           ></b-input>
@@ -53,6 +53,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { lowercase } from '@/utils/string';
 
 export default {
   data() {
@@ -80,6 +81,8 @@ export default {
       let validateForm = await this.$validator.validateAll()
       if (!validateForm) return false
 
+      console.log("{email, password}")
+
       this.$auth
         .login({
           auth: { username: this.email, password: this.password },
@@ -103,6 +106,9 @@ export default {
           })
           this.error = res.response.data.errors
         })
+    },
+    lowercase(value) {
+      return lowercase(value)
     }
   }
 }

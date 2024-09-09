@@ -8,20 +8,20 @@
     </div>
     <div class="card-content">
       <div class="content">
-        <p class="title is-4">{{ tracer.name | capitalize }}</p>
-        <p>{{ tracer.description | capitalize }}</p>
+        <p class="title is-4">{{ capitalize(tracer.name) }}</p>
+        <p>{{ capitalize(tracer.description) }}</p>
         <p>
           <strong>{{ $t('origin') }}: </strong>
-          {{ tracer.origin | capitalize }}
+          {{ capitalize(tracer.origin) }}
         </p>
         <p>
           <strong>{{ $t('kind') }}: </strong>
-          {{ tracer.kind | capitalize }}
+          {{ capitalize(tracer.kind) }}
         </p>
         <p>
           <strong>{{ $t('created_at') }}: </strong>
-          <time datetime="tracer.created_at | formatDate">{{
-            tracer.created_at | formatDate
+          <time :datetime="formatDate(tracer.created_at)">{{
+            formatDate(tracer.created_at)
           }}</time>
         </p>
         <p>
@@ -41,6 +41,9 @@
 import { createNamespacedHelpers } from 'vuex'
 const reportsModule = createNamespacedHelpers('reports')
 
+import { formatDate } from '@/utils/format';
+import { capitalize } from '@/utils/string';
+
 export default {
   name: 'TracerCard',
   props: ['tracer'],
@@ -54,7 +57,13 @@ export default {
     ...reportsModule.mapGetters([
       'getReportCount',
       'getFormattedReportsEveryDistance'
-    ])
+    ]),
+    capitalize(value) {
+      return capitalize(value)
+    },
+    formatDate(value) {
+      return formatDate(value)
+    }
   }
 }
 </script>

@@ -14,7 +14,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import moment from 'moment'
-import slugify from 'slugify'
+
 import en from 'vee-validate/dist/locale/en'
 import es from 'vee-validate/dist/locale/es'
 import fr from 'vee-validate/dist/locale/fr'
@@ -151,25 +151,6 @@ library.add(
   faUser
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
-Vue.prototype.$filters = Vue.options.filters
-
-Vue.filter('formatDate', value => moment(String(value)).format('Do MMMM YYYY'))
-
-Vue.filter('capitalize', function(value) {
-  if (!value) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
-})
-
-Vue.filter('lowercase', function(value) {
-  if (!value) return ''
-  return value.toString().toLowerCase()
-})
-
-Vue.filter('slugify', function(value) {
-  return slugify(value)
-})
 
 Vue.prototype.$normalizeStr = function(string) {
   if (string == null) return ''

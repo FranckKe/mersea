@@ -54,7 +54,7 @@
             v-bind:label="$t('last_activity')"
             sortable
             centered
-            >{{ props.row.last_activity | formatDate }}</b-table-column
+            >{{ formatDate(props.row.last_activity) }}</b-table-column
           >
         </template>
       </b-table>
@@ -64,6 +64,8 @@
 
 <script>
 import moment from 'moment'
+import { formatDate } from '@/utils/format';
+import { lowercase } from '@/utils/string';
 
 export default {
   data() {
@@ -93,9 +95,16 @@ export default {
         })
       }
     },
+    // TODO bad duplicate
     formattedDate: function(date) {
       return moment(date).format('Do MMMM YYYY')
-    }
+    },
+    lowercase(value) {
+      return lowercase(value)
+    },
+    formatDate(value) {
+      return formatDate(value)
+    },
   },
   computed: {
     filtered: function() {
@@ -107,7 +116,7 @@ export default {
             normalizedFiltered
           ) ||
           this.$normalizeStr(
-            this.$options.filters.formatDate(v.last_activity)
+            formatDate(v.last_activity)
           ).includes(normalizedFiltered)
         )
       })

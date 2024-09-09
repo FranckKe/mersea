@@ -9,7 +9,7 @@
         :key="field"
         @click="sortTracersBy(field)"
       >
-        {{ $t(field) | capitalize }} ({{
+        {{ capitalize($t(field)) }} ({{
           `${orderText[sortFields[field]['type']][sortFields[field]['order']]}`
         }})
       </button>
@@ -40,6 +40,8 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters } = createNamespacedHelpers('tracers')
 import TracerCard from '@/components/TracerCard'
 const reportsModule = createNamespacedHelpers('reports')
+
+import { capitalize } from '@/utils/string';
 
 export default {
   name: 'tracers-grid',
@@ -161,7 +163,10 @@ export default {
           return 0
         }
       })
-    }
+    },
+    capitalize(value) {
+      return capitalize(value)
+    },
   },
   watch: {
     tracers: function() {
