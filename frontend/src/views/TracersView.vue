@@ -14,7 +14,8 @@ import Page from "@/components/Page.vue"
 import type { Tracer } from "@/types"
 
 const { locale } = useI18n()
-
+const api_url = import.meta.env.VITE_APP_API_URL
+console.log("API URL", api_url)
 const tracers = ref<Tracer[]>([])
 const layout = ref<"grid" | "list">("grid")
 const options = ref(["list", "grid"])
@@ -29,7 +30,7 @@ const filteredTracers = computed(() => {
 
 onBeforeMount(() => {
   axios
-    .get("/tracers")
+    .get(`${api_url}/tracers`)
     .then((response) => {
       tracers.value = response.data ?? []
       tracers.value.sort(
@@ -98,7 +99,7 @@ onBeforeMount(() => {
                 <div class="md:w-40">
                   <img
                     class="block xl:block mx-auto rounded w-full"
-                    :src="`https://alpha.oceanplastictracker.com${item.photo}`"
+                    :src="`${api_url}${item.photo}`"
                     :alt="item.name"
                   />
                   <!-- TODO use env var for apiurl -->
@@ -162,7 +163,7 @@ onBeforeMount(() => {
                 <div class="mx-auto">
                   <img
                     class="rounded w-full max-w-[300px]"
-                    :src="`https://alpha.oceanplastictracker.com${item.photo}`"
+                    :src="`${api_url}${item.photo}`"
                     :alt="item.name"
                   />
                   <!-- TODO use env var for apiurl -->

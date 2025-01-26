@@ -5,35 +5,35 @@ import router from "../router"
 
 const auth = createAuth({
   plugins: {
-    router,
+    router
   },
   drivers: {
     auth: driverAuthBasic,
-    http: driverHttpAxios,
+    http: driverHttpAxios
   },
   authRedirect: { name: "login" },
   tokenDefaultKey: "mersea_auth_token",
   registerData: {
     url: "users",
     method: "POST",
-    redirect: "/",
+    redirect: "/"
   },
   loginData: {
     url: "users/sign_in",
     method: "POST",
-    redirect: "/",
+    redirect: "/"
   },
   logoutData: {
     url: "users/sign_out",
     method: "DELETE",
     redirect: "/",
-    makeRequest: true,
+    makeRequest: true
   },
   fetchData: {
     url: "users/me",
     method: "GET",
-    enabled: true,
-  },
+    enabled: true
+  }
   //   refreshData: { // Deprecated, changed for refreshToken
   //     url: 'users/me',
   //     method: 'GET',

@@ -5,6 +5,7 @@ import { MglMap, MglNavigationControl, MglGeolocateControl } from "@indoorequal/
 import axios from "@/libs/axios"
 
 const mapLibreApiKey = import.meta.env.VITE_MAPLIBRE_TOKEN
+const api_url = import.meta.env.VITE_APP_API_URL
 
 // apiUrl: this.$apiUrl,
 // map: {},
@@ -36,16 +37,19 @@ onBeforeMount(() => {
   const maxReportedAt = new Date().toISOString().split("T")[0]
   // TODO difficultés à appeler cette ressource below...
   axios
-    .get(`/reports?r_min_reported_at=${minReportedAt}&r_max_reported_at=${maxReportedAt}`, {
-      headers: {
-        Accept: "application/geo+json",
-        "Content-Type": "application/geo+json",
-      },
-    })
-    .then((response) => {
+    .get(
+      `${api_url}/reports?r_min_reported_at=${minReportedAt}&r_max_reported_at=${maxReportedAt}`,
+      {
+        headers: {
+          Accept: "application/geo+json",
+          "Content-Type": "application/geo+json"
+        }
+      }
+    )
+    .then(response => {
       reports.value = response.data ?? []
     })
-    .catch((error) => {
+    .catch(error => {
       console.error(error)
     })
 })

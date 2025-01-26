@@ -7,7 +7,7 @@ import dayjs from "@/libs/dayjs"
 const { availableLocales, locale } = useI18n()
 
 // Day.js does not detect locale change by itself, so we need to do it manually
-watch(locale, (newValue) => {
+watch(locale, newValue => {
   dayjs.locale(newValue)
 })
 </script>

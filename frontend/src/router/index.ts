@@ -11,33 +11,33 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      component: HomeView
     },
     // --- PUBLIC --- //
     {
       path: "/tracers",
       alias: ["/traceurs", "/trazadores"],
       name: "tracers",
-      component: () => import("../views/TracersView.vue"),
+      component: () => import("../views/TracersView.vue")
     },
     {
       path: "/contributions",
       alias: ["/contributions", "/contributiones"],
       name: "contributions",
-      component: () => import("../views/LeaderboardView.vue"),
+      component: () => import("../views/LeaderboardView.vue")
     },
     {
       // TODO remove this entry?
       path: "/pages",
       alias: ["/pages", "/páginas"],
       name: "pages",
-      component: () => import("../views/PageView.vue"),
+      component: () => import("../views/PageView.vue")
     },
     {
       path: "/pages/:id",
       alias: ["/pages/:id", "/páginas/:id"],
       name: "page",
-      component: () => import("../views/PageView.vue"),
+      component: () => import("../views/PageView.vue")
     },
     // --- AUTH --- //
     {
@@ -46,9 +46,9 @@ const router = createRouter({
       alias: ["/connexion", "/todo"],
       meta: {
         auth: false,
-        redirect: "/",
+        redirect: "/"
       },
-      component: () => import("../views/LoginView.vue"),
+      component: () => import("../views/LoginView.vue")
     },
     {
       path: "/register", // TODO localize
@@ -56,9 +56,9 @@ const router = createRouter({
       alias: ["/inscription", "/todo"],
       meta: {
         auth: false,
-        redirect: "/",
+        redirect: "/"
       },
-      component: () => import("../views/RegisterView.vue"),
+      component: () => import("../views/RegisterView.vue")
     },
     {
       path: "/forgotten-password", // TODO localize
@@ -66,9 +66,9 @@ const router = createRouter({
       alias: ["/mot-de-pass-oublie", "/todo"],
       meta: {
         auth: false,
-        redirect: "/",
+        redirect: "/"
       },
-      component: () => import("../views/ForgottenPasswordView.vue"),
+      component: () => import("../views/ForgottenPasswordView.vue")
     },
     {
       path: "/reset-password", // TODO localize
@@ -76,9 +76,9 @@ const router = createRouter({
       alias: ["/mot-de-pass-oublie", "/todo"],
       meta: {
         auth: false,
-        redirect: "/",
+        redirect: "/"
       },
-      component: () => import("../views/ResetPasswordView.vue"),
+      component: () => import("../views/ResetPasswordView.vue")
     },
     // --- ACCOUNT --- //
     {
@@ -86,10 +86,10 @@ const router = createRouter({
       name: "account",
       meta: {
         auth: true,
-        redirect: "/login",
+        redirect: "/login"
       },
-      component: () => import("../views/AccountView.vue"),
-    },
+      component: () => import("../views/AccountView.vue")
+    }
     // {
     //   path: '/account/reports',
     //   name: 'accountReports',
@@ -98,7 +98,7 @@ const router = createRouter({
     //   },
     //   component: MyReports // TODO have a child view for that
     // },
-  ],
+  ]
 })
 
 export default router
