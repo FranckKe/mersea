@@ -26,6 +26,7 @@ RUN apk add --update --no-cache \
     libxml2-dev \
     libxslt-dev \
     tzdata \
+    libmagickwand-dev \
     nodejs
 
 # Bundler 2.x.x
