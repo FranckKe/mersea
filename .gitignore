@@ -23,6 +23,9 @@ datagouv/*
 # dotenv
 # TODO Comment out this rule if environment variables can be committed
 .env
+.env.prod
+.env.production
+.env.staging
 
 ## Environment normalization:
 /.bundle

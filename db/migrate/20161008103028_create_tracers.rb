@@ -1,3 +1,4 @@
+
 class CreateTracers < ActiveRecord::Migration[5.0]
   def change
     create_table :tracers, id: :uuid do |t|

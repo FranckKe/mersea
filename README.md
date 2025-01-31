@@ -4,17 +4,32 @@
 
 ## Requirements
 
-- Ruby MRI 2.7.x ([rbenv](https://github.com/rbenv/rbenv) recommended)
+- Ruby MRI 3.2.x ([rbenv](https://github.com/rbenv/rbenv) recommended)
 - Bundler
 - Rails 6.x
-- Postgres 9.5+ [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
+- Postgres 16+ [configuration file](https://github.com/FranckKe/mersea/blob/master/config/database.yml)
 - [ImageMagick](https://www.imagemagick.org/script/index.php)(for thumbnails)
 
 ### Setup
 
 ```sh
+# sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libpq-dev rbenv
+
+# If first time setup
+git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+# else
+
+git -C "$(rbenv root)"/plugins/ruby-build pull # Update when needed
+
+# Add to shell
+# echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+# echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
+
 rbenv install
+rbenv local
 gem install bundler
+# If error "You don't have write permissions for the /var/lib/gems/3.0.0 directory."
+# source ~/.bash_profile or source ~/.zshrc
 ```
 
 ## Development
@@ -23,15 +38,26 @@ Clone repository.
 
 ```sh
 # Install and configure db
-$ bundle install
-$ bundle exec rails db:create
-$ bundle exec rails db:migrate
+bundle install
+mkdir data
+chown -R 1000:1000
+docker stop mersea_postgres; docker rm mersea_postgres; docker run -d \
+  --name mersea_benji_postgres \
+  -p 127.0.0.1:5432:5432 \
+  --user 1000:1000 \
+  -e POSTGRES_PASSWORD=postgres \
+  -e PGDATA=/var/lib/postgresql/data/pgdata \
+  -v $(pwd)/data/db:/var/lib/postgresql/data/pgdata \
+  --restart always \
+  postgres:17-alpine
+bundle exec rails db:create
+bundle exec rails db:migrate
 
 # Add static pages
-$ bundle exec rails db:seed
+bundle exec rails db:seed
 
 # Launch app
-$ bundle exec rails s
+bundle exec rails s
 ```
 
 [Increase inotify watchers](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers).

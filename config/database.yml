@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: <%= ENV['MERSEA_DATABASE_HOST'] || 'localhost' %>
-  port: 5432
+  port: <%= ENV['MERSEA_DATABASE_PORT'] || 5432 %>
   username: postgres
   password: postgres
 
