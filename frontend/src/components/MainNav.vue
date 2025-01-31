@@ -46,12 +46,12 @@ const items = computed(() => {
             items: [
               {
                 label: "ANSEL",
-                url: "https://vuejs.org/", // TODO
+                url: "https://assoansel.jimdoweb.com/",
                 icon: "pi pi-external-link",
               },
               {
-                label: "Sea-Mer",
-                url: "https://vuejs.org/", // TODO
+                label: "Piksail",
+                url: "https://piksail.fr",
                 icon: "pi pi-external-link",
               },
             ],
