@@ -3,6 +3,11 @@ import driverAuthBasic from "vue-auth3/drivers/auth/basic"
 import driverHttpAxios from "vue-auth3/drivers/http/axios"
 import router from "../router"
 
+// It would be cleaner to pass the axios instance
+// to avoid prepending import.meta.env.VITE_APP_API_URL
+// for each endpoint
+const baseUrl = import.meta.env.VITE_APP_API_URL
+
 const auth = createAuth({
   plugins: {
     router
@@ -14,27 +19,27 @@ const auth = createAuth({
   authRedirect: { name: "login" },
   tokenDefaultKey: "mersea_auth_token",
   registerData: {
-    url: "users",
+    url: `${baseUrl}/users`,
     method: "POST",
     redirect: "/"
   },
   loginData: {
-    url: "users/sign_in",
+    url: `${baseUrl}/users/sign_in`,
     method: "POST",
     redirect: "/"
   },
   logoutData: {
-    url: "users/sign_out",
+    url: `${baseUrl}/users/sign_out`,
     method: "DELETE",
     redirect: "/",
     makeRequest: true
   },
   fetchData: {
-    url: "users/me",
+    url: `${baseUrl}/users/me`,
     method: "GET",
     enabled: true
   }
-  //   refreshData: { // Deprecated, changed for refreshToken
+  //   refreshData: { // TODO Deprecated, changed for refreshToken
   //     url: 'users/me',
   //     method: 'GET',
   //     enabled: false,

@@ -24,10 +24,11 @@ const formErrors = ref([])
 
 const vuelidateRules = {
   email: { required, emailValidator },
+  name: { required },
   password: { required },
   passwordConfirm: { required, sameAs: sameAs(password) },
 }
-const vuelidate = useVuelidate(vuelidateRules, { email, password, passwordConfirm })
+const vuelidate = useVuelidate(vuelidateRules, { email, name, password, passwordConfirm })
 
 async function register() {
   formErrors.value = []
@@ -37,7 +38,7 @@ async function register() {
 
   auth
     .register({
-      auth: { username: email.value, password: password.value }, // TODO on perd le nom ?
+      data: { email: email.value, password: password.value, name: name.value },
       staySignedIn: remember.value,
       autoLogin: true,
     })
