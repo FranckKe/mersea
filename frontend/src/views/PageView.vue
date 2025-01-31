@@ -2,11 +2,12 @@
 import { computed, onBeforeMount, ref } from "vue"
 import { useRouter } from "vue-router"
 import axios from "@/libs/axios"
-import type { Page } from "@/types"
+import type { Page as TPage } from "@/types"
+import Page from "@/components/Page.vue"
 
 const router = useRouter()
 
-const pages = ref<Page[]>([])
+const pages = ref<TPage[]>([])
 const page = computed(() => {
   const slug = router.currentRoute.value.params.id
   return pages.value?.find((page) => page.slug === slug)
@@ -28,5 +29,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <article v-html="page?.content" class="max-w-screen-md mx-auto"></article>
+  <Page>
+    <article v-html="page?.content" class="max-w-screen-md mx-auto"></article>
+  </Page>
 </template>
