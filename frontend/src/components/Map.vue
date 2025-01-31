@@ -6,7 +6,6 @@ import axios from "@/libs/axios"
 import { useMap } from '@indoorequal/vue-maplibre-gl';
 
 const mapToken = import.meta.env.VITE_APP_MAP_TOKEN
-const api_url = import.meta.env.VITE_APP_API_URL
 
 // apiUrl: this.$apiUrl,
 // map: {},
@@ -36,10 +35,9 @@ const reports = ref([])
 onBeforeMount(() => {
   const minReportedAt = "2018-01-01"
   const maxReportedAt = new Date().toISOString().split("T")[0]
-  // TODO difficultés à appeler cette ressource below...
   axios
     .get(
-      `${api_url}/reports?r_min_reported_at=${minReportedAt}&r_max_reported_at=${maxReportedAt}`,
+      `/reports?r_min_reported_at=${minReportedAt}&r_max_reported_at=${maxReportedAt}`,
       {
         headers: {
           Accept: "application/geo+json",

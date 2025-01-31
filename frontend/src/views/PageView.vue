@@ -5,7 +5,6 @@ import axios from "@/libs/axios"
 import type { Page } from "@/types"
 
 const router = useRouter()
-const api_url = import.meta.env.VITE_APP_API_URL
 
 const pages = ref<Page[]>([])
 const page = computed(() => {
@@ -18,7 +17,7 @@ console.log(page.value?.content)
 // TODO on locale change, go to the relevant alias -> backend must have a single id for each localized group
 onBeforeMount(() => {
   axios
-    .get(`${api_url}/pages`)
+    .get(`/pages`)
     .then((response) => {
       pages.value = response.data
     })
