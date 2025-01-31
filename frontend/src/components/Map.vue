@@ -3,8 +3,9 @@ import { onBeforeMount, ref } from "vue"
 import "maplibre-gl/dist/maplibre-gl.css"
 import { MglMap, MglNavigationControl, MglGeolocateControl } from "@indoorequal/vue-maplibre-gl"
 import axios from "@/libs/axios"
+import { useMap } from '@indoorequal/vue-maplibre-gl';
 
-const mapLibreApiKey = import.meta.env.VITE_MAPLIBRE_TOKEN
+const mapToken = import.meta.env.VITE_APP_MAP_TOKEN
 const api_url = import.meta.env.VITE_APP_API_URL
 
 // apiUrl: this.$apiUrl,
@@ -27,8 +28,8 @@ const refreshExpiredTiles = false
 const zoom = 5
 const minZoom = 2
 const maxZoom = 18 // TODO attention il y a un maxZoom - 1 dans la def du MapLibre
-// const style = `mapbox://styles/mapbox/satellite-streets-v10?optimize=true&key=${mapLibreApiKey}`
-const style = `https://api.maptiler.com/maps/streets-v2/style.json?key=${mapLibreApiKey}`
+// const style = `mapbox://styles/mapbox/satellite-streets-v10?optimize=true&key=${mapToken}`
+const style = `https://api.maptiler.com/maps/hybrid/style.json?key=${mapToken}`
 
 const reports = ref([])
 
@@ -48,17 +49,27 @@ onBeforeMount(() => {
     )
     .then(response => {
       reports.value = response.data ?? []
+      // const map = useMap();
+      // map.on('load', async () => {
+      //   map.addSource('markers', {
+      //     'type': 'geojson',
+      //     'data': reports.value,
+      //     'cluster': true, // must be true
+      //   });
+      // });
     })
     .catch(error => {
       console.error(error)
     })
+
 })
+
 </script>
 
 <template>
   <div id="map">
     <mgl-map
-      :style="style"
+      :map-style="style"
       :center="center"
       :zoom="zoom"
       :min-zoom="minZoom"

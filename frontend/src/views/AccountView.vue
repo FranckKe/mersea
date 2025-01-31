@@ -7,7 +7,7 @@ import { capitalize } from "@/utils/string"
 </script>
 
 <template>
-  <!-- TODO use page compinent  -->
+  <!-- TODO use page component  -->
   <div class="max-w-screen-md mx-auto">
     <h1 class="text-4xl">{{ capitalize($t("login")) }}</h1>
 

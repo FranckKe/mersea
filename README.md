@@ -13,14 +13,23 @@
 ### Setup
 
 ```sh
-# sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libpq-dev
+# sudo apt install git curl libssl-dev libreadline-dev zlib1g-dev autoconf bison build-essential libyaml-dev libreadline-dev libncurses5-dev libffi-dev libgdbm-dev libpq-dev rbenv
+
+# If first time setup
 git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
-# git -C "$(rbenv root)"/plugins/ruby-build pull # Update when needed
-echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+# else
+
+git -C "$(rbenv root)"/plugins/ruby-build pull # Update when needed
+
+# Add to shell
+# echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 # echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
+
 rbenv install
 rbenv local
 gem install bundler
+# If error "You don't have write permissions for the /var/lib/gems/3.0.0 directory."
+# source ~/.bash_profile or source ~/.zshrc
 ```
 
 ## Development
@@ -32,9 +41,9 @@ Clone repository.
 bundle install
 mkdir data
 chown -R 1000:1000
-docker rm mersea_postgres;docker run -d \
-  --name mersea_postgres \
-  -p 127.0.0.1:5433:5432 \
+docker stop mersea_postgres; docker rm mersea_postgres; docker run -d \
+  --name mersea_benji_postgres \
+  -p 127.0.0.1:5432:5432 \
   --user 1000:1000 \
   -e POSTGRES_PASSWORD=postgres \
   -e PGDATA=/var/lib/postgresql/data/pgdata \
