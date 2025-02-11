@@ -13,7 +13,7 @@ const page = computed(() => {
   return pages.value?.find((page) => page.slug === slug)
 })
 // TODO have a get with id for route
-console.log(page.value?.content)
+console.log("page.value", page.value?.content)
 
 // TODO on locale change, go to the relevant alias -> backend must have a single id for each localized group
 onBeforeMount(() => {
