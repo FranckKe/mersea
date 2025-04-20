@@ -40,7 +40,7 @@ async function logIn() {
       staySignedIn: remember.value,
     })
     .then((request) => {
-      console.log(request)
+      // console.log(request)
       // this.setLocale(request.data.language) // TODO
       toast.add({ severity: "success", detail: "TODO phrase login success", life: 5000 })
     })

@@ -42,7 +42,7 @@ async function register() {
       autoLogin: true,
     })
     .then((request) => {
-      console.log(request)
+      // console.log(request)
       // this.setLocale(request.data.language) // TODO indiquer la langue peut-être ?
       toast.add({ severity: "success", detail: "TODO phrase register success", life: 5000 })
     })
