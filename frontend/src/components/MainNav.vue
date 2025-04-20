@@ -12,7 +12,6 @@ import type { Page } from "@/types"
 const { locale, t } = useI18n()
 
 const pages = ref<Page[]>([])
-const api_url = import.meta.env.VITE_APP_API_URL
 
 const items = computed(() => {
   if (!pages.value) return []
@@ -47,12 +46,12 @@ const items = computed(() => {
             items: [
               {
                 label: "ANSEL",
-                url: "https://vuejs.org/", // TODO
+                url: "https://assoansel.jimdoweb.com/",
                 icon: "pi pi-external-link",
               },
               {
-                label: "Sea-Mer",
-                url: "https://vuejs.org/", // TODO
+                label: "Piksail",
+                url: "https://piksail.fr",
                 icon: "pi pi-external-link",
               },
             ],
@@ -66,7 +65,7 @@ const items = computed(() => {
 // TODO update backend to only retrieve page slug name and such
 onBeforeMount(() => {
   axios
-    .get(`${api_url}/pages`)
+    .get(`/pages`)
     .then((response) => {
       pages.value = response.data ?? []
     })

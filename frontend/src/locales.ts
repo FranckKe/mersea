@@ -52,7 +52,7 @@ const locales = {
     passwordConfirm: "confirmación de contraseña",
     passwordReset: "restablecer contraseña",
     reports: "testimonios",
-    registration: "TODO inscription",
+    registration: "registro",
     rememberMe: "recordarme",
     submit: "validar",
     tracer: "trazador",

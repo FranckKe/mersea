@@ -13,7 +13,6 @@ import { capitalize, normalize } from "@/utils/string"
 import type { User } from "@/types"
 
 const leaderboard = ref<User[]>([])
-const api_url = import.meta.env.VITE_APP_API_URL
 
 const search = ref("")
 
@@ -25,7 +24,7 @@ const filteredLeaderboard = computed(() => {
 
 onBeforeMount(() => {
   axios
-    .get(`${api_url}/leaderboard`)
+    .get(`/leaderboard`)
     .then((response) => {
       leaderboard.value = response.data ?? []
       leaderboard.value.sort((a, b) => b.reports_count - a.reports_count)

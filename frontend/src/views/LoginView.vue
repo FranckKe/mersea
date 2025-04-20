@@ -36,7 +36,7 @@ async function logIn() {
 
   auth
     .login({
-      auth: { username: email.value, password: password.value },
+      data: { username: email.value, password: password.value },
       staySignedIn: remember.value,
     })
     .then((request) => {

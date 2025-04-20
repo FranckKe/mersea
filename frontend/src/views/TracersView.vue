@@ -14,8 +14,7 @@ import Page from "@/components/Page.vue"
 import type { Tracer } from "@/types"
 
 const { locale } = useI18n()
-const api_url = import.meta.env.VITE_APP_API_URL
-console.log("API URL", api_url)
+
 const tracers = ref<Tracer[]>([])
 const layout = ref<"grid" | "list">("grid")
 const options = ref(["list", "grid"])
@@ -30,7 +29,7 @@ const filteredTracers = computed(() => {
 
 onBeforeMount(() => {
   axios
-    .get(`${api_url}/tracers`)
+    .get(`/tracers`)
     .then((response) => {
       tracers.value = response.data ?? []
       tracers.value.sort(
