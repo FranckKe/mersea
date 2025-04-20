@@ -26,6 +26,8 @@ jobs:
       with:
         # ruby-version: 2.7 # Not needed with a .ruby-version file
         bundler-cache: true
+    - name: Install Imagemagick
+      run: sudo apt install imagemagick
     - name: Database create
       run: bundle exec rake db:create
     - name: Database migration
